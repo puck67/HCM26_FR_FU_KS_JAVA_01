@@ -1,7 +1,5 @@
 package src.utils;
 
-import src.entities.Product;
-
 import java.util.List;
 
 public class Validation {
@@ -29,4 +27,15 @@ public class Validation {
     public static boolean isUniqueId(String id, List<String> list) {
         return !list.contains(id);
     }
+
+    public static boolean isValidEmail(String email) {
+        if (email == null) return false;
+        return email.matches("^[\\w._%+\\-]+@[\\w.\\-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    public static boolean isValidPhone(String phone) {
+        if (phone == null) return false;
+        return phone.matches("^\\d{10,11}$");
+    }
 }
+
