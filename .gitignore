@@ -1,0 +1,26 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+release.properties
+
+# IDEA
+.idea/
+*.iml
+
+# OS
+.DS_Store
+
+# H2 database files
+store_management_db.mv.db
+store_management_db.trace.db
+*.mv.db
+*.trace.db
+
+# Logs and build
+*.log
+out/
+*.class
+*.jar
+
