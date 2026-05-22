@@ -1,0 +1,29 @@
+# Java compiled outputs
+/bin/
+/out/
+*.class
+
+# H2 Database files (local tests and state)
+/data/
+*.mv.db
+*.trace.db
+
+# IntelliJ IDEA settings
+.idea/
+*.iml
+
+# Eclipse settings
+.settings/
+.project
+.classpath
+
+# NetBeans settings
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbproject/jdk.xml
+
+# System files
+.DS_Store
+Thumbs.db
