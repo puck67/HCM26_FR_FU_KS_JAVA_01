@@ -5,9 +5,6 @@ import java.util.Scanner;
 public class InputHelper {
     private static final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Prompts the user for a non-empty string
-     */
     public static String promptString(String message) {
         while (true) {
             System.out.print(message);
@@ -19,18 +16,14 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts the user for a string (can be empty, useful for updates)
-     */
+
     public static String promptStringForUpdate(String message, String currentValue) {
         System.out.print(message + " [" + currentValue + "]: ");
         String input = scanner.nextLine().trim();
         return input.isEmpty() ? currentValue : input;
     }
 
-    /**
-     * Prompts for a validated student code (format: SVxxx)
-     */
+
     public static String promptStudentCode(String message) {
         while (true) {
             String input = promptString(message).toUpperCase();
@@ -41,9 +34,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts for a validated subject code (format: MHxxx)
-     */
+
     public static String promptSubjectCode(String message) {
         while (true) {
             String input = promptString(message).toUpperCase();
@@ -54,9 +45,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts for a validated name (letters and spaces only)
-     */
+
     public static String promptName(String message) {
         while (true) {
             String input = promptString(message);
@@ -81,9 +70,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts for a validated email
-     */
+
     public static String promptEmail(String message) {
         while (true) {
             String input = promptString(message);
@@ -108,9 +95,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts for a validated phone number
-     */
+\
     public static String promptPhone(String message) {
         while (true) {
             String input = promptString(message);
@@ -135,9 +120,7 @@ public class InputHelper {
         }
     }
 
-    /**
-     * Prompts for an integer within range [min, max]
-     */
+\
     public static int promptInt(String message, int min, int max) {
         while (true) {
             System.out.print(message);

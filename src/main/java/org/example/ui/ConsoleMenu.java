@@ -22,7 +22,7 @@ public class ConsoleMenu {
             System.out.println("============================================");
             System.out.println("1. Student Management");
             System.out.println("2. Subject Management");
-            System.out.println("3. Grade Management");
+//            System.out.println("3. Grade Management");
             System.out.println("0. Exit Application");
             System.out.println("============================================");
 
@@ -34,9 +34,9 @@ public class ConsoleMenu {
                 case 2:
                     showSubjectMenu();
                     break;
-                case 3:
-                    showGradeMenu();
-                    break;
+//                case 3:
+//                    showGradeMenu();
+//                    break;
                 case 0:
                     System.out.println("Exiting application. Goodbye!");
                     return;
