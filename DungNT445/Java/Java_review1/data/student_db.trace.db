@@ -1,0 +1,72 @@
+2026-05-22 10:17:14.006559+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Class "org.example.config.DatabaseProcedures" not found; SQL statement:
+CREATE ALIAS IF NOT EXISTS add_student FOR "org.example.config.DatabaseProcedures.addStudent" [90086-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.util.JdbcUtils.loadUserClass(JdbcUtils.java:200)
+	at org.h2.schema.FunctionAlias.loadClass(FunctionAlias.java:148)
+	at org.h2.schema.FunctionAlias.load(FunctionAlias.java:124)
+	at org.h2.schema.FunctionAlias.init(FunctionAlias.java:109)
+	at org.h2.schema.FunctionAlias.newInstance(FunctionAlias.java:83)
+	at org.h2.command.ddl.CreateFunctionAlias.update(CreateFunctionAlias.java:47)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.example.config.DatabaseConfig.initializeDatabase(DatabaseConfig.java:71)
+	at org.example.App.main(App.java:11)
+Caused by: java.lang.ClassNotFoundException: org.example.config.DatabaseProcedures
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:423)
+	at java.base/java.lang.Class.forName(Class.java:414)
+	at org.h2.util.JdbcUtils.loadUserClass(JdbcUtils.java:193)
+	... 11 more
+2026-05-22 10:18:04.461130+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Class "org.example.config.DatabaseProcedures" not found; SQL statement:
+CREATE ALIAS IF NOT EXISTS add_student FOR "org.example.config.DatabaseProcedures.addStudent" [90086-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.util.JdbcUtils.loadUserClass(JdbcUtils.java:200)
+	at org.h2.schema.FunctionAlias.loadClass(FunctionAlias.java:148)
+	at org.h2.schema.FunctionAlias.load(FunctionAlias.java:124)
+	at org.h2.schema.FunctionAlias.init(FunctionAlias.java:109)
+	at org.h2.schema.FunctionAlias.newInstance(FunctionAlias.java:83)
+	at org.h2.command.ddl.CreateFunctionAlias.update(CreateFunctionAlias.java:47)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.example.config.DatabaseConfig.initializeDatabase(DatabaseConfig.java:71)
+	at org.example.App.main(App.java:11)
+Caused by: java.lang.ClassNotFoundException: org.example.config.DatabaseProcedures
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:641)
+	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:188)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526)
+	at java.base/java.lang.Class.forName0(Native Method)
+	at java.base/java.lang.Class.forName(Class.java:423)
+	at java.base/java.lang.Class.forName(Class.java:414)
+	at org.h2.util.JdbcUtils.loadUserClass(JdbcUtils.java:193)
+	... 11 more
+2026-05-22 10:35:18.909745+07:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: The public static Java method was not found: "addGrade (org.example.config.GradeProcedures)"; SQL statement:
+CREATE ALIAS IF NOT EXISTS add_grade FOR "org.example.config.GradeProcedures.addGrade" [90139-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:644)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.schema.FunctionAlias.loadClass(FunctionAlias.java:170)
+	at org.h2.schema.FunctionAlias.load(FunctionAlias.java:124)
+	at org.h2.schema.FunctionAlias.init(FunctionAlias.java:109)
+	at org.h2.schema.FunctionAlias.newInstance(FunctionAlias.java:83)
+	at org.h2.command.ddl.CreateFunctionAlias.update(CreateFunctionAlias.java:47)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:169)
+	at org.h2.command.Command.executeUpdate(Command.java:256)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:262)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at org.example.config.DatabaseConfig.initializeDatabase(DatabaseConfig.java:77)
+	at org.example.App.main(App.java:11)
