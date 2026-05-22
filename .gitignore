@@ -1,29 +1,49 @@
-# Java compiled outputs
-/bin/
-/out/
-*.class
+### --- Java Build Tools (Maven & Gradle) --- ###
+# Chặn tất cả thư mục target và build ở bất kỳ cấp độ nào
+**/target/
+**/build/
+**/out/
 
-# H2 Database files (local tests and state)
-/data/
-*.mv.db
-*.trace.db
+# Ngoại trừ các file wrapper cần thiết để chạy dự án
+!.mvn/wrapper/maven-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# IntelliJ IDEA settings
-.idea/
+.kotlin
+
+### --- IntelliJ IDEA --- ###
+# Chặn thư mục cấu hình của IntelliJ trong từng project con
+**/.idea/
+*.iws
 *.iml
+*.ipr
+# Nếu bạn muốn lưu lại cấu hình run/debug dùng chung của IntelliJ thì bỏ chặn dòng dưới:
+# !**/.idea/runConfigurations/
 
-# Eclipse settings
-.settings/
-.project
-.classpath
+### --- Eclipse --- ###
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+**/.springBeans
+**/.sts4-cache
 
-# NetBeans settings
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbproject/jdk.xml
+### --- NetBeans --- ###
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
 
-# System files
+### --- VS Code --- ###
+**/.vscode/
+**/.vs
+
+### --- Hệ điều hành & File rác --- ###
 .DS_Store
 Thumbs.db
+**/*.log
