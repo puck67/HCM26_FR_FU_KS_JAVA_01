@@ -1,26 +1,54 @@
-# Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-release.properties
+### --- Java Build Tools (Maven & Gradle) --- ###
+# Chặn tất cả thư mục target và build ở bất kỳ cấp độ nào
+**/target/
+**/build/
+**/out/
 
-# IDEA
-.idea/
+# Ngoại trừ các file wrapper cần thiết để chạy dự án
+!.mvn/wrapper/maven-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+.kotlin
+
+### --- IntelliJ IDEA --- ###
+# Chặn thư mục cấu hình của IntelliJ trong từng project con
+**/.idea/
+*.iws
 *.iml
+*.ipr
+# Nếu bạn muốn lưu lại cấu hình run/debug dùng chung của IntelliJ thì bỏ chặn dòng dưới:
+# !**/.idea/runConfigurations/
 
-# OS
+### --- Eclipse --- ###
+**/.apt_generated
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+**/.springBeans
+**/.sts4-cache
+
+### --- NetBeans --- ###
+**/nbproject/private/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/.nb-gradle/
+
+### --- VS Code --- ###
+**/.vscode/
+**/.vs
+
+### --- Hệ điều hành & File rác --- ###
 .DS_Store
+**/.DS_Store
+Thumbs.db
+**/*.log
 
-# H2 database files
-store_management_db.mv.db
-store_management_db.trace.db
-*.mv.db
-*.trace.db
-
-# Logs and build
-*.log
-out/
-*.class
-*.jar
-
+### --- Database Files --- ###
+**/*.db
+**/*.trace.db

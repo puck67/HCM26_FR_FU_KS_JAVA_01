@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- H2 Database Connection Settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        
+        <!-- 
+          Cấu hình URL kết nối đến H2 lưu trên ổ đĩa.
+          - jdbc:h2:./data/mydb : Lưu trữ dữ liệu trong thư mục "data" tại thư mục gốc của dự án.
+          Nếu muốn lưu ở thư mục Home của User (C:\Users\Tên_User\mydb), bạn có thể dùng: jdbc:h2:~/mydb
+        -->
+        <property name="connection.url">jdbc:h2:./data/mydb;DB_CLOSE_DELAY=-1</property>
+        
+        <property name="connection.username">sa</property>
+        <property name="connection.password"></property>
+
+        <!-- JDBC Connection Pool settings -->
+        <property name="connection.pool_size">5</property>
+
+        <!-- SQL Dialect cho H2 Database -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Tắt 2nd level cache -->
+        <property name="cache.use_second_level_cache">false</property>
+
+        <!-- Hiển thị câu lệnh SQL ra console (đặt true để debug, false để output sạch) -->
+        <property name="show_sql">false</property>
+        <property name="format_sql">false</property>
+        <property name="use_sql_comments">false</property>
+
+        <!-- 
+          Tự động cập nhật cấu trúc bảng dựa trên các Entity.
+          - "update": Cập nhật schema nếu có thay đổi mà không xóa dữ liệu cũ.
+          - "create": Luôn tạo mới (xóa bảng cũ đi tạo lại) mỗi lần khởi chạy.
+        -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Danh sách các Class Entity của bạn (Khai báo khi bạn thêm class Entity) -->
+        <mapping class="org.example.model.Student"/>
+        <mapping class="org.example.model.Course"/>
+
+    </session-factory>
+</hibernate-configuration>

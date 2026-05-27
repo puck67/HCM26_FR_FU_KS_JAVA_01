@@ -1,0 +1,186 @@
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 1
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. Back to main menu
+Select an option (1-6): 5
+
+[All Students]
+No students found.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. Back to main menu
+Select an option (1-6): 2
+Enter student ID to update: 1
+Student with ID 1 not found.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. Back to main menu
+Select an option (1-6): 6
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 2
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option (1-6): 1
+Enter course title: Java Programming
+Enter course credits: 4
+Course created successfully.
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option (1-6): 6
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 1
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. Back to main menu
+Select an option (1-6): 1
+Enter student name: Thang Hung
+Enter student age: 23
+Student created successfully.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. Back to main menu
+Select an option (1-6): 6
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 3
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option (1-5): 1
+Enter Student ID: 1
+Enter Course ID: 1
+Enrollment request processed successfully.
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option (1-5): 5
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 4
+
+--- Queries and Reports ---
+1. Find students older than a given age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than a value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option (1-7): 5
+
+[Enrollment Counts per Course]
+ - Course: Java Programming | Students enrolled: 1
+
+--- Queries and Reports ---
+1. Find students older than a given age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than a value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option (1-7): 3
+
+[Students and their Courses]
+ - Student: Thang Hung (Age: 23) | Course: Java Programming
+
+--- Queries and Reports ---
+1. Find students older than a given age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than a value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option (1-7): 7
+
+=== MAIN MENU ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option (1-5): 5
+Exiting the application... Goodbye!
+May 27, 2026 11:16:35 AM org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PoolState stop
+INFO: HHH10001008: Cleaning up connection pool [jdbc:h2:mem:school_db;DB_CLOSE_DELAY=-1]
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time:  03:51 min
+Finished at: 2026-05-27T11:16:35+07:00
+------------------------------------------------------------------------

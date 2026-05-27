@@ -1,0 +1,93 @@
+# Book Management System (JDBC & JUnit 5 Edition - SQL Server)
+
+## 1. Mô tả chương trình
+Chương trình quản lý sách chạy trên Console, sử dụng Java SE với kết nối cơ sở dữ liệu **Microsoft SQL Server** thông qua JDBC. Toàn bộ thao tác CRUD được thực hiện bằng cách gọi các **Stored Procedures** thông qua **CallableStatement** thay vì viết câu lệnh SQL thô trong mã Java. 
+Đồng thời, dự án hỗ trợ bộ **Unit Test JUnit 5** tự động chạy hoàn chỉnh và độc lập.
+
+---
+
+## 2. Cấu trúc dự án mới
+Dự án được cấu trúc theo mô hình phân lớp chuyên nghiệp chuẩn doanh nghiệp:
+```
+BookManager/
+├── lib/                             ← Các thư viện .jar phụ thuộc (SQL Server Driver, JUnit 5)
+├── src/
+│   ├── fa/training/model/
+│   │   └── Book.java                ← Entity đại diện cho bảng sách
+│   ├── fa/training/database/
+│   │   └── DBConnection.java        ← Quản lý kết nối JDBC SQL Server
+│   ├── fa/training/dao/
+│   │   └── BookDAO.java             ← Tương tác CSDL bằng CallableStatement (Stored Procedures)
+│   ├── fa/training/service/
+│   │   └── BookService.java         ← Nghiệp vụ (Business logic & Validation)
+│   ├── fa/training/utils/
+│   │   └── Validator.java           ← Kiểm tra tính đúng đắn của dữ liệu đầu vào
+│   ├── fa/training/test/
+│   │   └── BookServiceTest.java     ← 5 Test Cases Unit Test bằng JUnit 5
+│   └── fa/training/main/
+│       └── Main.java                ← Giao diện Console Menu và tương tác người dùng
+├── book_manager.sql                 ← File cấu hình Database và 5 Stored Procedures
+└── README.md                        ← Tài liệu hướng dẫn sử dụng
+```
+
+---
+
+## 3. Hướng dẫn thiết lập Database (SQL Server / SSMS)
+Bạn đã tạo thành công database **`BookMng`** trên Microsoft SQL Server. Hãy tiến hành nạp bảng và stored procedures như sau:
+
+### 3.1. Chạy File SQL thiết lập bảng và Stored Procedures:
+1. Mở phần mềm **SQL Server Management Studio (SSMS)** của bạn.
+2. Trên thanh công cụ, chọn database đích là **`BookMng`** (ở ô chọn database hoặc click đúp vào database `BookMng` ở thanh Object Explorer và nhấn nút **New Query**).
+3. Mở file **`book_manager.sql`** trong dự án này, copy toàn bộ nội dung của nó.
+4. Dán (Paste) nội dung SQL vào cửa sổ Query mới trong SSMS.
+5. Nhấn nút **Execute** (hoặc nhấn phím **`F5`**) để chạy toàn bộ câu lệnh.
+   * *Lệnh này sẽ tạo bảng `books` và 5 Stored Procedures (`insert_book`, `get_all_books`, `update_book`, `delete_book`, `find_book_by_id`).*
+
+### 3.2. Cấu hình kết nối CSDL trong Java:
+Mở file [DBConnection.java](file:///d:/CAPSTONE/BookManager/src/fa/training/database/DBConnection.java) và cập nhật thông tin tài khoản SQL Server Authentication của bạn (ví dụ tài khoản `sa`):
+```java
+private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=BookMng;encrypt=true;trustServerCertificate=true;";
+private static final String USER = "sa"; // Tài khoản đăng nhập SQL Server của bạn
+private static final String PASSWORD = "your_sql_server_password"; // Mật khẩu của bạn
+```
+
+---
+
+## 4. Hướng dẫn Biên dịch và Chạy từ Dòng lệnh (Terminal)
+
+Nếu máy bạn chưa cấu hình biến môi trường `PATH` cho Java, bạn có thể chỉ định đường dẫn JDK trên máy (`C:\Users\Boss\.jdks\openjdk-25.0.2`):
+
+### 4.1. Biên dịch dự án (Compile cả mã nguồn và Unit Test):
+```powershell
+& "C:\Users\Boss\.jdks\openjdk-25.0.2\bin\javac.exe" -d bin -cp "lib/*" -sourcepath src src\fa\training\main\Main.java src\fa\training\test\BookServiceTest.java
+```
+
+### 4.2. Chạy ứng dụng Console (Run Main App):
+```powershell
+& "C:\Users\Boss\.jdks\openjdk-25.0.2\bin\java.exe" -cp "bin;lib/mssql-jdbc-12.6.1.jre11.jar" fa.training.main.Main
+```
+
+### 4.3. Chạy toàn bộ Unit Tests (JUnit 5):
+Chạy lệnh sau để kích hoạt 5 test cases tự động bằng JUnit 5 Console Standalone Launcher:
+```powershell
+& "C:\Users\Boss\.jdks\openjdk-25.0.2\bin\java.exe" -jar lib\junit-platform-console-standalone-1.10.2.jar -cp bin --select-class fa.training.test.BookServiceTest
+```
+
+---
+
+## 5. Danh sách các Unit Test Cases đã xây dựng
+Trong lớp `BookServiceTest.java` đã xây dựng đầy đủ 5 test cases theo yêu cầu đề bài:
+1. `testInsertRecord()`: Kiểm tra chức năng thêm sách hoạt động chính xác và thêm đúng giá trị vào nguồn dữ liệu.
+2. `testFindById()`: Kiểm tra việc tìm kiếm chính xác sách theo mã ID cũng như phản hồi khi ID không tồn tại.
+3. `testUpdateRecord()`: Kiểm tra việc sửa đổi thông tin của sách đã có và kiểm chứng thông tin mới được lưu chính xác.
+4. `testDeleteRecord()`: Kiểm tra tính năng xóa thông tin sách ra khỏi danh sách.
+5. `testValidation()`: Kiểm tra các nghiệp vụ ràng buộc dữ liệu:
+   - Email hợp lệ / không hợp lệ.
+   - Số điện thoại chỉ chứa số và có độ dài từ 7 đến 15 ký tự.
+   - Đơn giá sách phải lớn hơn 0 và Số lượng sách phải lớn hơn hoặc bằng 0.
+
+---
+
+## 6. Chạy trực tiếp bằng IDE (IntelliJ IDEA / VS Code)
+- **Đối với IntelliJ IDEA:** Mở thư mục `BookManager` bằng IntelliJ. Chuột phải vào thư mục `src` -> chọn **Mark Directory as -> Sources Root**. IntelliJ sẽ tự động liên kết các file jar trong `lib` và cho phép bạn click biểu tượng nút Play màu xanh lá để chạy file `Main.java` hoặc `BookServiceTest.java` một cách vô cùng đơn giản.
+- **Đối với VS Code:** Cài đặt gói extension **Extension Pack for Java** và mở thư mục này trong VS Code. Bạn có thể nhấn trực tiếp chữ **Run** trên các hàm hoặc phím `F5` để chạy.
