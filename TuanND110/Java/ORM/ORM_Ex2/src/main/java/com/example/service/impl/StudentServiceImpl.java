@@ -9,8 +9,19 @@ import com.example.service.StudentService;
 import java.util.ArrayList;
 import java.util.List;
 public class StudentServiceImpl implements StudentService {
-    private final StudentDAO studentDAO = new StudentDAOImpl();
-    private final CourseDAO courseDAO = new CourseDAOImpl();
+    private final StudentDAO studentDAO;
+    private final CourseDAO courseDAO;
+
+    // Default constructor for production / existing callers
+    public StudentServiceImpl() {
+        this(new StudentDAOImpl(), new CourseDAOImpl());
+    }
+
+    // Constructor injection for testability
+    public StudentServiceImpl(StudentDAO studentDAO, CourseDAO courseDAO) {
+        this.studentDAO = studentDAO;
+        this.courseDAO = courseDAO;
+    }
     @Override
     public Student createStudent(String name, int age) {
         Student student = new Student(name, age);

@@ -78,12 +78,14 @@ public class Student {
     }
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", courses=" + courses.stream().map(Course::getTitle).collect(Collectors.toList()) +
-                '}';
+        StringBuilder sb = new StringBuilder(128);
+        sb.append("Student{");
+        sb.append("id=").append(id);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", age=").append(age);
+        sb.append(", courses=").append(courses.stream().map(Course::getTitle).collect(Collectors.toList()));
+        sb.append('}');
+        return sb.toString();
     }
     @Override
     public boolean equals(Object o) {
