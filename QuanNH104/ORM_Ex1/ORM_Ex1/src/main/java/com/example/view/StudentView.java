@@ -66,4 +66,31 @@ public class StudentView {
         }
         System.out.println("+------+-------------------------------------------------------------+--------------+");
     }
+
+    public void printStudentsAndCoursesJoin(List<Object[]> results) {
+        System.out.println("\n================ STUDENTS AND ENROLLED COURSES (HQL JOIN) ================");
+        if (results.isEmpty()) {
+            System.out.println("No enrollments found.");
+            return;
+        }
+        String separator = "+------+---------------------------+------+------------------------------------------+---------+";
+        System.out.println(separator);
+        System.out.printf("| %-4s | %-25s | %-4s | %-40s | %-7s |\n", "S.ID", "Student Name", "Age", "Course Title", "Credits");
+        System.out.println(separator);
+        for (Object[] row : results) {
+            Student s = (Student) row[0];
+            Course c = (Course) row[1];
+            String studentName = s.getName();
+            if (studentName.length() > 25) {
+                studentName = studentName.substring(0, 22) + "...";
+            }
+            String courseTitle = c.getTitle();
+            if (courseTitle.length() > 40) {
+                courseTitle = courseTitle.substring(0, 37) + "...";
+            }
+            System.out.printf("| %-4d | %-25s | %-4d | %-40s | %-7d |\n",
+                    s.getId(), studentName, s.getAge(), courseTitle, c.getCredit());
+        }
+        System.out.println(separator);
+    }
 }

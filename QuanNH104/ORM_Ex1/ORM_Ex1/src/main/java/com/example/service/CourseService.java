@@ -47,4 +47,12 @@ public class CourseService {
     public List<Student> getStudentsOfCourse(int courseId) {
         return courseDAO.getStudentsOfCourse(courseId);
     }
+
+    public List<Course> findCoursesWithCreditGreaterThan(int creditValue) {
+        return courseDAO.findCoursesWithCreditGreaterThan(creditValue);
+    }
+
+    public List<Object[]> getStudentCountPerCourse() {
+        return courseDAO.getStudentCountPerCourse();
+    }
 }

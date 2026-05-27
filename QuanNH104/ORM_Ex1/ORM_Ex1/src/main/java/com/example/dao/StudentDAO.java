@@ -149,7 +149,7 @@ public class StudentDAO {
     public List<Student> findStudentsByName(String name) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createNamedQuery("Student.findByName", Student.class)
-                    .setParameter("name", name)
+                    .setParameter("name", "%" + name + "%")
                     .list();
         }
     }

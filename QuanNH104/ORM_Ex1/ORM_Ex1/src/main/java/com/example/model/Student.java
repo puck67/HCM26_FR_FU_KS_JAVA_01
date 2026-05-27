@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "student")
 @NamedQueries({
-    @NamedQuery(name = "Student.findByName", query = "FROM Student s WHERE s.name = :name")
+    @NamedQuery(name = "Student.findByName", query = "FROM Student s WHERE LOWER(s.name) LIKE LOWER(:name)")
 })
 public class Student {
     @Id

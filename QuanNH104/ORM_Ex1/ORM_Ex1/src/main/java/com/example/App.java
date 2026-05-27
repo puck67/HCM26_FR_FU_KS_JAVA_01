@@ -23,7 +23,7 @@ public final class App {
 
     private static final StudentController studentController = new StudentController(studentService, studentView);
     private static final CourseController courseController = new CourseController(courseService, courseView);
-    private static final EnrollmentController enrollmentController = new EnrollmentController(studentService);
+    private static final EnrollmentController enrollmentController = new EnrollmentController(studentService, courseService, studentView, courseView);
 
     public static void main(String[] args) {
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(java.util.logging.Level.SEVERE);
@@ -39,6 +39,8 @@ public final class App {
         studentMenu.addItem("Update Student", () -> studentController.updateStudent(scanner));
         studentMenu.addItem("Delete Student", () -> studentController.deleteStudent(scanner));
         studentMenu.addItem("Search Student by ID", () -> studentController.searchStudent(scanner));
+        studentMenu.addItem("Find Students Older Than", () -> studentController.findStudentsOlderThan(scanner));
+        studentMenu.addItem("Find Students by Name (Named Query)", () -> studentController.findStudentsByName(scanner));
         studentMenu.addItem("Back to Main Menu", studentMenu::exitMenu);
 
         Menu courseMenu = new Menu("Course Management");
@@ -47,11 +49,16 @@ public final class App {
         courseMenu.addItem("Update Course", () -> courseController.updateCourse(scanner));
         courseMenu.addItem("Delete Course", () -> courseController.deleteCourse(scanner));
         courseMenu.addItem("Search Course by ID", () -> courseController.searchCourse(scanner));
+        courseMenu.addItem("Find Courses by Credit Greater Than (Criteria)", () -> courseController.findCoursesWithCreditGreaterThan(scanner));
+        courseMenu.addItem("Display Student Count per Course (Aggregation)", courseController::displayStudentCountPerCourse);
         courseMenu.addItem("Back to Main Menu", courseMenu::exitMenu);
 
         Menu enrollmentMenu = new Menu("Enrollment Management");
         enrollmentMenu.addItem("Enroll Student in a Course", () -> enrollmentController.enroll(scanner));
         enrollmentMenu.addItem("Unenroll Student from a Course", () -> enrollmentController.unenroll(scanner));
+        enrollmentMenu.addItem("Display all Courses of a Student", () -> enrollmentController.displayCoursesOfStudent(scanner));
+        enrollmentMenu.addItem("Display all Students of a Course", () -> enrollmentController.displayStudentsOfCourse(scanner));
+        enrollmentMenu.addItem("Display Students and Enrolled Courses (HQL Join)", enrollmentController::listStudentsAndCourses);
         enrollmentMenu.addItem("Back to Main Menu", enrollmentMenu::exitMenu);
 
         Menu mainMenu = new Menu("Main Menu");
