@@ -127,4 +127,42 @@ public class StudentController {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public void findStudentsOlderThan(Scanner scanner) {
+        System.out.println("\n--- FIND STUDENTS OLDER THAN ---");
+        System.out.print("Enter Age threshold: ");
+        try {
+            int ageThreshold = Integer.parseInt(scanner.nextLine().trim());
+            List<Student> students = studentService.findStudentsOlderThan(ageThreshold);
+
+            Map<Student, List<Course>> studentCoursesMap = new LinkedHashMap<>();
+            for (Student s : students) {
+                studentCoursesMap.put(s, studentService.getCoursesOfStudent(s.getId()));
+            }
+            
+            studentView.printStudentList(studentCoursesMap);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Age threshold must be an integer!");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void findStudentsByName(Scanner scanner) {
+        System.out.println("\n--- FIND STUDENTS BY NAME ---");
+        System.out.print("Enter Student Name: ");
+        try {
+            String name = scanner.nextLine().trim();
+            List<Student> students = studentService.findStudentsByName(name);
+
+            Map<Student, List<Course>> studentCoursesMap = new LinkedHashMap<>();
+            for (Student s : students) {
+                studentCoursesMap.put(s, studentService.getCoursesOfStudent(s.getId()));
+            }
+            
+            studentView.printStudentList(studentCoursesMap);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

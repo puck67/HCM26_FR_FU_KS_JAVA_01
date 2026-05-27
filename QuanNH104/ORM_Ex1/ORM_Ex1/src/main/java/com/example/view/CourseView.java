@@ -66,4 +66,25 @@ public class CourseView {
         }
         System.out.println("+------+-------------------------------------------------------------+--------------+");
     }
+
+    public void printStudentCountPerCourse(List<Object[]> countList) {
+        System.out.println("\n================ STUDENT COUNT PER COURSE ================");
+        if (countList.isEmpty()) {
+            System.out.println("No courses found.");
+            return;
+        }
+        String separator = "+------------------------------------------+-----------------+";
+        System.out.println(separator);
+        System.out.printf("| %-40s | %-15s |\n", "Course Title", "Student Count");
+        System.out.println(separator);
+        for (Object[] row : countList) {
+            String title = (String) row[0];
+            Long count = (Long) row[1];
+            if (title.length() > 40) {
+                title = title.substring(0, 37) + "...";
+            }
+            System.out.printf("| %-40s | %-15d |\n", title, count);
+        }
+        System.out.println(separator);
+    }
 }
