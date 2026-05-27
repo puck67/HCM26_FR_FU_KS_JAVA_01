@@ -30,7 +30,7 @@ class ServiceIntegrationTest {
 
     @BeforeAll
     static void init() {
-        HibernateUtil.getSessionFactory();
+        assertNotNull(HibernateUtil.getSessionFactory());
         studentService = new StudentServiceImpl();
         courseService = new CourseServiceImpl();
     }
@@ -108,6 +108,48 @@ class ServiceIntegrationTest {
 
         assertTrue(studentService.removeStudentFromCourse(aliceId, dbId));
         assertEquals(1, studentService.getCoursesOfStudent(aliceId).size());
+    }
+
+    @Test
+    @Order(3)
+    void inspectDatabaseSnapshot() {
+        System.out.println("=== DATABASE SNAPSHOT ===");
+
+        System.out.println("Students:");
+        List<Student> students = studentService.getAllStudents();
+        students.forEach(student -> System.out.println(" - " + student));
+
+        System.out.println("Courses:");
+        List<Course> courses = courseService.getAllCourses();
+        courses.forEach(course -> System.out.println(" - " + course));
+
+        System.out.println("Student -> Course rows:");
+        List<Object[]> studentCourseRows = studentService.listStudentsWithCourses();
+        studentCourseRows.forEach(row -> {
+            Student student = (Student) row[0];
+            String title = (String) row[1];
+            System.out.println(" - " + student.getName() + " -> " + title);
+        });
+
+        System.out.println("Course enrollment counts:");
+        List<Object[]> courseCounts = courseService.countStudentsInEachCourse();
+        courseCounts.forEach(row -> {
+            Course course = (Course) row[0];
+            Long count = (Long) row[1];
+            System.out.println(" - " + course.getTitle() + " | Students enrolled: " + count);
+        });
+
+        assertEquals(2, students.size());
+        assertEquals(3, courses.size());
+        assertEquals(1, studentService.getCoursesOfStudent(aliceId).size());
+        assertEquals(2, studentService.getCoursesOfStudent(bobId).size());
+        assertEquals(2, courseService.getStudentsOfCourse(javaId).size());
+        assertEquals(0, courseService.getStudentsOfCourse(dbId).size());
+        assertEquals(1, courseService.getStudentsOfCourse(webId).size());
+        assertTrue(studentCourseRows.stream().anyMatch(row -> ((Student) row[0]).getName().equals("Alice Smith") && "Java Programming".equals(row[1])));
+        assertTrue(courseCounts.stream().anyMatch(row -> ((Course) row[0]).getTitle().equals("Java Programming") && ((Long) row[1]) == 2L));
+        assertTrue(courseCounts.stream().anyMatch(row -> ((Course) row[0]).getTitle().equals("Database Systems") && ((Long) row[1]) == 0L));
+        assertTrue(courseCounts.stream().anyMatch(row -> ((Course) row[0]).getTitle().equals("Web Development") && ((Long) row[1]) == 1L));
     }
 }
 

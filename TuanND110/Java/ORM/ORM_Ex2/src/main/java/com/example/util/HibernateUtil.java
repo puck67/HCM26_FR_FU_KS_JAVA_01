@@ -5,11 +5,12 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 public final class HibernateUtil {
-    private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
+    private static SessionFactory sessionFactory;
     private HibernateUtil() {
     }
     private static SessionFactory buildSessionFactory() {
         try {
+            System.setProperty("org.jboss.logging.provider", "slf4j");
             StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                     .configure("hibernate.cfg.xml")
                     .build();
@@ -19,12 +20,15 @@ public final class HibernateUtil {
             throw new ExceptionInInitializerError("Failed to build SessionFactory: " + ex.getMessage());
         }
     }
-    public static SessionFactory getSessionFactory() {
-        return SESSION_FACTORY;
+    public static synchronized SessionFactory getSessionFactory() {
+        if (sessionFactory == null || sessionFactory.isClosed()) {
+            sessionFactory = buildSessionFactory();
+        }
+        return sessionFactory;
     }
-    public static void shutdown() {
-        if (SESSION_FACTORY != null && !SESSION_FACTORY.isClosed()) {
-            SESSION_FACTORY.close();
+    public static synchronized void shutdown() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
         }
     }
 }

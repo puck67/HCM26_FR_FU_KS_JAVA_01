@@ -66,12 +66,14 @@ public class Course {
     }
     @Override
     public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", credit=" + credit +
-                ", students=" + students.stream().map(Student::getName).collect(Collectors.toList()) +
-                '}';
+        StringBuilder sb = new StringBuilder(128);
+        sb.append("Course{");
+        sb.append("id=").append(id);
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", credit=").append(credit);
+        sb.append(", students=").append(students.stream().map(Student::getName).collect(Collectors.toList()));
+        sb.append('}');
+        return sb.toString();
     }
     @Override
     public boolean equals(Object o) {
