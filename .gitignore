@@ -1,4 +1,4 @@
-﻿### --- Java Build Tools (Maven & Gradle) --- ###
+### --- Java Build Tools (Maven & Gradle) --- ###
 # Chặn tất cả thư mục target và build ở bất kỳ cấp độ nào
 **/target/
 **/build/
@@ -45,5 +45,10 @@
 
 ### --- Hệ điều hành & File rác --- ###
 .DS_Store
+**/.DS_Store
 Thumbs.db
 **/*.log
+
+### --- Database Files --- ###
+**/*.db
+**/*.trace.db
