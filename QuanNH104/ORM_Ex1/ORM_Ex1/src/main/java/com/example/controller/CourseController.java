@@ -127,4 +127,33 @@ public class CourseController {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+    public void findCoursesWithCreditGreaterThan(Scanner scanner) {
+        System.out.println("\n--- FIND COURSES BY CREDIT GREATER THAN ---");
+        System.out.print("Enter Credit threshold: ");
+        try {
+            int creditThreshold = Integer.parseInt(scanner.nextLine().trim());
+            List<Course> courses = courseService.findCoursesWithCreditGreaterThan(creditThreshold);
+
+            Map<Course, List<Student>> courseStudentsMap = new LinkedHashMap<>();
+            for (Course c : courses) {
+                courseStudentsMap.put(c, courseService.getStudentsOfCourse(c.getId()));
+            }
+            
+            courseView.printCourseList(courseStudentsMap);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Credit threshold must be an integer!");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void displayStudentCountPerCourse() {
+        try {
+            List<Object[]> counts = courseService.getStudentCountPerCourse();
+            courseView.printStudentCountPerCourse(counts);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 }

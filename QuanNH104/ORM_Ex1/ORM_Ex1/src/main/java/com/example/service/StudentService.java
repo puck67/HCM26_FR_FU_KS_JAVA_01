@@ -89,4 +89,16 @@ public class StudentService {
     public List<Course> getCoursesOfStudent(int studentId) {
         return studentDAO.getCoursesOfStudent(studentId);
     }
+
+    public List<Student> findStudentsOlderThan(int age) {
+        return studentDAO.findStudentsOlderThan(age);
+    }
+
+    public List<Student> findStudentsByName(String name) {
+        return studentDAO.findStudentsByName(name);
+    }
+
+    public List<Object[]> getStudentsAndTheirCourses() {
+        return studentDAO.getStudentsAndTheirCourses();
+    }
 }
