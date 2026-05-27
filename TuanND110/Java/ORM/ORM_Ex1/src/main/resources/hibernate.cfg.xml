@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.h2.Driver</property>
+        <!-- Use a file-based H2 DB so the data persists between JVM runs and external tools can connect.
+             AUTO_SERVER=TRUE allows other processes (H2 Console, separate JVM) to open the same DB file.
+             Example file will be created at ./data/testdb (relative to project working dir). -->
+        <!-- Use H2's AUTO_SERVER=TRUE to automatically manage connection sharing.
+             This avoids manual TCP port conflicts and enables external tools to connect. -->
+        <property name="hibernate.connection.url">jdbc:h2:./data/testdb;AUTO_SERVER=TRUE</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+<!--        <property name="hibernate.show_sql">true</property>-->
+<!--        <property name="hibernate.format_sql">true</property>-->
+
+        <mapping class="fa.training.entities.Student"/>
+        <mapping class="fa.training.entities.Course"/>
+    </session-factory>
+</hibernate-configuration>
