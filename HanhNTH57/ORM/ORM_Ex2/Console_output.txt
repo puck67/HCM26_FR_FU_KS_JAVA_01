@@ -1,0 +1,350 @@
+=== Main Menu ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option: 1
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 1
+Enter name: Min
+Enter age: 12
+Student created successfully.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 5
+Student{id=1, name='Hanh', age=11}
+Student{id=65, name='Min', age=12}
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 2
+Enter student ID to update: 22
+Student not found with ID: 22
+
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 2
+Enter student ID to update: 65
+Enter new name: Min
+Enter new age: 15
+Student updated successfully.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 3
+Enter student ID to delete: 65
+Student deleted successfully.
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 5
+Student{id=1, name='Hanh', age=11}
+
+--- Student Management ---
+1. Create a new student
+2. Update student information
+3. Delete a student
+4. View student by ID
+5. List all students
+6. List students paginated (Bonus)
+7. List students not enrolled (Bonus)
+8. Back to main menu
+Select an option: 8
+
+=== Main Menu ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option: 2
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 1
+Enter title: ORM
+Enter credit: 3
+Course created successfully.
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 2
+Enter course ID to update: 2
+Enter new title: ORM
+Enter new credit: 5
+Course not found.
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 5
+Course{id=1, title='Java', credit=22}
+Course{id=34, title='ORM', credit=3}
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 2
+Enter course ID to update: 34
+Enter new title: ORM
+Enter new credit: 5
+Course updated successfully.
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 3
+Enter course ID to delete: 34
+Course deleted successfully.
+
+--- Course Management ---
+1. Create a new course
+2. Update course information
+3. Delete a course
+4. View course by ID
+5. List all courses
+6. Back to main menu
+Select an option: 6
+
+=== Main Menu ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option: 3
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 1
+Enter Student ID: 1
+Enter Course ID: 1
+
+Student enrolled in course successfully.
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 2
+Enter Student ID: 1
+Enter Course ID: 1
+Student removed from course successfully.
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 1
+Enter Student ID: 1
+Enter Course ID: 1
+Student enrolled in course successfully.
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 3
+Enter Student ID: 1
+Course{id=1, title='Java', credit=22}
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 4
+Enter Course ID: 1
+Student{id=1, name='Hanh', age=11}
+
+--- Enrollment Management ---
+1. Enroll a student in a course
+2. Remove a student from a course
+3. View courses of a student
+4. View students of a course
+5. Back to main menu
+Select an option: 5
+
+=== Main Menu ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option: 4
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 1
+Enter age: 1
+Student{id=1, name='Hanh', age=11}
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 2
+Enter name: H
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 3
+--- Students and their Courses ---
+Student: Hanh | Course: Java
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 4
+Enter credit: 1
+Course{id=1, title='Java', credit=22}
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 5
+--- Student Enrollment Count ---
+Course: Java | Students enrolled: 1
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 6
+Enter Course ID: 1
+Student{id=1, name='Hanh', age=11}
+
+--- Queries and Reports ---
+1. Find students older than age (HQL)
+2. Find students by name (Named Query)
+3. List students and their courses (HQL Join)
+4. Find courses with credit greater than value (Criteria API)
+5. Count number of students in each course (Aggregation Query)
+6. Find students enrolled in a specific course
+7. Back to main menu
+Select an option: 7
+
+=== Main Menu ===
+1. Student Management
+2. Course Management
+3. Enrollment Management
+4. Queries and Reports
+5. Exit
+Select an option: 5
+Exiting... Goodbye!
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time:  03:29 min
+Finished at: 2026-05-27T10:48:24+07:00
+------------------------------------------------------------------------

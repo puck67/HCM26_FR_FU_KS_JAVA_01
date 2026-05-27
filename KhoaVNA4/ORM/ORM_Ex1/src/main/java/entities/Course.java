@@ -1,0 +1,91 @@
+package entities;
+
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "course")
+public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "title", length = 100, nullable = false)
+    private String title;
+
+    @Column(name = "credit", nullable = false)
+    private int credit;
+
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
+    private Set<Student> students = new HashSet<>();
+
+    public Course() {
+    }
+
+    public Course(int id, String title, int credit) {
+        this.id = id;
+        this.title = title;
+        this.credit = credit;
+    }
+
+    public Course(String title, int credit) {
+        this.title = title;
+        this.credit = credit;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", credit=" + credit +
+                '}';
+    }
+}
