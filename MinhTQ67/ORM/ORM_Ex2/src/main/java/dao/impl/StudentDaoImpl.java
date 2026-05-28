@@ -52,9 +52,7 @@ public class StudentDaoImpl implements StudentDao {
             Student student = session.get(Student.class, studentId);
             if (student != null) {
                 // Remove from all courses first to clean join table
-                for (entity.Course course : student.getCourses()) {
-                    course.getStudents().remove(student);
-                }
+                student.getCourses().forEach(course -> course.getStudents().remove(student));
                 student.getCourses().clear();
                 session.remove(student);
                 logger.info("Student deleted with id: {}", studentId);
