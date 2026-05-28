@@ -22,7 +22,7 @@ public class Main {
         int choice;
         do {
             System.out.println("\n=========================================");
-            System.out.println("            EX2: HIBERNATE CRUD          ");
+            System.out.println("            Main Menu          ");
             System.out.println("=========================================");
             System.out.println("1. Student Management");
             System.out.println("2. Course Management");
