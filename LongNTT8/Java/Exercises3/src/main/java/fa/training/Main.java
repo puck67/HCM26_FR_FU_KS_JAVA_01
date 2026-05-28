@@ -2,6 +2,7 @@ package fa.training;
 
 import fa.training.controller.AirplaneController;
 import fa.training.controller.AirportController;
+import fa.training.controller.StudentController;
 import fa.training.handler.ConsoleInputUtil;
 
 import java.util.LinkedHashMap;
@@ -12,10 +13,12 @@ public class Main {
     private static final Map<Integer, Runnable> masterMenuMap = new LinkedHashMap<>();
     private static final Map<Integer, Runnable> airplaneMenuMap = new LinkedHashMap<>();
     private static final Map<Integer, Runnable> airportMenuMap = new LinkedHashMap<>();
+    private static final Map<Integer, Runnable> studentMenuMap = new LinkedHashMap<>();
 
     static {
         masterMenuMap.put(1, Main::airplaneMenuLoop);
         masterMenuMap.put(2, Main::airportMenuLoop);
+        masterMenuMap.put(3, Main::studentMenuLoop);
         masterMenuMap.put(0, () -> { System.out.println("Goodbye!"); System.exit(0); });
 
         airplaneMenuMap.put(1, AirplaneController::createAirplane);
@@ -35,6 +38,12 @@ public class Main {
         airportMenuMap.put(6, AirportController::updateAirportSP);
         airportMenuMap.put(7, AirportController::deleteAirportSP);
         airportMenuMap.put(0, () -> System.out.println("Returning to Master Menu..."));
+
+        studentMenuMap.put(1, StudentController::createStudent);
+        studentMenuMap.put(2, StudentController::updateStudent);
+        studentMenuMap.put(3, StudentController::deleteStudent);
+        studentMenuMap.put(4, StudentController::listStudents);
+        studentMenuMap.put(0, () -> System.out.println("Returning to Master Menu..."));
     }
 
     public static void main(String[] args) {
@@ -43,6 +52,7 @@ public class Main {
             printMenu("MASTER SYSTEM MENU",
                 "1. Airplane Management",
                 "2. Airport Management",
+                "3. Student Management",
                 "0. Exit"
             );
             choice = runChoice(masterMenuMap);
@@ -83,13 +93,26 @@ public class Main {
         } while (choice != 0);
     }
 
+    private static void studentMenuLoop() {
+        int choice;
+        do {
+            printMenu("STUDENT MANAGEMENT",
+                "1. Create Student",
+                "2. Update Student",
+                "3. Delete Student",
+                "4. List All Students",
+                "0. Back"
+            );
+            choice = runChoice(studentMenuMap);
+        } while (choice != 0);
+    }
+
     private static void printMenu(String title, String... options) {
         System.out.println("\n====== " + title + " ======");
         for (String option : options) {
             System.out.println(option);
         }
     }
-
 
     private static int runChoice(Map<Integer, Runnable> menuMap) {
         try {
