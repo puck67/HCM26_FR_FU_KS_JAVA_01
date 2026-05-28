@@ -18,9 +18,10 @@ public class ConsoleView {
         System.out.println("==================================================");
         System.out.println(" 1. Manage Students");
         System.out.println(" 2. Manage Courses");
-        System.out.println(" 3. Manage Enrollments & Queries");
-        System.out.println(" 4. Seed Sample Data");
-        System.out.println(" 5. Exit");
+        System.out.println(" 3. Manage Enrollments");
+        System.out.println(" 4. Insert Data (Seed Sample Data)");
+        System.out.println(" 5. Task 5 Queries");
+        System.out.println(" 6. Exit");
         System.out.println("==================================================");
     }
 

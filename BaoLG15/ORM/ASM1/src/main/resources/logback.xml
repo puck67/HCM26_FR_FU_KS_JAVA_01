@@ -1,0 +1,32 @@
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="fa.training" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.hibernate"                    level="OFF" additivity="false"/>
+    <logger name="org.hibernate.SQL"                level="OFF" additivity="false"/>
+    <logger name="org.hibernate.orm"                level="OFF" additivity="false"/>
+    <logger name="org.hibernate.orm.jdbc.bind"      level="OFF" additivity="false"/>
+    <logger name="org.hibernate.orm.connections"    level="OFF" additivity="false"/>
+    <logger name="org.hibernate.orm.deprecation"    level="OFF" additivity="false"/>
+    <logger name="org.hibernate.engine"             level="OFF" additivity="false"/>
+    <logger name="org.hibernate.event"              level="OFF" additivity="false"/>
+    <logger name="org.hibernate.cfg"                level="OFF" additivity="false"/>
+    <logger name="org.hibernate.boot"               level="OFF" additivity="false"/>
+    <logger name="org.hibernate.tool"               level="OFF" additivity="false"/>
+    <logger name="com.zaxxer"                       level="OFF" additivity="false"/>
+    <logger name="org.postgresql"                   level="OFF" additivity="false"/>
+    <logger name="jakarta"                          level="OFF" additivity="false"/>
+
+    <root level="OFF">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

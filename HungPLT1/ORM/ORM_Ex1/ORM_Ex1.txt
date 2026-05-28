@@ -1,0 +1,439 @@
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 1
+
+--- [1] Inserting Sample Data ---
+Sample Data Loaded successfully!
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 2
+
+--- [2] Student CRUD Operations ---
+1. Create Student
+2. Read Student by ID
+3. Update Student Info
+4. Delete Student
+5. List All Students
+Select action: 5
+Student{id=1, name='John', age=22}
+Student{id=2, name='Anna', age=25}
+Student{id=3, name='Bob', age=19}
+Student{id=4, name='Charlie', age=20}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 2
+
+--- [2] Student CRUD Operations ---
+1. Create Student
+2. Read Student by ID
+3. Update Student Info
+4. Delete Student
+5. List All Students
+Select action: 1
+Enter Student Name: David
+Enter Student Age: 21
+Student created: Student{id=5, name='David', age=21}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 2
+
+--- [2] Student CRUD Operations ---
+1. Create Student
+2. Read Student by ID
+3. Update Student Info
+4. Delete Student
+5. List All Students
+Select action: 2
+Enter Student ID: 1
+Result: Student{id=1, name='John', age=22}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 2
+
+--- [2] Student CRUD Operations ---
+1. Create Student
+2. Read Student by ID
+3. Update Student Info
+4. Delete Student
+5. List All Students
+Select action: 3
+Enter Student ID to update: 4
+Enter New Name (Charlie): Jennie
+Enter New Age (20): 23
+Student updated successfully.
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 2
+
+--- [2] Student CRUD Operations ---
+1. Create Student
+2. Read Student by ID
+3. Update Student Info
+4. Delete Student
+5. List All Students
+Select action: 4
+Enter Student ID to delete: 3
+Delete action completed.
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 3
+
+--- [3] Course CRUD Operations ---
+1. Create Course
+2. List All Courses
+3. Delete Course
+Select action: 1
+Enter Course Title: Python Basics
+Enter Credit: 2
+Course created: Course{id=5, title='Python Basics', credit=2}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 3
+
+--- [3] Course CRUD Operations ---
+1. Create Course
+2. List All Courses
+3. Delete Course
+Select action: 2
+Course{id=1, title='Java Programming', credit=4}
+Course{id=2, title='Database Systems', credit=3}
+Course{id=3, title='Web Development', credit=3}
+Course{id=4, title='Introduction to Art', credit=1}
+Course{id=5, title='Python Basics', credit=2}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 3
+
+--- [3] Course CRUD Operations ---
+1. Create Course
+2. List All Courses
+3. Delete Course
+Select action: 3
+Enter Course ID to delete: 5
+Delete action completed.
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 4
+
+--- [4] Enrollment Management ---
+1. Enroll Student in Course
+2. Remove Student from Course
+3. View Courses of a Student
+4. View Students of a Course
+Select action: 1
+Enter Student ID: 1
+Enter Course ID: 2
+Enrollment request processed.
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 4
+
+--- [4] Enrollment Management ---
+1. Enroll Student in Course
+2. Remove Student from Course
+3. View Courses of a Student
+4. View Students of a Course
+Select action: 3
+Enter Student ID: 1
+  - Database Systems (Credit: 3)
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 4
+
+--- [4] Enrollment Management ---
+1. Enroll Student in Course
+2. Remove Student from Course
+3. View Courses of a Student
+4. View Students of a Course
+Select action: 4
+Enter Course ID: 2
+  - John (Age: 22)
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 4
+
+--- [4] Enrollment Management ---
+1. Enroll Student in Course
+2. Remove Student from Course
+3. View Courses of a Student
+4. View Students of a Course
+Select action: 2
+Enter Student ID: 1
+Enter Course ID: 2
+Removal request processed.
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 5
+
+--- [5] Task 5 Queries ---
+1. HQL: Find students older than given age
+2. HQL with Join: List students and their enrolled courses
+3. Named Query: Find students by name
+4. Criteria API: Find courses with credit greater than given value
+5. Aggregation: Count how many students are enrolled in each course
+Select query: 1
+Enter Age: 21
+Student{id=1, name='John', age=22}
+Student{id=2, name='Anna', age=25}
+Student{id=4, name='Jennie', age=23}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 5
+
+--- [5] Task 5 Queries ---
+1. HQL: Find students older than given age
+2. HQL with Join: List students and their enrolled courses
+3. Named Query: Find students by name
+4. Criteria API: Find courses with credit greater than given value
+5. Aggregation: Count how many students are enrolled in each course
+Select query: 2
+Student: John -> [No Courses]
+Student: Anna -> [No Courses]
+Student: Jennie -> [No Courses]
+Student: David -> [No Courses]
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 5
+
+--- [5] Task 5 Queries ---
+1. HQL: Find students older than given age
+2. HQL with Join: List students and their enrolled courses
+3. Named Query: Find students by name
+4. Criteria API: Find courses with credit greater than given value
+5. Aggregation: Count how many students are enrolled in each course
+Select query: 3
+Enter name to search: John
+Student{id=1, name='John', age=22}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 5
+
+--- [5] Task 5 Queries ---
+1. HQL: Find students older than given age
+2. HQL with Join: List students and their enrolled courses
+3. Named Query: Find students by name
+4. Criteria API: Find courses with credit greater than given value
+5. Aggregation: Count how many students are enrolled in each course
+Select query: 4
+Enter minimum Credit: 2
+Course{id=1, title='Java Programming', credit=4}
+Course{id=2, title='Database Systems', credit=3}
+Course{id=3, title='Web Development', credit=3}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 5
+
+--- [5] Task 5 Queries ---
+1. HQL: Find students older than given age
+2. HQL with Join: List students and their enrolled courses
+3. Named Query: Find students by name
+4. Criteria API: Find courses with credit greater than given value
+5. Aggregation: Count how many students are enrolled in each course
+Select query: 5
+Database Systems: 0
+Introduction to Art: 0
+Java Programming: 0
+Web Development: 0
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 6
+
+--- [6] Bonus Queries ---
+1. Pagination: Get Students paginated
+2. Find Students not enrolled in any course
+Select option: 1
+Enter page number: 1
+Enter page size: 2
+Student{id=1, name='John', age=22}
+Student{id=2, name='Anna', age=25}
+
+==========================================
+   HIBERNATE CRUD & QUERY PRACTICE MENU   
+==========================================
+1. Insert Sample Data
+2. Student CRUD Operations
+3. Course CRUD Operations
+4. Student Enrollment Management
+5. Task 5 Queries (HQL, Named Query, Criteria)
+6. Bonus Queries (Pagination & Free Students)
+7. Exit
+Choose an option: 7
+Closing Hibernate...
+Goodbye!
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time:  08:47 min
+Finished at: 2026-05-27T10:30:29+07:00
+------------------------------------------------------------------------
