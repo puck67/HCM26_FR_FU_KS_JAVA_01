@@ -52,9 +52,7 @@ public class CourseDaoImpl implements CourseDao {
             Course course = session.get(Course.class, courseId);
             if (course != null) {
                 // Remove from all students first
-                for (entity.Student student : course.getStudents()) {
-                    student.getCourses().remove(course);
-                }
+                course.getStudents().forEach(student -> student.getCourses().remove(course));
                 course.getStudents().clear();
                 session.remove(course);
                 logger.info("Course deleted with id: {}", courseId);
