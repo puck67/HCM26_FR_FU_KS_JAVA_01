@@ -78,6 +78,9 @@ public class SeatDaoImpl implements SeatDao {
             transaction = session.beginTransaction();
             Seat seat = session.get(Seat.class, id);
             if (seat != null) {
+                if (seat.getCinemaRoom() != null) {
+                    seat.getCinemaRoom().getSeats().remove(seat);
+                }
                 session.remove(seat);
                 transaction.commit();
                 return true;

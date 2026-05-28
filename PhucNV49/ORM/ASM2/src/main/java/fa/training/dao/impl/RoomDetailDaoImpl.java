@@ -78,6 +78,9 @@ public class RoomDetailDaoImpl implements RoomDetailDao {
             transaction = session.beginTransaction();
             CinemaRoomDetail roomDetail = session.get(CinemaRoomDetail.class, id);
             if (roomDetail != null) {
+                if (roomDetail.getCinemaRoom() != null) {
+                    roomDetail.getCinemaRoom().setCinemaRoomDetailHelper(null);
+                }
                 session.remove(roomDetail);
                 transaction.commit();
                 return true;
