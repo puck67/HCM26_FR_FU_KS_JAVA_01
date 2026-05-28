@@ -1,0 +1,19 @@
+<configuration>
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Default Root Level (Suppress noise) -->
+    <root level="WARN">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Application Log Level -->
+    <logger name="fa.training" level="INFO" />
+
+    <!-- Hibernate Log Level -->
+    <logger name="org.hibernate" level="ERROR" />
+</configuration>
