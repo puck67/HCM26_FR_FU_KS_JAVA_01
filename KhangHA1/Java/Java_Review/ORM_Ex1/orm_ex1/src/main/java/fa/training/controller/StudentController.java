@@ -6,7 +6,6 @@ import fa.training.entity.Student;
 import fa.training.util.ConsoleUtil;
 import fa.training.view.StudentView;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,14 +13,16 @@ import java.util.Scanner;
  */
 public class StudentController {
 
-    private final StudentDAO  studentDAO = new StudentDAOImpl();
-    private final StudentView view       = new StudentView();
-    private final Scanner     scanner    = new Scanner(System.in);
+    private final StudentDAO studentDAO = new StudentDAOImpl();
+    private final StudentView view = new StudentView();
+    private final Scanner scanner = new Scanner(System.in);
 
-    public StudentView getView() { return view; }
+    public StudentView getView() {
+        return view;
+    }
 
     // ------------------------------------------------------------------ //
-    //  Add
+    // Add
     // ------------------------------------------------------------------ //
 
     public void addStudent() {
@@ -32,7 +33,8 @@ public class StudentController {
         int age;
         while (true) {
             age = ConsoleUtil.readInt("Enter age: ");
-            if (age > 0 && age < 120) break;
+            if (age > 0 && age < 120)
+                break;
             view.printWarning("Age must be between 1 and 119.");
         }
 
@@ -46,7 +48,7 @@ public class StudentController {
     }
 
     // ------------------------------------------------------------------ //
-    //  Display all
+    // Display all
     // ------------------------------------------------------------------ //
 
     public void displayAllStudents() {
@@ -54,7 +56,7 @@ public class StudentController {
     }
 
     // ------------------------------------------------------------------ //
-    //  Find by ID
+    // Find by ID
     // ------------------------------------------------------------------ //
 
     public void findStudentById() {
@@ -64,7 +66,7 @@ public class StudentController {
     }
 
     // ------------------------------------------------------------------ //
-    //  Update
+    // Update
     // ------------------------------------------------------------------ //
 
     public void updateStudent() {
@@ -80,7 +82,8 @@ public class StudentController {
 
         System.out.print("Enter new name [" + existing.getName() + "]: ");
         String name = scanner.nextLine().trim();
-        if (name.isBlank()) name = existing.getName();
+        if (name.isBlank())
+            name = existing.getName();
 
         int age;
         while (true) {
@@ -92,7 +95,8 @@ public class StudentController {
             }
             try {
                 age = Integer.parseInt(ageInput);
-                if (age > 0 && age < 120) break;
+                if (age > 0 && age < 120)
+                    break;
                 view.printWarning("Age must be between 1 and 119.");
             } catch (NumberFormatException e) {
                 view.printWarning("Please enter a valid integer.");
@@ -110,7 +114,7 @@ public class StudentController {
     }
 
     // ------------------------------------------------------------------ //
-    //  Delete
+    // Delete
     // ------------------------------------------------------------------ //
 
     public void deleteStudent() {

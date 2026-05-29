@@ -1,10 +1,8 @@
 package fa.training.service.impl;
 
-import fa.training.dao.CourseDAO;
 import fa.training.dao.EnrollmentDAO;
 import fa.training.dao.QueryDAO;
 import fa.training.dao.StudentDAO;
-import fa.training.dao.impl.CourseDAOImpl;
 import fa.training.dao.impl.EnrollmentDAOImpl;
 import fa.training.dao.impl.QueryDAOImpl;
 import fa.training.dao.impl.StudentDAOImpl;
@@ -19,7 +17,6 @@ import java.util.Set;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentDAO studentDAO = new StudentDAOImpl();
-    private final CourseDAO courseDAO = new CourseDAOImpl();
     private final EnrollmentDAO enrollmentDAO = new EnrollmentDAOImpl();
     private final QueryDAO queryDAO = new QueryDAOImpl();
 
