@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Separate H2 file for tests to avoid polluting main database -->
+        <property name="hibernate.connection.driver_class">org.h2.Driver</property>
+        <property name="hibernate.connection.url">jdbc:h2:file:./data/movietheaterdb_test;AUTO_SERVER=TRUE</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- create-drop: fresh schema each test run -->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.show_sql">false</property>
+
+        <mapping class="fa.training.entities.CinemaRoom"/>
+        <mapping class="fa.training.entities.CinemaRoomDetail"/>
+        <mapping class="fa.training.entities.Seat"/>
+    </session-factory>
+</hibernate-configuration>
