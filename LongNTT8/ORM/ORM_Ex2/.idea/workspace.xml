@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="44219c37-bb3e-4d64-a948-55f72fd0e2b6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Java/Exercises3/.idea/Exercises3.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Orm2.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Exercises3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Exercises3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Exercises3/src/main/java/fa/training/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Exercises3/src/main/java/fa/training/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/Exercises3/src/main/java/fa/training/handler/ValidationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/Exercises3/src/main/java/fa/training/handler/ValidationUtil.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4,
+  "fromUser": false
+}]]></component>
+  <component name="ProjectId" id="3EI2s6y4ZB7LtEy4ny6DwmIUVRg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.App.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "LongNTT8",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "F:/HCM26_FR_FU_KS_JAVA_01/HCM26_FR_FU_KS_JAVA_01/LongNTT8/ORM_Ex2/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\HCM26_FR_FU_KS_JAVA_01\HCM26_FR_FU_KS_JAVA_01\LongNTT8\ORM_Ex2\src" />
+      <recent name="F:\HCM26_FR_FU_KS_JAVA_01\HCM26_FR_FU_KS_JAVA_01\LongNTT8\ORM_Ex2\src\main" />
+    </key>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="44219c37-bb3e-4d64-a948-55f72fd0e2b6" name="Changes" comment="" />
+      <created>1779851970046</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779851970046</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
