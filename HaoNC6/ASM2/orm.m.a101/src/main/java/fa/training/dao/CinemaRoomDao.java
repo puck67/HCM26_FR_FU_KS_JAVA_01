@@ -25,7 +25,12 @@ public class CinemaRoomDao {
     // 2. Get By ID
     public CinemaRoom getCinemaRoomById(int id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return session.get(CinemaRoom.class, id);
+            CinemaRoom room = session.get(CinemaRoom.class, id);
+            if (room != null) {
+                org.hibernate.Hibernate.initialize(room.getSeats());
+                org.hibernate.Hibernate.initialize(room.getCinemaRoomDetail());
+            }
+            return room;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -35,7 +40,12 @@ public class CinemaRoomDao {
     // 3. Get All
     public List<CinemaRoom> getAllCinemaRoom() {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
-            return session.createQuery("from CinemaRoom", CinemaRoom.class).list();
+            List<CinemaRoom> list = session.createQuery("from CinemaRoom", CinemaRoom.class).list();
+            for (CinemaRoom room : list) {
+                org.hibernate.Hibernate.initialize(room.getSeats());
+                org.hibernate.Hibernate.initialize(room.getCinemaRoomDetail());
+            }
+            return list;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
