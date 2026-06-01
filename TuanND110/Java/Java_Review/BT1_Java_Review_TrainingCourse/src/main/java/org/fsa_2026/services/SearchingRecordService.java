@@ -45,10 +45,7 @@ public class SearchingRecordService {
     }
 
     public Cousrse findCousrseByName(String name) {
-        return cousrseDao.findAll().stream()
-                .filter(c -> c.getCousrseName().equals(name))
-                .findFirst()
-                .orElse(null);
+        return cousrseDao.findByName(name);
     }
 
     public Learner findLearnerByID(int id) {
@@ -56,10 +53,7 @@ public class SearchingRecordService {
     }
 
     public Learner findLearnerByName(String name) {
-        return learnerDao.findAll().stream()
-                .filter(l -> l.getStudentName().equals(name))
-                .findFirst()
-                .orElse(null);
+        return learnerDao.findByName(name);
     }
 
     public Trainner findTrainnerByID(int id) {
@@ -67,9 +61,6 @@ public class SearchingRecordService {
     }
 
     public Trainner findTrainnerByName(String name) {
-        return trainnerDao.findAll().stream()
-                .filter(t -> t.getTrainnerName().equals(name))
-                .findFirst()
-                .orElse(null);
+        return trainnerDao.findByName(name);
     }
 }

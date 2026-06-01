@@ -7,6 +7,7 @@ import java.util.List;
 public interface LearnerDao {
     boolean insert(Learner learner);
     Learner findById(int id);
+    Learner findByName(String name);
     List<Learner> findAll();
     boolean update(Learner learner);
     boolean deleteById(int id);
