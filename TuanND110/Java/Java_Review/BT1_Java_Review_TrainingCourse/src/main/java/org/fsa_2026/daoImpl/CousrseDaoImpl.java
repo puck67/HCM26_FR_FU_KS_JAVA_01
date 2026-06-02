@@ -48,6 +48,23 @@ public class CousrseDaoImpl implements CousrseDao {
     }
 
     @Override
+    public Cousrse findByName(String name) {
+        String sql = "SELECT id, course_name, description, start_time, end_time FROM courses WHERE course_name = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Find course by name failed", e);
+        }
+        return null;
+    }
+
+    @Override
     public List<Cousrse> findAll() {
         String sql = "SELECT id, course_name, description, start_time, end_time FROM courses ORDER BY id";
         List<Cousrse> list = new ArrayList<>();

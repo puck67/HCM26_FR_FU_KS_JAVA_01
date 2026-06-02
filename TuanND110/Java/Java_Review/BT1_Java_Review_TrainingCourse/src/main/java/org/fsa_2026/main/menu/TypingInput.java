@@ -17,7 +17,7 @@ public class TypingInput {
         while (true) {
             System.out.print(message);
             input = scan.nextLine().trim();
-            if (!Validation.isEmty(input)) {
+            if (!Validation.isEmpty(input)) {
                 return input;
             }
             System.out.println("Input cannot be empty. Please try again.");
