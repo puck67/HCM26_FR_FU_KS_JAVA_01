@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CMS</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        (function() {
+            var currentUser = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+            if (currentUser) {
+                window.location.href = 'view-contents.html';
+            }
+        })();
+    </script>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <h5>Register</h5>
+
+            <form id="registerForm" action="#" method="post" novalidate>
+                <!-- User name -->
+                <div class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           id="username"
+                           name="username"
+                           placeholder="User name"
+                           maxlength="30">
+                    <div class="invalid-feedback" id="usernameError"></div>
+                </div>
+
+                <!-- E-mail -->
+                <div class="form-group">
+                    <input type="text"
+                           class="form-control"
+                           id="email"
+                           name="email"
+                           placeholder="E-mail"
+                           maxlength="255">
+                    <div class="invalid-feedback" id="emailError"></div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <input type="password"
+                           class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="Password"
+                           maxlength="30">
+                    <div class="invalid-feedback" id="passwordError"></div>
+                </div>
+
+                <!-- Re Password -->
+                <div class="form-group">
+                    <input type="password"
+                           class="form-control"
+                           id="rePassword"
+                           name="rePassword"
+                           placeholder="Re Password"
+                           maxlength="30">
+                    <div class="invalid-feedback" id="rePasswordError"></div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block" id="btnRegister">Register</button>
+                </div>
+
+                <div>
+                    <a href="login.html" id="linkLogin">Click here to Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    $(document).ready(() => {
+        /* ── Helpers ── */
+        const setError = ($input, errorDivId, message) => {
+            $input.addClass('is-invalid').removeClass('is-valid');
+            $(`#${errorDivId}`).text(message).show();
+        };
+
+        const clearError = ($input, errorDivId) => {
+            $input.removeClass('is-invalid is-valid');
+            $(`#${errorDivId}`).text('').hide();
+        };
+
+        const setValid = $input => {
+            $input.removeClass('is-invalid').addClass('is-valid');
+        };
+
+        const isValidEmail = email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+        /* ── Clear error on input ── */
+        $('#username').on('input', function () { clearError($(this), 'usernameError'); });
+        $('#email').on('input', function () { clearError($(this), 'emailError'); });
+        $('#password').on('input', function () {
+            clearError($(this), 'passwordError');
+            clearError($('#rePassword'), 'rePasswordError');
+        });
+        $('#rePassword').on('input', function () { clearError($(this), 'rePasswordError'); });
+
+        /* ── Form Submit Validation ── */
+        $('#registerForm').on('submit', e => {
+            e.preventDefault();
+            let valid = true;
+
+            const usernameVal  = $('#username').val().trim();
+            const emailVal     = $('#email').val().trim();
+            const passwordVal  = $('#password').val();
+            const rePassVal    = $('#rePassword').val();
+
+            /* --- User name: required, min 3, max 30 --- */
+            if (usernameVal === '') {
+                setError($('#username'), 'usernameError', 'User name is required.');
+                valid = false;
+            } else if (usernameVal.length < 3) {
+                setError($('#username'), 'usernameError', 'User name must be at least 3 characters.');
+                valid = false;
+            } else if (usernameVal.length > 30) {
+                setError($('#username'), 'usernameError', 'User name must not exceed 30 characters.');
+                valid = false;
+            } else {
+                setValid($('#username'));
+            }
+
+            /* --- Email: required, min 5, valid format (no max) --- */
+            if (emailVal === '') {
+                setError($('#email'), 'emailError', 'Email is required.');
+                valid = false;
+            } else if (emailVal.length < 5) {
+                setError($('#email'), 'emailError', 'Email must be at least 5 characters.');
+                valid = false;
+            } else if (!isValidEmail(emailVal)) {
+                setError($('#email'), 'emailError', 'Please enter a valid email address (e.g. name@example.com).');
+                valid = false;
+            } else {
+                setValid($('#email'));
+            }
+
+            /* --- Password: required, min 8, max 30 --- */
+            if (passwordVal === '') {
+                setError($('#password'), 'passwordError', 'Password is required.');
+                valid = false;
+            } else if (passwordVal.length < 8) {
+                setError($('#password'), 'passwordError', 'Password must be at least 8 characters.');
+                valid = false;
+            } else if (passwordVal.length > 30) {
+                setError($('#password'), 'passwordError', 'Password must not exceed 30 characters.');
+                valid = false;
+            } else {
+                setValid($('#password'));
+            }
+
+            /* --- Re Password: required, min 8, max 30, must match Password --- */
+            if (rePassVal === '') {
+                setError($('#rePassword'), 'rePasswordError', 'Please confirm your password.');
+                valid = false;
+            } else if (rePassVal.length < 8) {
+                setError($('#rePassword'), 'rePasswordError', 'Re Password must be at least 8 characters.');
+                valid = false;
+            } else if (rePassVal.length > 30) {
+                setError($('#rePassword'), 'rePasswordError', 'Re Password must not exceed 30 characters.');
+                valid = false;
+            } else if (rePassVal !== passwordVal) {
+                setError($('#rePassword'), 'rePasswordError', 'Passwords do not match.');
+                valid = false;
+            } else {
+                setValid($('#rePassword'));
+            }
+
+            /* --- If all valid: save user and navigate to login --- */
+            if (valid) {
+                const users = JSON.parse(localStorage.getItem('users') ?? '[]');
+                const duplicate = users.find(u => u.email?.toLowerCase() === emailVal.toLowerCase());
+
+                if (duplicate) {
+                    setError($('#email'), 'emailError', 'This email is already registered.');
+                } else {
+                    const newUser = {
+                        username: usernameVal,
+                        email: emailVal,
+                        password: passwordVal,
+                        firstName: '',
+                        lastName: '',
+                        phone: '',
+                        description: ''
+                    };
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    window.location.href = 'login.html';
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>
