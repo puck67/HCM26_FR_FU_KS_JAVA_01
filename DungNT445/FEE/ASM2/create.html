@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Create Interview</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Polls</a>
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="index.html">Vote</a>
+                <a class="nav-item nav-link active" href="create.html">Create</a>
+                <a class="nav-item nav-link" href="list.html">List</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container bg-white p-5 shadow-sm rounded mb-5" style="max-width: 850px;">
+        <h2 class="mb-4 font-weight-bold">Create Interview</h2>
+        
+        <div id="errorContainer" class="error-message-container d-none"></div>
+
+        <form id="interviewForm">
+            <div class="form-group mb-4 val-group">
+                <label class="font-weight-bold text-secondary data-label">Name poll</label>
+                <input type="text" class="form-control validate-input" id="namePoll" placeholder="Name poll" data-name="Name poll" data-min="3" data-max="255">
+            </div>
+
+            <hr class="my-4">
+
+            <div id="questionsContainer">
+                
+                <div class="card card-body bg-light border-0 p-4 mb-4 question-block">
+                    <div class="form-group val-group">
+                        <label class="font-weight-bold text-secondary data-label">Enter your question</label>
+                        <input type="text" class="form-control validate-input q-text" placeholder="Enter your question" data-name="Your question" data-min="3" data-max="255">
+                    </div>
+
+                    <div class="form-group custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input q-mandatory" id="mandatory_1">
+                        <label class="custom-control-label text-secondary" for="mandatory_1">Mandatory</label>
+                    </div>
+
+                    <div class="form-group custom-control custom-checkbox mb-4">
+                        <input type="checkbox" class="custom-control-input q-multiple" id="multiple_1">
+                        <label class="custom-control-label text-secondary" for="multiple_1">You can select multiple options</label>
+                    </div>
+
+                    <div class="answers-wrapper">
+                        <label class="font-weight-bold text-secondary mb-1">Possible answers</label>
+                        <div class="input-group mb-2 val-group answer-item">
+                            <input type="text" class="form-control validate-input ans-text" placeholder="Type your answer" data-name="Answer" data-min="3" data-max="200">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-info px-3 add-answer-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-success font-weight-bold px-3 mb-4" id="addQuestionBtn">+ Add question</button>
+            </div>
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn px-5 py-2 font-weight-bold">Retain</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let questionCounter = 1;
+
+            // Xử lý thêm câu trả lời (Possible answers) động
+            $(document).on('click', '.add-answer-btn', function() {
+                let wrapper = $(this).closest('.answers-wrapper');
+                let newAnswerHtml = `
+                    <div class="input-group mb-2 val-group answer-item">
+                        <input type="text" class="form-control validate-input ans-text" placeholder="Type your answer" data-name="Answer" data-min="3" data-max="200">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-danger px-3 remove-answer-btn" style="background-color: #dc3545!important; border-color: #dc3545!important;">-</button>
+                        </div>
+                    </div>`;
+                wrapper.append(newAnswerHtml);
+            });
+
+            // Xử lý xóa bớt câu trả lời
+            $(document).on('click', '.remove-answer-btn', function() {
+                $(this).closest('.answer-item').remove();
+            });
+
+            // Xử lý thêm một khối câu hỏi (Question block) mới động
+            $('#addQuestionBtn').on('click', function() {
+                questionCounter++;
+                let newQuestionHtml = `
+                <div class="card card-body bg-light border-0 p-4 mb-4 question-block">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="text-muted m-0">Question Block</h5>
+                        <button type="button" class="btn btn-sm btn-danger remove-question-btn" style="background-color: #dc3545!important; border-color: #dc3545!important;">Delete Block</button>
+                    </div>
+                    <div class="form-group val-group">
+                        <label class="font-weight-bold text-secondary data-label">Enter your question</label>
+                        <input type="text" class="form-control validate-input q-text" placeholder="Enter your question" data-name="Your question" data-min="3" data-max="255">
+                    </div>
+                    <div class="form-group custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input q-mandatory" id="mandatory_${questionCounter}">
+                        <label class="custom-control-label text-secondary" for="mandatory_${questionCounter}">Mandatory</label>
+                    </div>
+                    <div class="form-group custom-control custom-checkbox mb-4">
+                        <input type="checkbox" class="custom-control-input q-multiple" id="multiple_${questionCounter}">
+                        <label class="custom-control-label text-secondary" for="multiple_${questionCounter}">You can select multiple options</label>
+                    </div>
+                    <div class="answers-wrapper">
+                        <label class="font-weight-bold text-secondary mb-1">Possible answers</label>
+                        <div class="input-group mb-2 val-group answer-item">
+                            <input type="text" class="form-control validate-input ans-text" placeholder="Type your answer" data-name="Answer" data-min="3" data-max="200">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-info px-3 add-answer-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                $('#questionsContainer').append(newQuestionHtml);
+            });
+
+            // Xử lý xóa một khối câu hỏi
+            $(document).on('click', '.remove-question-btn', function() {
+                $(this).closest('.question-block').remove();
+            });
+
+            // THUẬT TOÁN VALIDATE THEO ĐÚNG ĐẶC TẢ
+            $('#interviewForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                let errors = [];
+                let $errorContainer = $('#errorContainer');
+                
+                // Reset trạng thái hiển thị lỗi cũ trước đó
+                $errorContainer.addClass('d-none').html('');
+                $('.val-group').removeClass('has-error');
+                $('.data-label').removeClass('label-error');
+                $('.validate-input').removeClass('input-error');
+
+                // Lặp qua tất cả các trường có class .validate-input để kiểm tra độ dài & bắt buộc
+                $('.validate-input').each(function() {
+                    let $input = $(this);
+                    let val = $.trim($input.val());
+                    let fieldName = $input.data('name');
+                    let minLen = parseInt($input.data('min'));
+                    let maxLen = parseInt($input.data('max'));
+                    let $group = $input.closest('.val-group');
+                    let $label = $group.find('.data-label');
+
+                    // Kiểm tra rỗng (Mặc định tất cả 3 items đều bắt buộc theo bảng đặc tả 2)
+                    if (val === "") {
+                        errors.push(`The field "${fieldName}" is required.`);
+                        $input.addClass('input-error');
+                        if($label.length) $label.addClass('label-error');
+                    } 
+                    // Kiểm tra độ dài min length
+                    else if (val.length < minLen) {
+                        errors.push(`"${fieldName}" must be at least ${minLen} characters long.`);
+                        $input.addClass('input-error');
+                        if($label.length) $label.addClass('label-error');
+                    } 
+                    // Kiểm tra độ dài max length
+                    else if (val.length > maxLen) {
+                        errors.push(`"${fieldName}" cannot exceed ${maxLen} characters.`);
+                        $input.addClass('input-error');
+                        if($label.length) $label.addClass('label-error');
+                    }
+                });
+
+                // Nếu có lỗi, xử lý hiển thị ở trên cùng của form và dừng submit
+                if (errors.length > 0) {
+                    let errorHtml = '<strong class="d-block mb-2">Please correct the following errors:</strong><ul class="mb-0 pl-4">';
+                    errors.forEach(function(msg) {
+                        errorHtml += `<li>${msg}</li>`;
+                    });
+                    errorHtml += '</ul>';
+                    
+                    $errorContainer.html(errorHtml).removeClass('d-none');
+                    // Tự động cuộn lên vị trí thông báo lỗi để tăng trải nghiệm UX
+                    $('html, body').animate({ scrollTop: $errorContainer.offset().top - 40 }, 300);
+                } else {
+                    alert('Biểu mẫu hợp lệ! Dữ liệu khảo sát đã lưu thành công.');
+                    // Thực hiện chức năng redirect hoặc reset form ở đây
+                }
+            });
+        });
+    </script>
+</body>
+</html>

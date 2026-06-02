@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Information</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-3">
+    <div class="container">
+        <a class="navbar-brand" href="person.html">Visitor System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="person.html">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="help.html">Help</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-4">
+    <div class="banner-container">
+        <img src="https://picsum.photos/id/1015/1200/300" alt="Banner Lake Scenic View">
+    </div>
+
+    <div class="main-content">
+        <h3 class="section-title">Visitor Information</h3>
+
+        <form id="visitorForm" novalidate>
+            <div class="form-group row">
+                <label for="firstName" class="col-sm-3 col-form-label text-sm-right">First name:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="firstName" maxlength="20" placeholder="(Type First name)">
+                    <div class="error-msg" id="err-firstName">First name là bắt buộc, tối đa 20 ký tự và không chứa số.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="lastName" class="col-sm-3 col-form-label text-sm-right">Last name:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="lastName" maxlength="20" placeholder="(Type Last name)">
+                    <div class="error-msg" id="err-lastName">Last name là bắt buộc, tối đa 20 ký tự và không chứa số.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="gender" class="col-sm-3 col-form-label text-sm-right">Gender:</label>
+                <div class="col-sm-3">
+                    <select class="form-control" id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="telephone" class="col-sm-3 col-form-label text-sm-right">Telephone:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="telephone" maxlength="11" placeholder="(Type Telephone)">
+                    <div class="error-msg" id="err-telephone">Telephone phải là số và tối đa 11 chữ số.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="email" class="col-sm-3 col-form-label text-sm-right">Email:</label>
+                <div class="col-sm-6">
+                    <input type="email" class="form-control" id="email" maxlength="50" placeholder="(Type Email)">
+                    <div class="error-msg" id="err-email">Email không đúng định dạng hoặc vượt quá 50 ký tự.</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 text-sm-right">You are in:</label>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="region" id="regEurope" value="Europe">
+                        <label class="form-check-label" id="lblEurope" for="regEurope">Europe</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="region" id="regAfrica" value="Africa">
+                        <label class="form-check-label" id="lblAfrica" for="regAfrica">Africa</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="region" id="regAustralia" value="Australia">
+                        <label class="form-check-label" id="lblAustralia" for="regAustralia">Australia</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="region" id="regAsia" value="Asia">
+                        <label class="form-check-label" id="lblAsia" for="regAsia">Asia</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="region" id="regAmerica" value="America">
+                        <label class="form-check-label" id="lblAmerica" for="regAmerica">America</label>
+                    </div>
+                    <div class="error-msg d-block" id="err-region" style="display:none !important;">Vui lòng chọn vùng bạn đang ở (You are in).</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 text-sm-right">What are your hobbies:</label>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobSwimming" value="Swimming">
+                        <label class="form-check-label" for="hobSwimming">Swimming</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobCooking" value="Cooking">
+                        <label class="form-check-label" for="hobCooking">Cooking</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobShopping" value="Shopping">
+                        <label class="form-check-label" for="hobShopping">Shopping</label>
+                    </div>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobSport" value="Sport">
+                        <label class="form-check-label" for="hobSport">Sport</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobDance" value="Dance">
+                        <label class="form-check-label" for="hobDance">Dance</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="hobbies" id="hobSing" value="Sing">
+                        <label class="form-check-label" for="hobSing">Sing</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="description" class="col-sm-3 col-form-label text-sm-right">Description:</label>
+                <div class="col-sm-6">
+                    <textarea class="form-control" id="description" rows="4" maxlength="200"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <button type="submit" class="btn btn-custom-green px-4">Register</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#visitorForm').on('submit', function(e) {
+        e.preventDefault();
+        let isValid = true;
+
+        // Ẩn toàn bộ thông báo lỗi trước khi kiểm tra lại
+        $('.error-msg').hide();
+
+        // 1. Validate First Name
+        const firstName = $('#firstName').val().trim();
+        const numRegex = /\d/;
+        if (firstName === "" || firstName.length > 20 || numRegex.test(firstName)) {
+            $('#err-firstName').show();
+            isValid = false;
+        }
+
+        // 2. Validate Last Name
+        const lastName = $('#lastName').val().trim();
+        if (lastName === "" || lastName.length > 20 || numRegex.test(lastName)) {
+            $('#err-lastName').show();
+            isValid = false;
+        }
+
+        // 3. Validate Telephone (Nếu có điền thì bắt buộc phải là số và <= 11 ký tự)
+        const telephone = $('#telephone').val().trim();
+        if (telephone !== "") {
+            const phoneRegex = /^[0-9]+$/;
+            if (!phoneRegex.test(telephone) || telephone.length > 11) {
+                $('#err-telephone').show();
+                isValid = false;
+            }
+        }
+
+        // 4. Validate Email dựa theo đặc tả yêu cầu: [a..Z][0..9]@[a..Z]
+        // Định nghĩa chặt chẽ theo pattern: chuỗi chữ phối hợp số @ chuỗi chữ. Tối đa 50 ký tự.
+        const email = $('#email').val().trim();
+        if (email !== "") {
+            const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z]+$/;
+            if (!emailRegex.test(email) || email.length > 50) {
+                $('#err-email').show();
+                isValid = false;
+            }
+        }
+
+        // 5. Validate Radio "You are in" (Bắt buộc chọn)
+        if (!$('input[name="region"]:checked').val()) {
+            $('#err-region').attr('style', 'display: block !important;');
+            isValid = false;
+        }
+
+        if (isValid) {
+            // Save to localStorage so search page can search it
+            let visitors = JSON.parse(localStorage.getItem('visitors')) || [];
+            
+            // Get selected hobbies
+            let hobbies = [];
+            $('input[name="hobbies"]:checked').each(function() {
+                hobbies.push($(this).val());
+            });
+
+            const newVisitor = {
+                firstName: firstName,
+                lastName: lastName,
+                gender: $('#gender').val(),
+                telephone: telephone || 'N/A',
+                region: $('input[name="region"]:checked').val(),
+                hobbies: hobbies.join(', ') || 'None',
+                description: $('#description').val().trim() || 'N/A'
+            };
+            
+            visitors.push(newVisitor);
+            localStorage.setItem('visitors', JSON.stringify(visitors));
+
+            alert("Đăng ký thành công! Dữ liệu đã hợp lệ.");
+            // Reset form
+            $('#visitorForm')[0].reset();
+        }
+    });
+});
+</script>
+</body>
+</html>

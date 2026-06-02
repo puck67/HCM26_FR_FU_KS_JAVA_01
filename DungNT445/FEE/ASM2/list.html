@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Polls</a>
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="index.html">Vote</a>
+                <a class="nav-item nav-link" href="create.html">Create</a>
+                <a class="nav-item nav-link active" href="list.html">List</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container bg-white p-4 shadow-sm rounded mb-5">
+        
+        <div class="mb-4 btn-group" role="group" aria-label="Status Filters">
+            <button type="button" class="btn btn-info btn-sm active px-3" style="background-color: #17a2b8!important; border-color: #17a2b8!important;">Active</button>
+            <button type="button" class="btn btn-secondary btn-sm px-3" style="background-color: #6c757d!important; border-color: #6c757d!important;">Drafts</button>
+            <button type="button" class="btn btn-light btn-sm border text-muted px-3" style="background-color: #f8f9fa!important;">Closed</button>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width: 8%;">#</th>
+                        <th style="width: 62%;">The list of questions and issues within</th>
+                        <th style="width: 30%;" class="text-center">Management</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="poll-row-98">
+                        <td class="font-weight-bold">98</td>
+                        <td>Great poll</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm mx-1 py-1 px-2 text-white font-weight-normal btn-action">View results</button>
+                            <button class="btn btn-sm mx-1 py-1 px-2 text-white font-weight-normal btn-action">Close poll</button>
+                            <button class="btn btn-sm mx-1 py-1 px-2 btn-danger delete-poll-btn" data-id="98" style="background-color: #dc3545!important; border-color: #dc3545!important;">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Sự kiện Click nút Delete
+            $('.delete-poll-btn').on('click', function() {
+                let pollId = $(this).data('id');
+                let targetRow = $(`#poll-row-${pollId}`);
+
+                // Hiển thị popup confirm mặc định hệ thống theo như hình minh họa đặc tả 2
+                if (confirm("Are you sure you want to delete this item?")) {
+                    
+                    // Thực hiện gửi Ajax lên Server xử lý xóa bản ghi
+                    $.ajax({
+                        url: `https://jsonplaceholder.typicode.com/posts/${pollId}`, // Đường dẫn API giả lập endpoint xóa dữ liệu công khai
+                        type: 'DELETE',
+                        success: function(result) {
+                            // Xóa thành công, thực hiện hiệu ứng ẩn dòng đó trên giao diện DOM
+                            targetRow.fadeOut(400, function() {
+                                $(this).remove();
+                            });
+                            alert('Xóa item thành công (Giao tiếp Ajax thành công)!');
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Có lỗi xảy ra trong quá trình gửi yêu cầu Ajax.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
