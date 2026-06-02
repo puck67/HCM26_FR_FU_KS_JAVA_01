@@ -13,10 +13,6 @@ public class Validation {
         return input == null || input.trim().isEmpty();
     }
 
-    public static boolean isEmty(String input) {
-        return isEmpty(input);
-    }
-
     public static boolean isNumber(String input) {
         if (input == null) {
             return false;

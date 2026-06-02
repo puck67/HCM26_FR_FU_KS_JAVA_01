@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description"
+          content="LMS Assessment Materials — upload and download assessment files for your course."/>
+    <title>Assessment Materials | LMS</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"/>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous"/>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet"/>
+
+    <style>
+        /* ── Design Tokens ───────────────────────────────────────── */
+        :root {
+            --primary:       #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark:  #4f46e5;
+            --success:       #10b981;
+            --danger:        #ef4444;
+            --bg-main:       #0f0f1a;
+            --bg-card:       #1a1a2e;
+            --bg-card-hover: #22223b;
+            --border:        rgba(255, 255, 255, 0.08);
+            --text-primary:  #f1f5f9;
+            --text-muted:    #94a3b8;
+            --radius:        14px;
+            --shadow:        0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ── Base ────────────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* ── Gradient Hero Header ────────────────────────────────── */
+        .lms-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lms-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .lms-header .badge-pill {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            color: var(--primary-light);
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.35rem 0.85rem;
+            border-radius: 99px;
+        }
+
+        .lms-header h1 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 700;
+            margin: 0.5rem 0 0.25rem;
+            background: linear-gradient(90deg, #e0e7ff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Card ────────────────────────────────────────────────── */
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: border-color 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card-header-custom {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-header-custom h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .card-header-custom .icon-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: rgba(99, 102, 241, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        /* ── Form Controls ───────────────────────────────────────── */
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control, .form-control:focus {
+            background-color: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            padding: 0.65rem 0.9rem;
+            box-shadow: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .form-control:focus {
+            background-color: rgba(99, 102, 241, 0.06);
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+
+        .form-control::placeholder { color: #475569; }
+
+        /* File input custom styling */
+        input[type="file"].form-control {
+            cursor: pointer;
+        }
+
+        input[type="file"].form-control::-webkit-file-upload-button {
+            background: rgba(99, 102, 241, 0.18);
+            color: var(--primary-light);
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 0.75rem;
+            transition: background 0.2s;
+        }
+
+        input[type="file"].form-control::-webkit-file-upload-button:hover {
+            background: rgba(99, 102, 241, 0.3);
+        }
+
+        /* ── Buttons ─────────────────────────────────────────────── */
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.88rem;
+            padding: 0.65rem 1.6rem;
+            border-radius: 8px;
+            letter-spacing: 0.03em;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(99, 102, 241, 0.5);
+            opacity: 0.95;
+        }
+
+        .btn-primary-custom:active { transform: translateY(0); }
+
+        .btn-download {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn-download:hover {
+            background: rgba(16, 185, 129, 0.22);
+            border-color: rgba(16, 185, 129, 0.5);
+            color: #6ee7b7;
+        }
+
+        /* ── Flash Messages ──────────────────────────────────────── */
+        .flash-alert {
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: none;
+            padding: 0.85rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .flash-success {
+            background: rgba(16, 185, 129, 0.12);
+            border-left: 3px solid var(--success);
+            color: #6ee7b7;
+        }
+
+        .flash-error {
+            background: rgba(239, 68, 68, 0.12);
+            border-left: 3px solid var(--danger);
+            color: #fca5a5;
+        }
+
+        /* ── Table ───────────────────────────────────────────────── */
+        .materials-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.875rem;
+        }
+
+        .materials-table thead th {
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .materials-table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        .materials-table tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .materials-table tbody td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            color: var(--text-primary);
+        }
+
+        .materials-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .id-badge {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-light);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .file-chip {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            max-width: 180px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            color: rgba(99, 102, 241, 0.25);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ── Responsive ──────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .materials-table thead { display: none; }
+            .materials-table tbody tr {
+                display: block;
+                margin-bottom: 0.75rem;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+            }
+            .materials-table tbody td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.6rem 0.9rem;
+                border-bottom: 1px solid var(--border);
+                font-size: 0.8rem;
+            }
+            .materials-table tbody td::before {
+                content: attr(data-label);
+                font-size: 0.7rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: var(--text-muted);
+                margin-right: 0.5rem;
+                flex-shrink: 0;
+            }
+            .materials-table tbody tr:last-child td:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════════════ -->
+<header class="lms-header">
+    <div class="container">
+        <span class="badge-pill"><i class="bi bi-mortarboard-fill me-1"></i>LMS Platform</span>
+        <h1 class="mt-2">Assessment Materials</h1>
+        <p class="text-secondary mb-0" style="font-size:0.9rem;">
+            Upload and manage course assessment files
+        </p>
+    </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════════════════ -->
+<main class="container py-4">
+
+    <!-- ── Flash: Success ─────────────────────────────────────────── -->
+    <div th:if="${successMessage}" class="flash-alert flash-success mb-4" role="alert"
+         id="alert-success">
+        <i class="bi bi-check-circle-fill flex-shrink-0"></i>
+        <span th:text="${successMessage}">Upload successful.</span>
+    </div>
+
+    <!-- ── Flash: Error list (collect-all — may contain multiple items) ── -->
+    <div th:if="${errorMessages != null and !#lists.isEmpty(errorMessages)}"
+         class="flash-alert flash-error mb-4" role="alert" id="alert-error">
+        <i class="bi bi-exclamation-triangle-fill flex-shrink-0 mt-1" style="align-self:flex-start"></i>
+        <div>
+            <div th:if="${#lists.size(errorMessages) == 1}"
+                 th:text="${errorMessages[0]}">Error message.</div>
+            <ul th:if="${#lists.size(errorMessages) > 1}" class="mb-0 ps-3" style="font-size:0.85rem;">
+                <li th:each="err : ${errorMessages}" th:text="${err}">Error item.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-12 col-lg-5">
+            <div class="glass-card h-100">
+                <div class="card-header-custom">
+                    <div class="icon-circle"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+                    <h2>Upload Assessment</h2>
+                </div>
+
+                <div class="p-4">
+                    <form id="upload-form"
+                          method="post"
+                          th:action="@{/assessments/upload}"
+                          enctype="multipart/form-data"
+                          novalidate>
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                <label for="title" class="form-label mb-0">Title <span style="color:#ef4444">*</span></label>
+                                <span id="title-counter" style="font-size:0.7rem;color:#475569;"
+                                      th:text="'0 / ' + ${titleMaxLength}">0 / 200</span>
+                            </div>
+                            <input id="title"
+                                   type="text"
+                                   name="title"
+                                   class="form-control"
+                                   placeholder="e.g. Assignment 1 Brief"
+                                   required
+                                   th:minlength="${titleMinLength}"
+                                   th:maxlength="${titleMaxLength}"/>
+                            <div class="form-text text-secondary mt-1" style="font-size:0.73rem;">
+                                <span th:text="${titleMinLength}">3</span>–<span th:text="${titleMaxLength}">200</span> characters
+                            </div>
+                            <div class="invalid-feedback">Title is required (min <span th:text="${titleMinLength}">3</span> characters).</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-baseline mb-1">
+                                <label for="description" class="form-label mb-0">Description <span style="color:#ef4444">*</span></label>
+                                <span id="desc-counter" style="font-size:0.7rem;color:#475569;"
+                                      th:text="'0 / ' + ${descMaxLength}">0 / 1000</span>
+                            </div>
+                            <textarea id="description"
+                                      name="description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Describe the assessment material…"
+                                      required
+                                      th:minlength="${descMinLength}"
+                                      th:maxlength="${descMaxLength}"></textarea>
+                            <div class="form-text text-secondary mt-1" style="font-size:0.73rem;">
+                                <span th:text="${descMinLength}">10</span>–<span th:text="${descMaxLength}">1000</span> characters
+                            </div>
+                            <div class="invalid-feedback">Description is required (min <span th:text="${descMinLength}">10</span> characters).</div>
+                        </div>
+
+                        <!-- File -->
+                        <div class="mb-4">
+                            <label for="file" class="form-label">File <span style="color:#ef4444">*</span></label>
+                            <input id="file"
+                                   type="file"
+                                   name="file"
+                                   class="form-control"
+                                   required/>
+                            <!-- Allowed extensions injected from controller model -->
+                            <div class="form-text text-secondary mt-1" style="font-size:0.73rem;">
+                                Max 10 MB &middot; Allowed:&nbsp;
+                                <span th:if="${allowedExtensions != null}"
+                                      th:text="${#strings.toUpperCase(#strings.arrayJoin(allowedExtensions.stream().sorted().toArray(), ', '))}">PDF, DOCX…</span>
+                                <span th:if="${allowedExtensions == null}">PDF, DOCX, ZIP…</span>
+                            </div>
+                            <div class="invalid-feedback">Please select a file.</div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button id="submit-btn" type="submit" class="btn-primary-custom">
+                                <i class="bi bi-upload me-2"></i>Upload Material
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Materials List ───────────────────────────────────── -->
+        <div class="col-12 col-lg-7">
+            <div class="glass-card">
+                <div class="card-header-custom">
+                    <div class="icon-circle"><i class="bi bi-folder2-open"></i></div>
+                    <h2>Uploaded Materials</h2>
+                    <span class="ms-auto badge"
+                          style="background:rgba(99,102,241,0.2);color:var(--primary-light);border-radius:99px;font-size:0.75rem;"
+                          th:text="${#lists.size(materials)}">0</span>
+                </div>
+
+                <!-- Empty state -->
+                <div th:if="${#lists.isEmpty(materials)}" class="empty-state">
+                    <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+                    <p>No materials uploaded yet.<br/>
+                        <span style="color:#475569;font-size:0.82rem;">
+                            Use the form on the left to add your first file.
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Materials Table -->
+                <div th:if="${!#lists.isEmpty(materials)}" class="table-responsive">
+                    <table class="materials-table" id="materials-table"
+                           aria-label="Assessment materials list">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">File</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="material : ${materials}">
+                            <td data-label="#">
+                                <span class="id-badge" th:text="${material.id()}">1</span>
+                            </td>
+                            <td data-label="Title" th:text="${material.title()}">Title</td>
+                            <td data-label="Description"
+                                style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                                th:text="${material.description()}">Description</td>
+                            <td data-label="File">
+                                <span class="file-chip">
+                                    <i class="bi bi-file-earmark"></i>
+                                    <span th:text="${material.fileName()}">file.pdf</span>
+                                </span>
+                            </td>
+                            <td data-label="Action">
+                                <a class="btn-download"
+                                   id="download-link"
+                                   th:href="@{/assessments/download/{fn}(fn=${material.fileName()})}">
+                                    <i class="bi bi-download"></i> Download
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /row -->
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
+<footer class="text-center py-4 mt-2"
+        style="font-size:0.78rem;color:#334155;border-top:1px solid var(--border);">
+    &copy; 2026 LMS Platform &mdash; Assessment Upload Module
+</footer>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmFnBSmJqQZkKECNhPBk7RMmLYN0"
+        crossorigin="anonymous"></script>
+
+<script>
+    // ── Live character counter ────────────────────────────────────────────────
+    function attachCounter(inputId, counterId) {
+        const input   = document.getElementById(inputId);
+        const counter = document.getElementById(counterId);
+        if (!input || !counter) return;
+        const max = input.getAttribute('maxlength') || '∞';
+        function update() {
+            const len = input.value.length;
+            counter.textContent = len + ' / ' + max;
+            // Warn when > 90% full
+            counter.style.color = (parseInt(max) > 0 && len > parseInt(max) * 0.9)
+                ? '#f97316' : '#475569';
+        }
+        input.addEventListener('input', update);
+        update();
+    }
+    attachCounter('title',       'title-counter');
+    attachCounter('description', 'desc-counter');
+
+    // ── Client-side validation (HTML5 Constraint API) ─────────────────────────
+    (function () {
+        'use strict';
+        const form = document.getElementById('upload-form');
+        if (!form) return;
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    })();
+
+    // ── Auto-dismiss flash messages after 6 seconds ───────────────────────────
+    ['alert-success', 'alert-error'].forEach(function (id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        setTimeout(function () {
+            el.style.transition = 'opacity 0.5s ease';
+            el.style.opacity    = '0';
+            setTimeout(function () { el.remove(); }, 500);
+        }, 6000);
+    });
+</script>
+
+</body>
+</html>

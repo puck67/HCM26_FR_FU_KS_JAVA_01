@@ -49,6 +49,23 @@ public class TrainnerDaoImpl implements TrainnerDao {
     }
 
     @Override
+    public Trainner findByName(String name) {
+        String sql = "SELECT id, trainer_name, phone, email, birth_date, class_name FROM trainers WHERE trainer_name = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Find trainer by name failed", e);
+        }
+        return null;
+    }
+
+    @Override
     public List<Trainner> findAll() {
         String sql = "SELECT id, trainer_name, phone, email, birth_date, class_name FROM trainers ORDER BY id";
         List<Trainner> list = new ArrayList<>();

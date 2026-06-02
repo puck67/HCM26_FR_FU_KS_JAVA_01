@@ -49,6 +49,23 @@ public class LearnerDaoImpl implements LearnerDao {
     }
 
     @Override
+    public Learner findByName(String name) {
+        String sql = "SELECT id, student_name, phone, email, birth_date, class_room FROM learners WHERE student_name = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRow(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Find learner by name failed", e);
+        }
+        return null;
+    }
+
+    @Override
     public List<Learner> findAll() {
         String sql = "SELECT id, student_name, phone, email, birth_date, class_room FROM learners ORDER BY id";
         List<Learner> list = new ArrayList<>();

@@ -7,6 +7,7 @@ import java.util.List;
 public interface TrainnerDao {
     boolean insert(Trainner trainner);
     Trainner findById(int id);
+    Trainner findByName(String name);
     List<Trainner> findAll();
     boolean update(Trainner trainner);
     boolean deleteById(int id);
