@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Shopping List Manager</h1>
+
+        <div class="form-section">
+
+            <div class="input-group">
+                <label>Item Name</label>
+                <input type="text" id="itemName" placeholder="e.g., Apples">
+            </div>
+
+            <div class="input-group">
+                <label>Cost ($)</label>
+                <input type="number" id="itemCost" step="0.01" placeholder="e.g., 2.50">
+            </div>
+
+            <button class="add-btn" id="addBtn">
+                Add Item +
+            </button>
+
+        </div>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Cost ($)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="itemTableBody">
+
+                <tr>
+                    <td>Apples</td>
+                    <td>3.49</td>
+                    <td>
+                        <button class="remove-btn">✖ Remove</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Milk (1 Gallon)</td>
+                    <td>4.15</td>
+                    <td>
+                        <button class="remove-btn">✖ Remove</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Bread (Whole Wheat)</td>
+                    <td>2.79</td>
+                    <td>
+                        <button class="remove-btn">✖ Remove</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Eggs (Dozen)</td>
+                    <td>5.20</td>
+                    <td>
+                        <button class="remove-btn">✖ Remove</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Cereal (Cheerios)</td>
+                    <td>4.89</td>
+                    <td>
+                        <button class="remove-btn">✖ Remove</button>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="grand-total">
+            <span>Grand Total:</span>
+            <span class="amount" id="grandTotal">$20.52</span>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="jquery-script.js"></script>
+
+</body>
+
+</html>
