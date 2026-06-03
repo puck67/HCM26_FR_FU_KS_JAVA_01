@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery (jQuery)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="gallery-container">
+        <h1 class="gallery-header">My Image Gallery</h1>
+        <div class="gallery-grid" id="gallery-grid">
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+            <div class="card"><div class="card-image"><div class="favorite-label">Add to Favorites</div></div><div class="card-footer"><div class="stars"><span class="star" data-value="1">&#9733;</span><span class="star" data-value="2">&#9733;</span><span class="star" data-value="3">&#9733;</span><span class="star" data-value="4">&#9733;</span><span class="star" data-value="5">&#9733;</span></div><div class="favorite-btn">&#9825;</div></div></div>
+        </div>
+        <div class="summary-footer">
+            <div class="summary-left">
+                <span><strong>AVERAGE RATING:</strong> <strong id="avg-rating">0.0 Stars</strong> <span class="rating-count" id="rating-count">(based on 0 items)</span></span>
+                <div class="chart-icon">
+                    <div class="bar bar-1"></div>
+                    <div class="bar bar-2"></div>
+                    <div class="bar bar-3"></div>
+                </div>
+            </div>
+            <div class="summary-divider"></div>
+            <div class="summary-right">
+                <span><strong>TOTAL FAVORITES:</strong> <strong id="total-favs">0</strong></span>
+                <span class="heart-icon-large">&hearts;</span>
+            </div>
+        </div>
+    </div>
+    <script src="script_jq.js"></script>
+</body>
+</html>
