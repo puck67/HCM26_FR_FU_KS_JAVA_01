@@ -1,0 +1,204 @@
+/* Exact clone styles based on the target image */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background-color: #f1f3f6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 40px;
+}
+
+.card-wrapper {
+    width: 100%;
+    max-width: 650px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 30px 40px;
+}
+
+.title {
+    text-align: center;
+    color: #17385B;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 25px;
+}
+
+.form-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    align-items: flex-end;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.name-group {
+    flex: 2;
+}
+
+.cost-group {
+    flex: 1.5;
+}
+
+.button-group {
+    flex: 1;
+}
+
+.input-group label {
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    color: #333333;
+}
+
+.input-group input {
+    padding: 8px 12px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    color: #555;
+    height: 35px;
+}
+
+.input-group input::placeholder {
+    color: #999;
+}
+
+.input-group input:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.btn-primary {
+    background-color: #317EAC; /* Specific blue from image */
+    color: white;
+    border: 1px solid #2B6D95;
+    padding: 0 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.2s;
+    height: 35px; /* Matches input height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #27658A;
+}
+
+.border-round-table{
+    border-radius: 10px 0 0 0;
+}
+
+.border-round-table-end{
+    border-radius: 0 10px 0 0;
+}
+.table-container {
+    margin-bottom: 25px;
+    border: 1px solid #dddddd;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden; /* To ensure border radius applies if table overflows */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 15px;
+    border: 1px  solid #dddddd;
+    font-size: 14px;
+}
+
+th {
+    background-color: #2D4C6B;
+    color: white;
+    font-weight: 600;
+    text-align: left;
+}
+
+th.text-center, td.text-center {
+    text-align: center;
+}
+
+tbody tr {
+    background-color: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9; 
+}
+
+.col-name { width: 45%; border-top-left-radius: 12px;  }
+.col-cost { width: 25%; }
+.col-action { width: 30%; border-top-right-radius: 12px; }
+
+.btn-remove {
+    background-color: #fafafa;
+    color: #b53b3b;
+    border: 1px solid #b53b3b;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+
+.btn-remove:hover {
+    background-color: #b53b3b;
+    color: white;
+}
+
+.remove-icon {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.footer-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid #222222;
+    border-radius: 6px;
+    padding: 15px 25px;
+    background-color: white;
+}
+
+.grand-total-label {
+    font-size: 26px;
+    color: #17385B; /* Dark blue */
+    font-weight: 700;
+}
+
+.grand-total-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #A94400; /* Orange/Brown */
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List Manager</title>
+    <!-- Google Fonts for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- jQuery for Problem 03 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <div class="card-wrapper">
+        <div class="card">
+            <h1 class="title">Shopping List Manager</h1>
+            
+            <form id="shopping-form" class="form-container">
+                <div class="input-group name-group">
+                    <label for="item-name">Item Name</label>
+                    <input type="text" id="item-name" placeholder="e.g., Apples" required>
+                </div>
+                <div class="input-group cost-group">
+                    <label for="item-cost">Item Cost ($)</label>
+                    <input type="number" id="item-cost" placeholder="e.g., 2.50" step="0.01" min="0" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit" id="add-btn" class="btn-primary">Add Item <span>+</span></button>
+                </div>
+            </form>
+
+            <div class="table-container">
+                <table id="shopping-table">
+                    <thead>
+                        <tr class="thead">
+                            <th class="col-name">Item Name</th>
+                            <th class="col-cost text-center">Cost ($)</th>
+                            <th class="col-action text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Items will be appended here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="footer-total">
+                <div class="grand-total-label">Grand Total:</div>
+                <div id="grand-total" class="grand-total-value">$0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-jquery.js"></script>
+</body>
+</html>
