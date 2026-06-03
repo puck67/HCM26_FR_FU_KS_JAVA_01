@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page Fragment</title>
+</head>
+
+<body>
+    <div class="login-container p-3">
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="aliasInput" id="aliasLabel">Alias:</label>
+                <input type="text" class="form-control" id="aliasInput" placeholder="JoeSixpack" required>
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="passwordInput" id="passwordLabel">Password:</label>
+                <input type="password" class="form-control" id="passwordInput" placeholder="********" required>
+            </div>
+
+            <div class="form-group form-check mt-3">
+                <input type="checkbox" class="form-check-input" id="rememberMeCheck">
+                <label class="form-check-label" for="rememberMeCheck">Remember me</label>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-block mt-4" id="loginSubmitBtn">Sign In</button>
+        </form>
+
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-secondary px-4" id="loginCloseBtn" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Visitor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=80" alt="Lake panorama banner" class="banner-img">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="person.html">Visitor Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="search.html">Search Visitor</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="help.html">Help</a>
+            </li>
+        </ul>
+        <div class="content-area">
+            <div class="section-title">Search Visitor</div>
+            <form id="search-form" class="form-inline mb-4" novalidate>
+                <div class="form-group mr-2">
+                    <label for="searchKeyword" class="mr-2 font-weight-bold">First name:</label>
+                    <input type="text" id="searchKeyword" class="form-control mr-2" placeholder="First name">
+                </div>
+                <button type="submit" class="btn btn-success mr-2">Search...</button>
+                <span class="text-muted font-italic">(Type First name Visitor and Click Search button)</span>
+            </form>
+            <div class="table-container">
+                <table class="table" id="visitor-table">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Gender</th>
+                            <th>Telephone</th>
+                            <th>You're in</th>
+                            <th>Hobbies</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="visitor-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
