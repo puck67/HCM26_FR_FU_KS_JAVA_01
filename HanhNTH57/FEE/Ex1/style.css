@@ -1,0 +1,185 @@
+:root {
+    --primary-color: #3685b8;
+    --primary-hover: #2b6a94;
+    --header-bg: #2b4561;
+    --table-header: #2b4561;
+    --brown-total: #a0522d;
+    --remove-red: #ba3939;
+    --border-light: #d1d1d1;
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --shadow: 0 10px 25px rgba(0,0,0,0.05);
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 800px;
+}
+
+h1 {
+    text-align: center;
+    color: #1a3a5f;
+    margin-bottom: 2.5rem;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+/* Form Styles */
+.form-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    align-items: flex-end;
+}
+
+.input-control {
+    flex: 1;
+}
+
+.input-control label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+    color: #444;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    background-color: #fafafa;
+}
+
+button#add-btn {
+    background-color: #3685b8;
+    color: white;
+    border: 1px solid #2b6a94;
+    padding: 0 25px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    height: 48px;
+    font-size: 1.15rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.2);
+}
+
+button#add-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+thead {
+    background-color: var(--table-header);
+    color: white;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: left;
+    border: 1px solid #efefef;
+}
+
+th {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+td {
+    color: #000;
+    font-size: 1.05rem;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.remove-btn {
+    background-color: #fff;
+    color: var(--remove-red);
+    border: 1px solid #d48e8e;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.remove-btn:hover {
+    background-color: #fef0f0;
+}
+
+/* Footer Styles - Bold black box */
+.footer {
+    margin-top: 35px;
+    padding: 25px 30px;
+    border: 6px solid #222;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-label {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #1a3a5f;
+}
+
+.total-amount {
+    font-size: 3.2rem;
+    font-weight: 800;
+    color: var(--brown-total);
+}
+
+/* jQuery specific */
+.total-excessive {
+    color: var(--danger-color) !important;
+}
+
+@media (max-width: 600px) {
+    .form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .input-control {
+        min-width: 100%;
+    }
+}
