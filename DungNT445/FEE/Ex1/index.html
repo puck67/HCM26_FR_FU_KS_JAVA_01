@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List Manager - jQuery</title>
+    <style>
+        :root {
+            --primary-color: #2b579a;
+            --button-color: #3182ce;
+            --button-hover: #2b6cb0;
+            --danger-color: #e53e3e;
+            --text-dark: #2d3748;
+            --border-color: #cbd5e0;
+            --bg-light: #f7fafc;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #edf2f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Form styling */
+        .input-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .form-control label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .form-control input {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-control input:focus {
+            border-color: var(--button-color);
+        }
+
+        .btn-add {
+            background-color: var(--button-color);
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .btn-add:hover {
+            background-color: var(--button-hover);
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        th:nth-child(2), td:nth-child(2) {
+            text-align: right;
+            width: 20%;
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            text-align: center;
+            width: 20%;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        .btn-remove {
+            background-color: transparent;
+            color: var(--danger-color);
+            border: 1px solid #fed7d7;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+        }
+
+        .btn-remove:hover {
+            background-color: #fff5f5;
+            border-color: var(--danger-color);
+        }
+
+        /* Footer styling */
+        .footer-total {
+            border: 2px solid #000000;
+            border-radius: 6px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .total-label {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .total-amount {
+            font-size: 28px;
+            font-weight: 700;
+            color: #b7791f; /* Màu nâu vàng đặc trưng trong ảnh mẫu */
+            transition: color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Shopping List Manager (jQuery)</h2>
+    
+    <div class="input-group">
+        <div class="form-control">
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="e.g., Apples">
+        </div>
+        <div class="form-control">
+            <label for="itemCost">Item Cost ($)</label>
+            <input type="number" id="itemCost" step="0.01" min="0.01" placeholder="e.g., 2.50">
+        </div>
+        <button class="btn-add" id="btnAddItem">Add Item +</button>
+    </div>
+
+    <table id="shoppingTable">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Cost ($)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <tr>
+                <td>Apples</td>
+                <td>3.49</td>
+                <td><button class="btn-remove">✕ Remove</button></td>
+            </tr>
+            <tr>
+                <td>Milk (1 Gallon)</td>
+                <td>4.15</td>
+                <td><button class="btn-remove">✕ Remove</button></td>
+            </tr>
+            <tr>
+                <td>Bread (Whole Wheat)</td>
+                <td>2.79</td>
+                <td><button class="btn-remove">✕ Remove</button></td>
+            </tr>
+            <tr>
+                <td>Eggs (Dozen)</td>
+                <td>5.20</td>
+                <td><button class="btn-remove">✕ Remove</button></td>
+            </tr>
+            <tr>
+                <td>Cereal (Cheerios)</td>
+                <td>4.89</td>
+                <td><button class="btn-remove">✕ Remove</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-total">
+        <span class="total-label">Grand Total:</span>
+        <span class="total-amount" id="grandTotal">$20.52</span>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
