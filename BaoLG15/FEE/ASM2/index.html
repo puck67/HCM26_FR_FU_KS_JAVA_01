@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="A modern, responsive Polls and Surveys Web Application built with Bootstrap 4 and jQuery.">
+    <title>Polls & Surveys Application</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="navBrand">Polls</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="linkVote">Vote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="linkCreate">Create</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="linkList">List</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="navLoginBtn"
+                            type="button">Login</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-4">
+
+        <div id="globalAlertContainer"></div>
+
+        <section id="voteSection" class="page-section active-section">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Great poll</h2>
+                    <form id="voteForm">
+                        <div class="vote-question">
+                            <p class="vote-question-title">1. Is it necessary to you? <span class="text-danger">*</span>
+                            </p>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="q1_yes" name="q1" class="custom-control-input" value="Yes"
+                                    required>
+                                <label class="custom-control-label" for="q1_yes">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="q1_no" name="q1" class="custom-control-input" value="No">
+                                <label class="custom-control-label" for="q1_no">No</label>
+                            </div>
+                        </div>
+
+                        <div class="vote-question">
+                            <p class="vote-question-title">2. Often pass polls?</p>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="q2_once_month" name="q2" class="custom-control-input"
+                                    value="Once a month">
+                                <label class="custom-control-label" for="q2_once_month">Once a month</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="q2_once_week" name="q2" class="custom-control-input"
+                                    value="Once a week">
+                                <label class="custom-control-label" for="q2_once_week">Once a week</label>
+                            </div>
+                        </div>
+
+                        <div class="vote-question">
+                            <p class="vote-question-title">3. How old are you?</p>
+                            <div class="custom-control custom-radio mb-2">
+                                <input type="radio" id="q3_18_20" name="q3" class="custom-control-input"
+                                    value="18-20" checked>
+                                <label class="custom-control-label" for="q3_18_20">18-20</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="q3_21_23" name="q3" class="custom-control-input"
+                                    value="21-23">
+                                <label class="custom-control-label" for="q3_21_23">21-23</label>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-success px-5" id="btnVoteRetain">Retain</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="createSection" class="page-section">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Create Interview</h2>
+                    <div id="createErrorAlert" class="alert alert-danger d-none" role="alert">
+                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle mr-2"></i>Validation Failed</h5>
+                        <p id="createErrorMessage" class="mb-0"></p>
+                    </div>
+
+                    <form id="createInterviewForm" novalidate>
+                        <div class="form-group row mb-4">
+                            <label for="pollNameInput" id="pollNameLabel"
+                                class="col-sm-2 col-form-label font-weight-bold">Name poll</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="pollNameInput" placeholder="Name poll"
+                                    required>
+                                <div class="invalid-feedback" id="pollNameFeedback"></div>
+                            </div>
+                        </div>
+
+                        <div id="questionsContainer">
+                        </div>
+
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-primary" id="btnAddQuestion">
+                                <i class="fas fa-plus mr-1"></i> Add question
+                            </button>
+                        </div>
+
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-success px-5" id="btnCreateRetain">Retain</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section id="listSection" class="page-section">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex mb-4">
+                        <button type="button" class="btn list-tab active mr-2" data-status="Active">Active</button>
+                        <button type="button" class="btn list-tab mr-2" data-status="Drafts">Drafts</button>
+                        <button type="button" class="btn list-tab" data-status="Closed">Closed</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped" id="pollsTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%;">#</th>
+                                    <th style="width: 60%;">The list of questions and issues within</th>
+                                    <th style="width: 30%;">Management</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-id="90">
+                                    <td>90</td>
+                                    <td class="poll-title-cell">Great poll</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="button" class="btn btn-success mr-1 btn-view-results">View
+                                                results</button>
+                                            <button type="button" class="btn btn-success mr-1 btn-close-poll">Close
+                                                poll</button>
+                                            <button type="button"
+                                                class="btn btn-success btn-delete-poll">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="loginModalBody">
+                    <div class="text-center p-4">
+                        <div class="spinner-border text-success" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

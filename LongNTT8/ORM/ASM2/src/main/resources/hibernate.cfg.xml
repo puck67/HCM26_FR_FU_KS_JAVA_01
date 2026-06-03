@@ -1,0 +1,32 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- JDBC Database connection settings -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:file:F:/HCM26_FR_FU_KS_JAVA_01/HCM26_FR_FU_KS_JAVA_01/LongNTT8/orm.m.a101/movietheaterdb;AUTO_SERVER=TRUE</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password">123456</property>
+
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">5</property>
+
+        <!-- SQL dialect -->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">false</property>
+        <!-- Format SQL for better readability -->
+        <property name="format_sql">false</property>
+        <property name="use_sql_comments">false</property>
+
+        <!-- hbm2ddl.auto: validate | update | create | create-drop -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Mapping entities -->
+        <mapping class="fa.training.entities.CinemaRoom"/>
+        <mapping class="fa.training.entities.CinemaRoomDetail"/>
+        <mapping class="fa.training.entities.Seat"/>
+    </session-factory>
+</hibernate-configuration>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page-bg">
+
+    <!-- loginContainer: Phần nội dung này sẽ được trang index.html tải qua AJAX -->
+    <div id="loginContainer" class="login-card mx-auto">
+        <div class="login-card-body">
+            <form id="ajaxLoginForm">
+                <div class="form-group mb-3">
+                    <label for="alias">Alias:</label>
+                    <input type="text" class="form-control" id="alias" placeholder="JoeSixpack" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" placeholder="********" required>
+                </div>
+                <div class="login-checkbox-group">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                </div>
+                <button type="submit" class="btn btn-signin">Sign In</button>
+            </form>
+        </div>
+        <div class="login-card-footer">
+            <button type="button" class="btn btn-close-custom" data-dismiss="modal">Close</button>
+        </div>
+
+        <script>
+            // Đăng ký sự kiện submit cho form (Chạy sau khi được import qua AJAX hoặc chạy trực tiếp)
+            $(document).off('submit', '#ajaxLoginForm').on('submit', '#ajaxLoginForm', function(e) {
+                e.preventDefault();
+                let valid = true;
+                
+                $(this).find('input[required]').each(function() {
+                    if ($.trim($(this).val()) === "") {
+                        valid = false;
+                        $(this).addClass('is-invalid');
+                    } else {
+                        $(this).removeClass('is-invalid');
+                    }
+                });
+
+                if (valid) {
+                    alert('Đăng nhập thành công (Dữ liệu gửi thành công qua AJAX)!');
+                    if ($('#loginModal').length) {
+                        $('#loginModal').modal('hide');
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

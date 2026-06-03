@@ -1,0 +1,191 @@
+/* Ghi đè toàn bộ button sang màu xanh lá theo yêu cầu */
+.btn, .btn-primary, .btn-success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.btn:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Định dạng placeholder màu xám nhạt */
+::placeholder {
+    color: #d1d1d1 !important;
+    opacity: 1; /* Cần thiết cho Firefox */
+}
+
+:-ms-input-placeholder {
+    color: #d1d1d1 !important;
+}
+
+::-ms-input-placeholder {
+    color: #d1d1d1 !important;
+}
+
+/* Kiểu hiển thị validation */
+.error-message-container {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.label-error {
+    color: #dc3545 !important;
+    font-weight: bold;
+}
+
+.input-error {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.2) !important;
+}
+
+/* Tinh chỉnh nhỏ giao diện */
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255,255,255,.75);
+}
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #fff;
+}
+
+/* --- LOGIN FORM STANDALONE CUSTOMIZATION (KHỚP VỚI ẢNH MẪU) --- */
+body.login-page-bg {
+    background-color: #7f7f7f !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.login-card {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 320px;
+    border: 1px solid #c2c2c2;
+    overflow: hidden;
+}
+
+.login-card-body {
+    padding: 30px 25px 20px 25px;
+}
+
+.login-card-body label {
+    font-weight: bold !important;
+    color: #212529 !important;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.login-card-body .form-control {
+    border-radius: 4px !important;
+    border: 1px solid #ccc !important;
+    height: auto !important;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    color: #495057 !important;
+}
+
+/* Checkbox mặc định như ảnh */
+.login-checkbox-group {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.login-checkbox-group input {
+    margin-right: 8px;
+    cursor: pointer;
+}
+.login-checkbox-group label {
+    margin: 0 !important;
+    font-size: 14px;
+    font-weight: bold !important;
+    color: #212529 !important;
+    cursor: pointer;
+    display: inline-block !important;
+}
+
+.btn-signin {
+    background-color: #4caf50 !important;
+    border-color: #4caf50 !important;
+    color: #fff !important;
+    padding: 6px 16px !important;
+    font-weight: 500 !important;
+    border-radius: 4px !important;
+    width: auto !important;
+}
+
+.btn-signin:hover {
+    background-color: #43a047 !important;
+    border-color: #43a047 !important;
+}
+
+.login-card-footer {
+    border-top: 1px solid #eaeaea;
+    padding: 15px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.btn-close-custom {
+    background-color: #fff !important;
+    border: 1px solid #ccc !important;
+    color: #333 !important;
+    padding: 5px 22px !important;
+    border-radius: 4px !important;
+    font-size: 14px !important;
+}
+
+.btn-close-custom:hover {
+    background-color: #f5f5f5 !important;
+    border-color: #bbb !important;
+    color: #333 !important;
+}
+
+/* Override nút Close và Delete/Danger khác để không bị chuyển hết thành màu xanh lá do CSS chung */
+.btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    color: #fff !important;
+}
+.btn-danger:hover {
+    background-color: #c82333 !important;
+    border-color: #bd2130 !important;
+}
+
+/* Override khi login-card nằm trong modal của trang index.html */
+.modal-body .login-card {
+    border: none !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+.modal-body .login-card-body {
+    padding: 5px 0 15px 0 !important;
+}
+.modal-body .login-card-footer {
+    border-top: 1px solid #eaeaea !important;
+    padding: 15px 0 0 0 !important;
+    margin-top: 10px;
+}
+#loginModal .modal-body {
+    padding: 25px 30px 20px 30px !important;
+}
+#loginModal .modal-content {
+    border-radius: 4px !important;
+    border: 1px solid #c2c2c2 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+#loginModal .modal-dialog {
+    max-width: 320px !important;
+}
+

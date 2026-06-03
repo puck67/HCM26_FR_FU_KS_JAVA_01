@@ -8,18 +8,18 @@ public class Trainner {
     private String phone;
     private String email;
     private Date birthDate;
-    private String ClassName;
+    private String className;
 
     public Trainner() {
 
     }
-    public Trainner(int id, String trainnerName, String phone, String email, Date birthDate, String ClassName) {
+    public Trainner(int id, String trainnerName, String phone, String email, Date birthDate, String className) {
         this.id = id;
         this.trainnerName = trainnerName;
         this.phone = phone;
         this.email = email;
         this.birthDate = birthDate;
-        this.ClassName = ClassName;
+        this.className = className;
     }
     //Getters and Setters
     public int getId() {
@@ -54,16 +54,16 @@ public class Trainner {
         this.birthDate = birthDate;
     }
     public String getClassName() {
-        return ClassName;
+        return className;
     }
-    public void setClassName(String ClassName) {
-        this.ClassName = ClassName;
+    public void setClassName(String className) {
+        this.className = className;
     }
-    public void setClass(String ClassName) {
-        this.ClassName = ClassName;
+    public void setClass(String className) {
+        this.className = className;
     }
 
     public String toString() {
-        return id + " " + trainnerName + " " + phone + " " + email + " " + birthDate + " " + ClassName;
+        return id + " " + trainnerName + " " + phone + " " + email + " " + birthDate + " " + className;
     }
 }

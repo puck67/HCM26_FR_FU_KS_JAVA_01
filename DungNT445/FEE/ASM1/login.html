@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="d-flex align-items-center" style="min-height: 100vh;">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">
+                        Please Sign In
+                    </div>
+                    <div class="card-body">
+                        <form id="loginForm" novalidate>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-content form-control" placeholder="E-mail" required maxlength="50">
+                                <div class="error-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="form-content form-control" placeholder="Password" required maxlength="50">
+                                <div class="error-feedback"></div>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label text-secondary" for="rememberMe">Remember Me</label>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-custom-green">Login</button>
+                            <div class="text-center mt-3">
+                                <a href="register.html" class="small text-success">Click here to Register</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
