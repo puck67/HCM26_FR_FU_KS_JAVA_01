@@ -1,113 +1,129 @@
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy các phần tử DOM cần thiết
+    const shoppingForm = document.getElementById('shopping-form');
+    const itemNameInput = document.getElementById('item-name');
+    const itemCostInput = document.getElementById('item-cost');
+    const btnAdd = document.getElementById('btn-add');
+    const errorMsg = document.getElementById('error-message');
+    const shoppingList = document.getElementById('shopping-list');
+    const grandTotal = document.getElementById('grand-total');
 
-    
-     //Hàm tính toán lại tổng tiền từ tất cả các dòng sản phẩm hiện có trong bảng.
-     
+    /**
+     * Hàm tính toán lại tổng tiền từ tất cả các dòng sản phẩm hiện có trong bảng
+     */
     function calculateGrandTotal() {
         let total = 0;
-
-        // Duyệt qua từng dòng tr trong tbody
-        $('#shopping-list tr').each(function() {
-            // Lấy giá trị cost được lưu trong thuộc tính data của jQuery
-            const cost = $(this).data('cost');
-            
-            // Cộng dồn vào tổng tiền nếu là số hợp lệ
-            if (typeof cost === 'number' && !isNaN(cost)) {
+        
+        // Lấy tất cả các dòng tr hiện tại trong danh sách
+        const rows = shoppingList.querySelectorAll('tr');
+        
+        rows.forEach(function(row) {
+            // Lấy giá trị cost từ thuộc tính dataset
+            const cost = parseFloat(row.dataset.cost);
+            if (!isNaN(cost)) {
                 total += cost;
             }
         });
 
         // Định dạng và hiển thị số tiền lên giao diện
-        $('#grand-total').text('$' + total.toFixed(2));
+        grandTotal.textContent = '$' + total.toFixed(2);
 
-        // Sử dụng .css() của jQuery để đổi màu chữ sang màu đỏ nếu tổng tiền lớn hơn $500
+        // Đổi màu chữ sang đỏ nếu tổng tiền lớn hơn $500, ngược lại dùng màu chủ đạo xanh dương
         if (total > 500) {
-            $('#grand-total').css('color', 'red');
+            grandTotal.style.color = 'red';
         } else {
-            // Trở về màu mặc định (xanh dương) khi tổng tiền từ $500 trở xuống
-            $('#grand-total').css('color', '#007bff');
+            grandTotal.style.color = '#007bff';
         }
     }
 
     /**
-     * Hàm thêm sản phẩm mới
+     * Hàm thêm sản phẩm mới sử dụng pure DOM manipulation
      */
     function addItem() {
-        // 1. Nhận giá trị từ các ô nhập liệu bằng jQuery selector $()
-        const name = $('#item-name').val().trim();
-        const costText = $('#item-cost').val().trim();
+        // 1. Nhận và chuẩn hóa giá trị từ các ô nhập liệu
+        const name = itemNameInput.value.trim();
+        const costText = itemCostInput.value.trim();
         const cost = parseFloat(costText);
 
-        // Lấy thẻ hiển thị thông báo lỗi inline
-        const $errorMsg = $('#error-message');
-
         // Reset thông báo lỗi trước đó
-        $errorMsg.text('');
+        errorMsg.textContent = '';
 
-        // 2. Kiểm tra dữ liệu đầu vào (Validation) - Cải tiến dùng thông báo inline thay vì alert()
+        // 2. Kiểm tra dữ liệu đầu vào (Validation)
         if (name === "") {
-            $errorMsg.text("Lỗi: Vui lòng nhập tên sản phẩm!");
-            $('#item-name').focus();
+            errorMsg.textContent = "Lỗi: Vui lòng nhập tên sản phẩm!";
+            itemNameInput.focus();
             return;
         }
         if (costText === "" || isNaN(cost) || cost <= 0) {
-            $errorMsg.text("Lỗi: Vui lòng nhập giá tiền hợp lệ (số dương lớn hơn 0)!");
-            $('#item-cost').focus();
+            errorMsg.textContent = "Lỗi: Vui lòng nhập giá tiền hợp lệ (số dương lớn hơn 0)!";
+            itemCostInput.focus();
             return;
         }
 
-        // 3. Tạo dòng mới dạng jQuery object, lưu trữ giá trị cost bằng data-cost
+        // 3. Tạo dòng mới bằng pure DOM manipulation (document.createElement)
+        const row = document.createElement('tr');
+        // Lưu trữ giá trị cost vào data attribute để phục vụ việc tính tổng tiền
+        row.dataset.cost = cost;
 
-        const $newRow = $(`
-            <tr data-cost="${cost}">
-                <td>${name}</td>
-                <td>$${cost.toFixed(2)}</td>
-                <td>
-                    <button type="button" class="btn-remove" aria-label="Xóa sản phẩm ${name}">Xóa</button>
-                </td>
-            </tr>
-        `);
+        // Tạo cột Tên sản phẩm
+        const nameCell = document.createElement('td');
+        nameCell.textContent = name;
+        row.appendChild(nameCell);
 
-        // Gắn dữ liệu kiểu số trực tiếp vào jQuery data() của dòng để tính toán chính xác
-        $newRow.data('cost', cost);
+        // Tạo cột Giá tiền
+        const costCell = document.createElement('td');
+        costCell.textContent = '$' + cost.toFixed(2);
+        row.appendChild(costCell);
 
-        // 4. Thêm dòng mới vào bảng bằng phương thức .append() của jQuery
-        $('#shopping-list').append($newRow);
+        // Tạo cột Hành động chứa nút Xóa
+        const actionCell = document.createElement('td');
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn-remove';
+        removeBtn.textContent = 'Xóa';
+        removeBtn.setAttribute('aria-label', 'Xóa sản phẩm ' + name);
 
-        // 5. Tính toán lại tổng tiền từ đầu dựa trên bảng dữ liệu hiện tại
+        // Gán sự kiện click xóa dòng bằng native JS
+        removeBtn.addEventListener('click', function() {
+            // Loại bỏ dòng khỏi DOM
+            row.remove();
+            // Tính toán lại tổng tiền sau khi xóa
+            calculateGrandTotal();
+        });
+
+        actionCell.appendChild(removeBtn);
+        row.appendChild(actionCell);
+
+        // 4. Thêm dòng mới vào bảng bằng appendChild
+        shoppingList.appendChild(row);
+
+        // 5. Tính toán lại tổng tiền sau khi thêm mới
         calculateGrandTotal();
 
-        // 6. Làm sạch biểu mẫu và focus lại vào ô nhập tên
-        $('#item-name').val('');
-        $('#item-cost').val('');
-        $('#item-name').focus();
+        // 6. Làm sạch biểu mẫu và focus lại vào ô nhập tên sản phẩm
+        itemNameInput.value = '';
+        itemCostInput.value = '';
+        itemNameInput.focus();
     }
 
-    // Đăng ký sự kiện Click cho nút "Thêm" bằng .on()
-    $('#btn-add').on('click', function() {
+    // Đăng ký sự kiện Click cho nút "Thêm"
+    btnAdd.addEventListener('click', function() {
         addItem();
     });
 
-    // Đăng ký sự kiện Click cho nút "Xóa"
-    // Sử dụng cơ chế Event Delegation (Ủy quyền sự kiện) bằng cách lắng nghe từ #shopping-list
-    $('#shopping-list').on('click', '.btn-remove', function() {
-        // Tìm dòng tr chứa nút Xóa vừa click và loại bỏ nó khỏi DOM bằng .remove()
-        $(this).closest('tr').remove();
-
-        // Tính toán lại tổng tiền sau khi xóa dòng
-        calculateGrandTotal();
-    });
-
     // Chặn sự kiện gửi biểu mẫu mặc định (tránh tải lại trang ngoài ý muốn)
-    $('#shopping-form').on('submit', function(event) {
+    shoppingForm.addEventListener('submit', function(event) {
         event.preventDefault();
     });
 
-    // Bắt phím Enter bằng sự kiện keydown (độ tương thích tốt hơn keypress cũ)
-    $('#item-name, #item-cost').on('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault(); // Ngăn chặn hành vi submit mặc định của phím Enter trong form
-            addItem();
-        }
+    // Bắt phím Enter trên các ô nhập liệu để kích hoạt thêm nhanh
+    const inputs = [itemNameInput, itemCostInput];
+    inputs.forEach(function(input) {
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Ngăn chặn hành vi submit mặc định
+                addItem();
+            }
+        });
     });
 });

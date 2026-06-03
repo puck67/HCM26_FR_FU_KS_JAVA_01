@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping List & Budget Tracker (Native JS)</title>
+    <title>Shopping List & Budget Tracker (jQuery)</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
     <div class="container">
         <!-- Bộ chuyển đổi trang (Page Toggle) -->
         <div class="page-toggle-container">
-           
+         
             <div class="toggle-switch">
-                <button id="toggle-native" class="toggle-btn active" onclick="location.href='index.html'">Native JS</button>
-                <button id="toggle-jquery" class="toggle-btn" onclick="location.href='jquery.html'">jQuery</button>
+                <button id="toggle-native" class="toggle-btn" onclick="location.href='index.html'">Native JS</button>
+                <button id="toggle-jquery" class="toggle-btn active" onclick="location.href='jquery.html'">jQuery</button>
             </div>
         </div>
 
-        <h1>Danh Sách Mua Sắm & Quản Lý Chi Tiêu (Native JS)</h1>
+        <h1>Danh Sách Mua Sắm & Quản Lý Chi Tiêu (jQuery)</h1>
 
         <!-- Form nhập thông tin sản phẩm -->
         <form id="shopping-form" class="form-group" novalidate>
@@ -41,7 +42,7 @@
                 </tr>
             </thead>
             <tbody id="shopping-list">
-                <!-- Các dòng sản phẩm sẽ được thêm vào đây bằng Native JS -->
+                <!-- Các dòng sản phẩm sẽ được thêm vào đây bằng jQuery -->
             </tbody>
         </table>
 
@@ -52,7 +53,7 @@
         </div>
     </div>
 
-    <!-- Nhúng file Javascript Native JS xử lý -->
-    <script src="app.js"></script>
+    <!-- Nhúng file Javascript jQuery xử lý -->
+    <script src="app-jquery.js"></script>
 </body>
 </html>
