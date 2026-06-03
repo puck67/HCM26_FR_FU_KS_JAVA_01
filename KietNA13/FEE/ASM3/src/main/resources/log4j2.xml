@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%-5level] %logger{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <!-- Chỉ hiển thị WARN trở lên từ Spring framework (tránh verbose) -->
+        <Logger name="org.springframework" level="WARN"/>
+        <!-- INFO cho code của chúng ta -->
+        <Logger name="com.lms" level="INFO"/>
+        <Root level="WARN">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

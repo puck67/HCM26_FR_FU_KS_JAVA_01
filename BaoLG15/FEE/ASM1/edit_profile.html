@@ -1,0 +1,42 @@
+<div>
+    <h1 class="content-title">Edit Profile</h1>
+    <div class="card card-custom">
+        <div class="card-header card-header-custom">
+            Profile Form Elements
+        </div>
+        <div class="card-body">
+            <div id="profileAlertContainer"></div>
+            <form id="profileForm" novalidate>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter the first name" required maxlength="30">
+                    <div class="invalid-feedback" id="firstNameFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter the last name" required maxlength="30">
+                    <div class="invalid-feedback" id="lastNameFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" class="form-control" id="profileEmail" name="email" placeholder="your_email@example.com" required readonly maxlength="50">
+                    <div class="invalid-feedback" id="profileEmailFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required maxlength="13">
+                    <div class="invalid-feedback" id="phoneFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" name="description" placeholder="Enter description" rows="4" maxlength="200"></textarea>
+                    <div class="invalid-feedback" id="descriptionFeedback"></div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success mr-2" id="btnSubmitProfile">Submit Button</button>
+                    <button type="reset" class="btn btn-success" id="btnResetProfile">Reset Button</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

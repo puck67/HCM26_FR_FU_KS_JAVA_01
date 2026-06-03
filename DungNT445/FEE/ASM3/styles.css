@@ -1,0 +1,90 @@
+/* Tùy biến nút bấm sang màu xanh lá cây theo yêu cầu */
+.btn-custom-green {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+.btn-custom-green:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Định dạng chữ placeholder màu xám nhạt */
+::placeholder {
+    color: #d3d3d3 !important;
+    opacity: 1; /* Cho Firefox */
+}
+
+:-ms-input-placeholder {
+    color: #d3d3d3 !important;
+}
+
+::-ms-input-placeholder {
+    color: #d3d3d3 !important;
+}
+
+/* Định dạng layout mô phỏng theo ảnh */
+body {
+    background-color: #f4f6f9;
+}
+
+.banner-container img {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+}
+
+.main-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #e3e6f0;
+}
+
+.section-title {
+    color: #28a745;
+    font-weight: bold;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+/* Style cho bảng kết quả tìm kiếm */
+.table-custom thead {
+    background-color: #cccccc;
+    color: #333333;
+}
+
+/* Class dùng để highlight hàng khi hover hoặc xử lý logic */
+.row-highlight {
+    background-color: #f8f9fa;
+}
+
+/* Hiển thị lỗi Validation */
+.error-msg {
+    color: #dc3545;
+    font-size: 0.875rem;
+    display: none;
+    margin-top: 5px;
+}
+
+/* Tùy biến thanh điều hướng (Navbar) */
+.navbar-custom {
+    background-color: #28a745;
+}
+
+.navbar-custom .navbar-brand {
+    color: #ffffff !important;
+    font-weight: bold;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-item.active .nav-link {
+    color: #ffffff !important;
+    font-weight: bold;
+}

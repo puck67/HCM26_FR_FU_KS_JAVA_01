@@ -1,0 +1,80 @@
+/* Custom styles.css cho Bootstrap 4 theo yêu cầu */
+
+/* Tất cả các nút bấm bắt buộc phải có background màu xanh lá */
+.btn-custom-green, 
+.btn-primary, 
+.btn-success,
+button[type="submit"] {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #ffffff !important;
+}
+
+.btn-custom-green:hover, 
+.btn-primary:hover,
+button[type="submit"]:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Nút Reset màu xám nhẹ để phân biệt trực quan */
+.btn-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    color: #fff !important;
+}
+
+/* CSS cho placeholder chữ màu xám nhạt */
+::placeholder {
+    color: #d3d3d3 !important;
+    opacity: 1; /* Cho Firefox */
+}
+
+:-ms-input-placeholder {
+    color: #d3d3d3 !important;
+}
+
+::-ms-input-placeholder {
+    color: #d3d3d3 !important;
+}
+
+/* Layout CMS tổng thể */
+body {
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.sidebar {
+    min-height: 100vh;
+    background-color: #f0f2f5;
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar .nav-link {
+    color: #495057;
+    border-bottom: 1px solid #e9ecef;
+    padding: 12px 20px;
+}
+
+.sidebar .nav-link.active {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-weight: 500;
+}
+
+/* Style cho thông báo lỗi Validation */
+.error-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.is-invalid ~ .error-feedback {
+    display: block;
+}

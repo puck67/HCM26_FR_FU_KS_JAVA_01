@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problem 02 – Shopping List (Vanilla JS)</title>
+  <meta name="description" content="Shopping List Manager built with pure JavaScript DOM manipulation." />
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+
+  <div class="card" role="main">
+
+    <!-- Header -->
+    <div class="card-header">
+      <h1>Shopping List Manager</h1>
+      <span class="badge">Problem 02 · Vanilla JavaScript</span>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+
+      <!-- Input Form -->
+      <div class="form-row" role="form" aria-label="Add item form">
+        <div class="form-group">
+          <label for="item-name">Item Name</label>
+          <input
+            type="text"
+            id="item-name"
+            placeholder="Apple,Banana,..."
+            aria-required="true"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="item-cost">Item Cost ($)</label>
+          <input
+            type="number"
+            id="item-cost"
+            placeholder="e.g., 2.50"
+            min="0.01"
+            step="0.01"
+            aria-required="true"
+          />
+        </div>
+
+        <button id="btn-add" class="btn-add" aria-label="Add item to list">
+          &#43; Add Item
+        </button>
+      </div>
+
+      <!-- Validation Message -->
+      <p id="validation-msg" class="validation-msg" role="alert" aria-live="polite"></p>
+
+      <!-- Table -->
+      <div class="table-wrapper">
+        <table class="shopping-table" aria-label="Shopping list">
+          <thead>
+            <tr>
+              <th scope="col">Item Name</th>
+              <th scope="col">Cost ($)</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="list-body">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Grand Total -->
+      <div class="grand-total-box" aria-label="Grand Total">
+        <span class="label">Grand Total:</span>
+        <span id="grand-total" class="amount">$0.00</span>
+      </div>
+
+    </div><!-- /.card-body -->
+  </div><!-- /.card -->
+
+  <script src="shoppingList.js"></script>
+  <script>
+    ShoppingList.init({
+      nameInputId: 'item-name',
+      costInputId:  'item-cost',
+      addBtnId:    'btn-add',
+      tbodyId:     'list-body',
+      totalId:     'grand-total',
+      msgId:       'validation-msg',
+      initialData: [
+        { id: 1, name: 'Apples', cost: 3.49 },
+        { id: 2, name: 'Milk (1 Gallon)', cost: 4.15 },
+        { id: 3, name: 'Bread (Whole Wheat)', cost: 2.79 },
+        { id: 4, name: 'Eggs (Dozen)', cost: 5.20 },
+        { id: 5, name: 'Cereal (Cheerios)', cost: 4.89 }
+      ]
+    });
+  </script>
+</body>
+</html>

@@ -58,7 +58,7 @@ class SearchingRecordServiceTest {
         Cousrse c1 = new Cousrse();
         c1.setCousrseName("Java Core");
 
-        when(cousrseDao.findAll()).thenReturn(Collections.singletonList(c1));
+        when(cousrseDao.findByName("Java Core")).thenReturn(c1);
 
         // Act
         Cousrse result = searchingService.findCousrseByName("Java Core");
@@ -74,7 +74,7 @@ class SearchingRecordServiceTest {
         Learner l1 = new Learner();
         l1.setStudentName("TuanND110");
 
-        when(learnerDao.findAll()).thenReturn(Collections.singletonList(l1));
+        when(learnerDao.findByName("TuanND110")).thenReturn(l1);
 
         // Act
         Learner result = searchingService.findLearnerByName("TuanND110");
@@ -90,7 +90,7 @@ class SearchingRecordServiceTest {
         Trainner t1 = new Trainner();
         t1.setTrainnerName("Master Shi");
 
-        when(trainnerDao.findAll()).thenReturn(Collections.singletonList(t1));
+        when(trainnerDao.findByName("Master Shi")).thenReturn(t1);
 
         // Act
         Trainner result = searchingService.findTrainnerByName("Master Shi");

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Add Content</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light border-bottom justify-content-between px-4">
+        <span class="navbar-brand mb-0 h1 font-weight-bold text-secondary">CMS</span>
+        <div class="dropdown">
+            <button class="btn btn-link text-secondary dropdown-toggle" type="button" id="userMenu" data-toggle="dropdown">
+                <i class="fas fa-user mr-1"></i> User Profile
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="edit-profile.html">User Profile</a>
+                <a class="dropdown-item" href="login.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar px-0">
+                <div class="p-3">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <nav class="nav flex-column">
+                    <a class="nav-link ajax-link" href="view-contents.html"><i class="fas fa-table mr-1"></i> View contents</a>
+                    <a class="nav-link ajax-link active" href="add-content.html"><i class="fas fa-edit mr-1"></i> Form content</a>
+                </nav>
+            </div>
+
+            <div class="col-md-10 p-4" id="main-content-area">
+                <h2 class="mb-4 text-dark font-weight-light">Add Content</h2>
+                
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light">Content Form Elements</div>
+                    <div class="card-body">
+                        <form id="addContentForm" novalidate>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Title</label>
+                                <input type="text" name="title" class="form-control" placeholder="Enter the title" required>
+                                <div class="error-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Brief</label>
+                                <textarea name="brief" class="form-control" rows="3" required></textarea>
+                                <div class="error-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold">Content</label>
+                                <textarea name="content" class="form-control" rows="6" required></textarea>
+                                <div class="error-feedback"></div>
+                            </div>
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-custom-green mr-2">Submit Button</button>
+                                <button type="reset" class="btn btn-secondary">Reset Button</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

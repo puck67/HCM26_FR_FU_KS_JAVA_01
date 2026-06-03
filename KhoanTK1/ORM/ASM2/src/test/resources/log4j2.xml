@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss} [%-5level] %logger{1} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.hibernate" level="ERROR" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="com.zaxxer" level="ERROR" additivity="false"/>
+        <Logger name="org.postgresql" level="ERROR" additivity="false"/>
+        <Logger name="fa.training" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="ERROR">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

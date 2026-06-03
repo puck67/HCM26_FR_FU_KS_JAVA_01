@@ -1,0 +1,44 @@
+<div class="content-card">
+    <div class="content-card-title">
+        <i class="fas fa-list-alt"></i> View Content List
+    </div>
+
+    <!-- Search/Filter within Table (optional premium feature) -->
+    <div class="mb-3 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="input-group style-search mb-2" style="max-width: 300px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-white border-right-0"><i class="fas fa-search text-muted"></i></span>
+            </div>
+            <input type="text" id="tableSearch" class="form-control border-left-0" placeholder="Filter contents..." style="padding-top: 6px; padding-bottom: 6px;">
+        </div>
+        <small class="text-muted" id="totalRecordsCount">Total records: 0</small>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-custom table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 8%;">#</th>
+                    <th scope="col" style="width: 30%;">Title</th>
+                    <th scope="col" style="width: 47%;">Brief</th>
+                    <th scope="col" style="width: 15%;">Created Date</th>
+                </tr>
+            </thead>
+            <tbody id="contentsTableBody">
+                <!-- Dynamically populated via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Quick table search filter
+        $('#tableSearch').on('keyup', function() {
+            var value = $(this).val().toLowerCase();
+            $('#contentsTableBody tr').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>

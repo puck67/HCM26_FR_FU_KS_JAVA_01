@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Polls</a>
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link active" href="index.html">Vote</a>
+                <a class="nav-item nav-link" href="create.html">Create</a>
+                <a class="nav-item nav-link" href="list.html">List</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <button class="btn btn-outline-light btn-sm my-2 my-sm-0" id="loginBtn">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container bg-white p-5 shadow-sm rounded mb-5" style="max-width: 800px;">
+        <h1 class="mb-4">Great poll</h1>
+        
+        <form id="voteForm">
+            <div class="form-group mb-4">
+                <label class="font-weight-bold">1. Is it necessary to you? <span class="text-danger">*</span></label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q1_yes" name="necessity" class="custom-control-input" required>
+                    <label class="custom-control-label font-weight-normal text-secondary" href="javascript:void(0)" for="q1_yes">Yes</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q1_no" name="necessity" class="custom-control-input">
+                    <label class="custom-control-label font-weight-normal text-secondary" for="q1_no">No</label>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="font-weight-bold">2. Often pass polls?</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q2_month" name="frequency" class="custom-control-input">
+                    <label class="custom-control-label font-weight-normal text-secondary" for="q2_month">Once a month</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q2_week" name="frequency" class="custom-control-input">
+                    <label class="custom-control-label font-weight-normal text-secondary" for="q2_week">Once a week</label>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="font-weight-bold">3. How old are you?</label>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q3_18" name="age" class="custom-control-input" checked>
+                    <label class="custom-control-label font-weight-normal text-secondary" for="q3_18">18-20</label>
+                </div>
+                <div class="custom-control custom-radio">
+                    <input type="radio" id="q3_21" name="age" class="custom-control-input">
+                    <label class="custom-control-label font-weight-normal text-secondary" for="q3_21">21-23</label>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn px-4">Retain</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 400px;">
+            <div class="modal-content">
+                <div class="modal-body p-4" id="loginModalBody">
+                    <div class="text-center py-3">Đang tải...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load Form đăng nhập động bằng AJAX theo yêu cầu
+            $('#loginBtn').on('click', function() {
+                $('#loginModal').modal('show');
+                $.ajax({
+                    url: 'login-form.html',
+                    type: 'GET',
+                    success: function(response) {
+                        // Trích xuất phần nội dung nằm bên trong #loginContainer của login-form.html
+                        var formContent = $('<div>').append(response).find('#loginContainer').html();
+                        $('#loginModalBody').html(formContent);
+                    },
+                    error: function() {
+                        $('#loginModalBody').html('<div class="alert alert-danger">Không thể tải form đăng nhập lúc này!</div>');
+                    }
+                });
+            });
+
+            // Xử lý submit vote form đơn giản
+            $('#voteForm').on('submit', function(e) {
+                e.preventDefault();
+                alert('Cảm ơn bạn đã thực hiện bình chọn!');
+            });
+        });
+    </script>
+</body>
+</html>
