@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ex1 – Dynamic Shopping List &amp; Budget Tracker</title>
+  <meta name="description"
+    content="Ex1: Dynamic Shopping List & Budget Tracker – HTML/CSS UI, JavaScript DOM manipulation, and jQuery refactoring." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+  <div class="card">
+    <h1>Shopping List Manager</h1>
+
+    <!-- Form -->
+    <div class="form-row">
+      <div class="form-group">
+        <label for="itemName">Item Name</label>
+        <input type="text" id="itemName" placeholder="e.g., Apples" />
+      </div>
+      <div class="form-group">
+        <label for="itemCost">Item Cost ($)</label>
+        <input type="number" id="itemCost" placeholder="e.g., 2.50" step="0.01" min="0" />
+      </div>
+      <button id="btnAdd" class="btn-add">Add Item +</button>
+    </div>
+
+    <!-- Validation error -->
+    <p class="error-msg" id="errorMsg" role="alert"></p>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table id="shoppingTable">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Cost ($)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+      </table>
+    </div>
+
+    <!-- footer -->
+    <div class="grand-total">
+      <span class="grand-total-label">Grand Total:</span>
+      <span class="grand-total-value" id="grandTotal">$0.00</span>
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="main.js"></script>
+
+</body>
+
+</html>
