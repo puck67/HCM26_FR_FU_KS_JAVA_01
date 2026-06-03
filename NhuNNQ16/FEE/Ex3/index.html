@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Image Gallery - Native JS Version</title>
+    <!-- Google Fonts for premium design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>My Image Gallery</h1>
+        </header>
+
+        <!-- Version Toggle Navigation -->
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-link active" id="nav-native">Native JS Version</a>
+            <a href="jquery.html" class="nav-link" id="nav-jquery">jQuery Version</a>
+        </div>
+
+        <!-- Gallery Grid (10 cards) -->
+        <main class="gallery-grid" id="gallery-grid">
+            
+            <!-- Card 1 (Initial: 4 Stars, Favorited) -->
+            <div class="card" data-id="1">
+                <div class="image-placeholder gradient-1"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="4">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Remove from Favorites</span>
+                        <button class="fav-btn active" aria-label="Remove from Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 (Initial: 5 Stars, Not Favorited) -->
+            <div class="card" data-id="2">
+                <div class="image-placeholder gradient-2"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="5">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Add to Favorites</span>
+                        <button class="fav-btn" aria-label="Add to Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 (Initial: 3 Stars, Favorited) -->
+            <div class="card" data-id="3">
+                <div class="image-placeholder gradient-3"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="3">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Remove from Favorites</span>
+                        <button class="fav-btn active" aria-label="Remove from Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 (Initial: 4 Stars, Not Favorited) -->
+            <div class="card" data-id="4">
+                <div class="image-placeholder gradient-4"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="4">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Add to Favorites</span>
+                        <button class="fav-btn" aria-label="Add to Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 (Initial: 5 Stars, Favorited) -->
+            <div class="card" data-id="5">
+                <div class="image-placeholder gradient-5"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="5">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Remove from Favorites</span>
+                        <button class="fav-btn active" aria-label="Remove from Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 (Initial: 4 Stars, Not Favorited) -->
+            <div class="card" data-id="6">
+                <div class="image-placeholder gradient-6"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="4">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Add to Favorites</span>
+                        <button class="fav-btn" aria-label="Add to Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7 (Initial: 4 Stars, Favorited) -->
+            <div class="card" data-id="7">
+                <div class="image-placeholder gradient-7"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="4">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Remove from Favorites</span>
+                        <button class="fav-btn active" aria-label="Remove from Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8 (Initial: 5 Stars, Not Favorited) -->
+            <div class="card" data-id="8">
+                <div class="image-placeholder gradient-8"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="5">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Add to Favorites</span>
+                        <button class="fav-btn" aria-label="Add to Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 9 (Initial: 4 Stars, Favorited) -->
+            <div class="card" data-id="9">
+                <div class="image-placeholder gradient-9"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="4">
+                        <button class="star-btn filled" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn filled" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Remove from Favorites</span>
+                        <button class="fav-btn active" aria-label="Remove from Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 10 (Initial: 0 Stars, Not Favorited) -->
+            <div class="card" data-id="10">
+                <div class="image-placeholder gradient-10"></div>
+                <div class="card-controls">
+                    <div class="stars-container" data-rating="0">
+                        <button class="star-btn" data-value="1" aria-label="Rate 1 star">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="2" aria-label="Rate 2 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="3" aria-label="Rate 3 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="4" aria-label="Rate 4 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                        <button class="star-btn" data-value="5" aria-label="Rate 5 stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </button>
+                    </div>
+                    <div class="fav-container">
+                        <span class="tooltip">Add to Favorites</span>
+                        <button class="fav-btn" aria-label="Add to Favorites">
+                            <svg class="fav-icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Summary Footer -->
+        <footer class="summary-footer">
+            <div class="summary-item">
+                <span class="summary-label">Average Rating:</span>
+                <span class="summary-value" id="avg-rating">4.2 Stars</span>
+                <span class="summary-note" id="rated-count">(based on 9 items)</span>
+                <!-- Bar Chart SVG icon -->
+                <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                </svg>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Total Favorites:</span>
+                <span class="summary-value" id="total-favs">5</span>
+                <!-- Heart SVG icon -->
+                <svg class="summary-icon heart" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Link native JS app -->
+    <script src="app.js"></script>
+</body>
+</html>
