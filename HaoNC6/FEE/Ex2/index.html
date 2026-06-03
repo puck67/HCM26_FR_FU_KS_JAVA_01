@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ex2 – Interactive Kanban Task Board</title>
+  <meta name="description"
+    content="Ex2: Interactive Kanban Task Board – HTML/CSS UI, JavaScript DOM, jQuery refactoring." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <div class="board-container">
+
+    <div class="board-header">
+      <h1 class="board-title">My Project Board</h1>
+      <div class="board-icons">
+        <span title="User">👤</span>
+        <span title="Calendar">📅</span>
+      </div>
+    </div>
+
+    <div class="search-bar-row">
+      <label for="searchInput">🔍 Search:</label>
+      <input type="text" id="searchInput" placeholder="Filter tasks..." />
+    </div>
+
+    <div class="board-body" id="board">
+
+      <div class="column col-todo">
+        <div class="column-header">To Do</div>
+        <div class="column-body">
+
+          <div class="add-task-row">
+            <input type="text" class="add-task-input" id="input-todo" placeholder="Add a task to To Do" />
+            <button class="btn-add-task" aria-label="Add task to To Do">+</button>
+          </div>
+
+          <div class="task-list" id="todo-list">
+
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <div class="card-title">Website Homepage Redesign</div>
+              <div class="card-actions">
+                <button class="btn-start">Start</button>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-move">Move →</button>
+              </div>
+            </div>
+
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <div class="card-title">Market Research Report</div>
+              <div class="card-actions">
+                <button class="btn-start">Start</button>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-move">Move →</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="column col-prog">
+        <div class="column-header">In Progress</div>
+        <div class="column-body">
+
+          <div class="add-task-row">
+            <input type="text" class="add-task-input" id="input-prog" placeholder="Add a task to In Progress" />
+            <button class="btn-add-task" aria-label="Add task to In Progress">+</button>
+          </div>
+
+          <div class="task-list" id="prog-list">
+
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <div class="card-title">User Testing Sessions</div>
+              <div class="card-actions">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-move">Move →</button>
+                <button class="btn-done-col">Done</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="column col-done">
+        <div class="column-header">Done</div>
+        <div class="column-body">
+
+          <div class="add-task-row">
+            <input type="text" class="add-task-input" id="input-done" placeholder="Add a task to Done" />
+            <button class="btn-add-task" aria-label="Add task to Done">+</button>
+          </div>
+
+          <div class="task-list" id="done-list">
+
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <div class="card-title">Completed Features List</div>
+              <div class="card-actions">
+                <button class="btn-edit">Edit</button>
+                <button class="btn-archive">Archive</button>
+                <button class="btn-move btn-move-done">Move →</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- External JavaScript -->
+  <script src="main.js"></script>
+
+</body>
+
+</html>
