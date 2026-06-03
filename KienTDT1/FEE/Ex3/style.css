@@ -1,0 +1,188 @@
+/* Base Resets & Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eef7f9;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.gallery-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+header h1 {
+    font-size: 2.2rem;
+    color: #222;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+/* --- CSS GRID GALLERY --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columns as seen in design */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Responsive breakdowns */
+@media (max-width: 1024px) {
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* Card Styling */
+.gallery-card {
+    background: #fff;
+    border: 1px solid #cce3e8;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+/* Image Gradients to replicate the sample */
+.image-placeholder {
+    height: 140px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 8px;
+}
+
+.img-1 { background: linear-gradient(135deg, #a8e6cf, #dcedc1); }
+.img-2 { background: linear-gradient(135deg, #ffd3b6, #ffaaa5); }
+.img-3 { background: linear-gradient(135deg, #3a6073, #3a7bd5); }
+.img-4 { background: linear-gradient(135deg, #4ea1d3, #46b3e6); }
+.img-5 { background: linear-gradient(135deg, #ff758c, #ff7eb3); }
+.img-6 { background: linear-gradient(135deg, #e53935, #e35d5b); }
+.img-7 { background: linear-gradient(135deg, #74b9ff, #81ecec); }
+.img-8 { background: linear-gradient(135deg, #a8e6cf, #81ecec); }
+.img-9 { background: linear-gradient(135deg, #ff7675, #ffaaa5); }
+.img-10 { background: linear-gradient(135deg, #55efc4, #81ecec); }
+
+/* Add to Favorites Toast Overlay */
+.fav-toast {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    font-size: 0.65rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.fav-toast:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Controls (Stars & Favorites Button) */
+.card-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+}
+
+.stars {
+    color: #ccc;
+    font-size: 0.9rem;
+    display: flex;
+    gap: 2px;
+}
+
+.stars .checked {
+    color: #fbc531; /* Bright gold for ratings */
+}
+
+.fav-btn {
+    background: #edf6f8;
+    border: 1px solid #cbdce0;
+    color: #555;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.fav-btn:hover {
+    background: #e1eff2;
+    color: #000;
+}
+
+/* --- SUMMARY FOOTER --- */
+.summary-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid #b0d4de;
+    background: #edf7f9;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.footer-segment {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+    color: #111;
+}
+
+.footer-segment span {
+    font-size: 0.95rem;
+    color: #666;
+    margin-left: 6px;
+}
+
+.avg-rating {
+    border-right: 2px solid #b0d4de;
+    position: relative;
+}
+
+.total-favorites {
+    justify-content: flex-start;
+    position: relative;
+}
+
+/* Alignment icons on the right of footer sections */
+.status-icon {
+    position: absolute;
+    right: 20px;
+    font-size: 1.4rem;
+    color: #222;
+}
+
+.heart-filled {
+    color: #000;
+}
+
+/* Footer Credit */
+.credit {
+    text-align: right;
+    font-size: 0.75rem;
+    color: #555;
+    font-style: italic;
+}
