@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f4f7;
+    margin: 0;
+    padding: 40px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+    text-align: center;
+    color: #0d2f57;
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.form-section {
+    display: flex;
+    gap: 18px;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.form-section div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section label {
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+input {
+    height: 45px;
+    padding: 0 12px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#addBtn {
+    background: #2f89c5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 47px;
+}
+
+#addBtn:hover {
+    background: #2473a6;
+}
+
+.remove-btn {
+    background: white;
+    color: #b84d45;
+    border: 1px solid #b84d45;
+    border-radius: 5px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background: #b84d45;
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th {
+    background: #294b82;
+    color: white;
+    padding: 12px;
+    font-size: 22px;
+}
+
+td {
+    border: 1px solid #d3d3d3;
+    padding: 12px;
+    font-size: 18px;
+    text-align: center;
+}
+
+td:first-child {
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background: #f0f2f5;
+}
+
+.grand-total-box {
+    margin-top: 25px;
+    border: 5px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grand-total-box span:first-child {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #0d2f57;
+}
+
+#total {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #b34a00;
+}
