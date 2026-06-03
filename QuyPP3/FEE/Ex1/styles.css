@@ -1,0 +1,41 @@
+/* Table layout cố định để không bị vỡ khi tên dài */
+#shoppingTable {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Cột Item Name: linh hoạt nhưng có giới hạn */
+#shoppingTable th:nth-child(1),
+#shoppingTable td:nth-child(1) {
+  width: 55%;
+  max-width: 0;           /* bắt buộc để overflow hoạt động với table-layout fixed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Cột Cost */
+#shoppingTable th:nth-child(2),
+#shoppingTable td:nth-child(2) {
+  width: 20%;
+  text-align: center;
+}
+
+/* Cột Action */
+#shoppingTable th:nth-child(3),
+#shoppingTable td:nth-child(3) {
+  width: 25%;
+  text-align: center;
+}
+
+/* Thông báo lỗi inline thay cho alert */
+.error-msg {
+  font-size: 0.8rem;
+  color: #dc3545;
+  margin-top: 2px;
+  min-height: 1.1rem;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
