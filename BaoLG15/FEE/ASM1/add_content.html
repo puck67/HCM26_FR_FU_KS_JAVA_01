@@ -1,0 +1,32 @@
+<div>
+    <h1 class="content-title">Add Content</h1>
+    <div class="card card-custom">
+        <div class="card-header card-header-custom">
+            Content Form Elements
+        </div>
+        <div class="card-body">
+            <div id="contentAlertContainer"></div>
+            <form id="contentForm" novalidate>
+                <div class="form-group">
+                    <label for="contentTitle">Title</label>
+                    <input type="text" class="form-control" id="contentTitle" name="title" placeholder="Enter the title" required maxlength="200">
+                    <div class="invalid-feedback" id="contentTitleFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="contentBrief">Brief</label>
+                    <textarea class="form-control" id="contentBrief" name="brief" placeholder="Enter brief description" rows="3" required maxlength="150"></textarea>
+                    <div class="invalid-feedback" id="contentBriefFeedback"></div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="contentMain">Content</label>
+                    <textarea class="form-control" id="contentMain" name="content" placeholder="Enter content" rows="6" required maxlength="1000"></textarea>
+                    <div class="invalid-feedback" id="contentMainFeedback"></div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success mr-2" id="btnSubmitContent">Submit Button</button>
+                    <button type="reset" class="btn btn-success" id="btnResetContent">Reset Button</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1000&q=80" alt="Lake panorama banner" class="banner-img">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="person.html">Visitor Registration</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="search.html">Search Visitor</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="help.html">Help</a>
+            </li>
+        </ul>
+        <div class="content-area">
+            <div class="section-title">Visitor Information</div>
+            <div id="validation-alert" class="alert alert-danger alert-validation" role="alert"></div>
+            <div id="success-alert" class="alert alert-success alert-validation" role="alert"></div>
+            <form id="visitor-form" novalidate>
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-3 col-form-label text-right">First name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="firstName" name="firstName" class="form-control" placeholder="First name">
+                        <div class="text-danger-custom" id="firstName-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-3 col-form-label text-right">Last name:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Last name">
+                        <div class="text-danger-custom" id="lastName-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="gender" class="col-sm-3 col-form-label text-right">Gender:</label>
+                    <div class="col-sm-6">
+                        <select id="gender" name="gender" class="form-control">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="telephone" class="col-sm-3 col-form-label text-right">Telephone:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="telephone" name="telephone" class="form-control" placeholder="Telephone">
+                        <div class="text-danger-custom" id="telephone-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label text-right">Email:</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="email" name="email" class="form-control" placeholder="Email">
+                        <div class="text-danger-custom" id="email-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">You are in:</label>
+                    <div class="col-sm-9 pt-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="country" id="countryEurope" value="Europe">
+                            <label class="form-check-label" for="countryEurope">Europe</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="country" id="countryAfrica" value="Africa">
+                            <label class="form-check-label" for="countryAfrica">Africa</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="country" id="countryAustralia" value="Australia">
+                            <label class="form-check-label" for="countryAustralia">Australia</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="country" id="countryAsia" value="Asia">
+                            <label class="form-check-label" for="countryAsia">Asia</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="country" id="countryAmerica" value="America">
+                            <label class="form-check-label" for="countryAmerica">America</label>
+                        </div>
+                        <div class="text-danger-custom" id="country-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-right">What are your hobbies:</label>
+                    <div class="col-sm-9 pt-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySwimming" value="Swimming">
+                            <label class="form-check-label" for="hobbySwimming">Swimming</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyCooking" value="Cooking">
+                            <label class="form-check-label" for="hobbyCooking">Cooking</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyShopping" value="Shopping">
+                            <label class="form-check-label" for="hobbyShopping">Shopping</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySport" value="Sport">
+                            <label class="form-check-label" for="hobbySport">Sport</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyDance" value="Dance">
+                            <label class="form-check-label" for="hobbyDance">Dance</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySing" value="Sing">
+                            <label class="form-check-label" for="hobbySing">Sing</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-3 col-form-label text-right">Description:</label>
+                    <div class="col-sm-6">
+                        <textarea id="description" name="description" class="form-control" rows="4" placeholder="Description"></textarea>
+                        <div class="text-danger-custom" id="description-error"></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6 text-center">
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
