@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Image Gallery (Pure JS)</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for nice icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Version Toggle Navigation -->
+  <div class="nav-toggle">
+    <a href="index.html" class="active"><i class="fa-solid fa-code mr-1"></i> Pure JS Version</a>
+    <a href="jquery.html"><i class="fa-brands fa-js mr-1"></i> jQuery Version</a>
+  </div>
+
+  <div class="gallery-container">
+    <h1 class="gallery-title">My Image Gallery</h1>
+
+    <!-- Image Grid Container -->
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- 10 Gallery cards will be dynamically rendered here by JavaScript -->
+    </div>
+
+    <!-- Summary Footer Panel -->
+    <div class="summary-footer">
+      <!-- Left side: Average Rating -->
+      <div class="footer-section left" id="avg-rating-section">
+        AVERAGE RATING: 4.2 Stars <span class="based-text">(based on 9 items)</span>
+      </div>
+
+      <!-- Center Icon -->
+      <div class="divider-icon">
+        <i class="fa-solid fa-chart-simple"></i>
+      </div>
+
+      <!-- Right side: Total Favorites -->
+      <div class="footer-section right" id="total-fav-section">
+        TOTAL FAVORITES: 5 <i class="fa-solid fa-heart footer-heart ml-2"></i>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

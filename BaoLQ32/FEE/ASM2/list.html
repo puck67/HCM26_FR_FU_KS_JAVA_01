@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polls Management Dashboard - List</title>
+  <!-- Bootstrap 4.6.2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand navbar-dark navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="vote.html">Polls</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="vote.html" id="nav-vote-btn">Vote</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="create.html" id="nav-create-btn">Create</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="list.html" id="nav-list-btn">List</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button class="btn btn-green" id="btn-login-trigger" data-toggle="modal" data-target="#loginModal">Login</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- LIST PAGE SECTION -->
+  <div class="container page-section" id="list-section">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <!-- Alert Container for Messages -->
+        <div id="list-alert-container"></div>
+        
+        <div class="card-custom">
+          <!-- Tabs/Pills Navigation -->
+          <ul class="nav nav-pills mb-4" id="poll-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="tab-active" data-toggle="pill" href="#" role="tab">Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="tab-drafts" data-toggle="pill" href="#" role="tab">Drafts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="tab-closed" data-toggle="pill" href="#" role="tab">Closed</a>
+            </li>
+          </ul>
+
+          <!-- Table list -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped table-custom">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 10%;">#</th>
+                  <th scope="col" style="width: 50%;">The list of questions and issues within</th>
+                  <th scope="col" style="width: 40%; text-align: center;">Management</th>
+                </tr>
+              </thead>
+              <tbody id="polls-table-body">
+                <!-- Will be rendered dynamically by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+      <div class="modal-content modal-content-custom">
+        <div class="modal-body p-4 text-center">
+          <form id="login-form" novalidate class="text-left d-inline-block w-100" style="max-width: 320px;">
+            <div id="login-alert-container"></div>
+            
+            <div class="form-group" id="login-alias-group">
+              <label for="login-alias" class="font-weight-bold text-dark">Alias:</label>
+              <input type="text" class="form-control" id="login-alias" placeholder="JoeSixpack" required>
+              <div class="invalid-feedback-custom">Alias is required and must be between 3 and 255 characters.</div>
+            </div>
+            
+            <div class="form-group" id="login-password-group">
+              <label for="login-password" class="font-weight-bold text-dark">Password:</label>
+              <input type="password" class="form-control" id="login-password" placeholder="********" required>
+              <div class="invalid-feedback-custom">Password is required and must be at least 6 characters.</div>
+            </div>
+            
+            <div class="form-group form-check mb-4">
+              <input type="checkbox" class="form-check-input" id="login-remember">
+              <label class="form-check-label text-muted" for="login-remember">Remember me</label>
+            </div>
+            
+            <div class="form-group text-left">
+              <button type="submit" class="btn btn-green">Sign In</button>
+            </div>
+          </form>
+          
+          <div class="mt-4 pt-3 border-top w-100 text-center">
+            <button type="button" class="btn btn-green" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POLL RESULTS MODAL -->
+  <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold text-dark" id="resultsModalLabel">Poll Results</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4" id="resultsModalBody">
+          <!-- Loaded dynamically via AJAX -->
+          <div class="text-center py-4">
+            <div class="spinner-border text-success" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-green" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- jQuery 3.6.0, Popper.js 1.16.1, Bootstrap 4.6.2 JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Mock Poll Data Store Helpers
+      var defaultPolls = [
+        {
+          id: 98,
+          title: "Great poll",
+          status: "active",
+          questions: [
+            {
+              text: "it is necessary to you?",
+              mandatory: true,
+              multiple: false,
+              answers: ["Yes", "No"]
+            },
+            {
+              text: "Often pass polls?",
+              mandatory: false,
+              multiple: false,
+              answers: ["Once a month", "Once a week"]
+            },
+            {
+              text: "How old are you?",
+              mandatory: false,
+              multiple: false,
+              answers: ["18-20", "21-23"]
+            }
+          ]
+        }
+      ];
+
+      function getPolls() {
+        var stored = localStorage.getItem('polls');
+        if (!stored) {
+          localStorage.setItem('polls', JSON.stringify(defaultPolls));
+          return defaultPolls;
+        }
+        return JSON.parse(stored);
+      }
+
+      function savePolls(pollsList) {
+        localStorage.setItem('polls', JSON.stringify(pollsList));
+      }
+
+      var polls = getPolls();
+
+      // ----------------------------------------------------
+      // LIST PAGE RENDERING & FILTERING
+      // ----------------------------------------------------
+      function renderPollsTable(statusFilter) {
+        // Refresh local memory from localStorage
+        polls = getPolls();
+        
+        var $tbody = $('#polls-table-body');
+        $tbody.empty();
+        
+        var filtered = polls.filter(function(p) {
+          return p.status === statusFilter;
+        });
+        
+        if (filtered.length === 0) {
+          $tbody.append(`
+            <tr>
+              <td colspan="3" class="text-center text-muted py-3">No items.</td>
+            </tr>
+          `);
+          return;
+        }
+        
+        filtered.forEach(function(poll) {
+          var closeButton = (poll.status === 'active') ? `
+            <button class="btn btn-sm btn-green btn-close-poll mr-1">Close poll</button>
+          ` : '';
+          
+          var voteButton = (poll.status === 'active') ? `
+            <button class="btn btn-sm btn-green btn-vote-on-poll mr-1">Vote</button>
+          ` : '';
+          
+          $tbody.append(`
+            <tr data-id="${poll.id}">
+              <td class="align-middle">${poll.id}</td>
+              <td class="poll-title font-weight-bold text-dark align-middle">${poll.title}</td>
+              <td class="text-center align-middle">
+                <div class="d-flex justify-content-center">
+                  ${voteButton}
+                  <button class="btn btn-sm btn-green btn-view-results mr-1">View results</button>
+                  ${closeButton}
+                  <button class="btn btn-sm btn-green btn-delete-poll">Delete</button>
+                </div>
+              </td>
+            </tr>
+          `);
+        });
+      }
+
+      // Handle click on List section tabs
+      $('#poll-tabs a').on('click', function(e) {
+        e.preventDefault();
+        $('#poll-tabs a').removeClass('active');
+        $(this).addClass('active');
+        
+        var status = $(this).text().toLowerCase();
+        renderPollsTable(status);
+      });
+
+      // Handle Close Poll
+      $(document).on('click', '.btn-close-poll', function(e) {
+        e.preventDefault();
+        var $row = $(this).closest('tr');
+        var pollId = parseInt($row.data('id'));
+        
+        polls = getPolls();
+        var poll = polls.find(function(p) { return p.id === pollId; });
+        if (poll) {
+          poll.status = 'closed';
+          savePolls(polls);
+          renderPollsTable('active');
+          
+          var successMsg = `
+            <div class="alert alert-success border mb-3">
+              Poll "${poll.title}" was closed successfully.
+            </div>
+          `;
+          $('#list-alert-container').html(successMsg).fadeIn().delay(2000).fadeOut();
+        }
+      });
+
+      // Handle Vote Button inside List Page (Load onto Vote Page)
+      $(document).on('click', '.btn-vote-on-poll', function(e) {
+        e.preventDefault();
+        var pollId = parseInt($(this).closest('tr').data('id'));
+        window.location.href = `vote.html?id=${pollId}`;
+      });
+
+      // Handle Delete Poll with AJAX (Confirm Box matching Page 6 & 7)
+      $(document).on('click', '.btn-delete-poll', function(e) {
+        e.preventDefault();
+        var $row = $(this).closest('tr');
+        var pollId = parseInt($row.data('id'));
+        var pollTitle = $row.find('.poll-title').text();
+        
+        // Native confirm box matching PDF page 6
+        var confirmDelete = confirm("Are you sure you want to delete this item?");
+        if (confirmDelete) {
+          // AJAX request to delete_poll.json
+          $.ajax({
+            url: 'delete_poll.json',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+              if (response.status === 'success') {
+                polls = getPolls();
+                polls = polls.filter(function(p) { return p.id !== pollId; });
+                savePolls(polls);
+                
+                $row.fadeOut(300, function() {
+                  $(this).remove();
+                  var currentTabStatus = $('#poll-tabs a.active').text().toLowerCase();
+                  renderPollsTable(currentTabStatus);
+                });
+                
+                var successMsg = `
+                  <div class="alert alert-success border mb-3">
+                    Poll "${pollTitle}" was deleted successfully via AJAX.
+                  </div>
+                `;
+                $('#list-alert-container').html(successMsg).fadeIn().delay(2500).fadeOut();
+              }
+            },
+            error: function() {
+              alert('Failed to delete item via AJAX.');
+            }
+          });
+        }
+      });
+
+      // Handle View Results with AJAX (Page 7)
+      $(document).on('click', '.btn-view-results', function(e) {
+        e.preventDefault();
+        var $row = $(this).closest('tr');
+        var pollTitle = $row.find('.poll-title').text();
+        
+        $('#resultsModalBody').html(`
+          <div class="text-center py-4">
+            <div class="spinner-border text-success" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <p class="text-muted mt-2">Loading results via AJAX...</p>
+          </div>
+        `);
+        $('#resultsModalLabel').text(`Results: ${pollTitle}`);
+        $('#resultsModal').modal('show');
+        
+        // Fetch results.html via AJAX
+        $.ajax({
+          url: 'results.html',
+          type: 'GET',
+          dataType: 'html',
+          success: function(htmlData) {
+            var bodyContent = '';
+            try {
+              var parser = new DOMParser();
+              var doc = parser.parseFromString(htmlData, 'text/html');
+              bodyContent = doc.querySelector('.results-content') ? doc.querySelector('.results-content').outerHTML : doc.body.innerHTML;
+            } catch(err) {
+              bodyContent = htmlData;
+            }
+            
+            setTimeout(function() {
+              $('#resultsModalBody').html(bodyContent);
+            }, 300);
+          },
+          error: function() {
+            $('#resultsModalBody').html('<div class="alert alert-danger">Failed to load poll results via AJAX.</div>');
+          }
+        });
+      });
+
+      // ----------------------------------------------------
+      // SHARED USER SESSION LOGIC
+      // ----------------------------------------------------
+      function checkUserSession() {
+        var currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+          $('#btn-login-trigger').removeClass('btn-success').addClass('btn-danger').html(`Logout (${currentUser})`).addClass('btn-logout-mode');
+        } else {
+          $('#btn-login-trigger').removeClass('btn-danger btn-logout-mode').addClass('btn-success').html('Login');
+        }
+      }
+
+      // Handle Login Form Submission
+      $('#login-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#login-alert-container').empty();
+        $('#login-alias-group, #login-password-group').removeClass('is-invalid-group');
+        
+        var alias = $('#login-alias').val().trim();
+        var password = $('#login-password').val().trim();
+        var hasErrors = false;
+        
+        if (alias.length < 3 || alias.length > 255) {
+          $('#login-alias-group').addClass('is-invalid-group');
+          hasErrors = true;
+        }
+        
+        if (password.length < 6 || password.length > 255) {
+          $('#login-password-group').addClass('is-invalid-group');
+          hasErrors = true;
+        }
+        
+        if (hasErrors) {
+          var errorHtml = `
+            <div class="alert alert-danger border py-2 px-3 mb-3" style="font-size: 0.9rem;">
+              Please fill in all mandatory fields correctly.
+            </div>
+          `;
+          $('#login-alert-container').html(errorHtml);
+        } else {
+          localStorage.setItem('currentUser', alias);
+          var successHtml = `
+            <div class="alert alert-success border py-2 px-3 mb-3" style="font-size: 0.9rem;">
+              Successfully logged in!
+            </div>
+          `;
+          $('#login-alert-container').html(successHtml);
+          
+          setTimeout(function() {
+            $('#loginModal').modal('hide');
+            $('#login-form')[0].reset();
+            $('#login-alert-container').empty();
+            checkUserSession();
+          }, 1000);
+        }
+      });
+
+      // Handle Logout action
+      $(document).on('click', '.btn-logout-mode', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('currentUser');
+        checkUserSession();
+        alert('Logged out successfully.');
+      });
+
+      // Real-time Validation Feedback Clearer
+      $(document).on('input change', '.form-control, .answer-input, .question-text-input', function() {
+        var $input = $(this);
+        var val = $input.val().trim();
+        var isValid = false;
+        
+        if ($input.attr('id') === 'poll-name' || $input.hasClass('question-text-input')) {
+          isValid = (val.length >= 3 && val.length <= 255);
+        } else if ($input.hasClass('answer-input')) {
+          isValid = (val.length >= 3 && val.length <= 200);
+        } else if ($input.attr('id') === 'login-alias') {
+          isValid = (val.length >= 3 && val.length <= 255);
+        } else if ($input.attr('id') === 'login-password') {
+          isValid = (val.length >= 6 && val.length <= 255);
+        }
+        
+        if (isValid) {
+          $input.closest('.form-group, .question-text-group, .answer-group, #login-alias-group, #login-password-group').removeClass('is-invalid-group');
+        }
+      });
+
+      // Initialize table
+      renderPollsTable('active');
+      checkUserSession();
+    });
+  </script>
+</body>
+</html>

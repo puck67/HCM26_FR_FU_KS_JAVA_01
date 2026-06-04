@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile – CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Navbar + Sidebar injected by cms-layout.js -->
+
+<main class="cms-main">
+    <div class="content-card">
+        <h4>Edit Profile</h4>
+        <div class="section-label">Profile Form Elements</div>
+
+        <div id="alertBox"></div>
+
+        <form id="profileForm" novalidate>
+            <!-- First Name -->
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" id="firstName" class="form-control"
+                       placeholder="Enter the first name" maxlength="30">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" id="lastName" class="form-control"
+                       placeholder="Enter the last name" maxlength="30">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Email (read-only display) -->
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <p class="form-control-plaintext">your_email@example.com</p>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" id="phone" class="form-control"
+                       placeholder="Enter your phone number" maxlength="13">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea id="description" class="form-control" rows="3"
+                          maxlength="200" placeholder="Optional description"></textarea>
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Submit Button</button>
+            <button type="reset"  class="btn btn-secondary">Reset Button</button>
+        </form>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/cms-layout.js"></script>
+<script>
+    const PROFILE_RULES = {
+        firstName:   { required: true, minLength: 3, maxLength: 30 },
+        lastName:    { required: true, minLength: 3, maxLength: 30 },
+        phone:       { required: true, phone: true },
+        description: { maxLength: 200 }
+    };
+
+    Validator.attachLive(PROFILE_RULES);
+
+    $('#profileForm').on('submit', function (e) {
+        e.preventDefault();
+        const ok = Validator.validateForm(PROFILE_RULES);
+        if (!ok) return;
+
+        // AJAX simulate update
+        $('#alertBox').html('<div class="alert alert-info">Saving…</div>');
+
+        $.ajax({
+            url: '#',                       // placeholder – replace with real endpoint
+            method: 'POST',
+            data: $(this).serialize(),
+            complete: function () {
+                // Simulate server latency
+                setTimeout(() => {
+                    $('#alertBox').html(
+                        '<div class="alert alert-success">Profile updated successfully!</div>'
+                    );
+                }, 800);
+            }
+        });
+    });
+</script>
+</body>
+</html>
