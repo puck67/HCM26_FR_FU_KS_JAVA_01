@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CMS</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">Please Sign In</div>
+            <div class="auth-body">
+                <form id="login-form" action="view-content.html" method="GET" novalidate>
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" placeholder="E-mail" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required maxlength="50">
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label text-muted" for="rememberMe">Remember Me</label>
+                    </div>
+                    <button type="submit" class="btn btn-block">Login</button>
+                    <div class="text-center mt-3">
+                        <a href="register.html" class="btn-link">Click here to Register</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/validation.js"></script>
+</body>
+</html>
