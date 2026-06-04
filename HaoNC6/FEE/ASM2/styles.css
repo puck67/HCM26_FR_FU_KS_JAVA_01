@@ -1,0 +1,139 @@
+/* Global Styles */
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f7f9fa;
+  color: #495057;
+}
+
+/* Custom Green Buttons - MUST be green for all buttons */
+.btn, button, .btn-green {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover, button:hover, .btn-green:hover {
+  background-color: #218838 !important;
+  border-color: #1e7e34 !important;
+  color: #ffffff !important;
+}
+
+.btn:focus, button:focus, .btn-green:focus {
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5) !important;
+}
+
+/* Override Tab buttons styling to also be green but indicate state */
+.btn-tab {
+  background-color: #e2e6ea !important;
+  border-color: #dae0e5 !important;
+  color: #495057 !important;
+}
+
+.btn-tab.active {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #ffffff !important;
+}
+
+/* Light Gray Placeholders */
+::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  color: #cccccc !important;
+}
+
+::-ms-input-placeholder {
+  color: #cccccc !important;
+}
+
+/* Custom Input Styling */
+.custom-input {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 10px 15px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-input:focus {
+  border-color: #28a745;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Error validation UI styling */
+.is-invalid-custom {
+  border-color: #dc3545 !important;
+}
+
+.is-invalid-custom:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.invalid-label-custom {
+  color: #dc3545 !important;
+}
+
+.invalid-feedback-custom {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
+/* Question card styling in Create page */
+.card-question {
+  border-radius: 6px;
+  background-color: #fcfcfc;
+  border: 1px solid #e9ecef !important;
+  margin-bottom: 20px;
+}
+
+.bg-light-gray {
+  background-color: #fafbfc;
+}
+
+/* Section transitions */
+.app-section {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navbar Link styles */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  color: #ffffff !important;
+  border-bottom: 2px solid #28a745;
+}
+
+/* Login Modal Styling */
+.modal-content {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
