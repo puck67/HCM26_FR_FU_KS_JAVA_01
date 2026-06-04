@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Contents – CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Navbar + Sidebar injected by cms-layout.js -->
+
+<main class="cms-main">
+    <div class="content-card">
+        <h4>View Content</h4>
+        <div class="section-label">View Content List</div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered view-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width:40px">#</th>
+                        <th style="width:200px">Title</th>
+                        <th>Brief</th>
+                        <th style="width:120px">Created Date</th>
+                    </tr>
+                </thead>
+                <tbody id="contentTableBody">
+                    <!-- Rows inserted by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script src="js/cms-layout.js"></script>
+<script>
+    // Default sample data (matches screenshot)
+    const DEFAULT_CONTENTS = [
+        {
+            title: 'Lorem ipsum dolor sit amet',
+            brief: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            date:  '31/08/2016 12:03'
+        },
+        {
+            title: 'Vestibulum tincidunt est vitae',
+            brief: 'Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.',
+            date:  '31/08/2016 13:13'
+        },
+        {
+            title: 'Aliquam ornare lacus adipiscing',
+            brief: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan.',
+            date:  '01/09/2016 15:09'
+        }
+    ];
+
+    function renderTable(items) {
+        const tbody = $('#contentTableBody');
+        tbody.empty();
+        items.forEach((item, i) => {
+            tbody.append(`
+                <tr>
+                    <td>${i + 1}</td>
+                    <td>${item.title}</td>
+                    <td>${item.brief}</td>
+                    <td>${item.date}</td>
+                </tr>
+            `);
+        });
+    }
+
+    // Merge local storage data with defaults
+    const saved   = JSON.parse(localStorage.getItem('cms_contents') || '[]');
+    const allData = DEFAULT_CONTENTS.concat(saved);
+    renderTable(allData);
+</script>
+</body>
+</html>

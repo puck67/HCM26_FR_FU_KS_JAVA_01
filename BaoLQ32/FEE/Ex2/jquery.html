@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kanban Board (jQuery)</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for nice icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Version Toggle Navigation -->
+  <div class="nav-toggle">
+    <a href="index.html"><i class="fa-solid fa-code mr-1"></i> Pure JS Version</a>
+    <a href="jquery.html" class="active"><i class="fa-brands fa-js mr-1"></i> jQuery Version</a>
+  </div>
+
+  <div class="board-container" id="kanban-board">
+    
+    <!-- Board Header -->
+    <div class="board-header">
+      <h1 class="board-title">My Project Board</h1>
+      <div class="board-meta">
+        <!-- Calendar and Avatar to match screenshot -->
+        <button class="btn-calendar"><i class="fa-regular fa-calendar-days"></i> Calendar</button>
+        <div class="avatar">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" alt="User Profile">
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-time Search Bar (jQuery Requirement) -->
+    <div class="search-wrapper">
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" class="search-input" id="search-tasks" placeholder="Type to filter tasks in real-time...">
+    </div>
+
+    <!-- Board Columns Grid -->
+    <div class="columns-grid">
+      
+      <!-- TO DO COLUMN -->
+      <div class="kanban-column column-todo" id="col-todo">
+        <div class="column-header">To Do</div>
+        <div class="column-input-area">
+          <div class="task-input-group">
+            <input type="text" class="task-input" placeholder="Add a task to To Do" id="input-todo">
+            <button class="btn-add-task" id="btn-add-todo" title="Add task"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="cards-list" id="cards-todo">
+          <!-- Task cards added here -->
+        </div>
+      </div>
+
+      <!-- IN PROGRESS COLUMN -->
+      <div class="kanban-column column-progress" id="col-progress">
+        <div class="column-header">In Progress</div>
+        <div class="column-input-area">
+          <div class="task-input-group">
+            <input type="text" class="task-input" placeholder="Add a task to In Progress" id="input-progress">
+            <button class="btn-add-task" id="btn-add-progress" title="Add task"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="cards-list" id="cards-progress">
+          <!-- Task cards added here -->
+        </div>
+      </div>
+
+      <!-- DONE COLUMN -->
+      <div class="kanban-column column-done" id="col-done">
+        <div class="column-header">Done</div>
+        <div class="column-input-area">
+          <div class="task-input-group">
+            <input type="text" class="task-input" placeholder="Add a task to Done" id="input-done">
+            <button class="btn-add-task" id="btn-add-done" title="Add task"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="cards-list" id="cards-done">
+          <!-- Task cards added here -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery Script logic -->
+  <script src="app-jquery.js"></script>
+</body>
+</html>

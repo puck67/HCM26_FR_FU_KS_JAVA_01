@@ -1,0 +1,442 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-color: #f0f2f5;
+    --board-bg: #ffffff;
+    --text-main: #1f2937;
+    --text-muted: #9ca3af;
+    --todo-border: #93c5fd;
+    --todo-header: #dbeafe;
+    --progress-border: #fde047;
+    --progress-header: #fef9c3;
+    --done-border: #86efac;
+    --done-header: #dcfce7;
+    --card-bg: #fefcf0;
+    --card-accent: #f59e0b;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 20px;
+}
+
+/* Navigation for switching versions */
+.nav-toggle {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.nav-toggle a {
+    text-decoration: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #4b5563;
+    transition: all 0.3s ease;
+}
+
+.nav-toggle a.active {
+    background: #2563eb;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.nav-toggle a:hover:not(.active) {
+    color: #2563eb;
+    background: #f3f4f6;
+}
+
+/* Kanban Board Container */
+.board-container {
+    background-color: var(--board-bg);
+    width: 100%;
+    max-width: 1100px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 35px;
+    border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+/* Board Header */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.board-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.board-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-calendar {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-calendar:hover {
+    background: #e5e7eb;
+}
+
+/* Search Bar (jQuery Version) */
+.search-wrapper {
+    width: 100%;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 18px 12px 42px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    background-color: #f9fafb;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    font-size: 1.1rem;
+}
+
+/* Columns Grid */
+.columns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+@media (max-width: 900px) {
+    .columns-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Kanban Column */
+.kanban-column {
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+}
+
+.column-header {
+    padding: 14px 20px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+}
+
+.column-todo .column-header {
+    background-color: var(--todo-header);
+    color: #1e40af;
+    border-color: var(--todo-border);
+}
+
+.column-progress .column-header {
+    background-color: var(--progress-header);
+    color: #854d0e;
+    border-color: var(--progress-border);
+}
+
+.column-done .column-header {
+    background-color: var(--done-header);
+    color: #166534;
+    border-color: var(--done-border);
+}
+
+/* Column Inputs Section */
+.column-input-area {
+    padding: 15px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.task-input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.task-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.task-input:focus {
+    outline: none;
+    border-color: #64748b;
+}
+
+.btn-add-task {
+    background-color: #e2e8f0;
+    color: #475569;
+    border: none;
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-add-task:hover {
+    background-color: #cbd5e1;
+    color: #1e293b;
+}
+
+/* Column Cards List Area */
+.cards-list {
+    padding: 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-height: 300px;
+}
+
+/* Sticky Note Task Card */
+.task-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--card-accent);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07);
+}
+
+/* Sticky Note Curl Effect */
+.task-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 14px 14px;
+    border-color: transparent transparent rgba(0,0,0,0.06) transparent;
+    border-bottom-right-radius: 8px;
+    transition: border-color 0.2s;
+}
+
+.task-card:hover::after {
+    border-color: transparent transparent rgba(0,0,0,0.12) transparent;
+}
+
+.card-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+/* Card Actions styling */
+.card-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn-card {
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.btn-card:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* Action Specific Buttons */
+.btn-card-start {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+.btn-card-start:hover {
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+.btn-card-done {
+    background-color: #16a34a;
+    border-color: #16a34a;
+    color: #ffffff;
+}
+
+.btn-card-done:hover {
+    background-color: #15803d;
+    border-color: #15803d;
+}
+
+.btn-card-delete {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+    color: #dc2626;
+}
+
+.btn-card-delete:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+}
+
+/* Dropdown Menu styling for Move dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    min-width: 110px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    color: #4b5563;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    display: block;
+}
+
+.dropdown-item:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}

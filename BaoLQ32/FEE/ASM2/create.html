@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polls Management Dashboard - Create</title>
+  <!-- Bootstrap 4.6.2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand navbar-dark navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="vote.html">Polls</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="vote.html" id="nav-vote-btn">Vote</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="create.html" id="nav-create-btn">Create</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="list.html" id="nav-list-btn">List</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button class="btn btn-green" id="btn-login-trigger" data-toggle="modal" data-target="#loginModal">Login</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CREATE PAGE SECTION -->
+  <div class="container page-section" id="create-section">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-custom">
+          <!-- Alert Container for Validation Messages -->
+          <div id="create-alert-container"></div>
+          
+          <h2 class="card-title-custom">Create Interview</h2>
+          
+          <form id="create-form" novalidate>
+            <!-- Poll Name Input (No label, just placeholder matching screenshot) -->
+            <div class="form-group mb-4" id="poll-name-group">
+              <input type="text" class="form-control form-control-lg" id="poll-name" placeholder="Name poll" required>
+              <div class="invalid-feedback-custom">Name poll is required and must be between 3 and 255 characters.</div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questions-container">
+              <!-- Default Question #1 Group -->
+              <div class="question-block-create mb-4" data-qindex="1">
+                <!-- Question input (No label, just placeholder) -->
+                <div class="form-group question-text-group mb-3">
+                  <input type="text" class="form-control question-text-input" placeholder="Enter your question" required>
+                  <div class="invalid-feedback-custom">Question text is required and must be between 3 and 255 characters.</div>
+                </div>
+
+                <!-- Checkboxes (Standard controls matching PDF) -->
+                <div class="form-group form-check mb-2">
+                  <input type="checkbox" class="form-check-input q-mandatory" id="q-mandatory-1">
+                  <label class="form-check-label text-dark" for="q-mandatory-1">Mandatory</label>
+                </div>
+                <div class="form-group form-check mb-3">
+                  <input type="checkbox" class="form-check-input q-multiple" id="q-multiple-1">
+                  <label class="form-check-label text-dark" for="q-multiple-1">You can select multiple options</label>
+                </div>
+
+                <!-- Possible Answers Inline Layout -->
+                <div class="answers-form-group">
+                  <div class="answers-container">
+                    <!-- Answer Input 1 with + button -->
+                    <div class="form-group row align-items-center mb-2 answer-group">
+                      <label class="col-sm-3 col-form-label text-dark text-right font-weight-bold pr-2 mb-0">Possible answers</label>
+                      <div class="col-sm-9">
+                        <div class="input-group">
+                          <input type="text" class="form-control answer-input" placeholder="Type your answer" required>
+                          <div class="input-group-append">
+                            <button class="btn btn-green btn-add-answer" type="button">+</button>
+                          </div>
+                        </div>
+                        <div class="invalid-feedback-custom w-100">Answer is required and must be between 3 and 200 characters.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add Question Action Button -->
+            <div class="form-group text-left mb-4">
+              <button type="button" class="btn btn-green" id="btn-add-question">+ Add question</button>
+            </div>
+
+            <hr class="my-4">
+
+            <!-- Submit Button -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-green px-4">Retain</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+      <div class="modal-content modal-content-custom">
+        <div class="modal-body p-4 text-center">
+          <form id="login-form" novalidate class="text-left d-inline-block w-100" style="max-width: 320px;">
+            <div id="login-alert-container"></div>
+            
+            <div class="form-group" id="login-alias-group">
+              <label for="login-alias" class="font-weight-bold text-dark">Alias:</label>
+              <input type="text" class="form-control" id="login-alias" placeholder="JoeSixpack" required>
+              <div class="invalid-feedback-custom">Alias is required and must be between 3 and 255 characters.</div>
+            </div>
+            
+            <div class="form-group" id="login-password-group">
+              <label for="login-password" class="font-weight-bold text-dark">Password:</label>
+              <input type="password" class="form-control" id="login-password" placeholder="********" required>
+              <div class="invalid-feedback-custom">Password is required and must be at least 6 characters.</div>
+            </div>
+            
+            <div class="form-group form-check mb-4">
+              <input type="checkbox" class="form-check-input" id="login-remember">
+              <label class="form-check-label text-muted" for="login-remember">Remember me</label>
+            </div>
+            
+            <div class="form-group text-left">
+              <button type="submit" class="btn btn-green">Sign In</button>
+            </div>
+          </form>
+          
+          <div class="mt-4 pt-3 border-top w-100 text-center">
+            <button type="button" class="btn btn-green" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- jQuery 3.6.0, Popper.js 1.16.1, Bootstrap 4.6.2 JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Mock Poll Data Store Helpers
+      var defaultPolls = [
+        {
+          id: 98,
+          title: "Great poll",
+          status: "active",
+          questions: [
+            {
+              text: "it is necessary to you?",
+              mandatory: true,
+              multiple: false,
+              answers: ["Yes", "No"]
+            },
+            {
+              text: "Often pass polls?",
+              mandatory: false,
+              multiple: false,
+              answers: ["Once a month", "Once a week"]
+            },
+            {
+              text: "How old are you?",
+              mandatory: false,
+              multiple: false,
+              answers: ["18-20", "21-23"]
+            }
+          ]
+        }
+      ];
+
+      function getPolls() {
+        var stored = localStorage.getItem('polls');
+        if (!stored) {
+          localStorage.setItem('polls', JSON.stringify(defaultPolls));
+          return defaultPolls;
+        }
+        return JSON.parse(stored);
+      }
+
+      function savePolls(pollsList) {
+        localStorage.setItem('polls', JSON.stringify(pollsList));
+      }
+
+      var polls = getPolls();
+      var questionCount = 1;
+
+      // Handle Answers dynamic addition (Page 6 layout)
+      $(document).on('click', '.btn-add-answer', function(e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var $currentGroup = $btn.closest('.answer-group');
+        var $container = $currentGroup.closest('.answers-container');
+        
+        // Remove validation error class
+        $currentGroup.removeClass('is-invalid-group');
+        
+        // Validation of current input before adding another (min 3, max 200)
+        var currentVal = $currentGroup.find('.answer-input').val().trim();
+        if (currentVal.length < 3 || currentVal.length > 200) {
+          $currentGroup.addClass('is-invalid-group');
+          return;
+        }
+        
+        // Remove the append group containing "+" button from the current input row
+        $btn.closest('.input-group-append').remove();
+        
+        // Append a new answer group with the "+" button at the end
+        var newAnswerHtml = `
+          <div class="form-group row align-items-center mb-2 answer-group">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+              <div class="input-group">
+                <input type="text" class="form-control answer-input" placeholder="Type your answer" required>
+                <div class="input-group-append">
+                  <button class="btn btn-green btn-add-answer" type="button">+</button>
+                </div>
+              </div>
+              <div class="invalid-feedback-custom w-100">Answer is required and must be between 3 and 200 characters.</div>
+            </div>
+          </div>
+        `;
+        $container.append(newAnswerHtml);
+      });
+
+      // Add a new question block (Page 6 layout)
+      $('#btn-add-question').on('click', function(e) {
+        e.preventDefault();
+        questionCount++;
+        
+        var newQuestionHtml = `
+          <div class="question-block-create mb-5 border-top pt-4" data-qindex="${questionCount}" style="display: none;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="text-success font-weight-bold mb-0">Question #${questionCount}</h6>
+              <button type="button" class="btn btn-sm btn-danger btn-delete-question">Delete Question</button>
+            </div>
+            
+            <div class="form-group question-text-group mb-3">
+              <input type="text" class="form-control question-text-input" placeholder="Enter your question" required>
+              <div class="invalid-feedback-custom">Question text is required and must be between 3 and 255 characters.</div>
+            </div>
+
+            <div class="form-group form-check mb-2">
+              <input type="checkbox" class="form-check-input q-mandatory" id="q-mandatory-${questionCount}">
+              <label class="form-check-label text-dark" for="q-mandatory-${questionCount}">Mandatory</label>
+            </div>
+            <div class="form-group form-check mb-3">
+              <input type="checkbox" class="form-check-input q-multiple" id="q-multiple-${questionCount}">
+              <label class="form-check-label text-dark" for="q-multiple-${questionCount}">You can select multiple options</label>
+            </div>
+
+            <div class="answers-form-group">
+              <div class="answers-container">
+                <div class="form-group row align-items-center mb-2 answer-group">
+                  <label class="col-sm-3 col-form-label text-dark text-right font-weight-bold pr-2 mb-0">Possible answers</label>
+                  <div class="col-sm-9">
+                    <div class="input-group">
+                      <input type="text" class="form-control answer-input" placeholder="Type your answer" required>
+                      <div class="input-group-append">
+                        <button class="btn btn-green btn-add-answer" type="button">+</button>
+                      </div>
+                    </div>
+                    <div class="invalid-feedback-custom w-100">Answer is required and must be between 3 and 200 characters.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        $('#questions-container').append(newQuestionHtml);
+        $('#questions-container .question-block-create:last-child').slideDown(200);
+      });
+
+      // Delete question block
+      $(document).on('click', '.btn-delete-question', function(e) {
+        e.preventDefault();
+        var $block = $(this).closest('.question-block-create');
+        $block.slideUp(200, function() {
+          $(this).remove();
+        });
+      });
+
+      // Create Poll Form Validation & Submission
+      $('#create-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#create-alert-container').empty();
+        $('.form-group, .question-text-group, .answer-group, .answers-form-group').removeClass('is-invalid-group');
+        
+        var errors = [];
+        
+        // 1. Validate Poll Name
+        var pollName = $('#poll-name').val().trim();
+        if (pollName.length < 3 || pollName.length > 255) {
+          $('#poll-name-group').addClass('is-invalid-group');
+          errors.push("Name poll is required and must be between 3 and 255 characters.");
+        }
+        
+        // 2. Validate Questions
+        var questionsData = [];
+        var qBlocks = $('#questions-container .question-block-create');
+        
+        qBlocks.each(function(index) {
+          var $qBlock = $(this);
+          var qIdx = index + 1;
+          
+          // Question text
+          var qText = $qBlock.find('.question-text-input').val().trim();
+          if (qText.length < 3 || qText.length > 255) {
+            $qBlock.find('.question-text-group').addClass('is-invalid-group');
+            errors.push(`Question #${qIdx}: question text must be between 3 and 255 characters.`);
+          }
+          
+          // Answers
+          var answers = [];
+          var hasAnswerError = false;
+          var validAnswersCount = 0;
+          
+          $qBlock.find('.answer-input').each(function() {
+            var ansVal = $(this).val().trim();
+            if (ansVal.length > 0) {
+              if (ansVal.length < 3 || ansVal.length > 200) {
+                $(this).closest('.answer-group').addClass('is-invalid-group');
+                hasAnswerError = true;
+              } else {
+                answers.push(ansVal);
+                validAnswersCount++;
+              }
+            } else {
+              $(this).closest('.answer-group').addClass('is-invalid-group');
+              hasAnswerError = true;
+            }
+          });
+          
+          if (hasAnswerError) {
+            $qBlock.find('.answers-form-group').addClass('is-invalid-group');
+            errors.push(`Question #${qIdx}: answers are required and must be between 3 and 200 characters.`);
+          } else if (validAnswersCount < 1) {
+            $qBlock.find('.answers-form-group').addClass('is-invalid-group');
+            errors.push(`Question #${qIdx}: please enter at least one valid answer.`);
+          }
+          
+          questionsData.push({
+            text: qText,
+            mandatory: $qBlock.find('.q-mandatory').is(':checked'),
+            multiple: $qBlock.find('.q-multiple').is(':checked'),
+            answers: answers
+          });
+        });
+        
+        // 3. Handle validation result
+        if (errors.length > 0) {
+          var errorHtml = `
+            <div class="alert alert-danger border mb-4">
+              <h6 class="font-weight-bold">Validation Errors:</h6>
+              <ul class="mb-0 pl-3">
+                ${errors.map(err => `<li>${err}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+          $('#create-alert-container').html(errorHtml);
+          $([document.documentElement, document.body]).animate({
+              scrollTop: $("#create-alert-container").offset().top - 120
+          }, 300);
+        } else {
+          // Success! Save poll to local storage
+          var pollsList = getPolls();
+          var nextId = pollsList.length > 0 ? Math.max(...pollsList.map(p => p.id)) + 1 : 1;
+          var newPoll = {
+            id: nextId,
+            title: pollName,
+            status: "active",
+            questions: questionsData
+          };
+          pollsList.push(newPoll);
+          savePolls(pollsList);
+          
+          alert(`Poll "${pollName}" was created successfully! Redirecting to List page.`);
+          window.location.href = 'list.html';
+        }
+      });
+
+      // ----------------------------------------------------
+      // SHARED USER SESSION LOGIC
+      // ----------------------------------------------------
+      function checkUserSession() {
+        var currentUser = localStorage.getItem('currentUser');
+        if (currentUser) {
+          $('#btn-login-trigger').removeClass('btn-success').addClass('btn-danger').html(`Logout (${currentUser})`).addClass('btn-logout-mode');
+        } else {
+          $('#btn-login-trigger').removeClass('btn-danger btn-logout-mode').addClass('btn-success').html('Login');
+        }
+      }
+
+      // Handle Login Form Submission
+      $('#login-form').on('submit', function(e) {
+        e.preventDefault();
+        $('#login-alert-container').empty();
+        $('#login-alias-group, #login-password-group').removeClass('is-invalid-group');
+        
+        var alias = $('#login-alias').val().trim();
+        var password = $('#login-password').val().trim();
+        var hasErrors = false;
+        
+        if (alias.length < 3 || alias.length > 255) {
+          $('#login-alias-group').addClass('is-invalid-group');
+          hasErrors = true;
+        }
+        
+        if (password.length < 6 || password.length > 255) {
+          $('#login-password-group').addClass('is-invalid-group');
+          hasErrors = true;
+        }
+        
+        if (hasErrors) {
+          var errorHtml = `
+            <div class="alert alert-danger border py-2 px-3 mb-3" style="font-size: 0.9rem;">
+              Please fill in all mandatory fields correctly.
+            </div>
+          `;
+          $('#login-alert-container').html(errorHtml);
+        } else {
+          localStorage.setItem('currentUser', alias);
+          var successHtml = `
+            <div class="alert alert-success border py-2 px-3 mb-3" style="font-size: 0.9rem;">
+              Successfully logged in!
+            </div>
+          `;
+          $('#login-alert-container').html(successHtml);
+          
+          setTimeout(function() {
+            $('#loginModal').modal('hide');
+            $('#login-form')[0].reset();
+            $('#login-alert-container').empty();
+            checkUserSession();
+          }, 1000);
+        }
+      });
+
+      // Handle Logout action
+      $(document).on('click', '.btn-logout-mode', function(e) {
+        e.preventDefault();
+        localStorage.removeItem('currentUser');
+        checkUserSession();
+        alert('Logged out successfully.');
+      });
+
+      // Real-time Validation Feedback Clearer
+      $(document).on('input change', '.form-control, .answer-input, .question-text-input', function() {
+        var $input = $(this);
+        var val = $input.val().trim();
+        var isValid = false;
+        
+        if ($input.attr('id') === 'poll-name' || $input.hasClass('question-text-input')) {
+          isValid = (val.length >= 3 && val.length <= 255);
+        } else if ($input.hasClass('answer-input')) {
+          isValid = (val.length >= 3 && val.length <= 200);
+        } else if ($input.attr('id') === 'login-alias') {
+          isValid = (val.length >= 3 && val.length <= 255);
+        } else if ($input.attr('id') === 'login-password') {
+          isValid = (val.length >= 6 && val.length <= 255);
+        }
+        
+        if (isValid) {
+          $input.closest('.form-group, .question-text-group, .answer-group, #login-alias-group, #login-password-group').removeClass('is-invalid-group');
+        }
+      });
+
+      checkUserSession();
+    });
+  </script>
+</body>
+</html>

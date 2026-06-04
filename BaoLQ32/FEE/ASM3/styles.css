@@ -1,0 +1,176 @@
+/* Custom styles for FEE ASM3 */
+
+body {
+    background-color: #e9ecf2 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    padding-bottom: 50px;
+}
+
+/* Navbar styles */
+.navbar-custom {
+    background-color: #1b1b1b !important;
+    border-bottom: 2px solid #4cae4c;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar-custom .navbar-brand {
+    font-weight: 700;
+    color: #ffffff !important;
+    letter-spacing: 0.5px;
+}
+.navbar-custom .nav-link {
+    color: #ccc !important;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+}
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: #ffffff !important;
+}
+
+/* Page container wrapper */
+.main-wrapper {
+    max-width: 950px;
+    margin: 30px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+
+/* Banner image */
+.banner-image {
+    width: 100%;
+    display: block;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Header Text Section */
+.header-bar-custom {
+    background-color: #ffffff;
+    padding: 15px 25px;
+    border-bottom: 1px solid #e1e5f2;
+}
+.header-bar-title {
+    color: #2e6b2e; /* Green text */
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+/* Form and content body */
+.content-body {
+    background-color: #ffffff;
+    padding: 30px 40px;
+}
+
+/* Labels alignment and style */
+.col-form-label-custom {
+    font-weight: 500;
+    color: #333;
+    text-align: left;
+}
+
+/* Green buttons requirement */
+.btn-green {
+    background-color: #4cae4c !important;
+    border-color: #4cae4c !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.btn-green:hover,
+.btn-green:focus,
+.btn-green:active {
+    background-color: #449d44 !important;
+    border-color: #398439 !important;
+    box-shadow: 0 0 0 0.2rem rgba(76, 174, 76, 0.5) !important;
+}
+
+/* Light gray placeholder requirement */
+.form-control::placeholder {
+    color: #d1d1d1 !important;
+    opacity: 1; /* Firefox */
+}
+.form-control:-ms-input-placeholder {
+    color: #d1d1d1 !important;
+}
+.form-control::-ms-input-placeholder {
+    color: #d1d1d1 !important;
+}
+
+/* Input styles */
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #333;
+}
+.form-control:focus {
+    border-color: #4cae4c;
+    box-shadow: 0 0 0 0.2rem rgba(76, 174, 76, 0.25);
+}
+
+/* Validation Style Modifiers */
+.is-invalid-group label,
+.is-invalid-group .form-label,
+.is-invalid-group .col-form-label-custom {
+    color: #d9534f !important;
+}
+.is-invalid-group .form-control {
+    border-color: #d9534f !important;
+    box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.15) !important;
+}
+.invalid-feedback-custom {
+    display: none;
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+.is-invalid-group .invalid-feedback-custom {
+    display: block;
+}
+
+/* Table layout styling for search Visitor */
+.table-custom {
+    margin-top: 20px;
+    background-color: #ffffff;
+}
+.table-custom th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd !important;
+    vertical-align: middle;
+}
+.table-custom td {
+    vertical-align: middle;
+    color: #444;
+}
+
+/* Table Hover Row Highlight Requirement */
+.table-custom tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+.table-custom tbody tr:hover {
+    background-color: #e2f0d9 !important; /* Soft green highlight */
+    cursor: pointer;
+}
+
+/* Custom layout alignments */
+.radio-grid, .checkbox-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 6px;
+}
+.radio-grid .form-check, .checkbox-grid .form-check {
+    margin-right: 20px;
+    margin-bottom: 8px;
+}
+
+/* Help text styling in search page */
+.search-help-text {
+    font-size: 0.9rem;
+    color: #555;
+    margin-left: 10px;
+}
