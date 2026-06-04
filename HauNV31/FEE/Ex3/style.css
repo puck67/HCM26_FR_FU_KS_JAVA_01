@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f8ff;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.app-container {
+    background-color: #e6f7f8;
+    width: 100%;
+    max-width: 1200px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border: 2px solid #d0ebed;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 32px;
+    font-weight: 300;
+    color: #222;
+}
+
+/* CSS Grid layout for gallery */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.img-placeholder {
+    height: 140px;
+    width: 100%;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: white;
+    border-top: 1px solid #eee;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 22px;
+    color: #ccc; /* empty star color */
+    cursor: pointer;
+    transition: color 0.2s;
+    user-select: none;
+}
+
+.star.filled {
+    color: #f39c12; /* filled star color */
+}
+
+/* Hover preview effect (jQuery will also handle this, but fallback) */
+.star.hover-filled {
+    color: #f1c40f; 
+}
+
+.fav-btn {
+    background: #eef2f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.fav-btn.active {
+    color: #e74c3c;
+    background: #fdf2f2;
+    border-color: #f5c6cb;
+}
+
+/* Summary Footer */
+.summary-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d8f1f2;
+    border: 2px solid #bce2e4;
+    padding: 20px 30px;
+    border-radius: 8px;
+}
+
+.summary-label {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.summary-value {
+    font-weight: bold;
+    font-size: 20px;
+    color: #222;
+}
+
+.based-on {
+    font-size: 14px;
+    color: #555;
+    margin-left: 5px;
+}
+
+.heart-icon {
+    font-size: 24px;
+    color: #333;
+    margin-left: 10px;
+}

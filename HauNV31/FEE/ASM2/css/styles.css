@@ -1,0 +1,43 @@
+/* Custom styles for Polls App */
+
+/* Requirement: Background color of all buttons must be green. */
+.btn {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+.btn:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Exception for delete confirm modal Cancel button */
+#deleteModal .btn-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+#deleteModal .btn-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+/* Requirement: Placeholder text in inputs must be in light gray color. */
+::placeholder {
+    color: lightgray !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+    color: lightgray !important;
+}
+
+::-ms-input-placeholder {
+    color: lightgray !important;
+}
+
+/* Adjustments for labels validation */
+label.text-danger {
+    color: #dc3545 !important;
+}

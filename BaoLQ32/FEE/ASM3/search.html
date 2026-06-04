@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Registry - Search</title>
+  <!-- Bootstrap 4.6.2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand navbar-dark navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="person.html"><i class="fas fa-id-card mr-2"></i>Visitor Registry</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="person.html">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="search.html">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="help.html">Help</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Wrapper matching PDF Figure -->
+  <div class="main-wrapper">
+    <!-- Top Lake Banner image -->
+    <img src="lake_banner.png" alt="Lake Banner" class="banner-image">
+
+    <!-- Header bar -->
+    <div class="header-bar-custom">
+      <h2 class="header-bar-title">Search Visitor</h2>
+    </div>
+
+    <!-- Content Body -->
+    <div class="content-body">
+      
+      <!-- Search Input Controls Row (Inline Layout matching PDF figure page 5) -->
+      <form id="search-form" class="form-inline mb-4 flex-nowrap align-items-center">
+        <div class="form-group mb-0 mr-2">
+          <label for="search-input" class="col-form-label col-form-label-custom font-weight-bold mr-2">Fist name:</label>
+          <input type="text" class="form-control" id="search-input" placeholder="(Type First name Visitor and Click Search button)" style="min-width: 250px;">
+        </div>
+        <button type="submit" class="btn btn-green mr-3" id="btn-search">Search...</button>
+        <span class="search-help-text text-muted d-none d-md-inline">(Type First name Visitor and Click Search button)</span>
+      </form>
+
+      <!-- Table results section -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-custom">
+          <thead>
+            <tr>
+              <th scope="col">Fist name</th>
+              <th scope="col">Last name</th>
+              <th scope="col">Gender</th>
+              <th scope="col">Telephone</th>
+              <th scope="col">You're in</th>
+              <th scope="col">Hobbies</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody id="visitors-table-body">
+            <!-- Table rows will be rendered dynamically by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- jQuery 3.6.0 & Bootstrap 4.6.2 JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Mock Visitor Data Store Helpers
+      var defaultVisitors = [
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        },
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        },
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        }
+      ];
+
+      function getVisitors() {
+        var stored = localStorage.getItem('visitors');
+        if (!stored) {
+          localStorage.setItem('visitors', JSON.stringify(defaultVisitors));
+          return defaultVisitors;
+        }
+        return JSON.parse(stored);
+      }
+
+      var visitors = getVisitors();
+
+      // Render visitors table
+      function renderTable(filterKeyword) {
+        var $tbody = $('#visitors-table-body');
+        $tbody.empty();
+        
+        var filteredList = visitors;
+        
+        if (filterKeyword) {
+          var key = filterKeyword.toLowerCase();
+          filteredList = visitors.filter(function(v) {
+            // "user is able to search for every item matched the keyword (not only First name like in the figure)"
+            return (
+              v.firstName.toLowerCase().includes(key) ||
+              v.lastName.toLowerCase().includes(key) ||
+              v.gender.toLowerCase().includes(key) ||
+              v.telephone.toLowerCase().includes(key) ||
+              v.youAreIn.toLowerCase().includes(key) ||
+              v.hobbies.toLowerCase().includes(key) ||
+              v.description.toLowerCase().includes(key)
+            );
+          });
+        }
+        
+        if (filteredList.length === 0) {
+          $tbody.append(`
+            <tr>
+              <td colspan="7" class="text-center text-muted py-4">No matching visitors found.</td>
+            </tr>
+          `);
+          return;
+        }
+        
+        filteredList.forEach(function(v) {
+          $tbody.append(`
+            <tr>
+              <td class="font-weight-bold text-dark">${v.firstName}</td>
+              <td>${v.lastName}</td>
+              <td>${v.gender}</td>
+              <td>${v.telephone}</td>
+              <td>${v.youAreIn}</td>
+              <td>${v.hobbies}</td>
+              <td style="font-size: 0.9rem; line-height: 1.4;">${v.description}</td>
+            </tr>
+          `);
+        });
+      }
+
+      // Initial table render (show all visitors)
+      renderTable();
+
+      // Form Search triggers keyword filtering
+      $('#search-form').on('submit', function(e) {
+        e.preventDefault();
+        var keyword = $('#search-input').val().trim();
+        renderTable(keyword);
+      });
+
+      // Quick-search as user types
+      $('#search-input').on('keyup', function() {
+        var keyword = $(this).val().trim();
+        renderTable(keyword);
+      });
+    });
+  </script>
+</body>
+</html>

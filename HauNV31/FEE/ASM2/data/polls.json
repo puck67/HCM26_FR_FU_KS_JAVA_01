@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "Favorite Programming Language",
+        "date": "2024-06-01"
+    },
+    {
+        "id": 2,
+        "title": "Best Frontend Framework",
+        "date": "2024-06-02"
+    },
+    {
+        "id": 3,
+        "title": "Work from Home vs Office",
+        "date": "2024-06-03"
+    }
+]

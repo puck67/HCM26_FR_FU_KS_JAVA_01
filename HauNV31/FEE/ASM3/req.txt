@@ -1,0 +1,113 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Front -End Essentials  
+Project Assignment  
+ 
+Document Code  25e-BM/HR/HDCV/FSOFT  
+Version  1.1 
+Effective Date 20/11/2012  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Hanoi, 04 /2019  
+Assignment  Front -End Essential s                     Issue/Revision: x/y  
+25e-BM/HR/HDCV/FSOFT  v1.1                         Internal use  2/6 RECORD OF CHANGES  
+ 
+No Effective Date  Change Description  Reason  Reviewer  Approver  
+1  25/Jun/2018  Create a new assignment  Create new  DieuNT1  VinhNV  
+2  01/Jun/2019  Apply fsoft template  
+Update FrontEnd requirements: split 
+Specification1 and 2 by training day  Update  DieuNT1  VinhNV  
+      
+      
+      
+      
+      
+      
+      
+      
+ 
+  Assignment  Front -End Essential s                     Issue/Revision: x/y  
+25e-BM/HR/HDCV/FSOFT  v1.1                         Internal use  3/6 Contents  
+Day 4. Unit 4 – Project Assignment  ................................ ................................ ................................ ....................  4 
+Objectives  ................................ ................................ ................................ ................................ ...................  4 
+Technical Requirements  ................................ ................................ ................................ .............................  4 
+Specifications 1  ................................ ................................ ................................ ................................ ..........  4 
+Specifications 2  ................................ ................................ ................................ ................................ ..........  6 
+ 
+ 
+ 
+  
+  Assignment  Front -End Essential s                     Issue/Revision: x/y  
+25e-BM/HR/HDCV/FSOFT  v1.1                         Internal use  4/6  CODE:    FEE. P.A103 (HR) 
+TYPE:    Project Assignment  
+LOC:    N/A 
+DURATION:   360 MINUTES  
+ 
+Project Assignment  
+Objective s 
+✓ Understand the basic concepts of Web Design (HTML, CSS, JS)  
+✓ Understand web design guidelines and process which you can apply to real world web projects  
+✓ Understand the syntax of HTML Element  
+✓ Understand important HTML Forms elements such as: form, form group, from control, submit  
+✓ Understand responsive web design by using CSS @media query  
+✓ Able use HTML and CSS to create a responsive web page  
+✓ Understand the core concepts of Bootstrap (layout, rows, grid, flex, components: buttons, alerts, 
+utilities)  
+✓ Able to create complex, beautiful, responsive webpage with Bootstrap  
+✓ Understand the core concepts of JavaScript programming language  
+✓ Understand basic concept of DOM  
+✓ Able to add behavior to make web site dynamic using JavaScript (DOM)  
+✓ Understand jQuery (selector, onclick, add/remove attribute, toggle, insert, remove class, GET, POST) 
+and AJAX  
+Technical Requirements  
+✓ Must use HTML, CSS, Bootstrap 4  
+✓ Must use JavaScript and jQuery  
+Day1 -2: Specifications  1 
+Create 3 html pages ( person.html,  search .html, help.html):  
+ 
+  
+Assignment  Front -End Essential s                     Issue/Revision: x/y  
+25e-BM/HR/HDCV/FSOFT  v1.1                         Internal use  5/6 ✓ Person screen:  
+ 
+✓ Search screen:  
+ 
+Functional Requirement:  
+✓ Background color of all button must be green.  
+✓ Placeholder text in inputs must be in  light gray color. You have to define the placeholder for each 
+input text with same value as above figures . 
+✓ Add a new file called styles .css to customize  the default CSS style of Bootstrap 4 . 
+ 
+Estimated time : 180 minutes  
+  
+Assignment  Front -End Essential s                     Issue/Revision: x/y  
+25e-BM/HR/HDCV/FSOFT  v1.1                         Internal use  6/6 Day3 -4: Specifications 2 
+✓ On person.htm l page, you must use JQuery to write a method for validation data when you click Register 
+button:  
+Field  Mandatory  Max length  Description  
+First name  Y 20 -First name must be characters and not contain number  
+Last name  Y 20 -Last name must be characters and not contain number  
+Telephone  N 11 Must be number  
+Email  N 50 Must be [a..Z][0..9]@[a..Z].  
+You are in  Y   
+Hobbies  N   
+Description  N 200  
+✓ On search.html page , user is able to search for every item matched the keyword (not only First name like 
+in the figure)  
+Estimated time : 180 minutes  
+ 
+--THE END -- 

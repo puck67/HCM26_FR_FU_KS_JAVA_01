@@ -1,0 +1,32 @@
+<h2>Edit Profile</h2>
+<hr>
+<div class="card">
+    <div class="card-header">Profile Form</div>
+    <div class="card-body">
+        <form id="editProfileForm">
+            <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="First name">
+                <div class="error-message" id="firstNameError">First name is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="Last name">
+                <div class="error-message" id="lastNameError">Last name is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control" id="phone" placeholder="Phone">
+                <div class="error-message" id="phoneError">Phone number is invalid.</div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Description"></textarea>
+                <div class="error-message" id="descriptionError">Description is required.</div>
+            </div>
+            <button type="submit" class="btn btn-custom">Submit Button</button>
+            <button type="reset" class="btn btn-custom">Reset Button</button>
+            <div id="profileUpdateSuccess" class="text-success mt-2" style="display: none;">Profile updated successfully!</div>
+        </form>
+    </div>
+</div>

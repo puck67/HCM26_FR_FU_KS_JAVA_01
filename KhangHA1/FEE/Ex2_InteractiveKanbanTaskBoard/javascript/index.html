@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kanban Task Board (Vanilla JS)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navigation Header to go back to Portal -->
+  <header class="app-nav">
+    <a href="../index.html" class="back-link">← Back to Dashboard</a>
+    <span class="engine-badge vanilla-badge">Vanilla JS Version</span>
+  </header>
+
+  <main class="board-wrapper">
+    <div class="kanban-container">
+      
+      <!-- Board Header -->
+      <header class="board-header">
+        <h1 class="board-title">My Project Board</h1>
+        <div class="board-widgets">
+          <!-- Calendar Icon -->
+          <div class="widget-icon calendar-widget" title="Calendar">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+            </svg>
+          </div>
+          <!-- Avatar Icon -->
+          <div class="user-avatar" title="User Profile">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="Profile Avatar">
+          </div>
+        </div>
+      </header>
+
+      <!-- Board Columns Container -->
+      <div class="board-columns">
+        
+        <!-- TO DO Column -->
+        <section class="column col-todo" id="todo-column">
+          <h2 class="column-title">TO DO</h2>
+          <div class="column-body">
+            <div class="add-task-form">
+              <input type="text" placeholder="Add a task to To Do" class="task-input" aria-label="Add task to To Do">
+              <button class="add-task-btn" aria-label="Add task">+</button>
+            </div>
+            <div class="cards-list">
+              <!-- Cards will be dynamically inserted here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- IN PROGRESS Column -->
+        <section class="column col-progress" id="progress-column">
+          <h2 class="column-title">IN PROGRESS</h2>
+          <div class="column-body">
+            <div class="add-task-form">
+              <input type="text" placeholder="Add a task to In Progress" class="task-input" aria-label="Add task to In Progress">
+              <button class="add-task-btn" aria-label="Add task">+</button>
+            </div>
+            <div class="cards-list">
+              <!-- Cards will be dynamically inserted here -->
+            </div>
+          </div>
+        </section>
+
+        <!-- DONE Column -->
+        <section class="column col-done" id="done-column">
+          <h2 class="column-title">DONE</h2>
+          <div class="column-body">
+            <div class="add-task-form">
+              <input type="text" placeholder="Add a task to Done" class="task-input" aria-label="Add task to Done">
+              <button class="add-task-btn" aria-label="Add task">+</button>
+            </div>
+            <div class="cards-list">
+              <!-- Cards will be dynamically inserted here -->
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
