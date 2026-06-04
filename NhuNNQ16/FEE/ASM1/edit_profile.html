@@ -1,0 +1,64 @@
+<div class="page-title">Edit Profile</div>
+
+<div class="card card-custom">
+    <div class="card-header">
+        Profile Form Elements
+    </div>
+    <div class="card-body">
+        <form id="profileForm" novalidate>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="profileFirstName">First Name</label>
+                    <input type="text" class="form-control" id="profileFirstName" name="firstName" placeholder="Enter the first name" required minlength="3" maxlength="30">
+                    <div class="invalid-feedback">
+                        First name is required (3 - 30 characters).
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="profileLastName">Last Name</label>
+                    <input type="text" class="form-control" id="profileLastName" name="lastName" placeholder="Enter the last name" required minlength="3" maxlength="30">
+                    <div class="invalid-feedback">
+                        Last name is required (3 - 30 characters).
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" class="form-control" id="profileEmail" name="email" placeholder="your_email@example.com" required readonly>
+                    <div class="invalid-feedback">
+                        Please provide a valid email.
+                    </div>
+                    <small class="form-text text-muted">Email address cannot be changed.</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="profilePhone">Phone</label>
+                    <input type="text" class="form-control" id="profilePhone" name="phone" placeholder="Enter your phone number" required minlength="9" maxlength="13">
+                    <div class="invalid-feedback" id="phoneFeedback">
+                        Phone number is required (9 - 13 digits).
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="profileDesc">Description</label>
+                <textarea class="form-control" id="profileDesc" name="description" rows="4" placeholder="Enter description" maxlength="200"></textarea>
+                <div class="text-right small text-muted" id="descCharCount">
+                    0/200 characters
+                </div>
+                <div class="invalid-feedback">
+                    Description cannot exceed 200 characters.
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-custom-green mr-2">Submit Button</button>
+                <button type="reset" class="btn btn-secondary">Reset Button</button>
+            </div>
+        </form>
+        <div id="profileSuccessAlert" class="alert alert-success mt-3 d-none" role="alert">
+            Profile updated successfully (via simulated Ajax call)!
+        </div>
+    </div>
+</div>
