@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kanban Task Board - Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f7f9fc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --accent-vanilla: #f7df1e;
+      --accent-jquery: #0769ad;
+      --accent-hover: #4f46e5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      text-align: center;
+      background: var(--card-bg);
+      padding: 3.5rem 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-sub);
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .version-card {
+      background: #fafafa;
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      text-align: left;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .version-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+
+    .version-card.vanilla::before {
+      background: var(--accent-vanilla);
+    }
+
+    .version-card.jquery::before {
+      background: var(--accent-jquery);
+    }
+
+    .version-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+      align-self: flex-start;
+    }
+
+    .vanilla .badge {
+      background: #fef9c3;
+      color: #713f12;
+    }
+
+    .jquery .badge {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .features-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .features-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .vanilla .btn {
+      background: #1e293b;
+      color: #ffffff;
+    }
+
+    .vanilla .btn:hover {
+      background: #0f172a;
+    }
+
+    .jquery .btn {
+      background: var(--accent-jquery);
+      color: #ffffff;
+    }
+
+    .jquery .btn:hover {
+      background: #065b96;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--text-sub);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Interactive Kanban Task Board</h1>
+    <p class="subtitle">Select the implementation to explore or grade</p>
+
+    <div class="cards-grid">
+      <!-- Vanilla JS Card -->
+      <div class="version-card vanilla">
+        <div>
+          <span class="badge">Problem 01 & 02</span>
+          <h2>Vanilla JS Board</h2>
+          <p>Built using standard Web API and native JavaScript DOM manipulation methods. Fully responsive.</p>
+          <ul class="features-list">
+            <li>Three column board (To Do, In Progress, Done)</li>
+            <li>Standard input adding functionality per column</li>
+            <li>Sticky note aesthetic with curled corners</li>
+            <li>DOM API operations (<code>appendChild</code>, <code>removeChild</code>)</li>
+          </ul>
+        </div>
+        <a href="vanilla/index.html" class="btn">Launch Vanilla Board</a>
+      </div>
+
+      <!-- jQuery Card -->
+      <div class="version-card jquery">
+        <div>
+          <span class="badge">Problem 03</span>
+          <h2>jQuery Refactored</h2>
+          <p>Refactored version using jQuery for DOM manipulation, event delegation, and real-time task searching.</p>
+          <ul class="features-list">
+            <li>Refactored movement using <code>.appendTo()</code></li>
+            <li>Global search bar with <code>.hide()</code> / <code>.show()</code></li>
+            <li>Event delegation via <code>.on()</code> binding</li>
+            <li>Same premium look with sticky note layout</li>
+          </ul>
+        </div>
+        <a href="jquery/index.html" class="btn">Launch jQuery Board</a>
+      </div>
+    </div>
+
+    <footer>
+      FEE - Exercise 2: Interactive Kanban Task Board
+    </footer>
+  </div>
+</body>
+</html>
