@@ -1,0 +1,272 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-green: #28a745;
+    --dark-green: #218838;
+    --light-green: #eafaf1;
+    --gray-bg: #f8f9fa;
+    --light-gray: #dcdcdc;
+    --dark-gray: #495057;
+    --placeholder-color: #c0c0c0;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f2f2fa; /* Light lavender-blue background matching screenshots */
+    color: #333333;
+    padding-top: 30px;
+    padding-bottom: 50px;
+}
+
+/* Header Banner Container */
+.banner-container {
+    overflow: hidden;
+    border: 1px solid #cbd5e0;
+    border-bottom: none;
+}
+
+.banner-img {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Main Content Containers */
+.main-card {
+    background: #ffffff;
+    border: 1px solid #cbd5e0;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+}
+
+/* Title Section styling matching screenshots exactly */
+.section-title-box {
+    border-bottom: 1px solid #cbd5e0;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+
+.section-title-box h1, .section-title-box h2 {
+    color: var(--primary-green);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Mandatory Green Buttons (Technical Requirement) */
+.btn-green {
+    background-color: #e9ecef;
+    background-image: linear-gradient(to bottom, #ffffff, #e9ecef);
+    border: 1px solid #ced4da;
+    color: #333333;
+    font-weight: 500;
+    padding: 6px 18px;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.15s ease-in-out;
+}
+
+/* Override background to Green for all buttons as explicitly specified */
+.btn-green, .btn-primary, .btn-success, input[type="submit"], button[type="submit"], #searchBtn {
+    background-color: var(--primary-green) !important;
+    background-image: none !important;
+    border: 1px solid var(--dark-green) !important;
+    color: #ffffff !important;
+    cursor: pointer;
+}
+
+.btn-green:hover, .btn-primary:hover, .btn-success:hover, input[type="submit"]:hover, button[type="submit"]:hover, #searchBtn:hover {
+    background-color: var(--dark-green) !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Light Gray Placeholder Colors (Technical Requirement) */
+input::placeholder,
+textarea::placeholder {
+    color: var(--placeholder-color) !important;
+    opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+
+/* Form Styles and Grid Adjustments */
+.form-label-custom {
+    font-weight: 500;
+    color: #333333;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    min-height: 38px;
+}
+
+.form-control-custom {
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+
+.form-control-custom:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.15);
+}
+
+/* Validation Feedback Customization */
+.invalid-feedback {
+    font-size: 85%;
+    font-weight: 500;
+    color: #dc3545;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.is-valid {
+    border-color: var(--primary-green) !important;
+}
+
+.is-valid:focus {
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+}
+
+/* Hobbies and Location Layouts matching screenshots */
+.options-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 8px;
+}
+
+.options-grid-item {
+    margin-right: 15px;
+    margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.options-grid-item input {
+    margin-right: 6px;
+}
+
+/* Search Screen Table Styling */
+.visitor-table-container {
+    margin-top: 20px;
+    border: 1px solid #cbd5e0;
+}
+
+.visitor-table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+/* Table header styled in gray matching screenshots */
+.visitor-table thead th {
+    background-color: #dcdcdc !important; /* Gray background for table header matching Figure 2 */
+    color: #333333 !important;
+    border-bottom: 2px solid #cbd5e0;
+    font-weight: 600;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-right: 1px solid #cbd5e0;
+}
+
+.visitor-table thead th:last-child {
+    border-right: none;
+}
+
+/* No custom background-color defined on td to allow hover/active row highlight code to work! */
+.visitor-table tbody td {
+    padding: 12px;
+    font-size: 14px;
+    vertical-align: top;
+    color: #333333;
+    border-bottom: 1px solid #cbd5e0;
+    border-right: 1px solid #cbd5e0;
+}
+
+.visitor-table tbody td:last-child {
+    border-right: none;
+}
+
+/* Row Hover Highlight */
+.visitor-table tbody tr {
+    cursor: pointer;
+}
+
+.visitor-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Row Click/Selected Highlight via JQuery */
+.row-highlight-active {
+    background-color: var(--light-green) !important;
+}
+
+.row-highlight-active td {
+    background-color: var(--light-green) !important;
+    color: #155724 !important;
+}
+
+/* Clean, highly visible Navigation Tabs below the Banner */
+.nav-tabs-custom {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.nav-tabs-custom .tab-item {
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none !important;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Active tab styled in prominent Green (Primary Specification) */
+.nav-tabs-custom .tab-item.active {
+    background-color: var(--primary-green) !important;
+    border: 1px solid var(--dark-green) !important;
+    color: #ffffff !important;
+    transform: translateY(0);
+}
+
+/* Inactive tabs styled with White background, Green border and text */
+.nav-tabs-custom .tab-item.inactive {
+    background-color: #ffffff !important;
+    border: 1px solid var(--primary-green) !important;
+    color: var(--primary-green) !important;
+}
+
+.nav-tabs-custom .tab-item.inactive:hover {
+    background-color: var(--light-green) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.15);
+}
+
+.nav-tabs-custom .tab-item.inactive:active {
+    transform: translateY(0);
+}
+
+.nav-tabs-custom .tab-item i {
+    margin-right: 8px;
+}
+

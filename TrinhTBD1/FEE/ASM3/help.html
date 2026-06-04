@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & FAQ</title>
+    <!-- Bootstrap 4.6.2 CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- FontAwesome 5 Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS Stylesheet -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container mt-2" style="max-width: 960px;">
+        
+        <!-- Header Lake Sunrise Banner Container -->
+        <div class="banner-container">
+            <img src="assets/images/banner.png" alt="Lake Sunrise Banner" class="banner-img">
+        </div>
+
+        <!-- Clean, highly visible Navigation Tabs below the Banner -->
+        <div class="nav-tabs-custom">
+            <a href="person.html" class="tab-item inactive"><i class="fas fa-user-plus"></i> Register Visitor</a>
+            <a href="search.html" class="tab-item inactive"><i class="fas fa-search"></i> Search Visitors</a>
+            <a href="help.html" class="tab-item active"><i class="fas fa-question-circle"></i> Help & FAQ</a>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="main-card">
+            
+            <!-- Section Title Box -->
+            <div class="section-title-box">
+                <h2 class="text-success font-weight-bold" id="page-title">Help & FAQ</h2>
+            </div>
+
+            <!-- Validation Rules Reference Table -->
+            <h4 class="font-weight-bold text-dark mb-3"><i class="fas fa-tasks mr-2 text-success"></i>Form Validation Specifications</h4>
+            <div class="table-responsive border rounded mb-4">
+                <table class="table table-bordered table-striped mb-0" style="font-size: 14px;">
+                    <thead style="background-color: #f8fafc;">
+                        <tr>
+                            <th style="width: 25%;">Field Name</th>
+                            <th style="width: 15%;">Mandatory</th>
+                            <th style="width: 15%;">Max Length</th>
+                            <th>Description & Validation Rules</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-bold">First name</td>
+                            <td><span class="badge badge-danger" style="background-color: #dc3545;">Yes</span></td>
+                            <td>20</td>
+                            <td>Must contain characters only. Cannot contain numbers.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Last name</td>
+                            <td><span class="badge badge-danger" style="background-color: #dc3545;">Yes</span></td>
+                            <td>20</td>
+                            <td>Must contain characters only. Cannot contain numbers.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Telephone</td>
+                            <td><span class="badge badge-secondary" style="background-color: #6c757d;">No</span></td>
+                            <td>11</td>
+                            <td>Optional field. If entered, must contain only numeric digits.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email</td>
+                            <td><span class="badge badge-secondary" style="background-color: #6c757d;">No</span></td>
+                            <td>50</td>
+                            <td>Optional field. If entered, must follow standard email formatting.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">You are in</td>
+                            <td><span class="badge badge-danger" style="background-color: #dc3545;">Yes</span></td>
+                            <td>-</td>
+                            <td>Must select exactly one region from the radio button options.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Hobbies</td>
+                            <td><span class="badge badge-secondary" style="background-color: #6c757d;">No</span></td>
+                            <td>-</td>
+                            <td>Optional checkboxes.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Description</td>
+                            <td><span class="badge badge-secondary" style="background-color: #6c757d;">No</span></td>
+                            <td>200</td>
+                            <td>Optional field. Maximum comment length is 200 characters.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- FAQ Section -->
+            <h4 class="font-weight-bold text-dark mt-4 mb-3"><i class="fas fa-question-circle mr-2 text-success"></i>Frequently Asked Questions</h4>
+            
+            <div class="accordion" id="faqAccordion">
+                
+                <!-- FAQ 1 -->
+                <div class="card mb-2" style="border: 1px solid #cbd5e0; border-radius: 4px;">
+                    <div class="card-header bg-light p-2" id="headingOne">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link text-success font-weight-bold" href="#collapseOne" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseOne" style="font-size: 15px; text-decoration: none; background: none !important; border: none !important; box-shadow: none !important; color: #28a745 !important;">
+                                How do I register a new visitor?
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                        <div class="card-body text-secondary" style="font-size: 14px; line-height: 1.6;">
+                            Navigate to the <strong>Register Visitor</strong> page. Complete the mandatory fields (First name, Last name, and region selection), select any hobbies you have, write a brief description, and click the <strong>Register</strong> button. A success popup will confirm details upon completion.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="card mb-2" style="border: 1px solid #cbd5e0; border-radius: 4px;">
+                    <div class="card-header bg-light p-2" id="headingTwo">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link text-success collapsed font-weight-bold" href="#collapseTwo" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 15px; text-decoration: none; background: none !important; border: none !important; box-shadow: none !important; color: #28a745 !important;">
+                                How does the search function work?
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                        <div class="card-body text-secondary" style="font-size: 14px; line-height: 1.6;">
+                            Type your keyword into the search input on the <strong>Search Visitors</strong> page and click **Search...**. This advanced search will match your keyword case-insensitively across all fields in the table, not just the first name.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="card mb-2" style="border: 1px solid #cbd5e0; border-radius: 4px;">
+                    <div class="card-header bg-light p-2" id="headingThree">
+                        <h2 class="mb-0">
+                            <a class="btn btn-link text-success collapsed font-weight-bold" href="#collapseThree" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseThree" style="font-size: 15px; text-decoration: none; background: none !important; border: none !important; box-shadow: none !important; color: #28a745 !important;">
+                                How do I highlight table rows?
+                            </a>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                        <div class="card-body text-secondary" style="font-size: 14px; line-height: 1.6;">
+                            Simply click on any row in the table to toggle its light-green background highlight. You can click multiple rows to highlight them, or click them again to remove the highlight.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- JQuery, Popper.js, Bootstrap 4 JS CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

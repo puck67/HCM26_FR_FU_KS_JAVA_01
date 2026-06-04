@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS - Login</title>
+  <!-- SEO Tags -->
+  <meta name="description" content="Secure portal to sign in to the Content Management System.">
+  
+  <!-- CSS Stylesheets -->
+  <!-- Bootstrap 4.6.2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Overrides -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="auth-wrapper">
+
+  <div class="auth-card" id="login-card">
+    <div class="auth-card-header text-left">
+      Please Sign In
+    </div>
+    
+    <div class="auth-card-body">
+      <!-- Error Alert Box -->
+      <div id="login-error-alert" class="alert alert-danger d-none" role="alert" style="border-radius: 6px; font-size: 0.85rem; font-weight: 500;">
+        Invalid credentials. Please try again.
+      </div>
+      
+      <form id="login-form" novalidate>
+        <!-- Email Input -->
+        <div class="form-group mb-4">
+          <input type="email" class="form-control" id="login-email" placeholder="E-mail" minlength="5" maxlength="50" required>
+          <div class="invalid-feedback">E-mail must be between 5 and 50 characters.</div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group mb-4">
+          <input type="password" class="form-control" id="login-password" placeholder="Password" minlength="8" maxlength="30" required>
+          <div class="invalid-feedback">Password must be between 8 and 30 characters.</div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="form-group form-check mb-4 pl-0">
+          <div class="custom-control custom-checkbox" style="padding-left: 1.5rem;">
+            <input type="checkbox" class="custom-control-input" id="remember-me">
+            <label class="custom-control-label text-muted font-weight-medium" for="remember-me" style="font-size: 0.9rem; user-select: none;">Remember Me</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-green w-100 py-2" id="login-btn">Login</button>
+      </form>
+    </div>
+
+    <div class="auth-card-footer">
+      <a href="register.html" id="register-link">Click here to Register</a>
+    </div>
+  </div>
+
+  <!-- JavaScript Dependencies -->
+  <!-- jQuery 3.5.1 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <!-- Bootstrap 4 Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Scripts -->
+  <script src="js/scripts.js"></script>
+</body>
+</html>
