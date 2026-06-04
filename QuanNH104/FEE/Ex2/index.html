@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project Board - Kanban UI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="board-header">
+            <h1 class="board-title">My Project Board</h1>
+            <div class="search-container">
+                <input type="text" id="global-search" placeholder="🔍 Search tasks...">
+            </div>
+            <div class="user-profile">
+                <div class="avatar">👤</div>
+                <div class="calendar-icon">📅</div>
+            </div>
+        </header>
+
+        <main class="kanban-board">
+
+            <section class="kanban-column col-todo">
+                <div class="column-header">TO DO</div>
+                <div class="input-container">
+                    <input type="text" placeholder="Add a task to To Do">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="cards-container">
+                    <div class="kanban-card">
+                        <span class="card-label">Title</span>
+                        <h3 class="card-title">Website Homepage Redesign</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-blue">Start</button>
+                            <button class="btn btn-outline">Edit</button>
+                            <button class="btn btn-outline btn-move">Move ▾</button>
+                        </div>
+                    </div>
+                    <div class="kanban-card">
+                        <span class="card-label">Title</span>
+                        <h3 class="card-title">Market Research Report</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-blue">Start</button>
+                            <button class="btn btn-outline">Edit</button>
+                            <button class="btn btn-outline btn-move">Move ▾</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="kanban-column col-progress">
+                <div class="column-header">IN PROGRESS</div>
+                <div class="input-container">
+                    <input type="text" placeholder="Add a task to In Progress">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="cards-container">
+                    <div class="kanban-card">
+                        <span class="card-label">Title</span>
+                        <h3 class="card-title">User Testing Sessions</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-outline">Edit</button>
+                            <button class="btn btn-outline btn-move">Move ▾</button>
+                            <button class="btn btn-green">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="kanban-column col-done">
+                <div class="column-header">DONE</div>
+                <div class="input-container">
+                    <input type="text" placeholder="Add a task to Done">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="cards-container">
+                    <div class="kanban-card">
+                        <span class="card-label">Title</span>
+                        <h3 class="card-title">Completed Features List</h3>
+                        <div class="card-actions">
+                            <button class="btn btn-outline">Edit</button>
+                            <button class="btn btn-outline">Archive</button>
+                            <button class="btn btn-outline btn-move">Move ▾</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="jquery-app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,249 @@
+/* --- Cấu hình chung --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f2f7f9;
+    /* Màu nền xám nhẹ dịu mát bao quanh */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+/* --- Khung viền ứng dụng --- */
+.gallery-wrapper {
+    background-color: #effcfc;
+    /* Tone màu nền nhạt của ứng dụng trong hình */
+    width: 100%;
+    max-width: 1100px;
+    border: 1px solid #cce5e5;
+    border-radius: 8px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+}
+
+/* --- Tiêu đề chính --- */
+.gallery-header h1 {
+    font-size: 28px;
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* --- Bố cục mạng lưới hình ảnh sử dụng CSS Grid --- */
+.gallery-grid {
+    display: grid;
+    /* Tự động tính toán số cột dựa trên kích thước màn hình để responsive */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+/* --- Cấu trúc của từng Card hình ảnh --- */
+.gallery-card {
+    background-color: #ffffff;
+    border: 1px solid #d4eae9;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* Khung ảnh nền màu sắc */
+.image-placeholder {
+    height: 120px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 6px;
+}
+
+/* Các tone màu dải gradient mô phỏng theo thiết kế */
+.img-1 {
+    background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+}
+
+.img-2 {
+    background: linear-gradient(135deg, #ffd3b6, #ffaaa5);
+}
+
+.img-3 {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.img-4 {
+    background: linear-gradient(135deg, #4adede, #1fa2ff);
+}
+
+.img-5 {
+    background: linear-gradient(135deg, #ff8b94, #ffaaa5);
+}
+
+.img-6 {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.img-7 {
+    background: linear-gradient(135deg, #a8c0ff, #3f2b96);
+}
+
+.img-8 {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.img-9 {
+    background: linear-gradient(135deg, #f12711, #f5af19);
+}
+
+.img-10 {
+    background: linear-gradient(135deg, #56ab2f, #a8ff78);
+}
+
+/* Nút Add to Favorites đè lên góc ảnh */
+.btn-add-favorite {
+    background-color: rgba(0, 0, 0, 0.65);
+    color: #ffffff;
+    border: none;
+    font-size: 9px;
+    padding: 3px 6px;
+    border-radius: 3px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.btn-add-favorite:hover {
+    opacity: 1;
+}
+
+/* --- Thanh điều khiển bên dưới ảnh (Rating & Trái tim) --- */
+.card-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #ffffff;
+}
+
+.rating-stars {
+    display: flex;
+    gap: 1px;
+}
+
+.star {
+    font-size: 16px;
+    color: #ccc;
+    /* Ngôi sao trống */
+    cursor: pointer;
+}
+
+.star.active {
+    color: #f1c40f;
+    /* Ngôi sao màu vàng */
+}
+
+/* Nút Trái tim */
+.btn-heart {
+    background-color: #f1f5f7;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+}
+
+.btn-heart:hover {
+    background-color: #ffeef0;
+    color: #e74c3c;
+    border-color: #ffccd3;
+}
+
+/* --- Summary Footer --- */
+.gallery-summary {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    /* Tự động xuống dòng nếu màn hình quá hẹp */
+}
+
+.summary-box {
+    flex: 1;
+    min-width: 250px;
+    background-color: #ffffff;
+    border: 2px solid #b3e0e0;
+    border-radius: 6px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.summary-text strong {
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.summary-text span {
+    font-size: 12px;
+    color: #666;
+    margin-left: 4px;
+}
+
+.summary-icon {
+    font-size: 20px;
+    color: #444;
+}
+
+.heart-icon {
+    color: #000;
+    /* Trái tim đen đặc theo như hình thiết kế */
+    font-size: 22px;
+}
+
+/* --- Định dạng Responsive cho thiết bị nhỏ hẳn --- */
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        /* Chia đôi màn hình trên điện thoại nhỏ */
+    }
+
+    .gallery-summary {
+        flex-direction: column;
+    }
+}
+
+/* --- Bổ sung các trạng thái tương tác qua jQuery --- */
+.star.pre-filled {
+    color: #f39c12 !important;
+    transform: scale(1.15);
+    transition: transform 0.1s;
+}
+
+.btn-heart.active {
+    background-color: #ffeef0;
+    color: #e74c3c;
+    border-color: #ffccd3;
+}
+
+.btn-add-favorite.active {
+    background-color: #e74c3c;
+    color: #ffffff;
+    opacity: 1;
+}

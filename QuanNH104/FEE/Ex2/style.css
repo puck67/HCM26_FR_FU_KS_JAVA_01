@@ -1,0 +1,289 @@
+/* --- Khởi tạo cơ bản --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eef2f5;
+    /* Màu nền xám nhẹ bao quanh app */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* --- Container chính của App (Khung màu trắng bo góc) --- */
+.app-container {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+}
+
+/* --- Header --- */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.board-title {
+    font-size: 24px;
+    color: #111;
+    font-weight: 700;
+}
+
+.user-profile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.avatar,
+.calendar-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #f0f2f5;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* --- Bố cục Kanban Board (Responsive Flexbox) --- */
+.kanban-board {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    /* Tự động xuống hàng trên màn hình nhỏ */
+}
+
+.kanban-column {
+    flex: 1;
+    min-width: 280px;
+    /* Đảm bảo không bị quá bóp nghẹt trên mobile */
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 30px;
+}
+
+/* Định dạng màu nền riêng cho từng cột giống thiết kế */
+.col-todo {
+    background-color: #e2f0fd;
+}
+
+.col-progress {
+    background-color: #ffebd2;
+}
+
+.col-done {
+    background-color: #e4f5e9;
+}
+
+/* --- Tiêu đề cột --- */
+.column-header {
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    padding: 6px 0;
+    color: #333;
+}
+
+.col-todo .column-header {
+    color: #0b4b8f;
+}
+
+.col-progress .column-header {
+    color: #8a5313;
+}
+
+.col-done .column-header {
+    color: #236137;
+}
+
+/* --- Ô nhập Task mới --- */
+.input-container {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.input-container input {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+}
+
+.btn-add {
+    background: none;
+    border: none;
+    padding: 0 12px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #666;
+    border-left: 1px solid #eee;
+}
+
+.btn-add:hover {
+    background-color: #f5f5f5;
+}
+
+/* --- Container chứa các thẻ bài --- */
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* --- Thiết kế Card dạng Sticky Note (Giấy nhớ) --- */
+.kanban-card {
+    background-color: #fef6dd;
+    /* Màu vàng giấy note đặc trưng */
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+
+    /* Đổ bóng giả lập góc note hơi cong lên ở phía dưới bên phải */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 20px 6px;
+}
+
+/* Thêm một hiệu ứng shadow viền nhẹ dưới đáy card để giống hình mẫu */
+.kanban-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 10px;
+    bottom: 4px;
+    width: 85%;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.15);
+    transform: rotate(2deg);
+}
+
+.card-label {
+    font-size: 11px;
+    color: #777;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.card-title {
+    font-size: 15px;
+    color: #111;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+
+/* --- Các nút chức năng trong Card --- */
+.card-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+/* Nút viền mảnh trắng / xám */
+.btn-outline {
+    background-color: #ffffff;
+    border: 1px solid #b3b3b3;
+    color: #333;
+}
+
+.btn-outline:hover {
+    background-color: #f0f0f0;
+}
+
+/* Nút xanh dương (Start) */
+.btn-blue {
+    background-color: #1a73e8;
+    color: white;
+}
+
+.btn-blue:hover {
+    background-color: #155cb8;
+}
+
+/* Nút xanh lá (Done) */
+.btn-green {
+    background-color: #2eb872;
+    color: white;
+}
+
+.btn-green:hover {
+    background-color: #24925a;
+}
+
+/* --- Global Search Bar --- */
+.search-container {
+    flex: 1;
+    max-width: 320px;
+    margin: 0 20px;
+}
+
+#global-search {
+    width: 100%;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: 1px solid #dcdcdc;
+    border-radius: 20px;
+    outline: none;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+#global-search:focus {
+    border-color: #1a73e8;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+}
+
+/* Nút xóa màu đỏ */
+.btn-red, .btn-delete {
+    background-color: #ea4335;
+    color: white;
+}
+
+.btn-red:hover, .btn-delete:hover {
+    background-color: #d33828;
+}
+
+/* --- Responsive cho điện thoại cực nhỏ --- */
+@media (max-width: 600px) {
+    .kanban-board {
+        flex-direction: column;
+    }
+
+    .kanban-column {
+        width: 100%;
+    }
+}
