@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Portal - Help</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="person.html">Visitor Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="person.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="help.html">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="visitor-card">
+                    <div class="card-content">
+                        <h2 class="visitor-title">Help &amp; Support</h2>
+                        
+                        <div class="mb-4">
+                            <h4 class="help-section-title">1. How to Register a Visitor</h4>
+                            <p class="text-justify">
+                                Navigate to the <strong>Register</strong> page using the navigation bar. Fill in the required fields marked with a red asterisk (*) including First name, Last name, and Region. You can optionally provide Gender, Telephone number, Email, Hobbies, and a Description. Once ready, click the green <strong>Register</strong> button to submit.
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="help-section-title">2. Registration Validation Rules</h4>
+                            <p class="text-justify">
+                                The form enforces the following rules upon registration:
+                            </p>
+                            <ul>
+                                <li><strong>First Name:</strong> Mandatory, maximum length of 20 characters, must contain characters only (no digits).</li>
+                                <li><strong>Last Name:</strong> Mandatory, maximum length of 20 characters, must contain characters only (no digits).</li>
+                                <li><strong>Telephone:</strong> Optional, maximum length of 11 digits, must contain numbers only.</li>
+                                <li><strong>Email:</strong> Optional, maximum length of 50 characters, must follow the valid email pattern.</li>
+                                <li><strong>You are in:</strong> Mandatory, you must select one of the regions.</li>
+                                <li><strong>Description:</strong> Optional, maximum length of 200 characters.</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="help-section-title">3. How to Search Visitors</h4>
+                            <p class="text-justify">
+                                Navigate to the <strong>Search</strong> page. Enter a keyword (which could match a First name, Last name, Region, Hobbies, or any column value) and click the green <strong>Search</strong> button. The list will immediately filter the table to display rows containing that keyword. Leaving the field blank and clicking Search will display the full list.
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <h4 class="help-section-title">4. System Requirements</h4>
+                            <p class="text-justify">
+                                The system runs fully offline by utilizing local resources. Data persistence is handled securely using the browser's <code>localStorage</code>, which stores newly registered visitor profiles.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
