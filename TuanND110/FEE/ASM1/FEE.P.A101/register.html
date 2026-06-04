@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CMS Dashboard</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="auth-wrapper">
+
+    <div class="auth-card">
+        <div class="auth-card__header">
+            <h2 class="auth-card__title">Register</h2>
+        </div>
+        <div class="auth-card__body">
+            <!-- Alert container for validation errors -->
+            <div id="alertContainer"></div>
+
+            <form class="form" id="registerForm" novalidate>
+                <!-- Username field group -->
+                <div class="form__group">
+                    <input type="text" class="form__control form__control--input-height" id="username" placeholder="User name" maxlength="50" required aria-describedby="usernameFeedback">
+                    <div class="form__feedback" id="usernameFeedback">Username must be between 3 and 30 characters.</div>
+                </div>
+
+                <!-- Email field group -->
+                <div class="form__group">
+                    <input type="email" class="form__control form__control--input-height" id="email" placeholder="E-mail" maxlength="50" required aria-describedby="emailFeedback">
+                    <div class="form__feedback" id="emailFeedback">Please enter a valid email address.</div>
+                </div>
+
+                <!-- Password field group -->
+                <div class="form__group">
+                    <input type="password" class="form__control form__control--input-height" id="password" placeholder="Password" maxlength="50" required aria-describedby="passwordFeedback">
+                    <div class="form__feedback" id="passwordFeedback">Password must be between 8 and 30 characters.</div>
+                </div>
+
+                <!-- Confirm Password field group -->
+                <div class="form__group form__group--spaced">
+                    <input type="password" class="form__control form__control--input-height" id="confirmPassword" placeholder="Re Password" required aria-describedby="confirmPasswordFeedback">
+                    <div class="form__feedback" id="confirmPasswordFeedback">Passwords must match.</div>
+                </div>
+
+                <!-- Register submission button -->
+                <button type="submit" class="btn btn--block" id="registerBtn">
+                    Register
+                </button>
+            </form>
+
+            <div class="auth-card__link-group">
+                <a href="./login.html" class="auth-card__link" id="loginLink">Click here to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Check if user is already logged in
+            if (sessionStorage.getItem('currentUser')) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Validate email format
+            function isValidEmail(email) {
+                const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return regex.test(email);
+            }
+
+            // Alert helper
+            function showAlert(type, message) {
+                const alertHTML = `
+                    <div class="alert alert--${type}">
+                        <span>
+                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                            ${message}
+                        </span>
+                        <button type="button" class="alert__close-btn" aria-label="Close alert" onclick="$(this).parent().remove()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                `;
+                $('#alertContainer').html(alertHTML);
+            }
+
+            // --- Real-time validations ---
+            $('#username').on('input blur', function() {
+                validateUsername();
+            });
+
+            $('#email').on('input blur', function() {
+                validateEmailField();
+            });
+
+            $('#password').on('input blur', function() {
+                validatePasswordField();
+            });
+
+            $('#confirmPassword').on('input blur', function() {
+                validateConfirmPassword();
+            });
+
+            function validateUsername() {
+                const username = $('#username').val().trim();
+                const $el = $('#username');
+                if (!username) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#usernameFeedback').text('Username is required.');
+                    return false;
+                } else if (username.length < 3 || username.length > 30) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#usernameFeedback').text('Username must be between 3 and 30 characters in length.');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            function validateEmailField() {
+                const email = $('#email').val().trim();
+                const $el = $('#email');
+                if (!email) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#emailFeedback').text('Email address is required.');
+                    return false;
+                } else if (!isValidEmail(email)) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#emailFeedback').text('Please enter a valid email address.');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            function validatePasswordField() {
+                const password = $('#password').val();
+                const $el = $('#password');
+                if (!password) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#passwordFeedback').text('Password is required.');
+                    return false;
+                } else if (password.length < 8 || password.length > 30) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#passwordFeedback').text('Password must be between 8 and 30 characters in length.');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            function validateConfirmPassword() {
+                const password = $('#password').val();
+                const confirmPassword = $('#confirmPassword').val();
+                const $el = $('#confirmPassword');
+                if (!confirmPassword) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#confirmPasswordFeedback').text('Confirm password is required.');
+                    return false;
+                } else if (confirmPassword !== password) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#confirmPasswordFeedback').text('Passwords do not match.');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            // Form Submit handler
+            $('#registerForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Clear previous alerts
+                $('#alertContainer').empty();
+
+                // Trigger validations
+                const isUsernameValid = validateUsername();
+                const isEmailValid = validateEmailField();
+                const isPasswordValid = validatePasswordField();
+                const isConfirmPasswordValid = validateConfirmPassword();
+
+                if (isUsernameValid && isEmailValid && isPasswordValid && isConfirmPasswordValid) {
+                    const username = $('#username').val().trim();
+                    const email = $('#email').val().trim();
+                    const password = $('#password').val();
+
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
+
+                    if (emailExists) {
+                        $('#email').addClass('form__control--invalid');
+                        showAlert('danger', 'This email is already registered to another account.');
+                        return;
+                    }
+
+                    // Save new user info
+                    const newUser = {
+                        username: username,
+                        email: email,
+                        password: password,
+                        firstName: "",
+                        lastName: "",
+                        phone: "",
+                        description: ""
+                    };
+
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+
+                    showAlert('success', 'Registration successful! Redirecting to login page...');
+                    $('#registerBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i> Registering...');
+
+                    setTimeout(function () {
+                        window.location.href = 'login.html';
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping List Manager</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<main class="budget-app">
+  <!-- Header Section -->
+  <header class="budget-app__header">
+    <h1 class="budget-app__title">Shopping List Manager</h1>
+  </header>
+
+  <!-- Main Content Space -->
+  <div class="budget-app__content">
+    
+    <!-- Item Form Section -->
+    <section class="budget-app__form">
+      <div class="budget-app__input-group">
+        <label class="budget-app__label" for="item-name">Item Name</label>
+        <input class="budget-app__input" type="text" id="item-name" placeholder="e.g., Apples" autocomplete="off" required>
+      </div>
+      <div class="budget-app__input-group">
+        <label class="budget-app__label" for="item-cost">Item Cost ($)</label>
+        <input class="budget-app__input" type="number" id="item-cost" placeholder="e.g., 2.50" step="0.01" min="0.01" required>
+      </div>
+      <button class="budget-app__btn budget-app__btn--add" id="add-item-btn">
+        Add Item +
+      </button>
+    </section>
+
+    <!-- Validation Error Container -->
+    <div class="budget-app__error" id="validation-error"></div>
+
+    <!-- Shopping Items Table -->
+    <div class="budget-table__container">
+      <table class="budget-table">
+        <thead class="budget-table__thead">
+          <tr class="budget-table__row">
+            <th class="budget-table__cell budget-table__cell--header">Item Name</th>
+            <th class="budget-table__cell budget-table__cell--header" style="text-align: center;">Cost ($)</th>
+            <th class="budget-table__cell budget-table__cell--header" style="text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody class="budget-table__tbody" id="items-list">
+          <!-- Item: Apples -->
+          <tr class="budget-table__row budget-table__row--item">
+            <td class="budget-table__cell budget-table__cell--name">Apples</td>
+            <td class="budget-table__cell budget-table__cell--cost">$3.49</td>
+            <td class="budget-table__cell budget-table__cell--action">
+              <button class="budget-table__remove-btn"><span class="remove-icon">✕</span> Remove</button>
+            </td>
+          </tr>
+          <!-- Item: Milk -->
+          <tr class="budget-table__row budget-table__row--item">
+            <td class="budget-table__cell budget-table__cell--name">Milk (1 Gallon)</td>
+            <td class="budget-table__cell budget-table__cell--cost">$4.15</td>
+            <td class="budget-table__cell budget-table__cell--action">
+              <button class="budget-table__remove-btn"><span class="remove-icon">✕</span> Remove</button>
+            </td>
+          </tr>
+          <!-- Item: Bread -->
+          <tr class="budget-table__row budget-table__row--item">
+            <td class="budget-table__cell budget-table__cell--name">Bread (Whole Wheat)</td>
+            <td class="budget-table__cell budget-table__cell--cost">$2.79</td>
+            <td class="budget-table__cell budget-table__cell--action">
+              <button class="budget-table__remove-btn"><span class="remove-icon">✕</span> Remove</button>
+            </td>
+          </tr>
+          <!-- Item: Eggs -->
+          <tr class="budget-table__row budget-table__row--item">
+            <td class="budget-table__cell budget-table__cell--name">Eggs (Dozen)</td>
+            <td class="budget-table__cell budget-table__cell--cost">$5.20</td>
+            <td class="budget-table__cell budget-table__cell--action">
+              <button class="budget-table__remove-btn"><span class="remove-icon">✕</span> Remove</button>
+            </td>
+          </tr>
+          <!-- Item: Cereal -->
+          <tr class="budget-table__row budget-table__row--item">
+            <td class="budget-table__cell budget-table__cell--name">Cereal (Cheerios)</td>
+            <td class="budget-table__cell budget-table__cell--cost">$4.89</td>
+            <td class="budget-table__cell budget-table__cell--action">
+              <button class="budget-table__remove-btn"><span class="remove-icon">✕</span> Remove</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Grand Budget Summary Box -->
+    <div class="total-card">
+      <span class="total-card__label">Grand Total:</span>
+      <span class="total-card__value" id="grand-total">$20.52</span>
+    </div>
+
+  </div>
+</main>
+
+<!-- Load jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Load Main Application Code -->
+<script src="js/app.js"></script>
+
+</body>
+</html>

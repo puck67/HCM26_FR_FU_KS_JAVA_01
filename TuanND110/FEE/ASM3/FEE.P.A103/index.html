@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HR Visitor Management</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="page">
+
+<header class="site-header">
+  <div class="site-header__banner" role="img" aria-label="Scenic lake banner"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container text-center">
+      <a class="site-nav__link site-nav__link--active" href="index.html">Home</a>
+      <a class="site-nav__link" href="person.html">Person</a>
+      <a class="site-nav__link" href="search.html">Search</a>
+      <a class="site-nav__link" href="help.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="visitor-panel" aria-labelledby="homeTitle">
+    <h1 class="visitor-panel__title" id="homeTitle">HR Visitor Management</h1>
+    <p>FEE.P.A103 — Register visitors, search with pagination, and read help.</p>
+
+    <div class="home-cards">
+      <article class="home-cards__item">
+        <h2 class="home-cards__title">Person</h2>
+        <p>Register with real-time validation (blur / input) and sanitized storage.</p>
+        <a href="person.html" class="visitor-btn d-inline-block text-decoration-none mt-2">Open Person</a>
+      </article>
+      <article class="home-cards__item">
+        <h2 class="home-cards__title">Search</h2>
+        <p>Search all columns, paginate results, sanitize keywords.</p>
+        <a href="search.html" class="visitor-btn d-inline-block text-decoration-none mt-2">Open Search</a>
+      </article>
+      <article class="home-cards__item">
+        <h2 class="home-cards__title">Help</h2>
+        <p>Usage guide aligned with project development standards.</p>
+        <a href="help.html" class="visitor-btn d-inline-block text-decoration-none mt-2">Open Help</a>
+      </article>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

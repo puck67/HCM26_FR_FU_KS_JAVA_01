@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Help - HR Visitor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="page">
+
+<header class="site-header">
+  <div class="site-header__banner" role="img" aria-label="Scenic lake banner"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container text-center">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="person.html">Person</a>
+      <a class="site-nav__link" href="search.html">Search</a>
+      <a class="site-nav__link site-nav__link--active" href="help.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="visitor-panel help-content" aria-labelledby="helpTitle">
+    <h1 class="visitor-panel__title" id="helpTitle">Help</h1>
+
+    <p>FEE.P.A103 — Visitor management with validation, sanitize, BEM CSS, and pagination.</p>
+
+    <h2 class="help-content__title">Register a visitor</h2>
+    <ol>
+      <li>Open <a href="person.html">Person</a>.</li>
+      <li>Fill required fields (First name, Last name, You are in).</li>
+      <li>Errors show at the top and under each field; <strong>blur</strong> validates one field at a time.</li>
+      <li>Click <strong>Register</strong> — button is disabled while processing.</li>
+    </ol>
+
+    <h2 class="help-content__title">Search visitors</h2>
+    <ol>
+      <li>Open <a href="search.html">Search</a>.</li>
+      <li>Enter a keyword (max 50 chars, sanitized) or leave empty to list all.</li>
+      <li>Search matches every column, not only first name.</li>
+      <li>Use pagination: rows per page and page navigation.</li>
+    </ol>
+
+    <h2 class="help-content__title">Validation rules (PDF)</h2>
+    <ul>
+      <li><strong>First / Last name:</strong> required, max 20, letters only (no digits).</li>
+      <li><strong>Telephone:</strong> optional, max 11, digits only.</li>
+      <li><strong>Email:</strong> optional, max 50, <code>[a..Z][0..9]@[a..Z].</code></li>
+      <li><strong>You are in:</strong> required (Europe, Africa, Australia, Asia, America).</li>
+      <li><strong>Description:</strong> optional, max 200 (live counter).</li>
+    </ul>
+
+    <h2 class="help-content__title">Project structure</h2>
+    <ul>
+      <li><code>css/styles.css</code> — BEM, CSS variables (:root)</li>
+      <li><code>js/validators.js</code> — Regex + sanitize (no DOM)</li>
+      <li><code>js/form-ui.js</code> — Error UI via classes only</li>
+      <li><code>js/validation.js</code> — Person form (blur / submit)</li>
+      <li><code>js/data.js</code> — Data + re-validate on save</li>
+      <li><code>js/pagination.js</code> — Paginator (event delegation)</li>
+      <li><code>js/search.js</code> — Search + table</li>
+    </ul>
+
+    <p class="mt-4">
+      <a href="person.html" class="visitor-btn d-inline-block text-decoration-none">Go to Person</a>
+      <a href="search.html" class="visitor-btn d-inline-block text-decoration-none ml-2">Go to Search</a>
+    </p>
+  </section>
+</main>
+
+</body>
+</html>
