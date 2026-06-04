@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Manage Polls</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="vote.html">Polls</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="vote.html">Vote</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="create.html">Create</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="list.html">List</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="login-nav-btn">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="list-container">
+            <div class="d-flex mb-4">
+                <button type="button" class="tab-btn active">Active</button>
+                <button type="button" class="tab-btn">Drafts</button>
+                <button type="button" class="tab-btn">Closed</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered mb-0" id="polls-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">#</th>
+                            <th style="width: 55%">The list of questions and issues within</th>
+                            <th style="width: 35%">Management</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-poll-id="98">
+                            <td>98</td>
+                            <td>Great poll</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">View results</button>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">Close poll</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-poll">Delete</button>
+                            </td>
+                        </tr>
+                        <tr data-poll-id="99">
+                            <td>99</td>
+                            <td>FEE Assessment Survey</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">View results</button>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">Close poll</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-poll">Delete</button>
+                            </td>
+                        </tr>
+                        <tr data-poll-id="100">
+                            <td>100</td>
+                            <td>CMS Feedback Collection</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">View results</button>
+                                <button type="button" class="btn btn-sm btn-secondary mr-1">Close poll</button>
+                                <button type="button" class="btn btn-sm btn-danger btn-delete-poll">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal-container"></div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
