@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Polls – Create</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand font-weight-bold" href="index.html">Polls</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item"><a class="nav-link" href="index.html">Vote</a></li>
+      <li class="nav-item active"><a class="nav-link" href="create.html">Create</a></li>
+      <li class="nav-item"><a class="nav-link" href="list.html">List</a></li>
+    </ul>
+    <button class="btn btn-sm ml-auto" id="btnLogin">Login</button>
+  </div>
+</nav>
+
+<!-- Create Form -->
+<div class="container" style="max-width:720px; margin-top:40px;">
+  <h2 class="mb-4">Create Interview</h2>
+
+  <!-- Validation error box -->
+  <div id="formError" class="alert-validation" style="display:none;"></div>
+
+  <!-- Poll name -->
+  <div class="form-group row">
+    <div class="col-12">
+      <input type="text" class="form-control" id="pollName" placeholder="Name poll" maxlength="255" />
+      <small class="form-text text-danger" id="pollNameErr" style="display:none;">Name poll is required (3–255 characters).</small>
+    </div>
+  </div>
+
+  <!-- Questions container -->
+  <div id="questionsContainer">
+    <!-- First question block (always present) -->
+    <div class="question-block" data-question="1">
+      <div class="form-group">
+        <input type="text" class="form-control question-input" placeholder="Enter your question" maxlength="255" />
+        <small class="form-text text-danger question-err" style="display:none;">Question is required (3–255 characters).</small>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" />
+        <label class="form-check-label">Mandatory</label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" />
+        <label class="form-check-label">You can select multiple options</label>
+      </div>
+      <div class="form-group row align-items-start">
+        <label class="col-sm-3 col-form-label text-right" style="color:#20a0c0;">Possible answers</label>
+        <div class="col-sm-9">
+          <div class="answers-container">
+            <div class="answer-row mb-2 d-flex">
+              <input type="text" class="form-control answer-input" placeholder="Type your answer" maxlength="200" />
+              <button class="btn btn-sm ml-2 btn-add-answer" type="button">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <button class="btn" type="button" id="btnAddQuestion">+ Add question</button>
+  </div>
+
+  <div class="form-group">
+    <button class="btn" type="button" id="btnRetain">Retain</button>
+  </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-4">
+        <div id="loginError" class="alert-validation" style="display:none;"></div>
+        <div class="form-group">
+          <label for="alias">Alias:</label>
+          <input type="text" class="form-control" id="alias" placeholder="JoeSixpack" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="••••••••" />
+        </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="rememberMe" />
+          <label class="form-check-label" for="rememberMe">Remember me</label>
+        </div>
+        <button class="btn" type="button" id="btnSignIn">Sign In</button>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ---- Add answer row ----
+  $(document).on('click', '.btn-add-answer', function () {
+    var container = $(this).closest('.answers-container');
+    var newRow = $('<div class="answer-row mb-2 d-flex"></div>');
+    var newInput = $('<input type="text" class="form-control answer-input" placeholder="Type your answer" maxlength="200" />');
+    var newBtn = $('<button class="btn btn-sm ml-2 btn-add-answer" type="button">+</button>');
+    newRow.append(newInput).append(newBtn);
+    container.append(newRow);
+    // Move + button: remove from old row's button
+    $(this).remove();
+    var prevRow = newRow.prev('.answer-row');
+    if (prevRow.length) {
+      prevRow.find('.btn-add-answer').remove();
+    }
+    newRow.append(newBtn);
+  });
+
+  // ---- Add question block ----
+  var questionCount = 1;
+  $('#btnAddQuestion').on('click', function () {
+    questionCount++;
+    var block = $('<div class="question-block" data-question="' + questionCount + '"></div>');
+    block.html(
+      '<div class="form-group">' +
+        '<input type="text" class="form-control question-input" placeholder="Enter your question" maxlength="255" />' +
+        '<small class="form-text text-danger question-err" style="display:none;">Question is required (3–255 characters).</small>' +
+      '</div>' +
+      '<div class="form-check">' +
+        '<input class="form-check-input" type="checkbox" />' +
+        '<label class="form-check-label">Mandatory</label>' +
+      '</div>' +
+      '<div class="form-check mb-3">' +
+        '<input class="form-check-input" type="checkbox" />' +
+        '<label class="form-check-label">You can select multiple options</label>' +
+      '</div>' +
+      '<div class="form-group row align-items-start">' +
+        '<label class="col-sm-3 col-form-label text-right" style="color:#20a0c0;">Possible answers</label>' +
+        '<div class="col-sm-9">' +
+          '<div class="answers-container">' +
+            '<div class="answer-row mb-2 d-flex">' +
+              '<input type="text" class="form-control answer-input" placeholder="Type your answer" maxlength="200" />' +
+              '<button class="btn btn-sm ml-2 btn-add-answer" type="button">+</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+    $('#questionsContainer').append(block);
+  });
+
+  // ---- Validate form ----
+  function validateForm() {
+    var errors = [];
+    var valid = true;
+
+    // Clear previous errors
+    $('.field-error').removeClass('field-error');
+    $('.error-label').removeClass('error-label');
+    $('.question-err, .answer-err').hide();
+    $('#pollNameErr').hide();
+    $('#formError').hide();
+
+    // Poll name
+    var pollName = $('#pollName').val().trim();
+    if (pollName.length < 3 || pollName.length > 255) {
+      errors.push('Name poll is required and must be 3–255 characters.');
+      $('#pollName').addClass('field-error');
+      $('#pollNameErr').show();
+    }
+
+    // Each question
+    $('.question-block').each(function (i) {
+      var qInput = $(this).find('.question-input');
+      var qVal = qInput.val().trim();
+      if (qVal.length < 3 || qVal.length > 255) {
+        errors.push('Question ' + (i + 1) + ' is required and must be 3–255 characters.');
+        qInput.addClass('field-error');
+        $(this).find('.question-err').show();
+        valid = false;
+      }
+
+      // Each answer
+      $(this).find('.answer-input').each(function (j) {
+        var aVal = $(this).val().trim();
+        if (aVal.length > 0 && (aVal.length < 3 || aVal.length > 200)) {
+          errors.push('Answer ' + (j + 1) + ' in question ' + (i + 1) + ' must be 3–200 characters.');
+          $(this).addClass('field-error');
+          valid = false;
+        }
+      });
+    });
+
+    if (errors.length > 0) {
+      $('#formError').html('<strong>Please fix the following errors:</strong><br>' + errors.join('<br>')).show();
+      return false;
+    }
+    return true;
+  }
+
+  $('#btnRetain').on('click', function () {
+    if (validateForm()) {
+      alert('Poll saved successfully!');
+    }
+  });
+
+  // ---- Login modal ----
+  $('#btnLogin').on('click', function () {
+    $('#loginModal').modal('show');
+  });
+
+  $('#btnSignIn').on('click', function () {
+    var alias = $('#alias').val().trim();
+    var pwd = $('#password').val().trim();
+    var errors = [];
+
+    $('#alias, #password').removeClass('field-error');
+    $('label[for="alias"], label[for="password"]').removeClass('error-label');
+    $('#loginError').hide();
+
+    if (!alias) {
+      errors.push('Alias is required.');
+      $('#alias').addClass('field-error');
+      $('label[for="alias"]').addClass('error-label');
+    }
+    if (!pwd) {
+      errors.push('Password is required.');
+      $('#password').addClass('field-error');
+      $('label[for="password"]').addClass('error-label');
+    }
+
+    if (errors.length > 0) {
+      $('#loginError').html(errors.join('<br>')).show();
+    } else {
+      alert('Signed in successfully!');
+      $('#loginModal').modal('hide');
+    }
+  });
+</script>
+</body>
+</html>

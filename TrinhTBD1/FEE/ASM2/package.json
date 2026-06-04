@@ -1,0 +1,20 @@
+{
+  "name": "fee.p.a102-polls",
+  "version": "1.0.0",
+  "description": "Polls Management Platform implementation for FEE.P.A102 assignment at FSOFT using Bootstrap 4, jQuery and AJAX",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "polls",
+    "fsoft",
+    "bootstrap",
+    "jquery",
+    "ajax",
+    "validation"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}

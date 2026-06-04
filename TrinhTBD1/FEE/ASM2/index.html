@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- SEO & Accessibility Configuration -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polls Management Platform - Front-End Essentials</title>
+  <meta name="description" content="A comprehensive Polls and Surveys Management Platform implementing responsive design, form validation, AJAX operations and dynamic DOM elements using Bootstrap 4 and jQuery.">
+  <meta name="author" content="Antigravity">
+  
+  <!-- CSS Stylesheets -->
+  <!-- Bootstrap 4.6.2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- FontAwesome Icons 5.15.4 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  
+  <!-- Custom Styles (Professional folder structure) -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Sleek Navigation Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-polls fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#home-section" id="nav-brand">Polls</a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <!-- Navigation Tabs Left -->
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#home-section" id="nav-vote"><i class="fas fa-vote-yea mr-1"></i> Vote</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#create-section" id="nav-create"><i class="fas fa-plus-circle mr-1"></i> Create</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#list-section" id="nav-list"><i class="fas fa-list-ul mr-1"></i> List</a>
+          </li>
+        </ul>
+
+        <!-- Navigation Tabs Right (Login Button) -->
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link login-nav-btn" href="#" id="nav-login-trigger">
+              <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Multi-View SPA Workspace -->
+  <main class="flex-grow-1 py-5">
+    <div class="container">
+      
+      <!-- ==========================================
+           1. VOTE VIEW (HOME PAGE)
+           ========================================== -->
+      <section id="home-section" class="page-section active-section">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-xl-9">
+            
+            <!-- Dynamic Success Feedback Alert -->
+            <div class="success-alert-custom d-none" id="vote-success-alert" role="alert"></div>
+
+            <!-- Error Validation Summary at Top of Form -->
+            <div class="validation-summary d-none" id="vote-validation-summary">
+              <div class="validation-summary-title">
+                <i class="fas fa-exclamation-triangle mr-2"></i> Error: Missing Mandatory Selections
+              </div>
+              <p class="mb-2 text-secondary text-sm">Please answer all mandatory questions outlined below in red to proceed.</p>
+              <ul class="validation-summary-list"></ul>
+            </div>
+
+            <!-- Poll Display Card -->
+            <div class="poll-card shadow-sm" id="vote-form-container">
+              <h1 class="poll-title" id="home-poll-title">Great poll</h1>
+              
+              <!-- Questions and Choices are loaded dynamically inside here -->
+              <form id="vote-form">
+                <div id="home-questions-container">
+                  <!-- Injected dynamically by jQuery -->
+                </div>
+                
+                <!-- Vote Submission Button (Must be green) -->
+                <div class="mt-5 text-center text-md-left">
+                  <button type="submit" class="btn text-white px-5" id="btn-submit-vote">
+                    Retain
+                  </button>
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           2. CREATE INTERVIEW VIEW (CREATE PAGE)
+           ========================================== -->
+      <section id="create-section" class="page-section">
+        <div class="create-poll-container">
+          
+          <!-- Dynamic Success Feedback Alert -->
+          <div class="success-alert-custom d-none" id="create-success-alert" role="alert"></div>
+
+          <!-- Error Validation Summary at Top of Form -->
+          <div class="validation-summary d-none" id="create-validation-summary">
+            <div class="validation-summary-title">
+              <i class="fas fa-exclamation-triangle mr-2"></i> Creation Failed: Correct Invalid Fields
+            </div>
+            <p class="mb-2 text-secondary text-sm">The form must be checked to make sure all mandatory fields are filled correctly. Please resolve the following errors:</p>
+            <ul class="validation-summary-list"></ul>
+          </div>
+
+          <div class="poll-card shadow-sm">
+            <h2 class="mb-4 font-weight-bold text-dark" style="font-size: 1.8rem;">Create Interview</h2>
+            
+            <form id="create-poll-form" novalidate>
+              <!-- Name poll input (Required, string 3-255) -->
+              <div class="form-group form-group-custom">
+                <label class="login-label font-weight-bold" for="input-name-poll">Name poll <span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-custom" id="input-name-poll" placeholder="Name poll" required data-field-name="Name Poll">
+              </div>
+
+              <!-- Question blocks container (dynamically expanded) -->
+              <div id="questions-wrapper">
+                <!-- Dynamically populated by scripts.js -->
+              </div>
+
+              <!-- Add question block button (Must be green) -->
+              <div class="mb-4">
+                <button type="button" class="btn text-white" id="btn-add-question-block">
+                  <i class="fas fa-plus-circle mr-2"></i> Add question
+                </button>
+              </div>
+
+              <!-- Retain (Save/Submit) Button (Must be green) -->
+              <div class="text-center pt-3 border-top mt-4">
+                <button type="submit" class="btn text-white px-5" id="btn-save-poll">
+                  Retain
+                </button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================
+           3. MANAGE QUESTIONS VIEW (LIST PAGE)
+           ========================================== -->
+      <section id="list-section" class="page-section">
+        <div class="poll-card shadow-sm">
+          <h2 class="mb-4 font-weight-bold text-dark" style="font-size: 1.8rem;">Manage Polls</h2>
+          
+          <!-- Status Filtering Tabs Group matching specific styles -->
+          <div class="tab-group-custom">
+            <button type="button" class="btn tab-btn-custom tab-btn-active" data-tab="Active">Active</button>
+            <button type="button" class="btn tab-btn-custom tab-btn-inactive-light" data-tab="Drafts">Drafts</button>
+            <button type="button" class="btn tab-btn-custom tab-btn-inactive-light" data-tab="Closed">Closed</button>
+          </div>
+
+          <!-- Polls List Table Elements -->
+          <div class="table-responsive">
+            <table class="table table-custom table-hover">
+              <thead>
+                <tr>
+                  <th style="width: 80px;">#</th>
+                  <th>The list of questions and issues within</th>
+                  <th style="width: 320px;">Management</th>
+                </tr>
+              </thead>
+              <tbody id="polls-list-tbody">
+                <!-- Dynamically rendered by scripts.js based on tab filters -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================
+       LOGIN POPUP OVERLAY MODAL
+       ========================================== -->
+  <div class="login-modal-overlay" id="login-popup-overlay">
+    <div class="login-modal-card">
+      <div class="login-modal-header d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 font-weight-bold text-dark" style="font-size: 1.25rem;">User Account Access</h4>
+        <span class="close" id="btn-close-login-popup" role="button" aria-label="Close" style="font-size: 1.5rem; outline: none; cursor: pointer;">&times;</span>
+      </div>
+      
+      <div class="login-modal-body">
+        <!-- Error message banner in modal -->
+        <div class="alert alert-danger p-2 mb-3 text-xs d-none" id="login-popup-error-alert"></div>
+
+        <form id="login-popup-form" novalidate>
+          <!-- Alias Username Input -->
+          <div class="form-group">
+            <label class="login-label" for="login-alias">Alias:</label>
+            <input type="text" class="form-control form-control-custom" id="login-alias" placeholder="JoeSixpack" required>
+          </div>
+
+          <!-- Password Input -->
+          <div class="form-group">
+            <label class="login-label" for="login-password">Password:</label>
+            <input type="password" class="form-control form-control-custom" id="login-password" placeholder="********" required>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div class="form-group mb-4">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="login-remember">
+              <label class="custom-control-label option-label" for="login-remember">Remember me</label>
+            </div>
+          </div>
+
+          <!-- Sign In Submit Button (Must be green) -->
+          <div class="mb-2">
+            <button type="submit" class="btn text-white btn-block" id="btn-popup-signin">
+              Sign In
+            </button>
+          </div>
+          
+          <!-- Close Modal Button (Must also be green as per specification) -->
+          <div>
+            <button type="button" class="btn btn-block" id="btn-popup-close" style="background-color: #28a745 !important; border-color: #28a745 !important;" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       VIEW RESULTS POPUP OVERLAY MODAL (AJAX CONTENT CONTAINER)
+       ========================================== -->
+  <div class="login-modal-overlay" id="results-modal-overlay">
+    <div class="login-modal-card" style="max-width: 550px;">
+      <div class="login-modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
+        <h4 class="mb-0 font-weight-bold text-dark" style="font-size: 1.25rem;"><i class="fas fa-poll mr-2 text-success"></i> Survey Results Analytics</h4>
+        <span class="close btn-close-modal" role="button" aria-label="Close" style="font-size: 1.5rem; outline: none; cursor: pointer;">&times;</span>
+      </div>
+      
+      <div class="login-modal-body py-4" id="results-modal-content-body">
+        <!-- Loaded dynamically via Sanitized AJAX from results.html -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       DELETE CONFIRMATION POPUP OVERLAY MODAL
+       ========================================== -->
+  <div class="login-modal-overlay" id="delete-confirm-modal-overlay">
+    <div class="login-modal-card" style="max-width: 400px;">
+      <div class="login-modal-header d-flex justify-content-between align-items-center pb-2 border-bottom">
+        <h4 class="mb-0 font-weight-bold text-dark" style="font-size: 1.15rem;"><i class="fas fa-trash-alt mr-2 text-danger"></i> Delete Confirmation</h4>
+        <span class="close btn-close-delete-modal" role="button" aria-label="Close" style="font-size: 1.5rem; outline: none; cursor: pointer;">&times;</span>
+      </div>
+      
+      <div class="login-modal-body py-4 text-center">
+        <p class="mb-4 text-secondary" style="font-size: 1rem; font-weight: 500;">Are you sure you want to delete this item?</p>
+        
+        <div class="row">
+          <div class="col-6">
+            <button type="button" class="btn btn-block text-white" id="btn-confirm-delete-action" style="background-color: #2e7d32 !important; border-color: #2e7d32 !important;">
+              Delete
+            </button>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-block btn-secondary btn-close-delete-modal" style="background-color: #28a745 !important; border-color: #28a745 !important;">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Dependency Libraries -->
+  <!-- jQuery 3.5.1 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <!-- Bootstrap 4 Bundle with Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Custom Application Scripts (Professional folder structure) -->
+  <script src="js/scripts.js"></script>
+</body>
+</html>

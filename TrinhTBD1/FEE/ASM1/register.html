@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS - Register</title>
+  <!-- SEO Tags -->
+  <meta name="description" content="Join the Content Management System. Register for an account.">
+  
+  <!-- CSS Stylesheets -->
+  <!-- Bootstrap 4.6.2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Overrides -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="auth-wrapper">
+
+  <div class="auth-card" id="register-card">
+    <div class="auth-card-header text-left">
+      Register
+    </div>
+    
+    <div class="auth-card-body">
+      <!-- Success Alert Box -->
+      <div id="register-success-alert" class="alert alert-success d-none" role="alert" style="border-radius: 6px; font-size: 0.85rem; font-weight: 500;">
+        <i class="fas fa-check-circle mr-1"></i> Registration successful! Redirecting to login...
+      </div>
+      
+      <form id="register-form" novalidate>
+        <!-- Username Input -->
+        <div class="form-group mb-4">
+          <input type="text" class="form-control" id="reg-username" placeholder="User name" minlength="3" maxlength="30" required>
+          <div class="invalid-feedback">User name is required (3-30 characters).</div>
+        </div>
+
+        <!-- Email Input -->
+        <div class="form-group mb-4">
+          <input type="email" class="form-control" id="reg-email" placeholder="E-mail" minlength="5" required>
+          <div class="invalid-feedback">Please enter a valid e-mail address (minimum 5 characters).</div>
+        </div>
+
+        <!-- Password Input -->
+        <div class="form-group mb-4">
+          <input type="password" class="form-control" id="reg-password" placeholder="Password" minlength="8" maxlength="30" required>
+          <div class="invalid-feedback">Password must be between 8 and 30 characters.</div>
+        </div>
+
+        <!-- Re Password Input -->
+        <div class="form-group mb-4">
+          <input type="password" class="form-control" id="reg-repassword" placeholder="Re Password" minlength="8" maxlength="30" required>
+          <div class="invalid-feedback">Re Password must match Password.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-green w-100 py-2" id="register-btn">Register</button>
+      </form>
+    </div>
+
+    <div class="auth-card-footer">
+      <a href="login.html" id="login-link">Click here to Login</a>
+    </div>
+  </div>
+
+  <!-- JavaScript Dependencies -->
+  <!-- jQuery 3.5.1 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <!-- Bootstrap 4 Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom Scripts -->
+  <script src="js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board - jQuery</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="header-title">My Project Board</h1>
+      <div class="search-container">
+        <input type="text" id="search-input" class="search-input" placeholder="Search tasks...">
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Vanilla JS</a>
+        <a href="jquery.html" class="nav-link active">jQuery</a>
+      </nav>
+    </header>
+
+    <main class="board-layout">
+      <section class="board-column todo" id="todo-column">
+        <div class="column-header">
+          <span>To Do</span>
+          <span class="task-count" id="todo-count">0</span>
+        </div>
+        <div class="input-container">
+          <form class="task-form" id="todo-form" novalidate>
+            <input type="text" class="task-input" id="todo-input" placeholder="Add a task to To Do" autocomplete="off">
+            <button type="submit" class="add-btn">+</button>
+          </form>
+        </div>
+        <div class="task-list" id="todo-list"></div>
+      </section>
+
+      <section class="board-column inprogress" id="inprogress-column">
+        <div class="column-header">
+          <span>In Progress</span>
+          <span class="task-count" id="inprogress-count">0</span>
+        </div>
+        <div class="input-container">
+          <form class="task-form" id="inprogress-form" novalidate>
+            <input type="text" class="task-input" id="inprogress-input" placeholder="Add a task to In Progress" autocomplete="off">
+            <button type="submit" class="add-btn">+</button>
+          </form>
+        </div>
+        <div class="task-list" id="inprogress-list"></div>
+      </section>
+
+      <section class="board-column done" id="done-column">
+        <div class="column-header">
+          <span>Done</span>
+          <span class="task-count" id="done-count">0</span>
+        </div>
+        <div class="input-container">
+          <form class="task-form" id="done-form" novalidate>
+            <input type="text" class="task-input" id="done-input" placeholder="Add a task to Done" autocomplete="off">
+            <button type="submit" class="add-btn">+</button>
+          </form>
+        </div>
+        <div class="task-list" id="done-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/app-jquery.js"></script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visitor Information – Person</title>
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="navbar navbar-expand-md navbar-dark">
+    <a class="navbar-brand" href="person.html">🌐 Visitor App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link active" href="person.html">Person</a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html">Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== Hero Banner ===== -->
+  <img
+    src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80"
+    alt="Nature Banner"
+    class="hero-banner"
+  />
+
+  <!-- ===== Main Content ===== -->
+  <div class="container my-4">
+    <h2 class="page-title">Visitor Information</h2>
+
+    <div class="form-card">
+      <form id="registerForm" novalidate>
+
+        <!-- First Name -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="firstName">
+            First name: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              name="firstName"
+              maxlength="20"
+              placeholder="First name"
+            />
+            <div class="error-msg" id="err-firstName"></div>
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="lastName">
+            Last name: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              name="lastName"
+              maxlength="20"
+              placeholder="Last name"
+            />
+            <div class="error-msg" id="err-lastName"></div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="gender">Gender:</label>
+          <div class="col-sm-4">
+            <select class="form-control" id="gender" name="gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Telephone -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="telephone">Telephone:</label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control"
+              id="telephone"
+              name="telephone"
+              maxlength="11"
+              placeholder="Telephone"
+            />
+            <div class="error-msg" id="err-telephone"></div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="email">Email:</label>
+          <div class="col-sm-6">
+            <input
+              type="text"
+              class="form-control"
+              id="email"
+              name="email"
+              maxlength="50"
+              placeholder="Email"
+            />
+            <div class="error-msg" id="err-email"></div>
+          </div>
+        </div>
+
+        <!-- You are in -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col">
+            You are in: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-8">
+            <div class="d-flex flex-wrap" style="gap:6px 18px;">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="youAreIn" id="rEurope" value="Europe" />
+                <label class="form-check-label" for="rEurope">Europe</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="youAreIn" id="rAfrica" value="Africa" />
+                <label class="form-check-label" for="rAfrica">Africa</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="youAreIn" id="rAustralia" value="Australia" />
+                <label class="form-check-label" for="rAustralia">Australia</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="youAreIn" id="rAsia" value="Asia" />
+                <label class="form-check-label" for="rAsia">Asia</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="youAreIn" id="rAmerica" value="America" />
+                <label class="form-check-label" for="rAmerica">America</label>
+              </div>
+            </div>
+            <div class="error-msg" id="err-youAreIn"></div>
+          </div>
+        </div>
+
+        <!-- Hobbies -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col">What are your hobbies:</label>
+          <div class="col-sm-8">
+            <div class="d-flex flex-wrap" style="gap:6px 18px;">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hSwimming" value="Swimming" />
+                <label class="form-check-label" for="hSwimming">Swimming</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hCooking" value="Cooking" />
+                <label class="form-check-label" for="hCooking">Cooking</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hShopping" value="Shopping" />
+                <label class="form-check-label" for="hShopping">Shopping</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hSport" value="Sport" />
+                <label class="form-check-label" for="hSport">Sport</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hDance" value="Dance" />
+                <label class="form-check-label" for="hDance">Dance</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="hobbies" id="hSing" value="Sing" />
+                <label class="form-check-label" for="hSing">Sing</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label form-label-col" for="description">Description:</label>
+          <div class="col-sm-7">
+            <textarea
+              class="form-control"
+              id="description"
+              name="description"
+              maxlength="200"
+              rows="4"
+              placeholder="Description"
+            ></textarea>
+            <div class="error-msg" id="err-description"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-6">
+            <button type="submit" class="btn btn-primary px-4" id="btnRegister">Register</button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Success alert (hidden initially) -->
+      <div id="successAlert" class="alert alert-success mt-3" style="display:none;">
+        ✅ Registration successful! Your information has been saved.
+      </div>
+    </div><!-- /.form-card -->
+  </div><!-- /.container -->
+
+  <footer>
+    &copy; 2024 Front-End Essentials – FPT Software Project Assignment
+  </footer>
+
+  <!-- ===== Scripts ===== -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      /* ---- Helper functions ---- */
+
+      // Show error message under a field
+      function showError(fieldId, message) {
+        $('#' + fieldId).addClass('is-invalid');
+        $('#err-' + fieldId).text(message).show();
+      }
+
+      // Clear error for a field
+      function clearError(fieldId) {
+        $('#' + fieldId).removeClass('is-invalid');
+        $('#err-' + fieldId).text('').hide();
+      }
+
+      // Validate a single field and return true if valid
+      function validateField(fieldId) {
+        var val = $('#' + fieldId).val().trim();
+        var ok = true;
+        clearError(fieldId);
+
+        switch (fieldId) {
+
+          /* ---- First name: mandatory, max 20, letters only ---- */
+          case 'firstName':
+            if (val === '') {
+              showError('firstName', 'First name is required.');
+              ok = false;
+            } else if (val.length > 20) {
+              showError('firstName', 'First name must not exceed 20 characters.');
+              ok = false;
+            } else if (/\d/.test(val)) {
+              showError('firstName', 'First name must not contain numbers.');
+              ok = false;
+            }
+            break;
+
+          /* ---- Last name: mandatory, max 20, letters only ---- */
+          case 'lastName':
+            if (val === '') {
+              showError('lastName', 'Last name is required.');
+              ok = false;
+            } else if (val.length > 20) {
+              showError('lastName', 'Last name must not exceed 20 characters.');
+              ok = false;
+            } else if (/\d/.test(val)) {
+              showError('lastName', 'Last name must not contain numbers.');
+              ok = false;
+            }
+            break;
+
+          /* ---- Telephone: optional, max 11, numbers only ---- */
+          case 'telephone':
+            if (val !== '') {
+              if (val.length > 11) {
+                showError('telephone', 'Telephone must not exceed 11 digits.');
+                ok = false;
+              } else if (!/^\d+$/.test(val)) {
+                showError('telephone', 'Telephone must contain numbers only.');
+                ok = false;
+              }
+            }
+            break;
+
+          /* ---- Email: optional, max 50, format [a..Z][0..9]@[a..Z]. ---- */
+          case 'email':
+            if (val !== '') {
+              if (val.length > 50) {
+                showError('email', 'Email must not exceed 50 characters.');
+                ok = false;
+              } else if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/.test(val)) {
+                showError('email', 'Email must be in format: example@domain.com');
+                ok = false;
+              }
+            }
+            break;
+
+          /* ---- Description: optional, max 200 ---- */
+          case 'description':
+            if (val.length > 200) {
+              showError('description', 'Description must not exceed 200 characters.');
+              ok = false;
+            }
+            break;
+        }
+        return ok;
+      }
+
+      /* ---- Live validation on input/change ---- */
+      $('#firstName, #lastName, #telephone, #email, #description').on('input change', function () {
+        validateField(this.id);
+      });
+
+      /* ---- Form submit with jQuery validation ---- */
+      $('#registerForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var isValid = true;
+
+        // Validate text fields
+        var fields = ['firstName', 'lastName', 'telephone', 'email', 'description'];
+        $.each(fields, function (i, fid) {
+          if (!validateField(fid)) isValid = false;
+        });
+
+        // Validate "You are in" (mandatory radio)
+        clearError('youAreIn');
+        if ($('input[name="youAreIn"]:checked').length === 0) {
+          showError('youAreIn', 'Please select where you are from.');
+          isValid = false;
+        }
+
+        if (!isValid) return;
+
+        /* ---- Collect form data and save to localStorage ---- */
+        var hobbies = [];
+        $('input[name="hobbies"]:checked').each(function () {
+          hobbies.push($(this).val());
+        });
+
+        var visitor = {
+          id: Date.now(),
+          firstName : $('#firstName').val().trim(),
+          lastName  : $('#lastName').val().trim(),
+          gender    : $('#gender').val(),
+          telephone : $('#telephone').val().trim(),
+          email     : $('#email').val().trim(),
+          youAreIn  : $('input[name="youAreIn"]:checked').val(),
+          hobbies   : hobbies.join(', '),
+          description: $('#description').val().trim()
+        };
+
+        // Persist to localStorage
+        var visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+        visitors.push(visitor);
+        localStorage.setItem('visitors', JSON.stringify(visitors));
+
+        // Reset form and show success
+        $('#registerForm')[0].reset();
+        $('#successAlert').fadeIn().delay(3000).fadeOut();
+      });
+
+    });
+  </script>
+
+</body>
+</html>

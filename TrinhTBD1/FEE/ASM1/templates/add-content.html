@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 font-weight-bold text-dark" id="content-card-header-title">Add Content</h1>
+</div>
+<div class="card cms-card">
+  <div class="card-header cms-card-header">
+    Content Form Elements
+  </div>
+  <div class="card-body cms-card-body">
+    <form id="add-content-form">
+      <input type="hidden" id="content-id-hidden" value="">
+      
+      <div class="form-group mb-4">
+        <label for="content-title" class="font-weight-semibold text-dark">Title</label>
+        <input type="text" class="form-control" id="content-title" placeholder="Enter the title" maxlength="200">
+        <div class="invalid-feedback">Title must be between 10 and 200 characters.</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="content-brief" class="font-weight-semibold text-dark">Brief</label>
+        <textarea class="form-control" id="content-brief" rows="3" placeholder="Enter the brief" maxlength="150"></textarea>
+        <div class="invalid-feedback">Brief must be between 30 and 150 characters.</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="content-textarea" class="font-weight-semibold text-dark">Content</label>
+        <textarea class="form-control" id="content-textarea" rows="8" placeholder="Enter the content" maxlength="1000"></textarea>
+        <div class="invalid-feedback">Content must be between 50 and 1000 characters.</div>
+      </div>
+
+      <div class="form-group mb-0">
+        <button type="submit" class="btn btn-green px-4 mr-2" id="content-submit-btn">Submit Button</button>
+        <button type="button" class="btn btn-reset px-4" id="content-reset-btn">Reset Button</button>
+      </div>
+    </form>
+  </div>
+</div>
