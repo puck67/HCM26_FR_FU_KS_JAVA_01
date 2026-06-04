@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery — jQuery</title>
+  <meta name="description" content="Dynamic image gallery with 5-star rating, hover effects, and animated footer using jQuery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <h1>📸 Image Gallery</h1>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span class="badge-jquery">jQuery</span>
+      <a href="../index.html" class="back-link">← Back</a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Gallery grid is rendered by jQuery -->
+    <div class="gallery-grid" id="gallery-grid"></div>
+
+    <!-- Summary Footer -->
+    <div class="summary-footer" id="summary-footer">
+      <div class="summary-stat">
+        <span class="stat-icon">⭐</span>
+        <div>
+          <div class="stat-label">Average Rating</div>
+          <div class="stat-value" id="avg-rating-val">0.0</div>
+          <div class="stat-sub" id="avg-rating-sub">no ratings yet</div>
+        </div>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-stat">
+        <span class="stat-icon">❤️</span>
+        <div>
+          <div class="stat-label">Total Favorites</div>
+          <div class="stat-value" id="total-favs-val">0</div>
+          <div class="stat-sub">of 10 images</div>
+        </div>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <span class="summary-built-with">Built with jQuery &amp; CSS Grid</span>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    FEE – Exercise 3 | Problem 03 – jQuery Refactored
+  </footer>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>
