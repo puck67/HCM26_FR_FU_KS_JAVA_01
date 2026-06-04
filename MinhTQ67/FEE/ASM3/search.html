@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Visitor</title>
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== Navigation ===== -->
+  <nav class="navbar navbar-expand-md navbar-dark">
+    <a class="navbar-brand" href="person.html">🌐 Visitor App</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="person.html">Person</a></li>
+        <li class="nav-item"><a class="nav-link active" href="search.html">Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===== Hero Banner ===== -->
+  <img
+    src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80"
+    alt="Nature Banner"
+    class="hero-banner"
+  />
+
+  <!-- ===== Main Content ===== -->
+  <div class="container my-4">
+    <h2 class="page-title">Search Visitor</h2>
+
+    <div class="form-card">
+
+      <!-- Search bar -->
+      <div class="search-row mb-3">
+        <label for="searchInput">First name:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Type keyword and click Search"
+          style="max-width:220px;"
+        />
+        <button class="btn btn-primary px-3" id="btnSearch">Search...</button>
+        <small class="text-muted ml-2">(Search matches any field)</small>
+      </div>
+
+      <!-- No result notice -->
+      <div id="noResult" class="alert alert-warning" style="display:none;">
+        No visitors found matching <strong id="noResultKeyword"></strong>.
+      </div>
+
+      <!-- Result Table -->
+      <div class="table-responsive">
+        <table class="search-table" id="resultTable">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Gender</th>
+              <th>Telephone</th>
+              <th>You're in</th>
+              <th>Hobbies</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <!-- rows injected by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty state (no data registered yet) -->
+      <div id="emptyState" class="text-center py-4 text-muted" style="display:none;">
+        <p>No visitors registered yet. <a href="person.html">Register one now →</a></p>
+      </div>
+
+    </div><!-- /.form-card -->
+  </div><!-- /.container -->
+
+  <footer>
+    &copy; 2024 Front-End Essentials – FPT Software Project Assignment
+  </footer>
+
+  <!-- ===== Scripts ===== -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+
+      /* ---- Load visitors from localStorage ---- */
+      function getVisitors() {
+        return JSON.parse(localStorage.getItem('visitors') || '[]');
+      }
+
+      /* ---- Render a list of visitor objects into the table ---- */
+      function renderTable(visitors) {
+        var $tbody = $('#tableBody');
+        $tbody.empty();
+
+        if (visitors.length === 0) return;
+
+        $.each(visitors, function (i, v) {
+          var row = '<tr>' +
+            '<td>' + escHtml(v.firstName)   + '</td>' +
+            '<td>' + escHtml(v.lastName)    + '</td>' +
+            '<td>' + escHtml(v.gender)      + '</td>' +
+            '<td>' + escHtml(v.telephone)   + '</td>' +
+            '<td>' + escHtml(v.youAreIn)    + '</td>' +
+            '<td>' + escHtml(v.hobbies)     + '</td>' +
+            '<td>' + escHtml(v.description) + '</td>' +
+          '</tr>';
+          $tbody.append(row);
+        });
+      }
+
+      /* ---- HTML escape helper ---- */
+      function escHtml(str) {
+        return $('<div>').text(str || '').html();
+      }
+
+      /* ---- Initial load: show all visitors ---- */
+      function loadAll() {
+        var all = getVisitors();
+        if (all.length === 0) {
+          $('#resultTable').hide();
+          $('#emptyState').show();
+          $('#noResult').hide();
+        } else {
+          $('#resultTable').show();
+          $('#emptyState').hide();
+          $('#noResult').hide();
+          renderTable(all);
+        }
+      }
+
+      loadAll();
+
+      /* ---- Search function ---- */
+      function doSearch() {
+        var keyword = $('#searchInput').val().trim().toLowerCase();
+        var all = getVisitors();
+
+        if (keyword === '') {
+          // Empty keyword → show all
+          loadAll();
+          return;
+        }
+
+        // Search across ALL fields (as per Spec 2)
+        var filtered = $.grep(all, function (v) {
+          var haystack = [
+            v.firstName, v.lastName, v.gender,
+            v.telephone, v.email, v.youAreIn,
+            v.hobbies, v.description
+          ].join(' ').toLowerCase();
+          return haystack.indexOf(keyword) !== -1;
+        });
+
+        $('#noResult').hide();
+        $('#emptyState').hide();
+
+        if (filtered.length === 0) {
+          $('#resultTable').hide();
+          $('#noResultKeyword').text('"' + keyword + '"');
+          $('#noResult').show();
+        } else {
+          $('#resultTable').show();
+          renderTable(filtered);
+        }
+      }
+
+      /* ---- Button click ---- */
+      $('#btnSearch').on('click', function () {
+        doSearch();
+      });
+
+      /* ---- Enter key in search input ---- */
+      $('#searchInput').on('keypress', function (e) {
+        if (e.which === 13) doSearch();
+      });
+
+      /* ---- Clear search when input is emptied ---- */
+      $('#searchInput').on('input', function () {
+        if ($(this).val().trim() === '') loadAll();
+      });
+
+    });
+  </script>
+
+</body>
+</html>

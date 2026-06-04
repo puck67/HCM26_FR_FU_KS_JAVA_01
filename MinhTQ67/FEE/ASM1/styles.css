@@ -1,0 +1,279 @@
+/* ===== styles.css - Custom Bootstrap 4 overrides ===== */
+
+/* --- Green buttons (all buttons must be green) --- */
+.btn-primary {
+  background-color: #5cb85c !important;
+  border-color: #4cae4c !important;
+  color: #fff !important;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #449d44 !important;
+  border-color: #398439 !important;
+}
+
+/* --- Light gray placeholder --- */
+::placeholder { color: #adb5bd !important; opacity: 1; }
+:-ms-input-placeholder { color: #adb5bd !important; }
+::-ms-input-placeholder { color: #adb5bd !important; }
+
+/* ===== AUTH PAGES (login / register) ===== */
+body.auth-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+.auth-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 30px 28px 24px;
+  width: 340px;
+}
+.auth-box h5 {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 14px;
+}
+.auth-box .form-control {
+  border-radius: 0;
+  border: 1px solid #ccc;
+  font-size: 0.88rem;
+  height: 34px;
+  margin-bottom: 8px;
+}
+.auth-box .btn-primary {
+  border-radius: 0;
+  font-size: 0.9rem;
+  height: 36px;
+  width: 100%;
+}
+.auth-box .auth-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: #337ab7;
+  text-decoration: none;
+}
+.auth-box .auth-link:hover { text-decoration: underline; }
+.auth-box .form-check { margin-bottom: 10px; }
+.auth-box .form-check-label { font-size: 0.85rem; color: #555; }
+
+/* ===== CMS LAYOUT ===== */
+body.cms-page {
+  background: #f5f5f5;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.88rem;
+}
+.cms-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* --- Topbar --- */
+.cms-topbar {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+.cms-topbar .brand {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  letter-spacing: 1px;
+}
+.cms-topbar .topbar-right .btn {
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  border-radius: 3px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #555;
+}
+.cms-topbar .topbar-right .dropdown-menu {
+  min-width: 130px;
+  font-size: 0.82rem;
+  border-radius: 0;
+  border: 1px solid #ddd;
+  padding: 2px 0;
+}
+.cms-topbar .topbar-right .dropdown-item {
+  padding: 5px 12px;
+  color: #555;
+}
+.cms-topbar .topbar-right .dropdown-item:hover { background: #f5f5f5; }
+
+/* --- Sidebar --- */
+.cms-sidebar {
+  width: 200px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  flex-shrink: 0;
+  padding-top: 6px;
+}
+.cms-sidebar .search-area {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+}
+.cms-sidebar .search-area .input-group-sm .form-control {
+  border-radius: 0;
+  font-size: 0.82rem;
+  height: 28px;
+  border-right: none;
+}
+.cms-sidebar .search-area .input-group-sm .input-group-append .input-group-text {
+  border-radius: 0;
+  background: #fff;
+  border-left: none;
+  font-size: 0.78rem;
+  color: #999;
+  padding: 0 8px;
+  cursor: pointer;
+}
+.cms-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  font-size: 0.83rem;
+  color: #555;
+  border-left: 3px solid transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.cms-sidebar .nav-link:hover {
+  background: #f8f8f8;
+  color: #333;
+}
+.cms-sidebar .nav-link.active {
+  color: #337ab7;
+  border-left-color: #337ab7;
+  background: #f0f6fb;
+}
+.cms-sidebar .nav-link .icon { font-size: 0.9rem; }
+
+/* --- Content area --- */
+.cms-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.cms-content {
+  padding: 22px 24px;
+  flex: 1;
+}
+.cms-content h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 18px;
+}
+
+/* Panel */
+.cms-panel {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0;
+}
+.cms-panel-header {
+  background: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #555;
+}
+.cms-panel-body { padding: 18px 16px; }
+
+/* Form styles */
+.cms-form label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 3px;
+  display: block;
+}
+.cms-form .form-control {
+  border-radius: 0;
+  border: 1px solid #ccc;
+  font-size: 0.85rem;
+  height: 32px;
+}
+.cms-form textarea.form-control {
+  height: auto;
+  resize: vertical;
+}
+.cms-form .email-static {
+  font-size: 0.85rem;
+  color: #555;
+  padding: 5px 0;
+  display: block;
+}
+.cms-form .form-group { margin-bottom: 12px; }
+.cms-form .btn { border-radius: 0; font-size: 0.85rem; height: 32px; padding: 0 16px; }
+.cms-form .btn-secondary {
+  background: #fff !important;
+  border: 1px solid #ccc !important;
+  color: #555 !important;
+  margin-left: 6px;
+}
+.cms-form .btn-secondary:hover { background: #f5f5f5 !important; }
+
+/* Table */
+.content-table { font-size: 0.83rem; }
+.content-table thead th {
+  background: #f9f9f9;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #555;
+  border-bottom: 2px solid #ddd;
+  padding: 7px 10px;
+  white-space: nowrap;
+}
+.content-table tbody td { padding: 7px 10px; vertical-align: top; color: #444; }
+.content-table tbody tr:hover { background: #fafafa; }
+.view-content-panel-title { font-size: 0.82rem; color: #666; margin-bottom: 10px; font-style: italic; }
+
+/* Loading overlay */
+#loading-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.93);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #555;
+  gap: 12px;
+}
+.cms-content-wrap { position: relative; flex: 1; }
+
+/* Validation */
+.error-msg { color: #d9534f; font-size: 0.78rem; margin-top: 3px; display: none; }
+.form-control.is-invalid { border-color: #d9534f !important; }
+.form-control.is-invalid ~ .error-msg { display: block; }
+
+/* Toast */
+.cms-toast {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: #5cb85c;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  z-index: 999;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
