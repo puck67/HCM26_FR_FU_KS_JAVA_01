@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Photo Gallery — jQuery | Ex3</title>
+  <meta name="description" content="Dynamic image gallery with 5-star rating system and favorites — refactored with jQuery hover effects and animations.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Problem 01: CSS Gallery UI (same stylesheet — reused) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="page-wrapper">
+      <p class="site-header__eyebrow">Problem 03 · jQuery</p>
+      <h1 class="site-header__title">📸 Photo Gallery</h1>
+      <p class="site-header__subtitle">
+        Hover to preview · Click to rate · Save your favourites
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Main Gallery ────────────────────────────────── -->
+  <main id="main-content" role="main">
+    <div class="page-wrapper">
+      <!--
+        Problem 01: Gallery Grid (CSS Grid layout)
+        Cards are injected here by gallery.jquery.js (Problem 03)
+      -->
+      <section
+        id="gallery-grid"
+        class="gallery"
+        aria-label="Image gallery"
+      >
+        <!-- Cards rendered dynamically by jQuery -->
+      </section>
+    </div>
+  </main>
+
+  <!-- ── Summary Footer ──────────────────────────────── -->
+  <!--
+    Problem 01: Summary Footer section
+    Values animated by jQuery fadeIn/fadeOut in gallery.jquery.js
+  -->
+  <footer class="summary-footer" role="contentinfo" aria-label="Gallery summary">
+    <div class="page-wrapper">
+      <div class="summary-footer__inner">
+
+        <!-- Average Rating Stat -->
+        <div class="summary-stat" id="summary-stat-avg">
+          <span
+            class="summary-stat__value"
+            id="stat-avg-rating"
+            aria-live="polite"
+            aria-label="Average rating"
+          >—</span>
+          <span class="summary-stat__label">⭐ Average Rating</span>
+        </div>
+
+        <div class="summary-divider" aria-hidden="true"></div>
+
+        <!-- Total Favorites Stat -->
+        <div class="summary-stat" id="summary-stat-fav">
+          <span
+            class="summary-stat__value"
+            id="stat-total-favorites"
+            aria-live="polite"
+            aria-label="Total favorites"
+          >0</span>
+          <span class="summary-stat__label">♥ Total Favorites</span>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ─────────────────────────────────────── -->
+  <!-- jQuery (CDN — latest stable) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+
+  <!-- Gallery Data (shared) -->
+  <script src="js/gallery.data.js"></script>
+
+  <!-- Problem 03: jQuery refactored implementation -->
+  <script src="js/gallery.jquery.js"></script>
+
+</body>
+</html>
