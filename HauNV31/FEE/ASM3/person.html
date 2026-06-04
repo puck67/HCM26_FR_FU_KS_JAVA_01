@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">System</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="person.html">Person</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="help.html">Help</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Register Person</h2>
+        <form id="personForm" novalidate>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="firstName">First name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" maxlength="20">
+                    <div class="invalid-feedback">First name is mandatory, max length 20, characters only.</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastName">Last name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" maxlength="20">
+                    <div class="invalid-feedback">Last name is mandatory, max length 20, characters only.</div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="telephone">Telephone</label>
+                    <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telephone" maxlength="11">
+                    <div class="invalid-feedback">Telephone must be numbers only, up to 11 digits.</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" maxlength="50">
+                    <div class="invalid-feedback">Invalid email format.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">You are in <span class="text-danger">*</span></label>
+                <select class="form-control" id="location" name="location">
+                    <option value="">Select location...</option>
+                    <option value="Hanoi">Hanoi</option>
+                    <option value="Da Nang">Da Nang</option>
+                    <option value="Ho Chi Minh">Ho Chi Minh</option>
+                </select>
+                <div class="invalid-feedback">Please select a location.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Hobbies</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="hobbyReading" value="Reading">
+                        <label class="form-check-label" for="hobbyReading">Reading</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="hobbySports" value="Sports">
+                        <label class="form-check-label" for="hobbySports">Sports</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="hobbyMusic" value="Music">
+                        <label class="form-check-label" for="hobbyMusic">Music</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="Description" maxlength="200"></textarea>
+                <div class="invalid-feedback">Description can be at most 200 characters.</div>
+            </div>
+
+            <button type="submit" class="btn btn-success" id="btnRegister">Register</button>
+        </form>
+        <div id="alertSuccess" class="alert alert-success mt-3 d-none">Registration successful!</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

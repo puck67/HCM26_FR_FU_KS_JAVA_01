@@ -1,0 +1,95 @@
+.btn-custom, .btn {
+    background-color: green !important;
+    color: white !important;
+    border-color: green !important;
+}
+
+.btn-custom:hover, .btn:hover {
+    background-color: darkgreen !important;
+    border-color: darkgreen !important;
+}
+
+::placeholder {
+    color: lightgray !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+   color: lightgray !important;
+}
+
+::-ms-input-placeholder {
+   color: lightgray !important;
+}
+
+/* Sidebar styling for CMS */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #f8f9fa;
+    min-height: calc(100vh - 56px);
+    border-right: 1px solid #ddd;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #e9ecef;
+    border-bottom: 1px solid #ddd;
+}
+
+#sidebar ul.components {
+    padding: 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+}
+
+#sidebar ul li a:hover, #sidebar ul li a.active {
+    background: #e9ecef;
+    color: green;
+}
+
+#content {
+    width: 100%;
+    padding: 20px;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid green;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 100px auto;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    color: red;
+    font-size: 0.85em;
+    display: none;
+    margin-top: 5px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}

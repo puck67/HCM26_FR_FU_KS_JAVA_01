@@ -1,0 +1,193 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eef2f5;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.board-wrapper {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 1100px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+#searchInput {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 250px;
+    font-size: 14px;
+    outline: none;
+}
+
+#searchInput:focus {
+    border-color: #007bff;
+}
+
+.kanban-board {
+    display: flex;
+    gap: 20px;
+}
+
+/* Flexbox responsive constraint */
+@media (max-width: 800px) {
+    .kanban-board {
+        flex-direction: column;
+    }
+}
+
+.kanban-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 500px;
+}
+
+.col-header {
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.col-body {
+    flex: 1;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Colors matching the design */
+.bg-todo { background-color: #b3d4fc; }
+.bg-todo-light { background-color: #e6f0fd; border: 1px solid #b3d4fc; border-top: none; }
+
+.bg-inprogress { background-color: #fce1b3; }
+.bg-inprogress-light { background-color: #fdf5e6; border: 1px solid #fce1b3; border-top: none; }
+
+.bg-done { background-color: #b3e6b3; }
+.bg-done-light { background-color: #e6f9e6; border: 1px solid #b3e6b3; border-top: none; }
+
+.input-container {
+    display: flex;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.task-input {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    outline: none;
+}
+
+.add-btn {
+    border: none;
+    background-color: #f0f0f0;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-left: 1px solid #ccc;
+}
+.add-btn:hover { background-color: #e0e0e0; }
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Sticky Note Style Cards */
+.task-card {
+    background-color: #fef9c3; /* Sticky note yellow */
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+    border-bottom-right-radius: 20px; /* folded corner effect */
+}
+
+/* Decorative folded corner */
+.task-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.1) 50%);
+    border-bottom-right-radius: 4px;
+}
+
+.task-title-label {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.task-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+    word-break: break-word;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.action-btn:hover {
+    background: #f0f0f0;
+}
+
+.btn-move {
+    background: white;
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+    border-color: #c0392b;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+}

@@ -1,0 +1,27 @@
+<h2>Add Content</h2>
+<hr>
+<div class="card">
+    <div class="card-header">Content Form Elements</div>
+    <div class="card-body">
+        <form id="addContentForm">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Title">
+                <div class="error-message" id="titleError">Title is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="brief">Brief</label>
+                <textarea class="form-control" id="brief" rows="2" placeholder="Brief"></textarea>
+                <div class="error-message" id="briefError">Brief is required.</div>
+            </div>
+            <div class="form-group">
+                <label for="contentBody">Content</label>
+                <textarea class="form-control" id="contentBody" rows="5" placeholder="Content"></textarea>
+                <div class="error-message" id="contentBodyError">Content is required.</div>
+            </div>
+            <button type="submit" class="btn btn-custom">Submit Button</button>
+            <button type="reset" class="btn btn-custom">Reset Button</button>
+            <div id="contentAddSuccess" class="text-success mt-2" style="display: none;">Content added successfully!</div>
+        </form>
+    </div>
+</div>
