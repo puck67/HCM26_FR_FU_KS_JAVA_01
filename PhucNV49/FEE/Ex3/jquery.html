@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A responsive image gallery with a star rating and favorites tracking system using jQuery.">
+  <title>My Image Gallery (jQuery)</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome for stars and heart icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div class="gallery-container">
+    <!-- Small switcher bar outside the card to preserve the mock look -->
+    <div class="version-switcher">
+      <a href="index.html">Native JS</a>
+      <span>|</span>
+      <strong>jQuery Refactored</strong>
+    </div>
+
+    <h1>My Image Gallery</h1>
+
+    <!-- Responsive Grid of 10 Cards -->
+    <div class="gallery-grid">
+      
+      <!-- Card 1: 5 Stars, Favorited (Gradient 1) -->
+      <div class="image-card" data-rating="5" data-favorite="true">
+        <div class="img-placeholder gradient-1">
+          <img src="img/gallery_img_1.png" alt="Teal abstract polygonal background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite active">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 2: 5 Stars, Favorited (Gradient 2) -->
+      <div class="image-card" data-rating="5" data-favorite="true">
+        <div class="img-placeholder gradient-2">
+          <img src="img/gallery_img_2.png" alt="Orange abstract gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite active">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 3: 5 Stars, Favorited (Gradient 3) -->
+      <div class="image-card" data-rating="5" data-favorite="true">
+        <div class="img-placeholder gradient-3">
+          <img src="img/gallery_img_3.png" alt="Dark blue patterned background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite active">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 4: Unrated (0 Stars), Favorited (Gradient 4) -->
+      <div class="image-card" data-rating="0" data-favorite="true">
+        <div class="img-placeholder gradient-4">
+          <img src="img/gallery_img_4.png" alt="Sky blue gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-regular fa-star star-icon" data-value="1"></i>
+            <i class="fa-regular fa-star star-icon" data-value="2"></i>
+            <i class="fa-regular fa-star star-icon" data-value="3"></i>
+            <i class="fa-regular fa-star star-icon" data-value="4"></i>
+            <i class="fa-regular fa-star star-icon" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite active">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 5: 5 Stars, Favorited (Gradient 5) -->
+      <div class="image-card" data-rating="5" data-favorite="true">
+        <div class="img-placeholder gradient-5">
+          <img src="img/gallery_img_5.png" alt="Pink gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite active">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 6: 5 Stars, Not Favorited (Gradient 6) -->
+      <div class="image-card" data-rating="5" data-favorite="false">
+        <div class="img-placeholder gradient-6">
+          <img src="img/gallery_img_1.png" alt="Teal abstract polygonal background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 7: 3 Stars, Not Favorited (Gradient 7) -->
+      <div class="image-card" data-rating="3" data-favorite="false">
+        <div class="img-placeholder gradient-7">
+          <img src="img/gallery_img_2.png" alt="Orange abstract gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-regular fa-star star-icon" data-value="4"></i>
+            <i class="fa-regular fa-star star-icon" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 8: 4 Stars, Not Favorited (Gradient 8) -->
+      <div class="image-card" data-rating="4" data-favorite="false">
+        <div class="img-placeholder gradient-8">
+          <img src="img/gallery_img_3.png" alt="Dark blue patterned background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-regular fa-star star-icon" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 9: 4 Stars, Not Favorited (Gradient 9) -->
+      <div class="image-card" data-rating="4" data-favorite="false">
+        <div class="img-placeholder gradient-9">
+          <img src="img/gallery_img_4.png" alt="Sky blue gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="3"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="4"></i>
+            <i class="fa-regular fa-star star-icon" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card 10: 2 Stars, Not Favorited (Gradient 10) -->
+      <div class="image-card" data-rating="2" data-favorite="false">
+        <div class="img-placeholder gradient-10">
+          <img src="img/gallery_img_5.png" alt="Pink gradient background">
+          <div class="favorite-tooltip">Add to Favorites</div>
+        </div>
+        <div class="card-bar">
+          <div class="star-rating">
+            <i class="fa-solid fa-star star-icon active" data-value="1"></i>
+            <i class="fa-solid fa-star star-icon active" data-value="2"></i>
+            <i class="fa-regular fa-star star-icon" data-value="3"></i>
+            <i class="fa-regular fa-star star-icon" data-value="4"></i>
+            <i class="fa-regular fa-star star-icon" data-value="5"></i>
+          </div>
+          <button type="button" class="btn-favorite">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Summary Footer Panel exactly matching mockup -->
+    <div class="summary-footer" id="gallery-footer">
+      <div class="footer-left">
+        AVERAGE RATING: <span class="avg-rating-val" id="avg-rating">4.2</span> Stars <span style="font-weight: 500; font-size: 16px; color: #495057;">(based on <span id="rated-items-count">9</span> items)</span>
+      </div>
+      <div class="footer-divider">
+        <i class="fa-solid fa-chart-simple"></i>
+      </div>
+      <div class="footer-right">
+        TOTAL FAVORITES: <span class="total-favs-val" id="total-favs">5</span>
+        <i class="fa-solid fa-heart"></i>
+      </div>
+    </div>
+
+    <div style="text-align: right; margin-top: 15px; font-size: 12px; color: #6c757d;">
+      Built with HTML/CSS Grid
+    </div>
+  </div>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery Logic -->
+  <script src="js/script_jquery.js"></script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #eceff1;
+  color: #333333;
+  margin: 0;
+  padding: 30px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.board-card {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 1100px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+}
+
+/* Header Section */
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #2b7cb7;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.calendar-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #495057;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.calendar-icon:hover {
+  background-color: #f8f9fa;
+}
+
+/* Global Search Bar (jQuery Problem 3) */
+.search-container {
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  height: 42px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #495057;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
+}
+
+/* Columns Layout */
+.columns-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .columns-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.board-column {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  padding: 0 0 15px 0;
+  box-sizing: border-box;
+}
+
+/* Column Themes */
+.col-todo {
+  border: 1px solid #abcdeb;
+  background-color: #e6f0fa;
+}
+
+.col-inprogress {
+  border: 1px solid #ffd2a8;
+  background-color: #fff2e6;
+}
+
+.col-done {
+  border: 1px solid #aae1aa;
+  background-color: #eaf7ea;
+}
+
+/* Column Header */
+.col-header {
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  margin-bottom: 12px;
+}
+
+.col-todo .col-header {
+  background-color: #abcdeb;
+  color: #1d3557;
+}
+
+.col-inprogress .col-header {
+  background-color: #ffd2a8;
+  color: #663300;
+}
+
+.col-done .col-header {
+  background-color: #aae1aa;
+  color: #1b431b;
+}
+
+/* Input Container inside columns */
+.input-container {
+  margin: 0 12px 12px 12px;
+  display: flex;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  background-color: #ffffff;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.input-container input {
+  flex: 1;
+  height: 36px;
+  border: none;
+  padding: 0 12px;
+  font-size: 13px;
+  color: #495057;
+  outline: none;
+  background: transparent;
+}
+
+.input-container button {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #ced4da;
+  font-size: 18px;
+  color: #6c757d;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.input-container button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Validation Message */
+.col-error {
+  color: #dc3545;
+  font-size: 11px;
+  margin: -8px 12px 10px 12px;
+  display: none;
+  font-weight: 500;
+}
+
+.col-error.active {
+  display: block;
+}
+
+/* Task List Body */
+.task-list {
+  padding: 0 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Task Card (Sticky Note Style) with Curved Corner peeling shadow */
+.task-card {
+  background-color: #fef1c9; /* cream/yellow sticky note */
+  padding: 18px 15px 15px 15px;
+  border-radius: 1px;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+}
+
+/* Peeled page-curl shadow effect at the bottom-right */
+.task-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 8px;
+  right: 6px;
+  width: 60%;
+  height: 15px;
+  box-shadow: 0 10px 12px rgba(0, 0, 0, 0.45);
+  transform: rotate(4deg);
+}
+
+.task-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 8px;
+  left: 6px;
+  width: 40%;
+  height: 15px;
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.25);
+  transform: rotate(-2deg);
+}
+
+/* Card details styling */
+.card-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #7f8c8d;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+  line-height: 1.35;
+  word-wrap: break-word;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Card Buttons styled like the screenshot */
+.btn-card {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease-in-out;
+}
+
+/* Button variants */
+.btn-start {
+  background-color: #3182ce;
+  color: #ffffff;
+  border: 1px solid #2b6cb0;
+}
+
+.btn-start:hover {
+  background-color: #2b6cb0;
+}
+
+.btn-edit {
+  background-color: #ffffff;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-edit:hover {
+  background-color: #f7fafc;
+}
+
+.btn-move {
+  background-color: #ffffff;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-move:hover {
+  background-color: #f7fafc;
+}
+
+.btn-done {
+  background-color: #38a169;
+  color: #ffffff;
+  border: 1px solid #2f855a;
+}
+
+.btn-done:hover {
+  background-color: #2f855a;
+}
+
+.btn-archive {
+  background-color: #ffffff;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+}
+
+.btn-archive:hover {
+  background-color: #f7fafc;
+}
+
+.btn-delete {
+  background-color: #e53e3e;
+  color: #ffffff;
+  border: 1px solid #c53030;
+}
+
+.btn-delete:hover {
+  background-color: #c53030;
+}
+
+/* Version switcher link at the top */
+.version-switcher {
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #6c757d;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.version-switcher a {
+  color: #2b7cb7;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.version-switcher a:hover {
+  text-decoration: underline;
+}
+
+.version-switcher span {
+  margin: 0 8px;
+}

@@ -1,0 +1,77 @@
+<div class="content-title">
+    Edit Profile
+</div>
+
+<div class="content-card">
+    <div class="card-header bg-light border-bottom-0 font-weight-bold text-secondary mb-4">
+        Profile Form Elements
+    </div>
+    <div id="edit-profile-alert" class="alert alert-success d-none" role="alert">
+        Profile updated successfully!
+    </div>
+    <form id="edit-profile-form" novalidate>
+        <div class="form-group">
+            <label for="profile-firstname">First Name</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="profile-firstname" 
+                name="firstname" 
+                placeholder="Enter the first name" 
+                required 
+                minlength="3" 
+                maxlength="30"
+            >
+        </div>
+        <div class="form-group">
+            <label for="profile-lastname">Last Name</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="profile-lastname" 
+                name="lastname" 
+                placeholder="Enter the last name" 
+                required 
+                minlength="3" 
+                maxlength="30"
+            >
+        </div>
+        <div class="form-group">
+            <label for="profile-email">Email</label>
+            <input 
+                type="email" 
+                class="form-control-plaintext bg-light pl-2 border rounded text-muted" 
+                id="profile-email" 
+                name="email" 
+                value="your_email@example.com" 
+                readonly 
+                style="height: calc(1.5em + .75rem + 2px);"
+            >
+        </div>
+        <div class="form-group">
+            <label for="profile-phone">Phone</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="profile-phone" 
+                name="phone" 
+                placeholder="Enter your phone number" 
+                required 
+                minlength="9" 
+                maxlength="13"
+            >
+        </div>
+        <div class="form-group">
+            <label for="profile-description">Description</label>
+            <textarea 
+                class="form-control" 
+                id="profile-description" 
+                name="description" 
+                rows="4" 
+                maxlength="200"
+            ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="edit-profile-submit-btn">Submit Button</button>
+        <button type="reset" class="btn btn-reset ml-2">Reset Button</button>
+    </form>
+</div>

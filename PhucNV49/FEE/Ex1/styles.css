@@ -1,0 +1,259 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f1f3f5;
+  color: #333333;
+  margin: 0;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 800px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  text-align: center;
+  color: #0f3a60;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+/* Form Layout */
+.form-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.name-group {
+  flex: 2;
+}
+
+.cost-group {
+  flex: 1;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  height: 38px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: #495057;
+  outline: none;
+  transition: border-color 0.15s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+input.is-invalid {
+  border-color: #dc3545;
+}
+
+/* Add Button */
+#btn-add {
+  background-color: #2b7cb7;
+  color: white;
+  border: 1px solid #246a9c;
+  border-radius: 6px;
+  height: 38px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#btn-add:hover {
+  background-color: #206394;
+}
+
+/* Error Messages */
+.error-msg {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+  font-weight: 500;
+}
+
+.error-msg.active {
+  display: block;
+}
+
+/* Table Style */
+.table-container {
+  margin-bottom: 25px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #dee2e6;
+  font-size: 14px;
+}
+
+th {
+  background-color: #2e4c76;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 10px 15px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+
+td {
+  padding: 10px 15px;
+  border: 1px solid #dee2e6;
+  color: #212529;
+  vertical-align: middle;
+}
+
+tbody tr:nth-of-type(even) {
+  background-color: #f8f9fa;
+}
+
+tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Column Alignments */
+.col-name {
+  width: 55%;
+  text-align: left;
+}
+
+.col-cost {
+  width: 25%;
+  text-align: center;
+  font-weight: 500;
+}
+
+.col-action {
+  width: 20%;
+  text-align: center;
+}
+
+th.col-cost {
+  text-align: center;
+}
+
+th.col-action {
+  text-align: center;
+}
+
+/* Remove Button */
+.btn-remove {
+  background-color: #ffffff;
+  color: #a83232;
+  border: 1px solid #dcdad9;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-remove:hover {
+  background-color: #fff5f5;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Grand Total Box styling exactly like the screenshot */
+.grand-total-box {
+  border: 3px solid #212529;
+  border-radius: 6px;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+.total-label {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f3a60;
+  margin: 0;
+}
+
+.total-amount {
+  font-size: 28px;
+  font-weight: 700;
+  color: #9f4d1d; /* default brownish/dark orange color from screenshot */
+  margin: 0;
+  transition: color 0.15s ease-in-out;
+}
+
+/* Version switcher link at the top */
+.version-switcher {
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.version-switcher a {
+  color: #2b7cb7;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.version-switcher a:hover {
+  text-decoration: underline;
+}
+
+.version-switcher span {
+  margin: 0 8px;
+}
+
+@media (max-width: 576px) {
+  .form-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #btn-add {
+    width: 100%;
+  }
+}

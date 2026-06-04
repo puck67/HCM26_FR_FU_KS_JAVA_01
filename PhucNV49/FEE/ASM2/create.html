@@ -1,0 +1,99 @@
+<div class="polls-card-title">
+    Create Interview
+</div>
+
+<!-- Dynamic Error Summary Container -->
+<div id="error-summary-wrapper"></div>
+
+<div id="create-poll-success" class="alert alert-success d-none" role="alert">
+    Interview created successfully!
+</div>
+
+<form id="create-poll-form" novalidate>
+    <!-- Poll Name -->
+    <div class="form-group mb-4">
+        <label for="poll-name" id="label-poll-name">Name poll <span class="required-star">*</span></label>
+        <input 
+            type="text" 
+            class="form-control form-control-lg" 
+            id="poll-name" 
+            name="poll_name" 
+            placeholder="Name poll" 
+            required 
+            minlength="3" 
+            maxlength="255"
+        >
+        <div class="invalid-field-feedback d-none" id="error-poll-name">Name poll must be between 3 and 255 characters.</div>
+    </div>
+
+    <!-- Questions Container -->
+    <div id="create-questions-container">
+        <!-- Question block 1 (rendered by default) -->
+        <div class="question-block create-question-item" data-qindex="1">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="font-weight-bold text-dark" style="font-size: 1.1rem;">
+                    Question #<span class="question-display-number">1</span>
+                </span>
+                <button type="button" class="btn btn-sm btn-remove-question btn-remove-answer d-none">
+                    <i class="fas fa-trash-alt mr-1"></i> Remove Question
+                </button>
+            </div>
+
+            <!-- Question Text -->
+            <div class="form-group">
+                <label class="q-text-label" for="q-text-1">Your question <span class="required-star">*</span></label>
+                <input 
+                    type="text" 
+                    class="form-control q-text-input" 
+                    id="q-text-1" 
+                    name="q_text_1" 
+                    placeholder="Enter your question" 
+                    required 
+                    minlength="3" 
+                    maxlength="255"
+                >
+                <div class="invalid-field-feedback d-none">Your question must be between 3 and 255 characters.</div>
+            </div>
+
+            <!-- Configuration Checkboxes -->
+            <div class="form-group form-check mb-2">
+                <input type="checkbox" class="form-check-input q-mandatory-checkbox" id="q-mandatory-1" name="q_mandatory_1">
+                <label class="form-check-label text-muted" for="q-mandatory-1">Mandatory</label>
+            </div>
+            <div class="form-group form-check mb-3">
+                <input type="checkbox" class="form-check-input q-multiple-checkbox" id="q-multiple-1" name="q_multiple_1">
+                <label class="form-check-label text-muted" for="q-multiple-1">You can select multiple options</label>
+            </div>
+
+            <!-- Possible Answers -->
+            <div class="form-group">
+                <label class="q-answers-label">Possible answers <span class="required-star">*</span></label>
+                
+                <!-- Answers inputs list -->
+                <div class="answers-inputs-list">
+                    <div class="dynamic-answer-row">
+                        <input 
+                            type="text" 
+                            class="form-control q-answer-input" 
+                            name="q_1_ans_1" 
+                            placeholder="Type your answer" 
+                            required 
+                            minlength="3" 
+                            maxlength="200"
+                        >
+                        <button type="button" class="btn btn-success btn-add-answer"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="invalid-field-feedback d-none">Please add at least one answer (minimum 3 characters each).</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <button type="button" class="btn btn-success" id="btn-add-question">
+            <i class="fas fa-plus-circle mr-1"></i> Add question
+        </button>
+        <button type="submit" class="btn btn-primary px-5" id="btn-submit-interview">Retain</button>
+    </div>
+</form>
