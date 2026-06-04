@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kanban Lite — A clean, interactive three-column Kanban task board built with HTML, CSS, vanilla JavaScript, and jQuery." />
+  <title>Kanban Lite — My Project Board</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/appbar.css" />
+  <link rel="stylesheet" href="css/board.css" />
+  <link rel="stylesheet" href="css/column.css" />
+  <link rel="stylesheet" href="css/card.css" />
+  <link rel="stylesheet" href="css/toast.css" />
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-bar">
+    <div class="app-bar__logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <rect x="3" y="3" width="5" height="18" rx="1.5"/>
+        <rect x="10" y="3" width="5" height="12" rx="1.5"/>
+        <rect x="17" y="3" width="5" height="8" rx="1.5"/>
+      </svg>
+      Kanban<span>.</span>Lite
+    </div>
+
+    <!-- Search box -->
+    <div class="search-wrapper">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input id="global-search" type="search" placeholder="Search tasks…" autocomplete="off" aria-label="Search tasks" />
+    </div>
+
+    <div class="app-bar__actions">
+      <div class="task-counter" aria-live="polite">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+        <span id="total-count">0</span> tasks
+      </div>
+    </div>
+  </header>
+
+  <!-- Board Container -->
+  <main class="board-wrapper">
+    <div class="board-heading">
+      <h1 class="board-title">My Project Board</h1>
+      <p class="board-subtitle">Track, move, and ship your work — one card at a time.</p>
+    </div>
+
+    <!-- Banner shown when search returns no matches -->
+    <div id="no-results">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 8px;opacity:.4">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      No tasks match your search.
+    </div>
+
+    <!-- Main board container -->
+    <div class="board" id="board">
+
+      <!-- To Do -->
+      <div class="column column--todo" id="col-todo">
+        <div class="column__header">
+          <span class="column__title">To Do</span>
+          <span class="column__badge" data-badge="todo">0</span>
+        </div>
+        <div class="column__add">
+          <input type="text" placeholder="Add a task to To Do…" data-target="col-todo" />
+          <button class="btn-add" aria-label="Add task" data-target="col-todo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+        <div class="column__cards" id="cards-todo"></div>
+      </div>
+
+      <!-- In Progress -->
+      <div class="column column--inprogress" id="col-inprogress">
+        <div class="column__header">
+          <span class="column__title">In Progress</span>
+          <span class="column__badge" data-badge="inprogress">0</span>
+        </div>
+        <div class="column__add">
+          <input type="text" placeholder="Add a task to In Progress…" data-target="col-inprogress" />
+          <button class="btn-add" aria-label="Add task" data-target="col-inprogress">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+        <div class="column__cards" id="cards-inprogress"></div>
+      </div>
+
+      <!-- Done -->
+      <div class="column column--done" id="col-done">
+        <div class="column__header">
+          <span class="column__title">Done</span>
+          <span class="column__badge" data-badge="done">0</span>
+        </div>
+        <div class="column__add">
+          <input type="text" placeholder="Add a task to Done…" data-target="col-done" />
+          <button class="btn-add" aria-label="Add task" data-target="col-done">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+        </div>
+        <div class="column__cards" id="cards-done"></div>
+      </div>
+
+    </div><!-- /.board -->
+  </main>
+
+  <footer class="board-footer">
+    Kanban<strong>.</strong>Lite &mdash; Built with HTML, CSS, JS &amp; jQuery
+  </footer>
+
+  <!-- Toast notifications -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/dom.js"></script>
+  <script src="js/jquery-handlers.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

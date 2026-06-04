@@ -1,0 +1,176 @@
+/* Task Card & Action Buttons */
+
+.card {
+  background: var(--white);
+  border-radius: var(--radius-card);
+  padding: 14px 14px 12px;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+  animation: cardIn .28s cubic-bezier(.34, 1.56, .64, 1) both;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Accent border stripe on left edge of the card */
+.card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3.5px;
+  border-radius: 4px 0 0 4px;
+}
+
+.column--todo       .card::before { background: var(--col-todo-accent); }
+.column--inprogress .card::before { background: var(--col-inprogress-accent); }
+.column--done       .card::before { background: var(--col-done-accent); }
+
+/* Lift card up on hover */
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Slide in/out transitions */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cardOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(.92) translateY(-8px); }
+}
+
+.card.removing {
+  animation: cardOut .22s ease forwards;
+}
+
+/* Card typography & buttons */
+.card__meta {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.card__title {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+.card__actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Base button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid transparent;
+  font-family: var(--font-body);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:active { transform: scale(.95); }
+
+/* Button color variations */
+.btn--outline {
+  background: transparent;
+  border-color: #DDE1F0;
+  color: var(--text-secondary);
+}
+
+.btn--outline:hover {
+  border-color: var(--col-todo-accent);
+  color: var(--col-todo-accent);
+  background: rgba(79, 110, 247, .06);
+}
+
+.btn--move {
+  background: var(--col-todo-accent);
+  color: #fff;
+  border-color: var(--col-todo-accent);
+}
+
+.btn--move:hover { filter: brightness(1.12); }
+
+.column--inprogress .btn--move {
+  background: var(--col-inprogress-accent);
+  border-color: var(--col-inprogress-accent);
+}
+
+.btn--done {
+  background: var(--col-done-accent);
+  color: #fff;
+  border-color: var(--col-done-accent);
+}
+
+.btn--done:hover { filter: brightness(1.1); }
+
+.btn--delete {
+  background: #FEE2E2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
+
+.btn--delete:hover {
+  background: #DC2626;
+  color: #fff;
+  border-color: #DC2626;
+}
+
+.btn--archive {
+  background: #F3F4F6;
+  color: #6B7280;
+  border-color: #E5E7EB;
+}
+
+.btn--archive:hover {
+  background: #6B7280;
+  color: #fff;
+  border-color: #6B7280;
+}
+
+/* In-progress column Move button override (orange/amber) */
+.btn--move-ip {
+  background: var(--col-inprogress-accent);
+  color: #fff;
+  border-color: var(--col-inprogress-accent);
+}
+
+.btn--move-ip:hover { filter: brightness(1.12); }
+
+/* Input layout for editing card title */
+.card__edit-input {
+  width: 100%;
+  padding: 5px 8px;
+  font-size: .88rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--text-primary);
+  border: 1.5px solid var(--col-todo-accent);
+  border-radius: 6px;
+  outline: none;
+  margin-bottom: 6px;
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(79, 110, 247, .12);
+  transition: var(--transition);
+}
