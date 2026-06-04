@@ -1,0 +1,32 @@
+.btn-green{
+    background: #5cb85c;
+    color: white;
+    border: none;
+}
+
+.btn-green:hover{
+    background: #4cae4c;
+    color:white;
+}
+
+.btn-white{
+    background:white;
+    border:1px solid #ccc;
+    color:#555;
+}
+
+::placeholder{
+    color:lightgray !important;
+}
+
+.is-invalid{
+    border:1px solid red;
+}
+
+.question-block{
+    background:#fff;
+}
+
+body{
+    background:#fafafa;
+}
