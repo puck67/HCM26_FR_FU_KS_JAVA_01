@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Lite - Native JS Version</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+       
+        <header>
+            <h1>My Project Board</h1>
+            <button id="view-archive-btn" class="archive-toggle-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: middle;"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
+                Archived Tasks (<span id="archive-count">0</span>)
+            </button>
+        </header>
+
+      
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-link active">Native JS version</a>
+            <a href="jquery.html" class="nav-link">jQuery Version</a>
+        </div>
+
+    
+        <main class="board" id="board">
+
+            <!-- Column 1: To Do -->
+            <section class="column todo">
+                <h2>To Do</h2>
+                <!-- Input field to add tasks directly to To Do column -->
+                <form class="add-task-form" id="todo-form">
+                    <input type="text" class="add-task-input" id="todo-input" placeholder="Add a new task..." required
+                        autocomplete="off">
+                    <button type="submit" class="add-btn">Add</button>
+                </form>
+                <!-- Task List container -->
+                <div class="task-list" id="todo-list">
+                </div>
+            </section>
+
+            <!-- Column 2: In Progress -->
+            <section class="column inprogress">
+                <h2>In Progress</h2>
+                <!-- Input field to add tasks directly to In Progress column -->
+                <form class="add-task-form" id="inprogress-form">
+                    <input type="text" class="add-task-input" id="inprogress-input" placeholder="Add a new task..."
+                        required autocomplete="off">
+                    <button type="submit" class="add-btn">Add</button>
+                </form>
+                <div class="task-list" id="inprogress-list">
+                </div>
+            </section>
+
+            <!-- Column 3: Done -->
+            <section class="column done">
+                <h2>Done</h2>
+                <!-- Input field to add tasks directly to Done column -->
+                <form class="add-task-form" id="done-form">
+                    <input type="text" class="add-task-input" id="done-input" placeholder="Add a new task..." required
+                        autocomplete="off">
+                    <button type="submit" class="add-btn">Add</button>
+                </form>
+                <!-- Task List container -->
+                <div class="task-list" id="done-list">
+        
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Archive Drawer -->
+    <div id="archive-drawer" class="archive-drawer">
+        <div class="drawer-header">
+            <h3>Archived Tasks</h3>
+            <button id="close-archive-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="drawer-content" id="archive-list">
+            <!-- Archived tasks will appear here -->
+        </div>
+    </div>
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

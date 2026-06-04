@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Visitor registration form – fill in your personal details to register." />
+  <title>Person – Visitor Registration</title>
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Custom styles (required by spec) -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ===== Toast notification ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== Navigation ===== -->
+<nav class="navbar navbar-expand-sm navbar-custom mb-3">
+  <span class="navbar-brand font-weight-bold">🌿 Visitor Portal</span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+    <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navMenu">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><a class="nav-link active" href="person.html">Person</a></li>
+      <li class="nav-item"><a class="nav-link" href="search.html">Search</a></li>
+      <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mb-5">
+  <div class="page-wrapper">
+
+    <!-- Banner -->
+    <img src="banner.png" alt="Scenic lake panorama" class="site-banner" />
+
+    <!-- Section title -->
+    <h1 class="section-title">Visitor Information</h1>
+
+    <!-- Form -->
+    <div class="p-4">
+      <form id="personForm" novalidate>
+
+        <!-- First name -->
+        <div class="form-group row">
+          <label for="firstName" class="col-sm-3 col-form-label text-right form-label-col">
+            First name: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="firstName" name="firstName"
+                   placeholder="Enter first name" maxlength="20" autocomplete="given-name" />
+            <div class="invalid-feedback" id="firstNameError"></div>
+          </div>
+        </div>
+
+        <!-- Last name -->
+        <div class="form-group row">
+          <label for="lastName" class="col-sm-3 col-form-label text-right form-label-col">
+            Last name: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-5">
+            <input type="text" class="form-control" id="lastName" name="lastName"
+                   placeholder="Enter last name" maxlength="20" autocomplete="family-name" />
+            <div class="invalid-feedback" id="lastNameError"></div>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="form-group row">
+          <label for="gender" class="col-sm-3 col-form-label text-right form-label-col">Gender:</label>
+          <div class="col-sm-3">
+            <select class="form-control" id="gender" name="gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Telephone -->
+        <div class="form-group row">
+          <label for="telephone" class="col-sm-3 col-form-label text-right form-label-col">Telephone:</label>
+          <div class="col-sm-5">
+            <input type="tel" class="form-control" id="telephone" name="telephone"
+                   placeholder="Enter phone number (digits only)" maxlength="11" />
+            <div class="invalid-feedback" id="telephoneError"></div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group row">
+          <label for="email" class="col-sm-3 col-form-label text-right form-label-col">Email:</label>
+          <div class="col-sm-5">
+            <input type="email" class="form-control" id="email" name="email"
+                   placeholder="example@domain.com" maxlength="50" autocomplete="email" />
+            <div class="invalid-feedback" id="emailError"></div>
+          </div>
+        </div>
+
+        <!-- You are in (mandatory) -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label text-right form-label-col">
+            You are in: <span class="text-danger">*</span>
+          </label>
+          <div class="col-sm-6">
+            <div id="regionGroup">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="region" id="regionEurope" value="Europe" />
+                <label class="form-check-label" for="regionEurope">Europe</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="region" id="regionAfrica" value="Africa" />
+                <label class="form-check-label" for="regionAfrica">Africa</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="region" id="regionAustralia" value="Australia" />
+                <label class="form-check-label" for="regionAustralia">Australia</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="region" id="regionAsia" value="Asia" />
+                <label class="form-check-label" for="regionAsia">Asia</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="region" id="regionAmerica" value="America" />
+                <label class="form-check-label" for="regionAmerica">America</label>
+              </div>
+            </div>
+            <div class="invalid-feedback d-block" id="regionError" style="display:none!important"></div>
+          </div>
+        </div>
+
+        <!-- Hobbies -->
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label text-right form-label-col">What are your hobbies:</label>
+          <div class="col-sm-6">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbySwimming" value="Swimming" />
+              <label class="form-check-label" for="hobbySwimming">Swimming</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbyCooking" value="Cooking" />
+              <label class="form-check-label" for="hobbyCooking">Cooking</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbyShopping" value="Shopping" />
+              <label class="form-check-label" for="hobbyShopping">Shopping</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbySport" value="Sport" />
+              <label class="form-check-label" for="hobbySport">Sport</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbyDance" value="Dance" />
+              <label class="form-check-label" for="hobbyDance">Dance</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="hobbySing" value="Sing" />
+              <label class="form-check-label" for="hobbySing">Sing</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group row">
+          <label for="description" class="col-sm-3 col-form-label text-right form-label-col">Description:</label>
+          <div class="col-sm-6">
+            <textarea class="form-control" id="description" name="description"
+                      placeholder="Write a short description about yourself..." rows="5" maxlength="200"></textarea>
+            <small class="form-text text-muted"><span id="descCount">0</span>/200 characters</small>
+            <div class="invalid-feedback" id="descriptionError"></div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group row">
+          <div class="col-sm-5 offset-sm-3">
+            <button type="submit" class="btn btn-register px-4" id="registerBtn">Register</button>
+            <button type="reset" class="btn btn-outline-secondary ml-2" id="resetBtn">Reset</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div><!-- /.page-wrapper -->
+</div>
+
+<!-- jQuery + Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(function () {
+
+  /* ---- Character counter for description ---- */
+  $('#description').on('input', function () {
+    $('#descCount').text($(this).val().length);
+  });
+
+  /* ---- Helper: mark a field valid/invalid ---- */
+  function setValid($el, errorId) {
+    $el.removeClass('is-invalid').addClass('is-valid');
+    $('#' + errorId).hide();
+  }
+
+  function setInvalid($el, errorId, msg) {
+    $el.removeClass('is-valid').addClass('is-invalid');
+    $('#' + errorId).text(msg).show();
+  }
+
+  /* ---- Validate individual fields (called on blur too) ---- */
+  function validateFirstName() {
+    var val = $.trim($('#firstName').val());
+    if (!val) { setInvalid($('#firstName'), 'firstNameError', 'First name is required.'); return false; }
+    if (val.length > 20) { setInvalid($('#firstName'), 'firstNameError', 'Max 20 characters.'); return false; }
+    if (/\d/.test(val)) { setInvalid($('#firstName'), 'firstNameError', 'First name must not contain numbers.'); return false; }
+    setValid($('#firstName'), 'firstNameError'); return true;
+  }
+
+  function validateLastName() {
+    var val = $.trim($('#lastName').val());
+    if (!val) { setInvalid($('#lastName'), 'lastNameError', 'Last name is required.'); return false; }
+    if (val.length > 20) { setInvalid($('#lastName'), 'lastNameError', 'Max 20 characters.'); return false; }
+    if (/\d/.test(val)) { setInvalid($('#lastName'), 'lastNameError', 'Last name must not contain numbers.'); return false; }
+    setValid($('#lastName'), 'lastNameError'); return true;
+  }
+
+  function validateTelephone() {
+    var val = $.trim($('#telephone').val());
+    if (!val) return true; // optional
+    if (!/^\d+$/.test(val)) { setInvalid($('#telephone'), 'telephoneError', 'Telephone must contain numbers only.'); return false; }
+    if (val.length > 11) { setInvalid($('#telephone'), 'telephoneError', 'Max 11 digits.'); return false; }
+    setValid($('#telephone'), 'telephoneError'); return true;
+  }
+
+  function validateEmail() {
+    var val = $.trim($('#email').val());
+    if (!val) return true; // optional
+    // Pattern: [a..Z][0..9]@[a..Z].
+    var emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(val) || val.length > 50) {
+      setInvalid($('#email'), 'emailError', 'Email must follow format: user@domain.com (max 50 chars).');
+      return false;
+    }
+    setValid($('#email'), 'emailError'); return true;
+  }
+
+  function validateRegion() {
+    if (!$('input[name="region"]:checked').length) {
+      $('#regionError').text('Please select a region.').css('display', 'block');
+      return false;
+    }
+    $('#regionError').hide(); return true;
+  }
+
+  function validateDescription() {
+    var val = $('#description').val();
+    if (val.length > 200) { setInvalid($('#description'), 'descriptionError', 'Max 200 characters.'); return false; }
+    if (val) setValid($('#description'), 'descriptionError');
+    return true;
+  }
+
+  /* ---- Inline validation on blur ---- */
+  $('#firstName').on('blur', validateFirstName);
+  $('#lastName').on('blur', validateLastName);
+  $('#telephone').on('blur', validateTelephone);
+  $('#email').on('blur', validateEmail);
+  $('input[name="region"]').on('change', validateRegion);
+  $('#description').on('blur', validateDescription);
+
+  /* ---- Toast helper ---- */
+  function showToast(msg, type) {
+    var id = 'toast_' + Date.now();
+    var $t = $('<div>').addClass('toast toast-' + type + ' p-3').attr('id', id).text(msg);
+    $('#toastContainer').append($t);
+    setTimeout(function () { $t.addClass('show'); }, 10);
+    setTimeout(function () { $t.removeClass('show'); setTimeout(function () { $t.remove(); }, 400); }, 3500);
+  }
+
+  /* ---- Reset clears validation states ---- */
+  $('#resetBtn').on('click', function () {
+    $('#personForm .form-control').removeClass('is-valid is-invalid');
+    $('.invalid-feedback').hide();
+    $('#descCount').text('0');
+    $('#regionError').hide();
+  });
+
+  /* ---- Submit handler (jQuery required by spec) ---- */
+  $('#personForm').on('submit', function (e) {
+    e.preventDefault();
+
+    var ok = true;
+    if (!validateFirstName())   ok = false;
+    if (!validateLastName())    ok = false;
+    if (!validateTelephone())   ok = false;
+    if (!validateEmail())       ok = false;
+    if (!validateRegion())      ok = false;
+    if (!validateDescription()) ok = false;
+
+    if (!ok) {
+      showToast('Please fix the errors before submitting.', 'error');
+      // Scroll to first invalid field
+      var $first = $('#personForm .is-invalid').first();
+      if ($first.length) $('html,body').animate({ scrollTop: $first.offset().top - 80 }, 300);
+      return;
+    }
+
+    // Collect & save to localStorage for search.html
+    var hobbies = [];
+    $('input[type="checkbox"]:checked').each(function () { hobbies.push($(this).val()); });
+
+    var visitor = {
+      firstName:   $.trim($('#firstName').val()),
+      lastName:    $.trim($('#lastName').val()),
+      gender:      $('#gender').val(),
+      telephone:   $.trim($('#telephone').val()),
+      email:       $.trim($('#email').val()),
+      region:      $('input[name="region"]:checked').val(),
+      hobbies:     hobbies.join(', '),
+      description: $.trim($('#description').val())
+    };
+
+    // Persist to localStorage
+    var visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+    visitors.push(visitor);
+    localStorage.setItem('visitors', JSON.stringify(visitors));
+
+    showToast('Registration successful! Redirecting to search…', 'success');
+    setTimeout(function () { window.location.href = 'search.html'; }, 2000);
+  });
+
+});
+</script>
+</body>
+</html>

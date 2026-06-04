@@ -1,0 +1,309 @@
+/* ============================================================
+   shared.css  –  Reusable base styles for Problem 02 & 03
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:          #1a1d2e;
+  --surface:     #ffffff;
+  --surface-2:   #f4f6fb;
+  --primary:     #3a5bd9;
+  --primary-h:   #2f4ec0;
+  --accent:      #e87c1e;
+  --danger:      #d93a3a;
+  --danger-h:    #b82d2d;
+  --header-bg:   #2b3a6b;
+  --header-fg:   #ffffff;
+  --border:      #d1d9f0;
+  --text:        #1e2240;
+  --text-muted:  #6b7280;
+  --total-border:#2b3a6b;
+  --shadow:      0 8px 32px rgba(30,34,64,.18);
+  --radius:      14px;
+  --radius-sm:   8px;
+  --transition:  .18s ease;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 16px 64px;
+  color: var(--text);
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 680px;
+  overflow: hidden;
+}
+
+/* ---------- Card Header ---------- */
+.card-header {
+  background: linear-gradient(135deg, #2b3a6b 0%, #3a5bd9 100%);
+  padding: 28px 32px 22px;
+  text-align: center;
+}
+
+.card-header h1 {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.5px;
+}
+
+.card-header .badge {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.65);
+  background: rgba(255,255,255,.12);
+  border-radius: 99px;
+  padding: 2px 12px;
+}
+
+/* ---------- Card Body ---------- */
+.card-body { padding: 28px 32px; }
+
+/* ---------- Form Row ---------- */
+.form-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.form-group label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: .03em;
+}
+
+.form-group input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: .95rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface-2);
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(58,91,217,.15);
+  background: #fff;
+}
+
+.form-group input.input-error {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(217,58,58,.13);
+}
+
+/* ---------- Add Button ---------- */
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, var(--primary) 0%, #5a7aef 100%);
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  white-space: nowrap;
+  align-self: flex-end;
+  height: 42px;
+}
+
+.btn-add:hover {
+  background: linear-gradient(135deg, var(--primary-h) 0%, #4a68d8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(58,91,217,.35);
+}
+
+.btn-add:active { transform: translateY(0); }
+
+/* ---------- Validation Message ---------- */
+.validation-msg {
+  font-size: .82rem;
+  color: var(--danger);
+  font-weight: 500;
+  margin-bottom: 10px;
+  min-height: 18px;
+  transition: opacity .2s;
+}
+
+/* ---------- Table ---------- */
+.table-wrapper {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+}
+
+.shopping-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+
+.shopping-table thead tr {
+  background: var(--header-bg);
+  color: var(--header-fg);
+}
+
+.shopping-table thead th {
+  padding: 13px 18px;
+  font-weight: 700;
+  font-size: .85rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.shopping-table thead th:last-child { text-align: center; }
+
+.shopping-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background var(--transition);
+}
+
+.shopping-table tbody tr:last-child { border-bottom: none; }
+
+.shopping-table tbody tr:hover { background: var(--surface-2); }
+
+.shopping-table tbody td {
+  padding: 12px 18px;
+  color: var(--text);
+  white-space: normal;
+  word-break: break-word; /* Tự động xuống dòng khi từ quá dài */
+  overflow-wrap: anywhere;
+}
+
+/* Định hình độ rộng hợp lý cho các cột */
+.shopping-table th:nth-child(1),
+.shopping-table td:nth-child(1) {
+  text-align: left;
+  /* Cột Item Name sẽ chiếm toàn bộ khoảng trống còn lại và tự xuống dòng */
+}
+
+.shopping-table th:nth-child(2),
+.shopping-table td:nth-child(2) {
+  width: 120px; /* Khống chế cột Cost rộng vừa đủ */
+  text-align: right;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.shopping-table th:nth-child(3),
+.shopping-table td:nth-child(3) {
+  width: 130px; /* Khống chế cột Action rộng vừa đủ */
+  text-align: center;
+}
+
+/* ---------- Empty State ---------- */
+.empty-row td {
+  text-align: center;
+  padding: 28px 18px;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: .9rem;
+}
+
+/* ---------- Remove Button ---------- */
+.btn-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 13px;
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid var(--danger);
+  border-radius: 6px;
+  font-size: .82rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
+
+.btn-remove:hover {
+  background: var(--danger);
+  color: #fff;
+  transform: scale(1.06);
+}
+
+/* ---------- Grand Total ---------- */
+.grand-total-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  padding: 18px 22px;
+  border: 2.5px solid var(--total-border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+
+.grand-total-box .label {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--total-border);
+}
+
+.grand-total-box .amount {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--accent);
+  transition: color .3s ease;
+}
+
+/* Red when total > $500 (jQuery adds this class) */
+.grand-total-box .amount.over-budget { color: var(--danger) !important; }
+
+/* ---------- Row entrance animation ---------- */
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.shopping-table tbody tr { animation: rowIn .22s ease; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 520px) {
+  .card-body { padding: 20px 16px; }
+  .card-header { padding: 20px 16px; }
+  .form-row { flex-direction: column; }
+  .btn-add { width: 100%; justify-content: center; }
+}

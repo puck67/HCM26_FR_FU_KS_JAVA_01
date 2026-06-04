@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List Manager (jQuery)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="manager-card">
+        <h1>Shopping List Manager</h1>
+        
+        <form id="shopping-form">
+            <div class="input-group">
+                <label for="item-name">Item Name</label>
+                <input type="text" id="item-name" placeholder="e.g., Apples" required autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="item-cost">Item Cost ($)</label>
+                <input type="number" id="item-cost" placeholder="e.g., 2.50" step="0.01" min="0.01" required>
+            </div>
+            <button type="submit" id="add-btn">Add Item +</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-name">Item Name</th>
+                    <th class="col-cost">Cost ($)</th>
+                    <th class="col-action">Action</th>
+                </tr>
+            </thead>
+            <tbody id="item-list">
+                <tr>
+                    <td>Apples</td>
+                    <td class="cost-val">3.49</td>
+                    <td><button class="remove-btn">✕ Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Milk (1 Gallon)</td>
+                    <td class="cost-val">4.15</td>
+                    <td><button class="remove-btn">✕ Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Bread (Whole Wheat)</td>
+                    <td class="cost-val">2.79</td>
+                    <td><button class="remove-btn">✕ Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Eggs (Dozen)</td>
+                    <td class="cost-val">5.20</td>
+                    <td><button class="remove-btn">✕ Remove</button></td>
+                </tr>
+                <tr>
+                    <td>Cereal (Cheerios)</td>
+                    <td class="cost-val">4.89</td>
+                    <td><button class="remove-btn">✕ Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="grand-total-box">
+            <span>Grand Total:</span>
+            <span id="grand-total">$20.52</span>
+        </div>
+
+        <div style="text-align: center; margin-top: 25px;">
+            <a href="index.html" style="text-decoration: none; color: #666666; font-size: 0.95rem; font-weight: 600; transition: color 0.2s;">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/app-jquery.js"></script>
+</body>
+</html>

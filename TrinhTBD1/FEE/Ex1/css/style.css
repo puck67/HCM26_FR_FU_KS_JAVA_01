@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #1d3557;
+  --secondary-color: #2b7a8a;
+  --secondary-hover: #1f5f6c;
+  --bg-color: #f0f4f8;
+  --card-bg: #ffffff;
+  --text-color: #333333;
+  --border-color: #d1d5db;
+  --remove-btn-bg: #fdf2f2;
+  --remove-btn-border: #f8b4b4;
+  --remove-btn-text: #c53030;
+  --remove-btn-hover-bg: #fde8e8;
+  --total-box-border: #222222;
+  --total-text-color: #a64d1c;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  background-color: var(--card-bg);
+  width: 100%;
+  max-width: 750px;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  border: 1px solid #e5e7eb;
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.error-box {
+  background-color: #fdf2f2;
+  color: #c53030;
+  border: 1px solid #f8b4b4;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  display: none;
+}
+
+.form-group-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.form-group.name {
+  flex: 2;
+}
+
+.form-group.cost {
+  flex: 1.5;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  outline: none;
+  font-family: var(--font-family);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(43, 122, 138, 0.15);
+}
+
+.btn-add {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 11px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-add:hover {
+  background-color: var(--secondary-hover);
+}
+
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 25px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+}
+
+th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+th.cost-col,
+td.cost-col {
+  width: 120px;
+  text-align: center;
+}
+
+th.action-col,
+td.action-col {
+  width: 120px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+td {
+  font-size: 15px;
+  color: #374151;
+}
+
+.btn-remove {
+  background-color: var(--remove-btn-bg);
+  color: var(--remove-btn-text);
+  border: 1px solid var(--remove-btn-border);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.btn-remove:hover {
+  background-color: var(--remove-btn-hover-bg);
+  border-color: #f19e9e;
+}
+
+.total-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid var(--total-box-border);
+  border-radius: 8px;
+  padding: 15px 25px;
+  margin-top: 20px;
+}
+
+.total-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.total-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--total-text-color);
+  transition: color 0.3s;
+}
+
+@media (max-width: 600px) {
+  .form-group-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-add {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
