@@ -1,0 +1,52 @@
+
+.btn, button, input[type="button"], input[type="submit"] {
+    background-color: green !important;
+    border-color: green !important;
+    color: white !important;
+}
+
+.btn:hover, button:hover {
+    background-color: darkgreen !important;
+    border-color: darkgreen !important;
+}
+
+::placeholder {
+    color: lightgray !important;
+    opacity: 1; 
+}
+
+:-ms-input-placeholder {
+    color: lightgray !important;
+}
+
+::-ms-input-placeholder {
+    color: lightgray !important;
+}
+
+.title-text {
+    color: green;
+    font-weight: bold;
+}
+
+.banner-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.error-msg {
+    color: red;
+    font-size: 0.85em;
+    display: none;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.main-container {
+    background-color: #e6e6ff !important;
+}
+.inner-container {
+    background-color: white;
+}

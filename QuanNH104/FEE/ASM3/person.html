@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-4 mb-5 shadow p-0 main-container" style="max-width: 800px;">
+        <img src="banner.png" alt="Banner" class="banner-img">
+        <div class="px-4 pb-4 m-3 inner-container border">
+            <h5 class="title-text pt-3 mb-4">Visitor Information</h5>
+            <form id="personForm">
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-3 col-form-label text-sm-right">First name:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="firstName" name="firstName">
+                        <span class="error-msg" id="firstNameError">First name must be characters and not contain number</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-3 col-form-label text-sm-right">Last name:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="lastName" name="lastName">
+                        <span class="error-msg" id="lastNameError">Last name must be characters and not contain number</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="gender" class="col-sm-3 col-form-label text-sm-right">Gender:</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="gender" name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="telephone" class="col-sm-3 col-form-label text-sm-right">Telephone:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="telephone" name="telephone">
+                        <span class="error-msg" id="telephoneError">Must be number and max 11 chars</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3 col-form-label text-sm-right">Email:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="email" name="email">
+                        <span class="error-msg" id="emailError">Must be [a..z][0..9]@[a..Z]. format</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">You are in:</label>
+                    <div class="col-sm-9 pt-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="region" id="regionEurope" value="Europe">
+                            <label class="form-check-label" for="regionEurope">Europe</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="region" id="regionAfrica" value="Africa">
+                            <label class="form-check-label" for="regionAfrica">Africa</label>
+                        </div>
+                        <div class="w-100 d-none d-sm-block"></div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="region" id="regionAustralia" value="Australia">
+                            <label class="form-check-label" for="regionAustralia">Australia</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="region" id="regionAsia" value="Asia">
+                            <label class="form-check-label" for="regionAsia">Asia</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="region" id="regionAmerica" value="America">
+                            <label class="form-check-label" for="regionAmerica">America</label>
+                        </div>
+                        <div style="display:block;"><span class="error-msg" id="regionError">This field is mandatory</span></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label text-sm-right">What are your hobbies:</label>
+                    <div class="col-sm-9 pt-2">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySwimming" value="Swimming">
+                            <label class="form-check-label" for="hobbySwimming">Swimming</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyCooking" value="Cooking">
+                            <label class="form-check-label" for="hobbyCooking">Cooking</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyShopping" value="Shopping">
+                            <label class="form-check-label" for="hobbyShopping">Shopping</label>
+                        </div>
+                        <div class="w-100 d-none d-sm-block"></div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySport" value="Sport">
+                            <label class="form-check-label" for="hobbySport">Sport</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyDance" value="Dance">
+                            <label class="form-check-label" for="hobbyDance">Dance</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySing" value="Sing">
+                            <label class="form-check-label" for="hobbySing">Sing</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-sm-3 col-form-label text-sm-right">Description:</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                        <span class="error-msg" id="descriptionError">Max length is 200</span>
+                    </div>
+                </div>
+                <div class="form-group row mt-4">
+                    <div class="col-sm-12 text-center">
+                        <button type="button" class="btn btn-success" id="btnRegister">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
