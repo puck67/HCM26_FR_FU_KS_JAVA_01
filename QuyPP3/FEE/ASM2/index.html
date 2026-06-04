@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Great poll - Vote on important questions">
+    <title>Polls - Vote</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Polls</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Vote</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create.html">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list.html">List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn" id="btnLogin">Login</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ================== END NAVBAR =================== -->
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+        <div class="page-content">
+            <h1>Great poll</h1>
+
+            <form id="voteForm" novalidate>
+
+                <!-- Question 1: Mandatory (radio) -->
+                <div class="form-group">
+                    <p>
+                        1. it is necessary to you?
+                        <span class="text-danger">*</span>
+                    </p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q1" id="q1Yes" value="yes">
+                        <label class="form-check-label" for="q1Yes">Yes</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q1" id="q1No" value="no">
+                        <label class="form-check-label" for="q1No">No</label>
+                    </div>
+                </div>
+
+                <!-- Question 2: Radio -->
+                <div class="form-group">
+                    <p>2. Often pass polls?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q2" id="q2Month" value="month">
+                        <label class="form-check-label" for="q2Month">Once a month</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="q2" id="q2Week" value="week">
+                        <label class="form-check-label" for="q2Week">Once a week</label>
+                    </div>
+                </div>
+
+                <!-- Question 3: Checkbox -->
+                <div class="form-group">
+                    <p>3. How old are you?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="q3" id="q3Age1" value="18-20">
+                        <label class="form-check-label" for="q3Age1">18-20</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="q3" id="q3Age2" value="21-23">
+                        <label class="form-check-label" for="q3Age2">21-23</label>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="form-group text-right">
+                    <button type="submit" class="btn" id="btnRetainVote">Retain</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+    <!-- ================= END MAIN CONTENT ================= -->
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label for="loginAlias">Alias:</label>
+                            <input type="text" class="form-control" id="loginAlias" placeholder="JoeSixpack">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-block" id="btnSignIn">Sign In</button>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-close-modal" id="btnCloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ================= END LOGIN MODAL ================== -->
+
+    <!-- jQuery, Popper.js, Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

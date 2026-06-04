@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Poll management list - View, close, and delete polls">
+    <title>Polls - List</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Polls</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Vote</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="create.html">Create</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="list.html">List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn" id="btnLogin">Login</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ================== END NAVBAR =================== -->
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+        <div class="page-content">
+
+            <!-- Tab Filter Buttons -->
+            <div class="mb-3">
+                <button type="button" class="btn btn-tab-active tab-btn mr-1" data-tab="active" id="tabActive">Active</button>
+                <button type="button" class="btn btn-tab-draft tab-btn mr-1" data-tab="drafts" id="tabDrafts">Drafts</button>
+                <button type="button" class="btn btn-tab-closed tab-btn" data-tab="closed" id="tabClosed">Closed</button>
+            </div>
+
+            <!-- Polls Table -->
+            <table class="table table-bordered" id="pollsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">The list of questions and issues within</th>
+                        <th scope="col">Management</th>
+                    </tr>
+                </thead>
+                <tbody id="pollsTableBody">
+                    <tr data-id="98" data-status="active">
+                        <td>98</td>
+                        <td><a href="index.html">Great poll</a></td>
+                        <td>
+                            <button type="button" class="btn btn-manage btn-view-results">View results</button>
+                            <button type="button" class="btn btn-manage btn-close-poll">Close poll</button>
+                            <button type="button" class="btn btn-manage btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-id="99" data-status="draft">
+                        <td>99</td>
+                        <td><a href="#">Draft Survey</a></td>
+                        <td>
+                            <button type="button" class="btn btn-manage btn-view-results">View results</button>
+                            <button type="button" class="btn btn-manage btn-close-poll">Close poll</button>
+                            <button type="button" class="btn btn-manage btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                    <tr data-id="100" data-status="closed">
+                        <td>100</td>
+                        <td><a href="#">Closed Survey</a></td>
+                        <td>
+                            <button type="button" class="btn btn-manage btn-view-results">View results</button>
+                            <button type="button" class="btn btn-manage btn-close-poll">Close poll</button>
+                            <button type="button" class="btn btn-manage btn-delete">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- AJAX-loaded content area (demo) -->
+            <section>
+                <h2 class="h5 mt-4">AJAX Loaded Content</h2>
+                <div id="ajax-content-area" class="border rounded p-3 bg-light">
+                    <p class="text-muted">Loading...</p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+    <!-- ================= END MAIN CONTENT ================= -->
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label for="loginAlias">Alias:</label>
+                            <input type="text" class="form-control" id="loginAlias" placeholder="JoeSixpack">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-block" id="btnSignIn">Sign In</button>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-close-modal" id="btnCloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ================= END LOGIN MODAL ================== -->
+
+    <!-- jQuery, Popper.js, Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

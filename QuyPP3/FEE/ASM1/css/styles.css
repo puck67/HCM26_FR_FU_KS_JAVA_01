@@ -1,0 +1,279 @@
+/* Premium CMS CSS Styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    background-color: #f4f7f6;
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+}
+
+/* Authentication Pages (Login/Register) */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #f4f7f6 0%, #e2e8f0 100%);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 480px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.auth-card .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #1e293b;
+    padding: 20px 24px;
+    text-align: center;
+}
+
+.auth-card .card-body {
+    padding: 30px 40px;
+}
+
+/* Form Elements Styling */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #334155;
+    transition: all 0.2s ease-in-out;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: #10b981; /* Green accent */
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+/* Functional Requirements */
+.btn, button, input[type="submit"], input[type="reset"], input[type="button"] {
+    background: linear-gradient(to right, #10b981, #059669) !important;
+    border: none !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn:hover, button:hover, input[type="submit"]:hover, input[type="reset"]:hover, input[type="button"]:hover {
+    background: linear-gradient(to right, #059669, #047857) !important;
+    box-shadow: 0 6px 12px rgba(16, 185, 129, 0.3) !important;
+    transform: translateY(-1px) !important;
+    color: #ffffff !important;
+}
+
+/* Fix for specific buttons that shouldn't be green */
+.navbar-toggler {
+    background: transparent !important;
+    border: 1px solid #cbd5e1 !important;
+    box-shadow: none !important;
+    padding: 6px 10px !important;
+}
+.navbar-toggler:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-toggler-icon {
+    filter: invert(0.5);
+}
+
+::placeholder {
+    color: lightgray !important;
+    opacity: 1 !important;
+}
+:-ms-input-placeholder { color: lightgray !important; }
+::-ms-input-placeholder { color: lightgray !important; }
+
+/* Dashboard Layout */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 260px;
+    max-width: 260px;
+    background: #0f172a; /* Dark navy */
+    color: #cbd5e1;
+    transition: all 0.3s;
+    min-height: 100vh;
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+#sidebar .search-box {
+    padding: 20px;
+    background: #0f172a;
+}
+
+#sidebar .search-box input {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #f8fafc;
+}
+
+#sidebar .search-box input:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+}
+
+#sidebar .search-box button {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #94a3b8 !important;
+    box-shadow: none !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 10px 15px !important;
+}
+
+#sidebar .search-box button:hover {
+    background: #334155 !important;
+    color: #ffffff !important;
+    transform: none !important;
+}
+
+#sidebar ul.components {
+    padding: 10px 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    display: block;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 4px solid transparent;
+}
+
+#sidebar ul li a i {
+    margin-right: 12px;
+    width: 20px;
+    text-align: center;
+}
+
+#sidebar ul li a:hover {
+    color: #ffffff;
+    background: #1e293b;
+    border-left-color: #10b981;
+}
+
+#sidebar ul li.active > a {
+    color: #ffffff;
+    background: #1e293b;
+    border-left-color: #10b981;
+}
+
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+    background-color: #f8fafc;
+}
+
+.navbar-custom {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #1e293b !important;
+    letter-spacing: 0.5px;
+    font-size: 1.5rem;
+}
+
+.page-title {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* Form Content Cards inside CMS */
+.content-form {
+    background: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    margin-bottom: 30px;
+}
+
+.content-form .card-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f1f5f9;
+    font-weight: 600;
+    color: #334155;
+    padding: 18px 24px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.content-form .card-body {
+    padding: 30px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+/* Table Enhancements */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.table thead th {
+    border-bottom: 2px solid #e2e8f0;
+    color: #475569;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 15px;
+    background-color: #f8fafc;
+}
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    color: #334155;
+    border-bottom: 1px solid #f1f5f9;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fcfcfc;
+}
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Link Styling */
+a {
+    color: #10b981;
+    transition: color 0.2s;
+}
+a:hover {
+    color: #047857;
+    text-decoration: none;
+}

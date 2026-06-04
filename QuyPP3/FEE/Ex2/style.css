@@ -1,0 +1,262 @@
+:root {
+    --bg-app: #f4f5f6;
+    --bg-board: #ffffff;
+    --todo-color: #3b82f6;
+    --todo-bg: #e0f2fe;
+    --progress-color: #d97706;
+    --progress-bg: #fef3c7;
+    --done-color: #16a34a;
+    --done-bg: #dcfce7;
+    --sticky-bg: #fef08a;
+    --text-main: #1f2937;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+}
+
+.app-layout-container {
+    width: 100%;
+    max-width: 1100px;
+    background: var(--bg-board);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Header & Search */
+.board-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 2px solid #f3f4f6;
+    padding-bottom: 15px;
+}
+
+.board-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+#global-search {
+    padding: 8px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    width: 260px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#global-search:focus {
+    border-color: var(--todo-color);
+}
+
+/* Kanban Board Layout */
+.kanban-board {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+@media (max-width: 768px) {
+    .kanban-board {
+        flex-direction: column;
+    }
+
+    .kanban-column {
+        width: 100% !important;
+    }
+}
+
+/* Column Styling */
+.kanban-column {
+    flex: 1;
+    border-radius: 8px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    transition: background-color 0.2s;
+}
+
+#col-todo {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+#col-progress {
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+}
+
+#col-done {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.column-header {
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.todo-header {
+    background-color: #cbd5e1;
+    color: #1e293b;
+}
+
+.progress-header {
+    background-color: #fde68a;
+    color: #92400e;
+}
+
+.done-header {
+    background-color: #bbf7d0;
+    color: #166534;
+}
+
+/* Input Elements & Validation */
+.column-input-area {
+    display: flex;
+    gap: 6px;
+}
+
+.task-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+}
+
+.task-input.error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.btn-add {
+    width: 36px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.btn-add:hover {
+    background: #f8fafc;
+}
+
+/* Task List */
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 100px;
+}
+
+/* Sticky Note Card Design & Effect */
+.task-card {
+    background: #fef08a;
+    padding: 16px;
+    position: relative;
+    border-radius: 2px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    word-break: break-word;
+    /* Hiệu ứng cong lật góc dưới */
+    border-bottom-right-radius: 15px 100px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.task-card .label-title {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.task-card .task-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #111827;
+}
+
+/* Action Buttons inside Card */
+.card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: auto;
+}
+
+.card-actions button {
+    padding: 6px 12px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.card-actions button:hover {
+    background: #f1f5f9;
+}
+
+.btn-move {
+    background: #ffffff;
+    color: #1e293b;
+}
+
+.btn-delete {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    border-color: #ef4444 !important;
+}
+
+/* Footer */
+.board-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #9ca3af;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 12px;
+    margin-top: auto;
+}
+
+.footer-links a {
+    color: #9ca3af;
+    text-decoration: none;
+    margin-left: 10px;
+}
