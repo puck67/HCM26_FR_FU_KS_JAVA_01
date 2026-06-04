@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive Kanban Task Board (Kanban Lite) built with native JavaScript.">
+  <title>My Project Board (Native JS)</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- FontAwesome for calendar and other icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <div style="width: 100%; max-width: 1100px; display: flex; flex-direction: column; align-items: center;">
+    <!-- Small switcher bar outside the card to preserve the mock look -->
+    <div class="version-switcher">
+      <strong>Native JS</strong>
+      <span>|</span>
+      <a href="jquery.html">jQuery Refactored</a>
+    </div>
+
+    <!-- Main board container card -->
+    <div class="board-card">
+      
+      <!-- Board Header -->
+      <div class="board-header">
+        <h1>My Project Board</h1>
+        
+        <div class="header-meta">
+          <!-- circular avatar -->
+          <div class="avatar-circle">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" fill="#3182ce"/>
+              <circle cx="18" cy="14" r="7" fill="#ffffff"/>
+              <path d="M6 30C6 24 11 20 18 20C25 20 30 24 30 30" fill="#ffffff"/>
+            </svg>
+          </div>
+          <!-- calendar icon card -->
+          <div class="calendar-icon">
+            <i class="fa-regular fa-calendar"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columns Container -->
+      <div class="columns-container">
+        
+        <!-- Column 1: TO DO -->
+        <div class="board-column col-todo" data-column="todo">
+          <div class="col-header">TO DO</div>
+          
+          <!-- Add Task Input -->
+          <div class="input-container">
+            <input type="text" id="input-todo" placeholder="Add a task to To Do" autocomplete="off">
+            <button type="button" class="btn-add-task" data-target="todo">+</button>
+          </div>
+          <div id="error-todo" class="col-error">Task title cannot be empty.</div>
+
+          <!-- Task Cards List -->
+          <div class="task-list" id="list-todo">
+            
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <h3 class="card-title">Website Homepage Redesign</h3>
+              <div class="card-actions">
+                <button type="button" class="btn-card btn-start">Start</button>
+                <button type="button" class="btn-card btn-edit">Edit</button>
+                <button type="button" class="btn-card btn-move">Move ▾</button>
+              </div>
+            </div>
+
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <h3 class="card-title">Market Research Report</h3>
+              <div class="card-actions">
+                <button type="button" class="btn-card btn-start">Start</button>
+                <button type="button" class="btn-card btn-edit">Edit</button>
+                <button type="button" class="btn-card btn-move">Move ▾</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column 2: IN PROGRESS -->
+        <div class="board-column col-inprogress" data-column="inprogress">
+          <div class="col-header">IN PROGRESS</div>
+          
+          <!-- Add Task Input -->
+          <div class="input-container">
+            <input type="text" id="input-inprogress" placeholder="Add a task to In Progress" autocomplete="off">
+            <button type="button" class="btn-add-task" data-target="inprogress">+</button>
+          </div>
+          <div id="error-inprogress" class="col-error">Task title cannot be empty.</div>
+
+          <!-- Task Cards List -->
+          <div class="task-list" id="list-inprogress">
+            
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <h3 class="card-title">User Testing Sessions</h3>
+              <div class="card-actions">
+                <button type="button" class="btn-card btn-edit">Edit</button>
+                <button type="button" class="btn-card btn-move">Move ▾</button>
+                <button type="button" class="btn-card btn-done">Done</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Column 3: DONE -->
+        <div class="board-column col-done" data-column="done">
+          <div class="col-header">DONE</div>
+          
+          <!-- Add Task Input -->
+          <div class="input-container">
+            <input type="text" id="input-done" placeholder="Add a task to Done" autocomplete="off">
+            <button type="button" class="btn-add-task" data-target="done">+</button>
+          </div>
+          <div id="error-done" class="col-error">Task title cannot be empty.</div>
+
+          <!-- Task Cards List -->
+          <div class="task-list" id="list-done">
+            
+            <div class="task-card">
+              <div class="card-label">Title</div>
+              <h3 class="card-title">Completed Features List</h3>
+              <div class="card-actions">
+                <button type="button" class="btn-card btn-edit">Edit</button>
+                <button type="button" class="btn-card btn-archive">Archive</button>
+                <!-- Replaced Move with Delete in the Done column according to Problem 2 Spec -->
+                <button type="button" class="btn-card btn-delete">Delete</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Native JS Logic -->
+  <script src="js/script_native.js"></script>
+</body>
+</html>

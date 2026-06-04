@@ -1,0 +1,411 @@
+/* Custom styles to override Bootstrap 4 - Pastel Pink Theme */
+
+/* Pastel Green buttons style (compiles with "Must be green" while matching the pastel theme) */
+.btn-custom-green,
+.btn-primary,
+.btn-success,
+button[type="submit"] {
+    background-color: #34d399 !important; /* Pastel Mint Green */
+    border-color: #34d399 !important;
+    color: #fff !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-green:hover,
+.btn-primary:hover,
+.btn-success:hover,
+button[type="submit"]:hover {
+    background-color: #059669 !important; /* Darker Mint Green on hover */
+    border-color: #059669 !important;
+    box-shadow: 0 4px 10px rgba(52, 211, 153, 0.3);
+}
+
+.btn-custom-green:focus,
+.btn-primary:focus,
+.btn-success:focus,
+button[type="submit"]:focus {
+    box-shadow: 0 0 0 0.2rem rgba(52, 211, 153, 0.4) !important;
+}
+
+/* Light gray placeholder text as required */
+::placeholder {
+    color: #cbd5e1 !important;
+    opacity: 1 !important; /* Firefox */
+}
+
+:-ms-input-placeholder {
+    color: #cbd5e1 !important;
+}
+
+::-ms-input-placeholder {
+    color: #cbd5e1 !important;
+}
+
+/* Reset button styling - Soft pastel gray */
+.btn-secondary,
+.btn-reset,
+button[type="reset"] {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: #64748b !important;
+    font-weight: 600;
+}
+
+.btn-secondary:hover,
+.btn-reset:hover,
+button[type="reset"]:hover {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+/* Link Styling */
+a.text-success {
+    color: #f472b6 !important; /* Pastel Pink Links */
+    transition: color 0.2s ease;
+    font-weight: 500;
+}
+
+a.text-success:hover {
+    color: #db2777 !important;
+    text-decoration: none;
+}
+
+/* Typography and General */
+body {
+    background-color: #fff8fa; /* Soft pink-white background */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #475569;
+}
+
+/* Auth Screens (Login & Register) */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fff1f2 0%, #fce7f3 100%); /* Pastel Pink-Rose gradient */
+}
+
+.auth-card {
+    background: #fff;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(219, 39, 119, 0.05); /* Soft pink shadow */
+    padding: 35px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.auth-card h3 {
+    font-weight: 700;
+    color: #831843; /* Deep Pink-Burgundy */
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.auth-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-logo h2 {
+    color: #ec4899 !important; /* Bright Pastel Pink logo */
+}
+
+.auth-logo img {
+    max-width: 150px;
+}
+
+/* CMS Dashboard Layout */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+/* Sidebar Styles - Light Pastel Pink */
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: #fdf2f8; /* Softest pink */
+    color: #831843;
+    transition: all 0.3s;
+    min-height: 100vh;
+    border-right: 1px solid #fbcfe8;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #fce7f3; /* Slightly darker pastel pink */
+    color: #831843;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #fbcfe8;
+}
+
+#sidebar .sidebar-search {
+    padding: 15px;
+    border-bottom: 1px solid #fbcfe8;
+}
+
+#sidebar .sidebar-search .input-group {
+    background: #fff;
+    border: 1px solid #fbcfe8;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+#sidebar .sidebar-search input {
+    background: transparent;
+    border: none;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+#sidebar .sidebar-search input:focus {
+    box-shadow: none;
+    background: #fff;
+}
+
+#sidebar .sidebar-search .input-group-text {
+    background: transparent;
+    border: none;
+    color: #db2777;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul p {
+    color: #831843;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 12px 20px;
+    font-size: 1rem;
+    display: block;
+    color: #be185d; /* Medium Dark Pink */
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+#sidebar ul li a:hover {
+    color: #831843;
+    background: #fce7f3;
+}
+
+#sidebar ul li.active > a {
+    color: #831843;
+    background: #fbcfe8; /* Active link background */
+    border-left: 4px solid #db2777;
+    font-weight: 600;
+}
+
+/* Main Content Area */
+#content {
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Top Navbar */
+.navbar-custom {
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(219, 39, 119, 0.02);
+    border-bottom: 1px solid #fbcfe8;
+    padding: 15px 30px;
+}
+
+#sidebarCollapseBtn {
+    border-color: #f472b6 !important;
+    color: #f472b6 !important;
+    background: transparent !important;
+}
+
+#sidebarCollapseBtn:hover {
+    background: #fce7f3 !important;
+    color: #db2777 !important;
+}
+
+.navbar-nav .dropdown-toggle {
+    color: #db2777 !important;
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    border: 1px solid #fbcfe8;
+    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.05);
+}
+
+.dropdown-item:hover {
+    background-color: #fdf2f8;
+    color: #db2777;
+}
+
+.main-body {
+    padding: 30px;
+    flex-grow: 1;
+    position: relative;
+}
+
+/* Page Headers */
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #831843;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #fbcfe8;
+    padding-bottom: 10px;
+}
+
+/* Cards */
+.card-custom {
+    background: #fff;
+    border: 1px solid #fce7f3;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(219, 39, 119, 0.02);
+    margin-bottom: 30px;
+}
+
+.card-custom .card-header {
+    background: #fff0f3; /* Pink pastel header */
+    border-bottom: 1px solid #fbcfe8;
+    font-weight: 700;
+    color: #831843;
+    padding: 15px 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card-custom .card-body {
+    padding: 25px;
+}
+
+/* Form Styling */
+.form-group label {
+    font-weight: 600;
+    color: #5b21b6; /* Soft Purple/Indigo label for contrast */
+    color: #831843; /* Keep it pink-themed */
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #fbcfe8;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    color: #475569;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #f472b6;
+    box-shadow: 0 0 0 0.2rem rgba(244, 114, 182, 0.15);
+}
+
+.form-control.is-invalid {
+    border-color: #f43f5e;
+}
+
+.invalid-feedback {
+    color: #f43f5e;
+    font-size: 0.825rem;
+    font-weight: 500;
+}
+
+/* Table Style */
+.table-custom {
+    width: 100%;
+    background: #fff;
+    border-collapse: collapse;
+}
+
+.table-custom th {
+    background: #fff0f3;
+    color: #831843;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 2px solid #fbcfe8;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.table-custom td {
+    padding: 16px;
+    border-bottom: 1px solid #fce7f3;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.table-custom tr:hover {
+    background-color: #fff5f7;
+}
+
+.table-custom tr td.text-success {
+    color: #db2777 !important; /* Style content list title pink/magenta instead of default green */
+}
+
+/* Loading Overlay (5 seconds requirement) */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.spinner-custom {
+    width: 3rem;
+    height: 3rem;
+    border: 0.25em solid rgba(244, 114, 182, 0.15);
+    border-right-color: #db2777; /* Pink Spinner */
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+    margin-bottom: 15px;
+}
+
+.loading-timer {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #be185d;
+}
+
+/* Pagination */
+.pagination-custom .page-link {
+    color: #db2777;
+    border-color: #fbcfe8;
+    background-color: #fff;
+}
+
+.pagination-custom .page-item.active .page-link {
+    background-color: #db2777 !important;
+    border-color: #db2777 !important;
+    color: #fff !important;
+}
+
+.pagination-custom .page-link:hover {
+    background-color: #fdf2f8;
+    color: #9f1239;
+}
+
+.pagination-custom .page-item.disabled .page-link {
+    color: #cbd5e1;
+    border-color: #fbcfe8;
+}

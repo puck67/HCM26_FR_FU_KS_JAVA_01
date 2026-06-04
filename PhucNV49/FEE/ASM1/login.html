@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CMS Portal</title>
+    <!-- Bootstrap 4 CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                Please Sign In
+            </div>
+            <div class="auth-body">
+                <form id="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <div class="input-group">
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="login-email" 
+                                name="email" 
+                                placeholder="E-mail" 
+                                required 
+                                minlength="5" 
+                                maxlength="50"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input 
+                            type="password" 
+                            class="form-control" 
+                            id="login-password" 
+                            name="password" 
+                            placeholder="Password" 
+                            required 
+                            minlength="8" 
+                            maxlength="30"
+                        >
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="remember-me" name="remember">
+                        <label class="form-check-label text-muted" for="remember-me">Remember Me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-3" id="login-btn">Login</button>
+                    <div class="text-center">
+                        <a href="register.html" class="auth-link">Click here to Register</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap bundle -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom validation library -->
+    <script src="js/validation.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Check if there was a registration email to prefill
+            const regEmail = localStorage.getItem('registeredEmail');
+            if (regEmail) {
+                $('#login-email').val(regEmail);
+                localStorage.removeItem('registeredEmail'); // clear it
+            }
+
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
+                
+                const $form = $(this);
+                if (validateForm($form)) {
+                    // Validated successfully
+                    const email = $('#login-email').val();
+                    localStorage.setItem('userEmail', email);
+                    
+                    // Add visual effect before transition
+                    $('#login-btn').html('<i class="fas fa-spinner fa-spin mr-2"></i>Signing in...').prop('disabled', true);
+                    
+                    setTimeout(function() {
+                        window.location.href = 'index.html';
+                    }, 800);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

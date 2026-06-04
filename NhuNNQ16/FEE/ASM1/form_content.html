@@ -1,0 +1,42 @@
+<div class="page-title">Add Content</div>
+
+<div class="card card-custom">
+    <div class="card-header">
+        Content Form Elements
+    </div>
+    <div class="card-body">
+        <form id="contentForm" novalidate>
+            <div class="form-group">
+                <label for="contentTitle">Title</label>
+                <input type="text" class="form-control" id="contentTitle" name="title" placeholder="Enter the title" required minlength="10" maxlength="200">
+                <div class="invalid-feedback" id="titleFeedback">
+                    Title is required (10 - 200 characters).
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="contentBrief">Brief</label>
+                <textarea class="form-control" id="contentBrief" name="brief" rows="3" placeholder="Enter the brief summary" required minlength="30" maxlength="150"></textarea>
+                <div class="invalid-feedback" id="briefFeedback">
+                    Brief is required (30 - 150 characters).
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="contentMain">Content</label>
+                <textarea class="form-control" id="contentMain" name="content" rows="8" placeholder="Enter the full content" required minlength="50" maxlength="1000"></textarea>
+                <div class="invalid-feedback" id="contentFeedback">
+                    Content is required (50 - 1000 characters).
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button type="submit" class="btn btn-custom-green mr-2">Submit Button</button>
+                <button type="reset" class="btn btn-secondary">Reset Button</button>
+            </div>
+        </form>
+        <div id="contentSuccessAlert" class="alert alert-success mt-3 d-none" role="alert">
+            Content added successfully!
+        </div>
+    </div>
+</div>
