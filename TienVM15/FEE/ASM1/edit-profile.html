@@ -1,0 +1,137 @@
+<div class="card shadow-sm border-0 bg-white">
+    <div class="card-header bg-white border-bottom py-3">
+        <h4 class="mb-0 text-dark font-weight-bold"><i class="fas fa-user-circle mr-2 text-success"></i>Edit Profile</h4>
+    </div>
+    <div class="card-body p-4">
+        <div id="profileAlert" class="alert alert-success alert-dismissible fade show border-0 shadow-sm" style="display: none; background-color: rgba(16, 185, 129, 0.1); color: var(--success);" role="alert">
+            <i class="fas fa-check-circle mr-2"></i>Profile updated successfully via AJAX request!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        
+        <form id="profileForm" novalidate>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                    <div class="invalid-feedback" id="firstNameError">First name must be between 3 and 30 characters.</div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                    <div class="invalid-feedback" id="lastNameError">Last name must be between 3 and 30 characters.</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="text" class="form-control" id="phone" placeholder="Phone Number" required>
+                <div class="invalid-feedback" id="phoneError">Phone number must be between 9 and 13 digits.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Profile Biography</label>
+                <textarea class="form-control" id="description" rows="4" placeholder="Brief details about yourself..."></textarea>
+                <div class="invalid-feedback" id="descError">Biography cannot exceed 200 characters.</div>
+                <div class="d-flex justify-content-between mt-1">
+                    <small class="text-muted" id="charCounter">0 / 200 characters</small>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary font-weight-bold shadow-sm px-4">Submit Button</button>
+                <button type="reset" class="btn btn-secondary font-weight-bold px-4 ml-2">Reset Button</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const $firstName = $('#firstName');
+        const $lastName = $('#lastName');
+        const $phone = $('#phone');
+        const $desc = $('#description');
+        const $charCounter = $('#charCounter');
+        
+        const validator = CMSApp.validator;
+        const storage = CMSApp.storage;
+
+        // Initialize Form Values from State
+        $firstName.val(storage.get('firstName', 'John'));
+        $lastName.val(storage.get('lastName', 'Doe'));
+        $phone.val(storage.get('phone', '0987654321'));
+        $desc.val(storage.get('description', 'Professional Front-end Developer, specialized in modern CMS platforms and Bootstrap design styles.'));
+        
+        // Character counter update
+        function updateCharCount() {
+            const len = $desc.val().length;
+            $charCounter.text(`${len} / 200 characters`);
+            if (len > 200) {
+                $charCounter.addClass('text-danger').removeClass('text-muted');
+            } else {
+                $charCounter.addClass('text-muted').removeClass('text-danger');
+            }
+        }
+        updateCharCount();
+
+        // Real-time Event validations
+        $firstName.on('keyup blur', () => validator.validateField($firstName, val => validator.rules.range(val.trim(), 3, 30), '#firstNameError'));
+        $lastName.on('keyup blur', () => validator.validateField($lastName, val => validator.rules.range(val.trim(), 3, 30), '#lastNameError'));
+        $phone.on('keyup blur', () => validator.validateField($phone, val => validator.rules.phone(val.trim()), '#phoneError'));
+        $desc.on('keyup blur input', () => {
+            updateCharCount();
+            validator.validateField($desc, val => val.trim().length <= 200, '#descError');
+        });
+
+        // Form Submit
+        $('#profileForm').on('submit', function(e) {
+            e.preventDefault();
+
+            const isFirstValid = validator.validateField($firstName, val => validator.rules.range(val.trim(), 3, 30), '#firstNameError');
+            const isLastValid = validator.validateField($lastName, val => validator.rules.range(val.trim(), 3, 30), '#lastNameError');
+            const isPhoneValid = validator.validateField($phone, val => validator.rules.phone(val.trim()), '#phoneError');
+            const isDescValid = validator.validateField($desc, val => val.trim().length <= 200, '#descError');
+
+            if (!isFirstValid) validator.shakeField($firstName);
+            if (!isLastValid) validator.shakeField($lastName);
+            if (!isPhoneValid) validator.shakeField($phone);
+            if (!isDescValid) validator.shakeField($desc);
+
+            if (isFirstValid && isLastValid && isPhoneValid && isDescValid) {
+                // Perform dynamic AJAX mockup network call
+                $.ajax({
+                    url: 'https://jsonplaceholder.typicode.com/posts',
+                    method: 'POST',
+                    data: {
+                        firstName: $firstName.val().trim(),
+                        lastName: $lastName.val().trim(),
+                        phone: $phone.val().trim(),
+                        description: $desc.val().trim()
+                    },
+                    beforeSend: function() {
+                        // Change UI State on sending
+                        $('button[type="submit"]').prop('disabled', true).html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...');
+                    },
+                    success: function(response) {
+                        // Persist data locally
+                        storage.set('firstName', $firstName.val().trim());
+                        storage.set('lastName', $lastName.val().trim());
+                        storage.set('phone', $phone.val().trim());
+                        storage.set('description', $desc.val().trim());
+
+                        $('#profileAlert').fadeIn();
+                        setTimeout(() => $('#profileAlert').fadeOut(), 4000);
+                    },
+                    error: function() {
+                        alert('Enterprise mock server reported error during submission.');
+                    },
+                    complete: function() {
+                        $('button[type="submit"]').prop('disabled', false).text('Submit Button');
+                    }
+                });
+            }
+        });
+    });
+</script>

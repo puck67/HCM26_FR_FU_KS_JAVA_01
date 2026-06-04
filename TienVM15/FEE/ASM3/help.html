@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - HR Admin Portal</title>
+    <!-- Bootstrap 4 CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Custom Style overriding Bootstrap 4 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
+        <div class="container-fluid max-viewport-width" style="max-width: 1000px;">
+            <a class="navbar-brand" href="person.html">HR Admin Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHR" aria-controls="navbarHR" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarHR">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="person.html">Register Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search Visitors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="help.html">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Outer Frame Container matching Mock Figures -->
+    <div class="frame-container">
+        <div class="inner-content">
+            
+            <!-- Hero Lake Banner -->
+            <div class="hero-banner"></div>
+
+            <!-- Page Title Bar -->
+            <div class="section-title-bar">
+                <h2 class="section-title">Help & Documentation</h2>
+            </div>
+
+            <!-- Instructions Area -->
+            <div class="form-section-wrapper" style="padding: 2.5rem 3rem;">
+                <h4 class="font-weight-bold text-success mb-3">Registration Form Guide</h4>
+                <p>When registering a new visitor, the following validation constraints must be satisfied:</p>
+                
+                <table class="table table-bordered mb-4">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Field</th>
+                            <th>Mandatory</th>
+                            <th>Max Length</th>
+                            <th>Constraints</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-weight-bold">First name</td>
+                            <td>Yes</td>
+                            <td>20</td>
+                            <td>Must contain letters only (no numbers or special characters).</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Last name</td>
+                            <td>Yes</td>
+                            <td>20</td>
+                            <td>Must contain letters only (no numbers or special characters).</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Telephone</td>
+                            <td>No</td>
+                            <td>11</td>
+                            <td>Must contain numbers only.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Email</td>
+                            <td>No</td>
+                            <td>50</td>
+                            <td>Must match valid email format.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">You are in</td>
+                            <td>Yes</td>
+                            <td>-</td>
+                            <td>Must select one geographic region.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">Description</td>
+                            <td>No</td>
+                            <td>200</td>
+                            <td>Optional textarea up to 200 characters.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="font-weight-bold text-success mb-3">Search & Filter Guide</h4>
+                <ul>
+                    <li>The Search page allows keyword filtering across **all columns** (not just First name).</li>
+                    <li>Type your keyword in the input box and click **Search...** to apply the filter instantly.</li>
+                    <li>Hovering over any visitor row in the list table will highlight the row in light green.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 dependencies via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Shopping List & Budget Tracker</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1 class="app-title">Shopping List Manager</h1>
+            
+            <!-- Mode Switcher -->
+            <div class="mode-switcher-container">
+                <button type="button" class="mode-btn active" id="btn-vanilla">Vanilla JS</button>
+                <button type="button" class="mode-btn" id="btn-jquery">jQuery Mode</button>
+            </div>
+            
+            <div class="mode-indicator-bar">
+                <span class="indicator-dot"></span>
+                <span id="mode-text">Active: Vanilla JS Mode</span>
+            </div>
+        </header>
+
+        <!-- Alert Notification Box -->
+        <div class="alert-box" id="alert-box"></div>
+
+        <!-- Input Form -->
+        <form class="input-form" novalidate>
+            <div class="input-group">
+                <label for="item-name" class="input-label">Item Name</label>
+                <input type="text" id="item-name" class="form-input" placeholder="e.g., Apples" required>
+            </div>
+            <div class="input-group">
+                <label for="item-cost" class="input-label">Item Cost ($)</label>
+                <input type="number" id="item-cost" class="form-input" placeholder="e.g., 2.50" step="0.01" min="0.01" required>
+            </div>
+            <button type="submit" class="btn-primary" id="btn-add">Add Item +</button>
+        </form>
+
+        <!-- Table Display -->
+        <div class="table-container">
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Cost ($)</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="items-table-body">
+                    <!-- Dynamic Rows Go Here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Grand Total Footer -->
+        <div class="total-section">
+            <span class="total-title">Grand Total:</span>
+            <span class="total-amount" id="grand-total">$0.00</span>
+        </div>
+    </div>
+
+    <!-- Include jQuery via CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- Include the custom scripts -->
+    <script src="app-vanilla.js"></script>
+    <script src="app-jquery.js"></script>
+
+    <!-- Switcher/Controller Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnVanilla = document.getElementById('btn-vanilla');
+            const btnJQuery = document.getElementById('btn-jquery');
+            const modeText = document.getElementById('mode-text');
+            const itemsTableBody = document.getElementById('items-table-body');
+            const alertBox = document.getElementById('alert-box');
+
+            function switchMode(mode) {
+                // Clear any alerts
+                alertBox.style.display = 'none';
+                
+                // Clear list items to start fresh in the new mode
+                itemsTableBody.innerHTML = '';
+
+                // Clone the form to clear all event listeners (Vanilla and jQuery)
+                const form = document.querySelector('.input-form');
+                const newForm = form.cloneNode(true);
+                form.parentNode.replaceChild(newForm, form);
+
+                if (mode === 'vanilla') {
+                    btnVanilla.classList.add('active');
+                    btnJQuery.classList.remove('active');
+                    modeText.textContent = 'Active: Vanilla JS Mode';
+                    
+                    // Reset styling on grand total from jQuery .css() inline overrides
+                    const grandTotal = document.getElementById('grand-total');
+                    grandTotal.style.color = ''; 
+                    
+                    // Init Vanilla mode listeners
+                    window.initVanilla();
+                } else {
+                    btnVanilla.classList.remove('active');
+                    btnJQuery.classList.add('active');
+                    modeText.textContent = 'Active: jQuery Mode';
+                    
+                    // Init jQuery mode listeners
+                    window.initJQuery();
+                }
+            }
+
+            btnVanilla.addEventListener('click', () => switchMode('vanilla'));
+            btnJQuery.addEventListener('click', () => switchMode('jquery'));
+
+            // Initial startup
+            switchMode('vanilla');
+        });
+    </script>
+</body>
+</html>
+

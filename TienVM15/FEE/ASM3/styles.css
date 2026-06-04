@@ -1,0 +1,239 @@
+/* FEE ASM3 Custom CSS Stylesheet overriding Bootstrap 4 */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-green: #28a745;
+    --primary-green-hover: #218838;
+    --primary-green-active: #1e7e34;
+    --light-gray: #a9a9a9;
+    --text-dark: #2d3748;
+    --text-muted: #718096;
+    --border-color: #cbd5e0;
+    --error-color: #dc3545;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: #eaeef3;
+    color: var(--text-dark);
+}
+
+/* Green Buttons Override Requirement */
+.btn, 
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    background-color: var(--primary-green) !important;
+    border-color: var(--primary-green) !important;
+    color: #ffffff !important;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn:hover,
+.btn-primary:hover,
+.btn-success:hover {
+    background-color: var(--primary-green-hover) !important;
+    border-color: var(--primary-green-hover) !important;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3) !important;
+}
+
+.btn:active,
+.btn:focus,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: var(--primary-green-active) !important;
+    border-color: var(--primary-green-active) !important;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+    outline: none !important;
+}
+
+/* Light Gray Placeholder Requirement */
+::placeholder {
+    color: var(--light-gray) !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+    color: var(--light-gray) !important;
+}
+
+::-ms-input-placeholder {
+    color: var(--light-gray) !important;
+}
+
+/* Navigation bar */
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1.5px solid #e2e8f0;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--primary-green) !important;
+    letter-spacing: -0.5px;
+}
+
+.nav-link {
+    color: var(--text-muted) !important;
+    font-weight: 600;
+    transition: color 0.15s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-green) !important;
+}
+
+/* Frame Layout matches the figures */
+.frame-container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background-color: #dbe4f0; /* Outer light blue frame container */
+    padding: 1.5rem;
+    border: 1px solid #b8c8dd;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.inner-content {
+    background-color: #ffffff;
+    border: 1px solid #b8c8dd;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Hero Banner Image at top */
+.hero-banner {
+    width: 100%;
+    height: 180px;
+    background-image: url('hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    border-bottom: 3px solid var(--primary-green);
+}
+
+/* Page Section Title Banner (Visitor Information, Search Visitor) */
+.section-title-bar {
+    background-color: #f7f9fa;
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-title {
+    color: #28a745;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+
+/* Form block */
+.form-section-wrapper {
+    padding: 2.5rem 4rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.9rem;
+    width: 150px; /* Aligned labels to the left like screenshots */
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 8px;
+}
+
+.form-group-content {
+    display: inline-block;
+    width: calc(100% - 160px);
+}
+
+@media (max-width: 768px) {
+    .form-group label {
+        width: 100%;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .form-group-content {
+        width: 100%;
+        display: block;
+    }
+}
+
+.form-control {
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    height: auto;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-dark);
+}
+
+.form-control:focus {
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+}
+
+/* Form error outlines */
+.form-control.is-invalid {
+    border-color: var(--error-color) !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15) !important;
+}
+
+.invalid-feedback {
+    color: var(--error-color);
+    font-weight: 500;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+}
+
+/* Search styling */
+.search-form-wrapper {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.search-description {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Table styles */
+.table-responsive-wrapper {
+    padding: 1.5rem;
+}
+
+.table {
+    border: 1px solid #dee2e6;
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: #b8c8dd; /* Gray-blue header */
+    color: #333333;
+    font-weight: 700;
+    border: 1px solid #cbd5e0;
+    font-size: 0.9rem;
+}
+
+.table td {
+    border: 1px solid #dee2e6;
+    vertical-align: middle;
+    font-size: 0.875rem;
+    /* VERY IMPORTANT: Do NOT define td background-color here to let row hover highlight work properly */
+}
+
+/* Custom interactive table row hover highlight */
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #d4edda !important; /* Soft green highlight */
+    cursor: pointer;
+}

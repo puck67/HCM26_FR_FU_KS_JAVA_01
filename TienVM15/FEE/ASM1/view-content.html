@@ -1,0 +1,113 @@
+<div class="card shadow-sm border-0 bg-white">
+    <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 text-dark font-weight-bold"><i class="fas fa-table mr-2 text-success"></i>View Contents</h4>
+        
+        <!-- Live Search Field for Enterprise Feel -->
+        <div class="input-group style-search" style="max-width: 250px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-light border-right-0" style="border-radius: 8px 0 0 8px;"><i class="fas fa-search text-muted"></i></span>
+            </div>
+            <input type="text" id="tableSearch" class="form-control bg-light pl-0" placeholder="Filter articles..." style="border-radius: 0 8px 8px 0; padding: 6px 12px; font-size: 0.85rem;">
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 5%">#</th>
+                        <th scope="col" style="width: 25%">Title</th>
+                        <th scope="col" style="width: 50%">Brief</th>
+                        <th scope="col" style="width: 20%">Created Date</th>
+                    </tr>
+                </thead>
+                <tbody id="contentsTableBody">
+                    <!-- Loaded dynamically with XSS sanitization -->
+                </tbody>
+            </table>
+        </div>
+        <div id="noDataMessage" class="text-center text-muted py-5" style="display: none;">
+            <i class="fas fa-folder-open fa-3x mb-3 text-muted" style="opacity: 0.5;"></i>
+            <h5 class="font-weight-bold">No articles found</h5>
+            <p class="small">Try adding one under the "Form Content" menu!</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        const storage = CMSApp.storage;
+        const security = CMSApp.security;
+
+        const defaultContents = [
+            {
+                id: 1,
+                title: "HTML5 Semantic Tags & Structured Layouts",
+                brief: "Explore best practice approaches to SEO friendly designs, semantic structure headers, footers and responsive grids.",
+                createdDate: "2026-05-15 10:30"
+            },
+            {
+                id: 2,
+                title: "Bootstrap 4 Grid System Deep Dive",
+                brief: "An advanced overview of row, column, container behaviors, layout nesting, and building dynamic user interfaces.",
+                createdDate: "2026-05-20 14:15"
+            },
+            {
+                id: 3,
+                title: "JavaScript ES6 Essentials",
+                brief: "Master arrows functions, classes, modules, and template literals for writing clean, optimized web application scripts.",
+                createdDate: "2026-05-28 09:00"
+            }
+        ];
+
+        let contents = storage.get('contents');
+        if (!contents) {
+            storage.set('contents', defaultContents);
+            contents = defaultContents;
+        }
+
+        // Render Table Rows
+        function renderTable(filterText = '') {
+            const tableBody = $('#contentsTableBody');
+            tableBody.empty();
+            
+            const filtered = contents.filter(item => {
+                const term = filterText.toLowerCase();
+                return item.title.toLowerCase().includes(term) || item.brief.toLowerCase().includes(term);
+            });
+
+            if (filtered.length === 0) {
+                $('#noDataMessage').show();
+                $('.table-responsive').hide();
+            } else {
+                $('#noDataMessage').hide();
+                $('.table-responsive').show();
+
+                filtered.forEach((item, index) => {
+                    const row = `
+                        <tr>
+                            <td class="text-muted font-weight-bold">${index + 1}</td>
+                            <td class="font-weight-bold text-dark text-truncate" style="max-width: 200px;">${security.escapeHtml(item.title)}</td>
+                            <td>${security.escapeHtml(item.brief)}</td>
+                            <td>
+                                <span class="badge badge-light text-muted p-2" style="font-size: 0.8rem; border-radius: 6px; border: 1.5px solid var(--border-color);">
+                                    <i class="far fa-clock mr-1 text-success"></i> ${security.escapeHtml(item.createdDate)}
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.append(row);
+                });
+            }
+        }
+
+        // Initial render
+        renderTable();
+
+        // Realtime Search Filter (Enterprise Feature)
+        $('#tableSearch').on('input keyup', function() {
+            renderTable($(this).val().trim());
+        });
+    });
+</script>
