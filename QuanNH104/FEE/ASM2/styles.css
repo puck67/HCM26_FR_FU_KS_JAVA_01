@@ -1,0 +1,107 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.btn {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+.btn:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    color: white;
+}
+
+::placeholder {
+    color: #d3d3d3 !important;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+   color: #d3d3d3 !important;
+}
+
+::-ms-input-placeholder {
+   color: #d3d3d3 !important;
+}
+
+.navbar-custom {
+    background-color: #222;
+    color: white;
+}
+.navbar-custom .navbar-brand, .navbar-custom .nav-link {
+    color: white;
+}
+.navbar-custom .nav-link.login-btn {
+    border: 1px solid red;
+    padding: 5px 15px;
+    margin-left: 15px;
+}
+
+.main-container {
+    background-color: white;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.error-message-top {
+    display: none;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1050;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.question-block {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.answer-row {
+    margin-bottom: 10px;
+}
+
+.add-btn {
+    width: 40px;
+    font-weight: bold;
+}
