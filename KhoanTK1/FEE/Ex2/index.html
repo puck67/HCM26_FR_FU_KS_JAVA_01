@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Kanban Task Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Interactive Kanban Task Board</h1>
+        <div class="toggle-container">
+            <a href="index.html" class="toggle-btn active">Vanilla JS</a>
+            <a href="index-jquery.html" class="toggle-btn">jQuery</a>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search tasks...">
+    </div>
+    <div class="board">
+        <div class="column todo">
+            <h2>TO DO</h2>
+            <div class="input-group">
+                <input type="text" id="todo-input" placeholder="Add task to To Do...">
+                <button id="todo-add-btn">+</button>
+            </div>
+            <div class="card-list" id="todo-list"></div>
+        </div>
+        <div class="column progress">
+            <h2>IN PROGRESS</h2>
+            <div class="input-group">
+                <input type="text" id="progress-input" placeholder="Add task to In Progress...">
+                <button id="progress-add-btn">+</button>
+            </div>
+            <div class="card-list" id="progress-list"></div>
+        </div>
+        <div class="column done">
+            <h2>DONE</h2>
+            <div class="input-group">
+                <input type="text" id="done-input" placeholder="Add task to Done...">
+                <button id="done-add-btn">+</button>
+            </div>
+            <div class="card-list" id="done-list"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

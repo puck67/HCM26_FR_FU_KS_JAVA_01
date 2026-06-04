@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Image Gallery & Rating System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="engine-toggle">
+    <a href="index.html" class="toggle-btn active">Vanilla JS</a>
+    <a href="index-jquery.html" class="toggle-btn">jQuery</a>
+  </div>
+
+  <div class="gallery-container">
+    <h1>My Image Gallery</h1>
+
+    <div class="gallery-grid">
+      <div class="card" data-rating="5">
+        <div class="card-image card-bg-1">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="4">
+        <div class="card-image card-bg-2">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="3">
+        <div class="card-image card-bg-3">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star empty" data-value="4">&#9734;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="2">
+        <div class="card-image card-bg-4">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star empty" data-value="3">&#9734;</span>
+            <span class="star empty" data-value="4">&#9734;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="1">
+        <div class="card-image card-bg-5">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star empty" data-value="2">&#9734;</span>
+            <span class="star empty" data-value="3">&#9734;</span>
+            <span class="star empty" data-value="4">&#9734;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="2">
+        <div class="card-image card-bg-6">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star empty" data-value="3">&#9734;</span>
+            <span class="star empty" data-value="4">&#9734;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="3">
+        <div class="card-image card-bg-7">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star empty" data-value="4">&#9734;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="4">
+        <div class="card-image card-bg-8">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="4">
+        <div class="card-image card-bg-9">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-rating="4">
+        <div class="card-image card-bg-10">
+          <div class="tooltip-badge">Add to Favorites</div>
+        </div>
+        <div class="card-footer">
+          <div class="stars">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star empty" data-value="5">&#9734;</span>
+          </div>
+          <div class="heart-box">
+            <span class="heart">&#9825;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-footer">
+      <div class="footer-section footer-left">
+        <div class="footer-text-container">
+          <span class="footer-label">AVERAGE RATING:</span>
+          <span class="footer-value" id="average-rating-val">4.2 Stars</span>
+          <span class="footer-sub" id="average-count-val">(based on 9 items)</span>
+        </div>
+        <div class="footer-divider-mini"></div>
+        <div class="bar-chart">
+          <div class="bar bar-1"></div>
+          <div class="bar bar-2"></div>
+          <div class="bar bar-3"></div>
+        </div>
+      </div>
+      <div class="footer-section footer-right">
+        <div class="footer-text-container">
+          <span class="footer-label">TOTAL FAVORITES:</span>
+          <span class="footer-value" id="total-favorites-val">5</span>
+        </div>
+        <span class="footer-heart">&#9829;</span>
+      </div>
+    </div>
+
+    <div class="credit">Built with HTML/CSS Grid</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
