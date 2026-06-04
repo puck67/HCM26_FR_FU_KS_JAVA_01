@@ -1,0 +1,180 @@
+/* Reset default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Main container */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.input-field {
+    flex: 2;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-field:focus {
+    border-color: #007bff;
+}
+
+.input-field[type="number"] {
+    flex: 1;
+}
+
+.btn-add {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+    background-color: #218838;
+}
+
+/* Inline Error Message Styling */
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 6px;
+    min-height: 20px; /* Nhằm giữ khoảng trống, tránh giật giao diện khi ẩn/hiện lỗi */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: bold;
+}
+
+/* Action column (Remove button) */
+.btn-remove {
+    padding: 6px 12px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.btn-remove:hover {
+    background-color: #c82333;
+}
+
+/* Footer Section */
+.footer-section {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 2px solid #333;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#grand-total {
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+/* Page Toggle Switch Styling */
+.page-toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.toggle-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #666;
+}
+
+.toggle-switch {
+    display: flex;
+    background-color: #e9ecef;
+    border-radius: 20px;
+    padding: 4px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.toggle-btn {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #6c757d;
+    cursor: pointer;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn.active {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.toggle-btn:hover:not(.active) {
+    color: #495057;
+}

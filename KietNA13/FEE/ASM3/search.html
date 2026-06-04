@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Search registered visitors by any field." />
+  <title>Search – Visitor Portal</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== Navigation ===== -->
+<nav class="navbar navbar-expand-sm navbar-custom mb-3">
+  <span class="navbar-brand font-weight-bold">🌿 Visitor Portal</span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+    <span class="navbar-toggler-icon" style="filter:invert(1)"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navMenu">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item"><a class="nav-link" href="person.html">Person</a></li>
+      <li class="nav-item"><a class="nav-link active" href="search.html">Search</a></li>
+      <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mb-5">
+  <div class="page-wrapper">
+
+    <!-- Banner -->
+    <img src="banner.png" alt="Scenic lake panorama" class="site-banner" />
+
+    <!-- Section title -->
+    <h1 class="section-title">Search Visitor</h1>
+
+    <!-- Search bar -->
+    <div class="p-3">
+      <div class="form-inline mb-3">
+        <label for="searchInput" class="mr-2">Search:</label>
+        <input type="text" class="form-control mr-2" id="searchInput"
+               placeholder="Type keyword to search all fields..." style="min-width:240px;" />
+        <button class="btn btn-search mr-3" id="searchBtn">Search</button>
+        <small class="text-muted d-none d-sm-inline">Matches across all columns</small>
+      </div>
+
+      <!-- Results counter -->
+      <div id="resultInfo" class="mb-2 text-muted small"></div>
+
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="resultTable">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Gender</th>
+              <th>Telephone</th>
+              <th>You're in</th>
+              <th>Hobbies</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No result placeholder -->
+      <div class="no-result d-none" id="noResult">
+        <span style="font-size:2.5rem">🔍</span>
+        <p class="mt-2">No visitors found matching your search.</p>
+        <a href="person.html" class="btn btn-register btn-sm">Register a Visitor</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(function () {
+
+  var allVisitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+
+  /* ---- Seed sample data if empty (matches the screenshot) ---- */
+  if (!allVisitors.length) {
+    allVisitors = [
+      { firstName:'John', lastName:'Terry', gender:'Male', telephone:'0909090909',
+        region:'Europe', hobbies:'Shopping, Cooking',
+        description:'One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that\'ll stop the row highlight code from working properly.' },
+      { firstName:'John', lastName:'Terry', gender:'Male', telephone:'0909090909',
+        region:'Europe', hobbies:'Shopping, Cooking',
+        description:'One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that\'ll stop the row highlight code from working properly.' },
+      { firstName:'John', lastName:'Terry', gender:'Male', telephone:'0909090909',
+        region:'Europe', hobbies:'Shopping, Cooking',
+        description:'One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that\'ll stop the row highlight code from working properly.' }
+    ];
+  }
+
+  /* ---- Escape HTML to prevent XSS ---- */
+  function escHtml(str) {
+    return $('<span>').text(str || '').html();
+  }
+
+  /* ---- Highlight matching keyword in text ---- */
+  function highlight(text, keyword) {
+    if (!keyword) return escHtml(text);
+    var escaped = escHtml(text);
+    var safeKw = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return escaped.replace(new RegExp('(' + safeKw + ')', 'gi'),
+      '<span class="highlight">$1</span>');
+  }
+
+  /* ---- Render table rows ---- */
+  function renderRows(data, keyword) {
+    var $tbody = $('#resultBody').empty();
+    if (!data.length) {
+      $('#resultTable').addClass('d-none');
+      $('#noResult').removeClass('d-none');
+      $('#resultInfo').text('');
+      return;
+    }
+    $('#resultTable').removeClass('d-none');
+    $('#noResult').addClass('d-none');
+    $('#resultInfo').text('Found ' + data.length + ' visitor(s).');
+
+    $.each(data, function (_, v) {
+      var $tr = $('<tr>').html(
+        '<td>' + highlight(v.firstName,   keyword) + '</td>' +
+        '<td>' + highlight(v.lastName,    keyword) + '</td>' +
+        '<td>' + highlight(v.gender,      keyword) + '</td>' +
+        '<td>' + highlight(v.telephone,   keyword) + '</td>' +
+        '<td>' + highlight(v.region,      keyword) + '</td>' +
+        '<td>' + highlight(v.hobbies,     keyword) + '</td>' +
+        '<td>' + highlight(v.description, keyword) + '</td>'
+      );
+      $tbody.append($tr);
+    });
+  }
+
+  /* ---- Filter logic: search every field ---- */
+  function doSearch() {
+    var kw = $.trim($('#searchInput').val()).toLowerCase();
+    if (!kw) { renderRows(allVisitors, ''); return; }
+
+    var filtered = $.grep(allVisitors, function (v) {
+      return (v.firstName   || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.lastName    || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.gender      || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.telephone   || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.region      || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.hobbies     || '').toLowerCase().indexOf(kw) >= 0 ||
+             (v.description || '').toLowerCase().indexOf(kw) >= 0;
+    });
+    renderRows(filtered, $('#searchInput').val());
+  }
+
+  // Initial render
+  renderRows(allVisitors, '');
+
+  // Button click
+  $('#searchBtn').on('click', doSearch);
+
+  // Press Enter to search
+  $('#searchInput').on('keydown', function (e) {
+    if (e.key === 'Enter') doSearch();
+  });
+
+  // Live search as user types (debounced)
+  var debounce;
+  $('#searchInput').on('input', function () {
+    clearTimeout(debounce);
+    debounce = setTimeout(doSearch, 300);
+  });
+
+});
+</script>
+</body>
+</html>

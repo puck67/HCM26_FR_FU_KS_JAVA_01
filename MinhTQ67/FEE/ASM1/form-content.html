@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Content - CMS</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="cms-page">
+
+<div class="cms-wrapper">
+  <!-- Sidebar -->
+  <div class="cms-sidebar">
+    <div class="search-area">
+      <div class="input-group input-group-sm">
+        <input type="text" class="form-control" placeholder="Search..."/>
+        <div class="input-group-append">
+          <span class="input-group-text">&#128269;</span>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <a href="view-contents.html" class="nav-link sidebar-nav" data-href="view-contents.html">
+        <span class="icon">&#9776;</span> View contents
+      </a>
+      <a href="form-content.html" class="nav-link active sidebar-nav" data-href="form-content.html">
+        <span class="icon">&#9998;</span> Form content
+      </a>
+    </nav>
+  </div>
+
+  <!-- Body -->
+  <div class="cms-body">
+    <!-- Topbar -->
+    <div class="cms-topbar">
+      <span class="brand">CMS</span>
+      <div class="topbar-right">
+        <div class="dropdown">
+          <button class="btn btn-sm dropdown-toggle" data-toggle="dropdown">
+            &#128100;
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="edit-profile.html">&#128100; User Profile</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="login.html">&#8594; Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="cms-content-wrap">
+      <div id="loading-overlay" style="display:none">
+        <span>Loading</span>
+      </div>
+      <div class="cms-content">
+        <h2>Add Content</h2>
+        <div class="cms-panel">
+          <div class="cms-panel-header">Content Form Elements</div>
+          <div class="cms-panel-body">
+            <form id="addContentForm" class="cms-form" novalidate>
+
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" id="title"
+                       placeholder="Enter the title" maxlength="200"/>
+                <div class="error-msg" id="titleError"></div>
+              </div>
+
+              <div class="form-group">
+                <label>Brief</label>
+                <textarea class="form-control" id="brief" rows="3" maxlength="150"
+                          placeholder=""></textarea>
+                <div class="error-msg" id="briefError"></div>
+              </div>
+
+              <div class="form-group">
+                <label>Content</label>
+                <textarea class="form-control" id="content" rows="5" maxlength="1000"
+                          placeholder=""></textarea>
+                <div class="error-msg" id="contentError"></div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit Button</button>
+              <button type="reset" class="btn btn-secondary">Reset Button</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cms-toast" id="toast">&#10003; Content added successfully!</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar nav — loading 5 seconds
+  $('.sidebar-nav').on('click', function(e) {
+    e.preventDefault();
+    const href = $(this).data('href');
+    $('#loading-overlay').fadeIn(150);
+    setTimeout(function() { window.location.href = href; }, 5000);
+  });
+
+  // Form validation
+  $('#addContentForm').on('submit', function(e) {
+    e.preventDefault();
+    let ok = true;
+    const title   = $('#title').val().trim();
+    const brief   = $('#brief').val().trim();
+    const content = $('#content').val().trim();
+
+    $('input, textarea').removeClass('is-invalid');
+    $('.error-msg').text('').hide();
+
+    // Title: required, min 10, max 200
+    if (!title) {
+      $('#title').addClass('is-invalid'); $('#titleError').text('Title is required.').show(); ok = false;
+    } else if (title.length < 10) {
+      $('#title').addClass('is-invalid'); $('#titleError').text('Title must be at least 10 characters.').show(); ok = false;
+    }
+
+    // Brief: required, min 30, max 150
+    if (!brief) {
+      $('#brief').addClass('is-invalid'); $('#briefError').text('Brief is required.').show(); ok = false;
+    } else if (brief.length < 30) {
+      $('#brief').addClass('is-invalid'); $('#briefError').text('Brief must be at least 30 characters.').show(); ok = false;
+    }
+
+    // Content: required, min 50, max 1000
+    if (!content) {
+      $('#content').addClass('is-invalid'); $('#contentError').text('Content is required.').show(); ok = false;
+    } else if (content.length < 50) {
+      $('#content').addClass('is-invalid'); $('#contentError').text('Content must be at least 50 characters.').show(); ok = false;
+    }
+
+    if (ok) {
+      const $btn = $(this).find('[type=submit]');
+      $btn.prop('disabled', true).text('Saving...');
+      // Simulate Ajax POST
+      setTimeout(function() {
+        $btn.prop('disabled', false).text('Submit Button');
+        $('#addContentForm')[0].reset();
+        const $t = $('#toast');
+        $t.fadeIn(200);
+        setTimeout(function() { $t.fadeOut(400); }, 3000);
+      }, 600);
+    }
+  });
+</script>
+</body>
+</html>

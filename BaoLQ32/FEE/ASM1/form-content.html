@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Content – CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Navbar + Sidebar injected by cms-layout.js -->
+
+<main class="cms-main">
+    <div class="content-card">
+        <h4>Add Content</h4>
+        <div class="section-label">Content Form Elements</div>
+
+        <div id="alertBox"></div>
+
+        <form id="contentForm" novalidate>
+            <!-- Title -->
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" id="title" class="form-control"
+                       placeholder="Enter the title" maxlength="200">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Brief -->
+            <div class="form-group">
+                <label class="form-label">Brief</label>
+                <textarea id="brief" class="form-control" rows="3"
+                          maxlength="150" placeholder="Enter brief…"></textarea>
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Content -->
+            <div class="form-group">
+                <label class="form-label">Content</label>
+                <textarea id="content" class="form-control" rows="5"
+                          maxlength="1000" placeholder="Enter content…"></textarea>
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Submit Button</button>
+            <button type="reset"  class="btn btn-secondary">Reset Button</button>
+        </form>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/cms-layout.js"></script>
+<script>
+    const CONTENT_RULES = {
+        title:   { required: true, minLength: 10, maxLength: 200 },
+        brief:   { required: true, minLength: 30, maxLength: 150 },
+        content: { required: true, minLength: 50, maxLength: 1000 }
+    };
+
+    Validator.attachLive(CONTENT_RULES);
+
+    $('#contentForm').on('submit', function (e) {
+        e.preventDefault();
+        const ok = Validator.validateForm(CONTENT_RULES);
+        if (!ok) return;
+
+        $('#alertBox').html('<div class="alert alert-info">Saving content…</div>');
+        setTimeout(() => {
+            // Add new row to local storage array (simulate server save)
+            const contents = JSON.parse(localStorage.getItem('cms_contents') || '[]');
+            contents.push({
+                title:   $('#title').val(),
+                brief:   $('#brief').val(),
+                content: $('#content').val(),
+                date:    new Date().toLocaleString()
+            });
+            localStorage.setItem('cms_contents', JSON.stringify(contents));
+
+            $('#alertBox').html('<div class="alert alert-success">Content added successfully!</div>');
+            this.reset();
+            document.querySelectorAll('.form-control').forEach(el => {
+                el.classList.remove('is-valid', 'is-invalid');
+            });
+        }, 600);
+    });
+</script>
+</body>
+</html>

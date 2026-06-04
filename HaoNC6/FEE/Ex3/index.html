@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Image Gallery</title>
+  <meta name="description"
+    content="Ex3: Dynamic Image Gallery with 5-star Rating System, Favorites, and jQuery refactoring." />
+
+  <!-- Problem 01: External CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- jQuery (required for Problem 03) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+  <div class="gallery-container">
+    <h1>My Image Gallery</h1>
+
+    <div class="gallery-grid" id="galleryGrid">
+
+      <!-- Card 1 -->
+      <div class="card" data-id="1">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #a8d8b9 0%, #6ec6a0 50%, #4aa87d 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="1" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="1">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="1" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="card" data-id="2">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #f4a460 0%, #e88544 50%, #d4704a 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="2" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="2">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="2" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card" data-id="3">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #4a6fa5 0%, #3a5a95 50%, #2a4a85 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="3" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="3">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="3" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="card" data-id="4">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #5bb8c4 0%, #3da0b0 50%, #2a8898 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="4" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="4">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="4" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="card" data-id="5">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #e8858a 0%, #d4606a 50%, #c04555 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="5" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="5">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="5" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="card" data-id="6">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #c06080 0%, #a84060 50%, #902848 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="6" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="6">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="6" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 7 -->
+      <div class="card" data-id="7">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #8ab4d8 0%, #6898c0 50%, #4878a8 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="7" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="7">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="7" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 8 -->
+      <div class="card" data-id="8">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #b8d8a0 0%, #90c070 50%, #70a850 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="8" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="8">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="8" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 9 -->
+      <div class="card" data-id="9">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #e8a090 0%, #d07858 50%, #b85840 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="9" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="9">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="9" title="Favorite">♡</button>
+        </div>
+      </div>
+
+      <!-- Card 10 -->
+      <div class="card" data-id="10">
+        <div class="img-placeholder"
+          style="background: linear-gradient(135deg, #80c8b0 0%, #58a890 50%, #388870 100%);"></div>
+        <div class="card-overlay">
+          <button class="btn-favorite" data-id="10" title="Add to Favorites">Add to Favorites</button>
+        </div>
+        <div class="card-footer">
+          <div class="stars" data-id="10">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button class="btn-heart" data-id="10" title="Favorite">♡</button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="summary-footer" id="summaryFooter">
+      <div class="summary-left">
+        <span class="summary-label">AVERAGE RATING:</span>
+        <span class="summary-avg" id="avgRating">0.0</span>
+        <span class="summary-stars-text">Stars</span>
+        <span class="summary-count" id="ratedCount">(based on 0 items)</span>
+        <span class="summary-chart">&#9641;</span>
+      </div>
+      <div class="summary-right">
+        <span class="summary-label">TOTAL FAVORITES:</span>
+        <span class="summary-fav" id="totalFavorites">0</span>
+        <span class="summary-heart">♥</span>
+      </div>
+    </div>
+
+    <div class="gallery-credit">Built with HTML/CSS Grid</div>
+
+  </div>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+/* ==========================================================================
+   PROBLEM 01: BUILD THE GALLERY UI (CSS STYLING)
+   ========================================================================== */
+:root {
+  --bg-color: #f0f8f9;
+  --card-bg: #ffffff;
+  --text-main: #333333;
+  --star-color: #ffcc00;
+  --star-empty: #ccc;
+  --heart-color: #e74c3c;
+  --footer-bg: #e1f0f2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #1a1a1a; /* Nền tối bên ngoài giống ảnh chụp */
+  padding: 400px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Khung giả lập trình duyệt (Browser Wrapper) như hình minh họa */
+.browser-container {
+  width: 100%;
+  max-width: 1000px;
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  overflow: hidden;
+  border: 1px solid #d1d1d1;
+}
+
+/* Thanh Header của ứng dụng */
+.app-header {
+  padding: 20px 30px 10px 30px;
+  background-color: var(--bg-color);
+}
+
+.app-header h1 {
+  font-size: 28px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+/* Gallery Grid dùng CSS Grid đáp ứng yêu cầu Responsive */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 10px 30px 20px 30px;
+}
+
+/* Cấu trúc Card Item */
+.image-card {
+  background-color: var(--card-bg);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Khối màu đại diện cho ảnh (Colored div blocks) */
+.image-placeholder {
+  height: 110px;
+  width: 100%;
+  position: relative;
+}
+
+/* Nút Add to Favorites nằm đè lên góc phải dưới của ảnh giống thiết kế */
+.btn-fav-overlay {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border: none;
+  padding: 2px 6px;
+  font-size: 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-fav-overlay:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Khuvực điều khiển (Rating & Heart) dưới mỗi ảnh */
+.card-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #fff;
+}
+
+/* Tổ hợp các ngôi sao */
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating-stars .fa-star {
+  font-size: 14px;
+  color: var(--star-empty);
+  cursor: pointer;
+  transition: color 0.1s;
+}
+
+/* Class active để fill màu khi được chọn hoặc hover */
+.rating-stars .fa-star.filled {
+  color: var(--star-color) !important;
+}
+
+/* Class tạm thời khi hover (Problem 03) */
+.rating-stars .fa-star.hovered {
+  color: var(--star-color);
+}
+
+/* Icon trái tim hiển thị trạng thái yêu thích */
+.heart-toggle {
+  font-size: 14px;
+  color: var(--star-empty);
+  cursor: pointer;
+  transition: transform 0.2s, color 0.2s;
+  padding: 2px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-toggle.active {
+  color: var(--heart-color);
+  background-color: #fdf2f2;
+  border-color: #fde8e8;
+}
+
+/* Summary Footer */
+.summary-footer {
+  margin: 10px 30px 25px 30px;
+  background-color: var(--footer-bg);
+  border: 1px solid #bcd6da;
+  border-radius: 6px;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  color: #1a202c;
+}
+
+.footer-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-section span.value {
+  font-size: 16px;
+}
+
+.footer-section span.sub-text {
+  font-size: 11px;
+  text-transform: none;
+  color: #555;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+.footer-section i {
+  font-size: 16px;
+}
+
+/* Màu sắc cụ thể cho từng khối placeholder mô phỏng theo ảnh mẫu */
+.bg-1 { background: linear-gradient(135deg, #a8e6cf, #dcedc1); }
+.bg-2 { background: linear-gradient(135deg, #ffd3b6, #ffaaa5); }
+.bg-3 { background: linear-gradient(135deg, #3498db, #2980b9); }
+.bg-4 { background: linear-gradient(135deg, #46cdcf, #3d84b8); }
+.bg-5 { background: linear-gradient(135deg, #ff7597, #ffccd5); }
+.bg-6 { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+.bg-7 { background: linear-gradient(135deg, #74b9ff, #a29bfe); }
+.bg-8 { background: linear-gradient(135deg, #a8ff78, #78ffd6); }
+.bg-9 { background: linear-gradient(135deg, #ff7675, #fab1a0); }
+.bg-10 { background: linear-gradient(135deg, #55efc4, #81ecec); }
+
+.credit {
+  text-align: right;
+  padding: 0 30px 10px 0;
+  font-size: 10px;
+  color: #777;
+}

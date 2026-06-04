@@ -1,0 +1,35 @@
+<h2 class="panel__title-header">View Content</h2>
+<div id="viewAlerts"></div>
+
+<section class="panel">
+    <div class="panel__header">
+        <h3 class="panel__title">View Content List</h3>
+    </div>
+    <div class="panel__body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="table__header-cell table__cell--center table__header-cell--narrow">#</th>
+                        <th class="table__header-cell table__header-cell--title">Title</th>
+                        <th class="table__header-cell">Brief</th>
+                        <th class="table__header-cell table__header-cell--date">Created Date</th>
+                    </tr>
+                </thead>
+                <tbody id="contentTableBody">
+                    <!-- Dynamic Rows Injected by Javascript -->
+                </tbody>
+            </table>
+        </div>
+
+        <nav class="pagination" id="contentPagination" aria-label="Content pagination"></nav>
+
+        <!-- No Data Alert Placeholder -->
+        <div class="alert alert--danger d-none mt-3" id="noDataPlaceholder">
+            <span>
+                <i class="fas fa-exclamation-circle mr-2" aria-hidden="true"></i>
+                No content items match your search.
+            </span>
+        </div>
+    </div>
+</section>

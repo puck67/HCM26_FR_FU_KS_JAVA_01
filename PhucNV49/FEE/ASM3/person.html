@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Registration - HR Portal</title>
+    <!-- Bootstrap 4 CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="hr-wrapper">
+        <!-- Top Navigation -->
+        <nav class="hr-top-nav">
+            <a href="person.html" class="hr-nav-item active"><i class="fas fa-user-plus mr-1"></i> Register</a>
+            <a href="search.html" class="hr-nav-item"><i class="fas fa-search mr-1"></i> Search Visitors</a>
+            <a href="help.html" class="hr-nav-item"><i class="fas fa-question-circle mr-1"></i> Help</a>
+        </nav>
+
+        <div class="hr-card">
+            <!-- Lake Banner Image -->
+            <div class="hr-banner-container">
+                <img src="lake_banner.png" alt="Lake Banner" class="hr-banner-image">
+            </div>
+
+            <div class="hr-card-body">
+                <h3 class="hr-header-title">Visitor Information</h3>
+
+                <!-- Validation Error Summary Block -->
+                <div id="error-summary-wrapper"></div>
+
+                <form id="visitor-registration-form" novalidate>
+                    
+                    <!-- First Name and Last Name -->
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="visitor-firstname" id="lbl-firstname">Fist name <span class="required-star">*</span></label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="visitor-firstname" 
+                                name="firstname" 
+                                required 
+                                maxlength="20"
+                            >
+                            <div class="invalid-field-feedback d-none">First name is required (max 20 characters, no numbers).</div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="visitor-lastname" id="lbl-lastname">Last name <span class="required-star">*</span></label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="visitor-lastname" 
+                                name="lastname" 
+                                required 
+                                maxlength="20"
+                            >
+                            <div class="invalid-field-feedback d-none">Last name is required (max 20 characters, no numbers).</div>
+                        </div>
+                    </div>
+
+                    <!-- Gender and Telephone -->
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="visitor-gender" id="lbl-gender">Gender</label>
+                            <select class="form-control" id="visitor-gender" name="gender">
+                                <option value="Male" selected>Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="visitor-phone" id="lbl-phone">Telephone</label>
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="visitor-phone" 
+                                name="phone" 
+                                maxlength="11"
+                            >
+                            <div class="invalid-field-feedback d-none">Telephone must contain only digits (max 11 characters).</div>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="visitor-email" id="lbl-email">Email</label>
+                        <input 
+                            type="email" 
+                            class="form-control" 
+                            id="visitor-email" 
+                            name="email" 
+                            maxlength="50"
+                        >
+                        <div class="invalid-field-feedback d-none">Please enter a valid email address (max 50 characters).</div>
+                    </div>
+
+                    <!-- You are in (Radios) -->
+                    <div class="form-group">
+                        <label id="lbl-region">You are in <span class="required-star">*</span></label>
+                        <div class="options-flex-grid">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="region-europe" name="region" value="Europe" class="custom-control-input" required>
+                                <label class="custom-control-label" for="region-europe">Europe</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="region-africa" name="region" value="Africa" class="custom-control-input" required>
+                                <label class="custom-control-label" for="region-africa">Africa</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="region-australia" name="region" value="Australia" class="custom-control-input" required>
+                                <label class="custom-control-label" for="region-australia">Australia</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="region-asia" name="region" value="Asia" class="custom-control-input" required>
+                                <label class="custom-control-label" for="region-asia">Asia</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="region-america" name="region" value="America" class="custom-control-input" required>
+                                <label class="custom-control-label" for="region-america">America</label>
+                            </div>
+                        </div>
+                        <div class="invalid-field-feedback d-none" id="region-error">Region selection is required.</div>
+                    </div>
+
+                    <!-- What are your hobbies (Checkboxes) -->
+                    <div class="form-group">
+                        <label id="lbl-hobbies">What are your hobbies</label>
+                        <div class="options-flex-grid">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-swimming" name="hobbies" value="Swimming" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-swimming">Swimming</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-cooking" name="hobbies" value="Cooking" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-cooking">Cooking</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-shopping" name="hobbies" value="Shopping" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-shopping">Shopping</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-sport" name="hobbies" value="Sport" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-sport">Sport</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-dance" name="hobbies" value="Dance" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-dance">Dance</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" id="hobby-sing" name="hobbies" value="Sing" class="custom-control-input">
+                                <label class="custom-control-label" for="hobby-sing">Sing</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label for="visitor-desc" id="lbl-desc">Description</label>
+                        <textarea 
+                            class="form-control" 
+                            id="visitor-desc" 
+                            name="description" 
+                            rows="4" 
+                            maxlength="200"
+                        ></textarea>
+                        <div class="invalid-field-feedback d-none">Description length must not exceed 200 characters.</div>
+                    </div>
+
+                    <!-- Submit action -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary px-5" id="btn-register-visitor">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap bundle -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- HR Core Logic -->
+    <script src="js/hr.js"></script>
+</body>
+</html>

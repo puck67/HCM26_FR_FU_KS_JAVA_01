@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search Visitor - HR</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="page">
+
+<header class="site-header">
+  <div class="site-header__banner" role="img" aria-label="Scenic lake banner"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container text-center">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link" href="person.html">Person</a>
+      <a class="site-nav__link site-nav__link--active" href="search.html">Search</a>
+      <a class="site-nav__link" href="help.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="visitor-panel visitor-panel--wide" aria-labelledby="searchTitle">
+    <h1 class="visitor-panel__title" id="searchTitle">Search Visitor</h1>
+
+    <div id="searchErrors" class="visitor-form__errors" role="alert" aria-live="polite" hidden></div>
+
+    <form id="searchForm" class="visitor-search" novalidate>
+      <div class="form-group row visitor-search__row">
+        <label for="searchKeyword" class="col-sm-2 col-form-label visitor-form__label">First name:</label>
+        <div class="col-sm-4">
+          <input type="search" class="form-control visitor-form__input" id="searchKeyword" name="keyword" placeholder="First name" maxlength="50" aria-describedby="searchKeywordError searchHint"/>
+          <span class="visitor-form__error" id="searchKeywordError" data-error-for="searchKeyword" hidden></span>
+        </div>
+        <div class="col-sm-auto">
+          <button type="submit" class="visitor-btn" id="searchBtn">Search...</button>
+        </div>
+        <div class="col-sm">
+          <p class="visitor-search__hint mb-0" id="searchHint">(Type keyword and click Search — matches all columns; leave empty to show all)</p>
+        </div>
+      </div>
+    </form>
+
+    <div class="table-responsive">
+      <table class="visitor-table" id="visitorTable">
+        <thead class="visitor-table__head">
+          <tr>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Telephone</th>
+            <th scope="col">You're in</th>
+            <th scope="col">Hobbies</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody id="visitorTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="visitor-pagination" id="visitorPagination" aria-label="Table pagination">
+      <p class="visitor-pagination__info mb-0" id="paginationInfo"></p>
+      <div class="visitor-pagination__controls">
+        <label class="visitor-pagination__size-label" for="pageSize">Rows per page:</label>
+        <select class="visitor-pagination__size" id="pageSize" aria-label="Rows per page">
+          <option value="3">3</option>
+          <option value="5" selected>5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select>
+        <nav aria-label="Page navigation">
+          <ul class="visitor-pagination__nav" id="paginationNav"></ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/validators.js"></script>
+<script src="js/form-ui.js"></script>
+<script src="js/data.js"></script>
+<script src="js/pagination.js"></script>
+<script src="js/search.js"></script>
+</body>
+</html>

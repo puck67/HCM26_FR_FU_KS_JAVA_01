@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create a new interview poll with custom questions and answers">
+    <title>Polls - Create Interview</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <a class="navbar-brand" href="index.html">Polls</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Vote</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="create.html">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list.html">List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <button class="btn" id="btnLogin">Login</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- ================== END NAVBAR =================== -->
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main>
+        <div class="page-content">
+            <h1>Create Interview</h1>
+
+            <!-- Global error alert (shown at top when validation fails) -->
+            <div class="alert alert-danger" id="form-error-alert" role="alert" aria-live="assertive"></div>
+
+            <form id="createForm" novalidate>
+
+                <!-- Name Poll -->
+                <div class="form-group">
+                    <input type="text" class="form-control" id="namePoll" name="namePoll" placeholder="Name poll">
+                </div>
+
+                <!-- ===== QUESTION BLOCKS (dynamically cloneable) ===== -->
+
+                <!-- Question Block 1 -->
+                <div class="question-block">
+
+                    <!-- Question Input -->
+                    <div class="form-group">
+                        <label class="question-label" for="question-0">Your question</label>
+                        <input type="text" class="form-control question-input" id="question-0" name="question[]" placeholder="Enter your question">
+                    </div>
+
+                    <!-- Mandatory Checkbox -->
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="mandatory-0" name="mandatory[]">
+                        <label class="form-check-label" for="mandatory-0">Mandatory</label>
+                    </div>
+
+                    <!-- Multiple Options Checkbox -->
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="multiple-0" name="multiple[]">
+                        <label class="form-check-label" for="multiple-0">You can select multiple options</label>
+                    </div>
+
+                    <!-- Possible Answers -->
+                    <div class="form-group">
+                        <div class="d-flex align-items-start">
+                            <label class="answers-label mr-3 mt-1" style="white-space:nowrap;">Possible answers</label>
+                            <div class="answers-block flex-fill">
+                                <!-- First answer row (has "+" button) -->
+                                <div class="answer-row">
+                                    <input type="text" class="form-control answer-input" name="answer[]" placeholder="Type your answer">
+                                    <button type="button" class="btn btn-add-answer">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- ===== END QUESTION BLOCK 1 ===== -->
+
+                <!-- Add Question Button -->
+                <div class="form-group add-question-wrapper">
+                    <button type="button" class="btn" id="btnAddQuestion">+ Add question</button>
+                </div>
+
+                <!-- Retain/Submit Button -->
+                <div class="form-group">
+                    <button type="button" class="btn" id="btnRetainCreate">Retain</button>
+                </div>
+
+            </form>
+
+        </div>
+    </main>
+    <!-- ================= END MAIN CONTENT ================= -->
+
+    <!-- ==================== LOGIN MODAL ==================== -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label for="loginAlias">Alias:</label>
+                            <input type="text" class="form-control" id="loginAlias" placeholder="JoeSixpack">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">Password:</label>
+                            <input type="password" class="form-control" id="loginPassword" placeholder="••••••••">
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-block" id="btnSignIn">Sign In</button>
+                    </form>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-close-modal" id="btnCloseModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ================= END LOGIN MODAL ================== -->
+
+    <!-- jQuery, Popper.js, Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom Script -->
+    <script src="js/script.js"></script>
+</body>
+</html>

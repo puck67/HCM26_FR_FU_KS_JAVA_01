@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project Board - Kanban UI</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+
+    <div class="app-layout-container">
+        <header class="board-header">
+            <h1>My Project Board</h1>
+            <div class="search-container">
+                <input type="text" id="global-search" placeholder="Tìm kiếm công việc...">
+            </div>
+        </header>
+
+        <main class="kanban-board" id="board-container">
+
+            <section class="kanban-column" id="col-todo" data-status="todo">
+                <div class="column-header todo-header">
+                    <h2>TO DO</h2>
+                </div>
+                <div class="column-input-area">
+                    <input type="text" class="task-input" placeholder="Add a task to To Do">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="task-list">
+                </div>
+            </section>
+
+            <section class="kanban-column" id="col-progress" data-status="progress">
+                <div class="column-header progress-header">
+                    <h2>IN PROGRESS</h2>
+                </div>
+                <div class="column-input-area">
+                    <input type="text" class="task-input" placeholder="Add a task to In Progress">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="task-list"></div>
+            </section>
+
+            <section class="kanban-column" id="col-done" data-status="done">
+                <div class="column-header done-header">
+                    <h2>DONE</h2>
+                </div>
+                <div class="column-input-area">
+                    <input type="text" class="task-input" placeholder="Add a task to Done">
+                    <button class="btn-add">+</button>
+                </div>
+                <div class="task-list"></div>
+            </section>
+
+        </main>
+
+        <footer class="board-footer">
+            <p>App layout container • Post: kanban-board</p>
+            <div class="footer-links">
+                <a href="#">App</a> <a href="#">Links</a> <a href="#">Blog</a> <a href="#">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Problem 02: Vanilla JS -->
+    <script src="app-vanilla.js"></script>
+
+    <!-- Problem 03: jQuery -->
+    <!-- <script src="app-jquery.js"></script> -->
+
+</body>
+
+</html>

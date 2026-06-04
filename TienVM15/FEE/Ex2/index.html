@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Kanban Task Board</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="board-container">
+        <!-- Header -->
+        <header>
+            <h1 class="board-title">My Project Board</h1>
+            
+            <div class="controls-row">
+                <!-- Mode Switcher -->
+                <div class="mode-switcher-container">
+                    <button type="button" class="mode-btn active" id="btn-vanilla">Vanilla JS</button>
+                    <button type="button" class="mode-btn" id="btn-jquery">jQuery Mode</button>
+                </div>
+                
+                <!-- Search bar -->
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search tasks...">
+                </div>
+            </div>
+
+            <div class="mode-indicator">
+                <span class="indicator-dot"></span>
+                <span id="mode-text">Active: Vanilla JS Mode</span>
+            </div>
+        </header>
+
+        <!-- Kanban Board Columns -->
+        <main class="kanban-board">
+            <!-- To Do Column -->
+            <section class="kanban-column todo">
+                <h2 class="column-header">To Do</h2>
+                <div class="column-input-wrapper">
+                    <input type="text" class="column-input" placeholder="Add a task to To Do...">
+                    <button type="button" class="btn-add-task">+</button>
+                </div>
+                <div class="tasks-list">
+                    <!-- Dynamic tasks -->
+                </div>
+            </section>
+
+            <!-- In Progress Column -->
+            <section class="kanban-column progress">
+                <h2 class="column-header">In Progress</h2>
+                <div class="column-input-wrapper">
+                    <input type="text" class="column-input" placeholder="Add a task to In Progress...">
+                    <button type="button" class="btn-add-task">+</button>
+                </div>
+                <div class="tasks-list">
+                    <!-- Dynamic tasks -->
+                </div>
+            </section>
+
+            <!-- Done Column -->
+            <section class="kanban-column done">
+                <h2 class="column-header">Done</h2>
+                <div class="column-input-wrapper">
+                    <input type="text" class="column-input" placeholder="Add a task to Done...">
+                    <button type="button" class="btn-add-task">+</button>
+                </div>
+                <div class="tasks-list">
+                    <!-- Dynamic tasks -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Include jQuery via CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <!-- Include custom scripts -->
+    <script src="app-vanilla.js"></script>
+    <script src="app-jquery.js"></script>
+
+    <!-- Switcher/Controller Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnVanilla = document.getElementById('btn-vanilla');
+            const btnJQuery = document.getElementById('btn-jquery');
+            const modeText = document.getElementById('mode-text');
+            const searchInput = document.querySelector('.search-input');
+
+            function switchMode(mode) {
+                // Reset search query
+                searchInput.value = '';
+
+                if (mode === 'vanilla') {
+                    btnVanilla.classList.add('active');
+                    btnJQuery.classList.remove('active');
+                    modeText.textContent = 'Active: Vanilla JS Mode';
+                    
+                    // Init Vanilla mode listeners
+                    window.initVanilla();
+                } else {
+                    btnVanilla.classList.remove('active');
+                    btnJQuery.classList.add('active');
+                    modeText.textContent = 'Active: jQuery Mode';
+                    
+                    // Init jQuery mode listeners
+                    window.initJQuery();
+                }
+            }
+
+            btnVanilla.addEventListener('click', () => switchMode('vanilla'));
+            btnJQuery.addEventListener('click', () => switchMode('jquery'));
+
+            // Initial startup
+            switchMode('vanilla');
+        });
+    </script>
+</body>
+</html>

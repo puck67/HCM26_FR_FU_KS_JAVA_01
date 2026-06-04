@@ -1,0 +1,246 @@
+/* Google Fonts for premium typography */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #10b981; /* Premium Emerald Green */
+    --primary-hover: #059669;
+    --primary-glow: rgba(16, 185, 129, 0.2);
+    --bg-dark: #1e293b;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --font-family: 'Outfit', sans-serif;
+    --placeholder-color: #cbd5e1;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: #f1f5f9;
+    color: #334155;
+    padding-bottom: 3rem;
+}
+
+/* Custom placeholder styling as per requirement */
+::placeholder {
+    color: var(--placeholder-color) !important;
+    opacity: 1 !important; /* Firefox override */
+    font-size: 0.9rem;
+}
+:-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+::-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+
+/* Green Buttons style as per requirement */
+.btn, 
+button,
+input[type="submit"],
+input[type="button"],
+.btn-primary,
+.btn-success {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+    border: none !important;
+    color: #ffffff !important;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15), 0 2px 4px -1px rgba(16, 185, 129, 0.1) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn:hover, 
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.btn-primary:hover,
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.25), 0 4px 6px -2px rgba(16, 185, 129, 0.15) !important;
+    filter: brightness(1.05);
+}
+
+.btn:active, 
+button:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #cbd5e1, #94a3b8) !important;
+    color: #1e293b !important;
+    box-shadow: 0 4px 6px -1px rgba(148, 163, 184, 0.15) !important;
+}
+.btn-secondary:hover {
+    box-shadow: 0 10px 15px -3px rgba(148, 163, 184, 0.25) !important;
+}
+
+/* Banner Styling */
+.hr-banner-container {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: #e2e8f0;
+}
+
+.hr-banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Main Layout Card */
+.hr-wrapper {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.hr-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+}
+
+.hr-card-body {
+    padding: 2.5rem;
+}
+
+.hr-header-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #059669; /* Green text header as per screenshot */
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+}
+
+/* Form Styles */
+.form-group label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.25rem;
+}
+
+.form-control {
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.required-star {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+/* Custom Validation Layout styles */
+.validation-error-summary {
+    border-radius: 8px;
+    border-left: 4px solid #ef4444 !important;
+    background-color: #fef2f2;
+    color: #991b1b;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.is-invalid-label {
+    color: #ef4444 !important;
+}
+
+.form-control.is-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2;
+}
+
+.invalid-field-feedback {
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Custom Radio & Checkbox grids for horizontal/vertical stack spacing */
+.options-flex-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+/* Search page Styles */
+.search-controls-row {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.search-hint {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* Table and row highlights as per instructions */
+/* Cell backgrounds must NOT be specified to prevent breaking row highlights */
+.hr-table {
+    width: 100%;
+    margin-top: 1rem;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.hr-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+}
+
+.hr-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+    color: #334155;
+}
+
+/* Hover highlights row */
+.hr-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.hr-table tbody tr:hover {
+    background-color: #f0fdf4 !important; /* Soft light-green hover highlighting */
+}
+
+/* Quick Page Navigation tabs on top */
+.hr-top-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.hr-nav-item {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.hr-nav-item:hover, .hr-nav-item.active {
+    color: var(--primary-color);
+}

@@ -1,0 +1,51 @@
+<h2 class="panel__title-header">User Profile</h2>
+<section class="panel">
+    <div class="panel__header">
+        <h3 class="panel__title">Profile Form Elements</h3>
+    </div>
+    <div class="panel__body">
+        <div id="profileAlerts"></div>
+        <form class="form" id="profileForm" novalidate>
+            <div class="form__row">
+                <!-- First Name -->
+                <div class="form__group">
+                    <label class="form__label" for="firstName">First Name</label>
+                    <input type="text" class="form__control form__control--input-height" id="firstName" placeholder="Enter the first name" maxlength="30" required aria-describedby="firstNameFeedback">
+                    <div class="form__feedback" id="firstNameFeedback">First name is mandatory.</div>
+                </div>
+                <!-- Last Name -->
+                <div class="form__group">
+                    <label class="form__label" for="lastName">Last Name</label>
+                    <input type="text" class="form__control form__control--input-height" id="lastName" placeholder="Enter the last name" maxlength="30" required aria-describedby="lastNameFeedback">
+                    <div class="form__feedback" id="lastNameFeedback">Last name is mandatory.</div>
+                </div>
+            </div>
+
+            <!-- Email Display -->
+            <div class="form__group">
+                <label class="form__label">Email</label>
+                <div class="form__display-value" id="profileEmail">Loading Email...</div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form__group form__group--narrow">
+                <label class="form__label" for="phone">Phone</label>
+                <input type="tel" class="form__control form__control--input-height" id="phone" placeholder="Enter your phone number" maxlength="15" required aria-describedby="phoneFeedback">
+                <div class="form__feedback" id="phoneFeedback">Phone number is mandatory.</div>
+            </div>
+
+            <!-- Description Bio -->
+            <div class="form__group">
+                <label class="form__label" for="description">Description</label>
+                <textarea class="form__control form__control--textarea-description" id="description" placeholder="Short biography description..." maxlength="200"></textarea>
+                <div class="form__char-count" id="descCharCount">0 / 200</div>
+            </div>
+
+            <!-- Form Action buttons -->
+            <div class="form__actions">
+                <button type="submit" class="btn" id="submitProfileBtn">Submit Button</button>
+                <button type="reset" class="btn btn--secondary" id="resetProfileBtn">Reset Button</button>
+            </div>
+        </form>
+    </div>
+</section>

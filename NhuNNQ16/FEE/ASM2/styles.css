@@ -1,0 +1,421 @@
+
+/* Import Poppins Font for a clean and professional appearance */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff0f3; /* Soft pastel pink background */
+    color: #4a5568;
+    padding-bottom: 50px;
+}
+
+
+button, 
+.btn,
+.btn-primary, 
+.btn-secondary, 
+.btn-success, 
+.btn-danger, 
+.btn-warning, 
+.btn-info, 
+.btn-light, 
+.btn-dark {
+    background-color: #58b368 !important; /* Soft emerald green */
+    border-color: #58b368 !important;
+    color: #fff !important;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 8px 18px;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 5px rgba(88, 179, 104, 0.2);
+}
+
+/* Hover and active states for buttons */
+button:hover, 
+.btn:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-warning:hover,
+.btn-info:hover,
+.btn-light:hover,
+.btn-dark:hover {
+    background-color: #469f55 !important;
+    border-color: #469f55 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(88, 179, 104, 0.3);
+}
+
+/* Focus outline matching green theme */
+button:focus, 
+.btn:focus,
+.btn:active {
+    box-shadow: 0 0 0 3px rgba(88, 179, 104, 0.4) !important;
+    outline: none !important;
+}
+
+/* Specific styling for the "+" add-answer button */
+.btn-add-answer {
+    background-color: #72c780 !important;
+    border-color: #72c780 !important;
+}
+.btn-add-answer:hover {
+    background-color: #58b368 !important;
+    border-color: #58b368 !important;
+}
+
+/* --- INPUTS & PLACEHOLDERS: MUST BE LIGHT GRAY --- */
+/* Global placeholder styling */
+input::placeholder,
+textarea::placeholder,
+.form-control::placeholder {
+    color: #bbb !important;
+    opacity: 1 !important;
+    font-size: 0.9rem;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder,
+.form-control:-ms-input-placeholder {
+    color: #bbb !important;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder,
+.form-control::-ms-input-placeholder {
+    color: #bbb !important;
+}
+
+/* Clean input borders and shadow */
+.form-control {
+    border: 1px solid #ffccd5; /* Soft pink input border */
+    border-radius: 8px;
+    padding: 10px 14px;
+    height: auto;
+    font-size: 0.95rem;
+    background-color: #fffafb;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: #ff85a1;
+    box-shadow: 0 0 0 3px rgba(255, 133, 161, 0.15);
+    background-color: #fff;
+}
+
+/* --- NAVBAR STYLING --- */
+.navbar-custom {
+    background-color: #ffccd5; /* Pastel pink navbar */
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(255, 204, 213, 0.5);
+}
+
+.navbar-custom .navbar-brand {
+    color: #8f2d56 !important; /* Deep berry/rose brand text */
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    color: #854d5d !important; /* Muted rose text */
+    font-weight: 500;
+    margin-right: 15px;
+    transition: color 0.25s;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover,
+.navbar-custom .navbar-nav .nav-item.active .nav-link {
+    color: #8f2d56 !important; /* Active deep berry */
+    font-weight: 600;
+}
+
+.navbar-custom .navbar-nav .nav-link#login-btn {
+    color: #c2185b !important; /* Standout pinkish dark red for login */
+    font-weight: 600;
+}
+
+.navbar-custom .navbar-nav .nav-link#login-btn:hover {
+    color: #8f2d56 !important;
+}
+
+/* --- CARDS & VIEWS --- */
+.card-container {
+    background: #ffffff;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.view-section {
+    display: none; /* Controlled dynamically by app.js */
+}
+
+.view-section.active-view {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- QUESTION & ANSWER BUILDER (CREATE PAGE) --- */
+.question-block {
+    background: #fffafb;
+    border-left: 5px solid #ff85a1; /* Pastel pink left border accent */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(255, 204, 213, 0.15);
+    position: relative;
+}
+
+.question-block .btn-remove-question {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #e74c3c !important;
+    border-color: #e74c3c !important;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+}
+
+.question-block .btn-remove-question:hover {
+    background-color: #c0392b !important;
+    border-color: #c0392b !important;
+}
+
+.answers-list .answer-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.answers-list .answer-item input {
+    flex-grow: 1;
+}
+
+.answers-list .answer-item .btn-remove-answer {
+    background-color: #e74c3c !important;
+    border-color: #e74c3c !important;
+    margin-left: 8px;
+    padding: 8px 12px;
+}
+
+.answers-list .answer-item .btn-remove-answer:hover {
+    background-color: #c0392b !important;
+    border-color: #c0392b !important;
+}
+
+/* --- FORM VALIDATION STYLING --- */
+/* Required indicator */
+.required-star {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
+/* Highlighting invalid labels and inputs */
+.label-invalid {
+    color: #e74c3c !important;
+    font-weight: 600;
+}
+
+.input-invalid {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15) !important;
+}
+
+.input-invalid:focus {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25) !important;
+}
+
+/* Validation Feedback message at input level */
+.invalid-msg {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: block;
+    font-weight: 500;
+}
+
+/* Form-level validation container at the top */
+#validation-summary {
+    display: none;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    padding: 15px 20px;
+    background-color: #fdf2f2;
+    border: 1px solid #f8b4b4;
+    color: #9b1c1c;
+}
+
+#validation-summary h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+#validation-summary ul {
+    margin-bottom: 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
+}
+
+/* Success notification message */
+#success-notification {
+    display: none;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    padding: 15px 20px;
+}
+
+/* --- LIST VIEW TABS & TABLE --- */
+.tab-filters {
+    margin-bottom: 25px;
+}
+
+.tab-filters .btn-tab {
+    background-color: #ffe5ec !important; /* Soft rose background */
+    border-color: #ffe5ec !important;
+    color: #8f2d56 !important; /* Deep berry text */
+    margin-right: 8px;
+    box-shadow: none;
+}
+
+.tab-filters .btn-tab:hover {
+    background-color: #ffccd5 !important;
+    border-color: #ffccd5 !important;
+    color: #8f2d56 !important;
+}
+
+.tab-filters .btn-tab.active-tab {
+    background-color: #ff85a1 !important; /* Highlighted pink tab */
+    border-color: #ff85a1 !important;
+    color: #ffffff !important;
+    box-shadow: 0 2px 5px rgba(255, 133, 161, 0.3);
+}
+
+.polls-table th {
+    background-color: #fff0f3;
+    border-top: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    color: #854d5d;
+}
+
+.polls-table td {
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+/* --- LOGIN MODAL OVERLAY --- */
+.modal-backdrop-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Softer overlay shade */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-backdrop-custom.show-modal {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(255, 204, 213, 0.25);
+    width: 100%;
+    max-width: 450px;
+    overflow: hidden;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-backdrop-custom.show-modal .modal-card {
+    transform: translateY(0);
+}
+
+.modal-card-header {
+    background-color: #ffccd5; /* Matching pink modal header */
+    color: #8f2d56; /* Deep rose text */
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ffccd5;
+}
+
+.modal-card-header h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+.modal-card-header .close-x {
+    color: #854d5d;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    box-shadow: none !important;
+}
+
+.modal-card-header .close-x:hover {
+    color: #ffffff;
+}
+
+.modal-card-body {
+    padding: 25px;
+}
+
+.modal-card-footer {
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+    .card-container {
+        padding: 20px;
+    }
+    
+    .navbar-custom {
+        margin-top: 0;
+        border-radius: 0;
+    }
+    
+    .answers-list .answer-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .answers-list .answer-item .btn-remove-answer {
+        margin-left: 0;
+        margin-top: 8px;
+        text-align: center;
+    }
+}

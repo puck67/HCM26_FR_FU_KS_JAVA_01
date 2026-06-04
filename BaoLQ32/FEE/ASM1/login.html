@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – CMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h5>Please Sign In</h5>
+
+        <form id="loginForm" novalidate>
+            <!-- Email -->
+            <div>
+                <input type="email" id="email" class="form-control"
+                       placeholder="E-mail" maxlength="50">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <input type="password" id="password" class="form-control"
+                       placeholder="Password" maxlength="30">
+                <div class="invalid-feedback"></div>
+            </div>
+
+            <!-- Remember Me -->
+            <div class="form-check mb-3 mt-1">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">Remember Me</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <a class="link-below" href="register.html">Click here to Register</a>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="js/validate.js"></script>
+<script>
+    const LOGIN_RULES = {
+        email:    { required: true, minLength: 5, maxLength: 50, email: true },
+        password: { required: true, minLength: 8, maxLength: 30 }
+    };
+
+    Validator.attachLive(LOGIN_RULES);
+
+    $('#loginForm').on('submit', function (e) {
+        e.preventDefault();
+        const ok = Validator.validateForm(LOGIN_RULES);
+        if (ok) {
+            // Simulate successful login → redirect to view-contents
+            window.location.href = 'view-contents.html';
+        }
+    });
+</script>
+</body>
+</html>

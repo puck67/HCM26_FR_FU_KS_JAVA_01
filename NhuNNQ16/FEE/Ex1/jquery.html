@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List & Budget Tracker (jQuery)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Bộ chuyển đổi trang (Page Toggle) -->
+        <div class="page-toggle-container">
+         
+            <div class="toggle-switch">
+                <button id="toggle-native" class="toggle-btn" onclick="location.href='index.html'">Native JS</button>
+                <button id="toggle-jquery" class="toggle-btn active" onclick="location.href='jquery.html'">jQuery</button>
+            </div>
+        </div>
+
+        <h1>Danh Sách Mua Sắm & Quản Lý Chi Tiêu (jQuery)</h1>
+
+        <!-- Form nhập thông tin sản phẩm -->
+        <form id="shopping-form" class="form-group" novalidate>
+            <div class="input-group">
+                <input type="text" id="item-name" class="input-field" placeholder="Tên sản phẩm (Ví dụ: Sách, Bút...)" aria-label="Tên sản phẩm">
+                <input type="number" id="item-cost" class="input-field" placeholder="Giá tiền ($)" min="0.01" step="0.01" aria-label="Giá tiền bằng USD">
+                <button type="button" id="btn-add" class="btn-add" aria-label="Thêm sản phẩm vào danh sách">Thêm</button>
+            </div>
+            <!-- Vùng hiển thị thông báo lỗi inline  -->
+            <div id="error-message" class="error-message" aria-live="polite"></div>
+        </form>
+
+        <!-- Bảng hiển thị danh sách sản phẩm -->
+        <table id="shopping-table">
+            <thead>
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá tiền ($)</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="shopping-list">
+                <!-- Các dòng sản phẩm sẽ được thêm vào đây bằng jQuery -->
+            </tbody>
+        </table>
+
+        <!-- Phần tổng cộng dưới chân trang hỗ trợ aria-live thông báo khi thay đổi số tiền -->
+        <div class="footer-section">
+            <span>Tổng cộng:</span>
+            <span id="grand-total" aria-live="polite" aria-atomic="true">$0.00</span>
+        </div>
+    </div>
+
+    <!-- Nhúng file Javascript jQuery xử lý -->
+    <script src="app-jquery.js"></script>
+</body>
+</html>

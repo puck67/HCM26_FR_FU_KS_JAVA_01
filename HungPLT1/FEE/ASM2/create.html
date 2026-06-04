@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Create Interview</title>
+    <link class="styles" rel="stylesheet" href="css/bootstrap.min.css">
+    <link class="styles" rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="vote.html">Polls</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="vote.html">Vote</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="create.html">Create</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list.html">List</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="login-nav-btn">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="create-container">
+                    <h2 class="create-title">Create Interview</h2>
+                    <form id="create-interview-form" novalidate>
+                        <div id="validation-alert-summary"></div>
+
+                        <div class="form-group mb-4">
+                            <label for="pollName" class="font-weight-bold">Name poll <span class="required-star text-danger">*</span></label>
+                            <input type="text" class="form-control" id="pollName" placeholder="Name poll" required minlength="3" maxlength="255">
+                        </div>
+
+                        <div id="questions-list">
+                            <div class="question-block" data-question-index="1">
+                                <div class="question-block-header">
+                                    <h5 class="mb-0 font-weight-bold text-success">Question #1</h5>
+                                </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold question-label">Enter your question <span class="required-star text-danger">*</span></label>
+                                    <input type="text" class="form-control question-text-input" placeholder="Enter your question" required minlength="3" maxlength="255">
+                                </div>
+                                <div class="form-group form-check mb-2">
+                                    <input type="checkbox" class="form-check-input question-mandatory" id="mandatory-1">
+                                    <label class="form-check-label text-muted" for="mandatory-1">Mandatory</label>
+                                </div>
+                                <div class="form-group form-check mb-3">
+                                    <input type="checkbox" class="form-check-input question-multiple" id="multiple-1">
+                                    <label class="form-check-label text-muted" for="multiple-1">You can select multiple options</label>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label class="font-weight-bold answer-label">Possible answers <span class="required-star text-danger">*</span></label>
+                                    <div class="answers-container">
+                                        <div class="answer-input-wrapper">
+                                            <input type="text" class="form-control answer-text-input" placeholder="Type your answer" required minlength="3" maxlength="200">
+                                            <button type="button" class="btn btn-add-answer ml-2">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <button type="button" class="btn btn-sm" id="btn-add-question">+ Add question</button>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn px-4">Retain</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal-container"></div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

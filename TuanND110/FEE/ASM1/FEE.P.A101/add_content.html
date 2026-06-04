@@ -1,0 +1,43 @@
+<h2 class="panel__title-header" id="formContentTitle">Form Content</h2>
+<section class="panel">
+    <div class="panel__header">
+        <h3 class="panel__title">Content Form Elements</h3>
+    </div>
+    <div class="panel__body">
+        <div id="formAlerts"></div>
+        <form class="form" id="contentForm" novalidate>
+            <!-- Hidden ID to identify edit vs add -->
+            <input type="hidden" id="contentId" value="">
+
+            <!-- Title field -->
+            <div class="form__group">
+                <label class="form__label" for="title">Title</label>
+                <input type="text" class="form__control form__control--input-height" id="title" placeholder="Enter the title of content" maxlength="50" required aria-describedby="titleFeedback">
+                <div class="form__char-count" id="titleCharCount">0 / 50</div>
+                <div class="form__feedback" id="titleFeedback">Title is mandatory.</div>
+            </div>
+
+            <!-- Brief field -->
+            <div class="form__group">
+                <label class="form__label" for="brief">Brief</label>
+                <textarea class="form__control form__control--textarea-brief" id="brief" placeholder="Enter brief content description..." maxlength="1500" required aria-describedby="briefFeedback"></textarea>
+                <div class="form__char-count" id="briefCharCount">0 / 1500</div>
+                <div class="form__feedback" id="briefFeedback">Brief is mandatory.</div>
+            </div>
+
+            <!-- Content field -->
+            <div class="form__group">
+                <label class="form__label" for="content">Content</label>
+                <textarea class="form__control form__control--textarea-content" id="content" placeholder="Enter detailed content..." maxlength="5000" required aria-describedby="contentFeedback"></textarea>
+                <div class="form__char-count" id="contentCharCount">0 / 5000</div>
+                <div class="form__feedback" id="contentFeedback">Content is mandatory.</div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form__actions">
+                <button type="submit" class="btn" id="submitContentBtn">Submit Button</button>
+                <button type="reset" class="btn btn--secondary" id="resetContentBtn">Reset Button</button>
+            </div>
+        </form>
+    </div>
+</section>

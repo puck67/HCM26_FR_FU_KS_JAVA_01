@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ex3 - Dynamic Image Gallery & Rating System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+  <div class="browser-container">
+    <div class="app-header">
+      <h1>My Image Gallery</h1>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      
+      <div class="image-card" data-id="1" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-1">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="2" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-2">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="3" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-3">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="4" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-4">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="5" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-5">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="6" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-6">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="7" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-7">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="8" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-8">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="9" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-9">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+      <div class="image-card" data-id="10" data-rating="0" data-favorite="false">
+        <div class="image-placeholder bg-10">
+          <button class="btn-fav-overlay">Add to Favorites</button>
+        </div>
+        <div class="card-controls">
+          <div class="rating-stars">
+            <i class="fa-star fas" data-value="1"></i>
+            <i class="fa-star fas" data-value="2"></i>
+            <i class="fa-star fas" data-value="3"></i>
+            <i class="fa-star fas" data-value="4"></i>
+            <i class="fa-star fas" data-value="5"></i>
+          </div>
+          <div class="heart-toggle"><i class="fa-solid fa-heart"></i></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="summary-footer">
+      <div class="footer-section">
+        <span>Average Rating: <span id="avgRatingValue">0.0</span> Stars <span id="itemCountSub" class="sub-text">(based on 0 items)</span></span>
+        <i class="fa-solid fa-chart-simple" style="margin-left: 10px; color: #555;"></i>
+      </div>
+      <div class="footer-section">
+        <span>Total Favorites: <span id="totalFavValue">0</span></span>
+        <i class="fa-solid fa-heart" style="color: #555; margin-left: 5px;" id="footerHeartIcon"></i>
+      </div>
+    </div>
+
+    <div class="credit">Built with HTML/CSS Grid</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

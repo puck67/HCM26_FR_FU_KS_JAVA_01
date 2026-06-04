@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board - Native JS Version</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="board-container">
+        <header class="board-header">
+            <div class="header-left">
+                <div class="board-title-wrapper">
+                    <div class="board-logo">JS</div>
+                    <h1 class="board-title">My Project Board</h1>
+                </div>
+                <p class="board-subtitle">Phiên bản sử dụng Native JavaScript DOM API</p>
+            </div>
+            <div class="header-right">
+                <a href="index.html" class="btn-back">
+                    &larr; Quay lại trang chủ
+                </a>
+            </div>
+        </header>
+
+        <main class="kanban-board">
+            <section class="kanban-column col-todo" id="col-todo">
+                <div class="column-header">
+                    <h2 class="column-title">To Do</h2>
+                    <span class="column-count" id="count-todo">0</span>
+                </div>
+                <div class="column-input-group">
+                    <input type="text" class="column-input" id="input-todo" placeholder="Add a task to To Do...">
+                    <button class="btn-add-task" id="btn-add-todo">+</button>
+                </div>
+                <div class="card-list" id="list-todo">
+                </div>
+            </section>
+
+            <section class="kanban-column col-inprogress" id="col-inprogress">
+                <div class="column-header">
+                    <h2 class="column-title">In Progress</h2>
+                    <span class="column-count" id="count-inprogress">0</span>
+                </div>
+                <div class="column-input-group">
+                    <input type="text" class="column-input" id="input-inprogress" placeholder="Add a task to In Progress...">
+                    <button class="btn-add-task" id="btn-add-inprogress">+</button>
+                </div>
+                <div class="card-list" id="list-inprogress">
+                </div>
+            </section>
+
+            <section class="kanban-column col-done" id="col-done">
+                <div class="column-header">
+                    <h2 class="column-title">Done</h2>
+                    <span class="column-count" id="count-done">0</span>
+                </div>
+                <div class="column-input-group">
+                    <input type="text" class="column-input" id="input-done" placeholder="Add a task to Done...">
+                    <button class="btn-add-task" id="btn-add-done">+</button>
+                </div>
+                <div class="card-list" id="list-done">
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app-vanilla.js"></script>
+</body>
+</html>

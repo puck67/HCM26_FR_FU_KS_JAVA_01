@@ -1,0 +1,45 @@
+/* Design system tokens & theme custom variables */
+
+:root {
+  /* To Do Column colors */
+  --col-todo-bg:        #EBF0FF;
+  --col-todo-accent:    #4F6EF7;
+  --col-todo-header:    #C7D3FC;
+  --col-todo-border:    #B8C8FF;
+
+  /* In Progress Column colors */
+  --col-inprogress-bg:     #FFF4E6;
+  --col-inprogress-accent: #F59E0B;
+  --col-inprogress-header: #FDDBA0;
+  --col-inprogress-border: #F9D080;
+
+  /* Done Column colors */
+  --col-done-bg:       #EDFBF3;
+  --col-done-accent:   #22C55E;
+  --col-done-header:   #BBF7D0;
+  --col-done-border:   #86EFAC;
+
+  /* Neutral surfaces */
+  --surface:           #F4F5F8;
+  --white:             #FFFFFF;
+
+  /* Fonts & weights */
+  --text-primary:      #1A1D2E;
+  --text-secondary:    #5E637A;
+  --text-muted:        #9EA3B8;
+  --font-display:      'Syne', sans-serif;
+  --font-body:         'DM Sans', sans-serif;
+
+  /* Borders & border radii */
+  --radius-card:       14px;
+  --radius-col:        18px;
+  --radius-btn:        8px;
+
+  /* Shadows & depth */
+  --shadow-card:       0 2px 8px rgba(0,0,0,.07), 0 0 0 1.5px rgba(0,0,0,.05);
+  --shadow-col:        0 4px 24px rgba(0,0,0,.06);
+  --shadow-lift:       0 12px 32px rgba(0,0,0,.15);
+
+  /* Transitions */
+  --transition:        all .22s cubic-bezier(.4,0,.2,1);
+}

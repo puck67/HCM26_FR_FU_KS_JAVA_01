@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Register</title>
+    <!-- Bootstrap 4.6.2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <h2 class="text-success font-weight-bold"><i class="fas fa-cubes"></i> CMS Portal</h2>
+                <p class="text-muted small">Content Management System</p>
+            </div>
+            
+            <h3>Register</h3>
+            
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="regUsername">User name</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="regUsername" placeholder="User name" required minlength="5" maxlength="30">
+                        <div class="invalid-feedback">
+                            Username is required (5 - 30 characters).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">E-mail</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        </div>
+                        <input type="email" class="form-control" id="regEmail" placeholder="E-mail" required minlength="8" maxlength="50">
+                        <div class="invalid-feedback">
+                            Email is required (8 - 50 characters) and must be a valid format.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                        </div>
+                        <input type="password" class="form-control" id="regPassword" placeholder="Password" required minlength="8" maxlength="30">
+                        <div class="invalid-feedback">
+                            Password is required (8 - 30 characters).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regRePassword">Re Password</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-redo"></i></span>
+                        </div>
+                        <input type="password" class="form-control" id="regRePassword" placeholder="Re Password" required minlength="8" maxlength="30">
+                        <div class="invalid-feedback" id="rePasswordFeedback">
+                            Re-entering password is required (8 - 30 characters).
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-custom-green btn-block mt-4 py-2">Register</button>
+            </form>
+            
+            <div id="registerSuccess" class="alert alert-success mt-3 d-none" role="alert">
+                Registration successful! Redirecting to login...
+            </div>
+            <div id="registerError" class="alert alert-danger mt-3 d-none" role="alert">
+                Email already exists.
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="login.html" class="text-success">Click here to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            $('#registerForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const usernameInput = $('#regUsername')[0];
+                const emailInput = $('#regEmail')[0];
+                const passwordInput = $('#regPassword')[0];
+                const rePasswordInput = $('#regRePassword')[0];
+                let isValid = true;
+
+                // Reset states
+                $('.form-control').removeClass('is-invalid');
+                $('#registerSuccess').addClass('d-none');
+                $('#registerError').addClass('d-none');
+
+                // Validate Username
+                if (!usernameInput.checkValidity() || usernameInput.value.length < 5 || usernameInput.value.length > 30) {
+                    $('#regUsername').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // Validate Email
+                if (!emailInput.checkValidity() || emailInput.value.length < 8 || emailInput.value.length > 50) {
+                    $('#regEmail').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // Validate Password
+                if (!passwordInput.checkValidity() || passwordInput.value.length < 8 || passwordInput.value.length > 30) {
+                    $('#regPassword').addClass('is-invalid');
+                    isValid = false;
+                }
+
+                // Validate Re-Password and Check Match
+                if (!rePasswordInput.checkValidity() || rePasswordInput.value.length < 8 || rePasswordInput.value.length > 30) {
+                    $('#regRePassword').addClass('is-invalid');
+                    $('#rePasswordFeedback').text('Re-entering password is required (8 - 30 characters).');
+                    isValid = false;
+                } else if (passwordInput.value !== rePasswordInput.value) {
+                    $('#regRePassword').addClass('is-invalid');
+                    $('#rePasswordFeedback').text('Passwords do not match.');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    const username = $('#regUsername').val().trim();
+                    const email = $('#regEmail').val().trim();
+                    const password = $('#regPassword').val();
+                    
+                    const users = JSON.parse(localStorage.getItem('cmsUsers') || '[]');
+
+                    // Check if email already registered
+                    const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
+
+                    if (emailExists) {
+                        $('#registerError').removeClass('d-none').text('Email is already registered.');
+                    } else {
+                        // Add new user
+                        const newUser = {
+                            username: username,
+                            email: email,
+                            password: password,
+                            firstName: '',
+                            lastName: '',
+                            phone: '',
+                            description: ''
+                        };
+                        users.push(newUser);
+                        localStorage.setItem('cmsUsers', JSON.stringify(users));
+
+                        $('#registerSuccess').removeClass('d-none');
+                        setTimeout(function() {
+                            window.location.href = 'login.html';
+                        }, 1500);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

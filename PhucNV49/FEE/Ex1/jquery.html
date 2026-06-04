@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A clean and simple Shopping List Manager using jQuery refactoring.">
+  <title>Shopping List Manager (jQuery)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div style="width: 100%; max-width: 800px;">
+    <!-- Small switcher bar outside the card to preserve the mock look -->
+    <div class="version-switcher">
+      <a href="index.html">Native JS</a>
+      <span>|</span>
+      <strong>jQuery Refactored</strong>
+    </div>
+
+    <!-- Main card -->
+    <div class="card">
+      <h1>Shopping List Manager</h1>
+
+      <!-- Input Form -->
+      <form id="form-jquery" onsubmit="return false;" class="form-container">
+        <div class="form-group name-group">
+          <label for="item-name-jquery">Item Name</label>
+          <input type="text" id="item-name-jquery" placeholder="e.g., Apples" autocomplete="off">
+          <div id="error-name-jquery" class="error-msg">Item name cannot be empty.</div>
+        </div>
+
+        <div class="form-group cost-group">
+          <label for="item-cost-jquery">Item Cost ($)</label>
+          <input type="number" id="item-cost-jquery" placeholder="e.g., 2.50" step="0.01" min="0.01">
+          <div id="error-cost-jquery" class="error-msg">Cost must be a positive number.</div>
+        </div>
+
+        <button type="submit" id="btn-add">Add Item +</button>
+      </form>
+
+      <!-- Table Section -->
+      <div class="table-container">
+        <table id="table-jquery">
+          <thead>
+            <tr>
+              <th class="col-name">Item Name</th>
+              <th class="col-cost">Cost ($)</th>
+              <th class="col-action">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-jquery">
+            <!-- Default items as shown in the screenshot -->
+            <tr>
+              <td class="col-name">Apples</td>
+              <td class="col-cost"><span class="col-cost-value" data-cost="3.49">$3.49</span></td>
+              <td class="col-action">
+                <button type="button" class="btn-remove">✖ Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-name">Milk (1 Gallon)</td>
+              <td class="col-cost"><span class="col-cost-value" data-cost="4.15">$4.15</span></td>
+              <td class="col-action">
+                <button type="button" class="btn-remove">✖ Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-name">Bread (Whole Wheat)</td>
+              <td class="col-cost"><span class="col-cost-value" data-cost="2.79">$2.79</span></td>
+              <td class="col-action">
+                <button type="button" class="btn-remove">✖ Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-name">Eggs (Dozen)</td>
+              <td class="col-cost"><span class="col-cost-value" data-cost="5.20">$5.20</span></td>
+              <td class="col-action">
+                <button type="button" class="btn-remove">✖ Remove</button>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-name">Cereal (Cheerios)</td>
+              <td class="col-cost"><span class="col-cost-value" data-cost="4.89">$4.89</span></td>
+              <td class="col-action">
+                <button type="button" class="btn-remove">✖ Remove</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Prominent Grand Total Box -->
+      <div class="grand-total-box">
+        <h2 class="total-label">Grand Total:</h2>
+        <span class="total-amount" id="total-amount-jquery">$20.52</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery Logic -->
+  <script src="js/script_jquery.js"></script>
+</body>
+</html>

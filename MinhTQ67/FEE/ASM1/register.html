@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="auth-page">
+
+  <div class="auth-box">
+    <h5>Register</h5>
+    <form id="registerForm" novalidate>
+      <input type="text" class="form-control" id="username" name="username"
+             placeholder="User name" maxlength="30"/>
+      <div class="error-msg" id="usernameError"></div>
+
+      <input type="email" class="form-control" id="email" name="email"
+             placeholder="E-mail" maxlength="50"/>
+      <div class="error-msg" id="emailError"></div>
+
+      <input type="password" class="form-control" id="password" name="password"
+             placeholder="Password" maxlength="30"/>
+      <div class="error-msg" id="passwordError"></div>
+
+      <input type="password" class="form-control" id="rePassword" name="rePassword"
+             placeholder="Re Password" maxlength="30"/>
+      <div class="error-msg" id="rePasswordError"></div>
+
+      <button type="submit" class="btn btn-primary mt-1">Register</button>
+      <a href="login.html" class="auth-link">Click here to Login</a>
+    </form>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+    $('#registerForm').on('submit', function(e) {
+      e.preventDefault();
+      let ok = true;
+      const uname = $('#username').val().trim();
+      const email = $('#email').val().trim();
+      const pwd   = $('#password').val();
+      const repwd = $('#rePassword').val();
+
+      $('input').removeClass('is-invalid');
+      $('.error-msg').text('').hide();
+
+      // Username: required, min 3, max 30
+      if (!uname) {
+        $('#username').addClass('is-invalid'); $('#usernameError').text('User name is required.').show(); ok = false;
+      } else if (uname.length < 3) {
+        $('#username').addClass('is-invalid'); $('#usernameError').text('User name must be at least 3 characters.').show(); ok = false;
+      } else if (uname.length > 30) {
+        $('#username').addClass('is-invalid'); $('#usernameError').text('User name must not exceed 30 characters.').show(); ok = false;
+      }
+
+      // Email: required, min 5, email format
+      if (!email) {
+        $('#email').addClass('is-invalid'); $('#emailError').text('Email is required.').show(); ok = false;
+      } else if (email.length < 5) {
+        $('#email').addClass('is-invalid'); $('#emailError').text('Email must be at least 5 characters.').show(); ok = false;
+      } else if (!isValidEmail(email)) {
+        $('#email').addClass('is-invalid'); $('#emailError').text('Invalid email format.').show(); ok = false;
+      }
+
+      // Password: required, min 8, max 30
+      if (!pwd) {
+        $('#password').addClass('is-invalid'); $('#passwordError').text('Password is required.').show(); ok = false;
+      } else if (pwd.length < 8) {
+        $('#password').addClass('is-invalid'); $('#passwordError').text('Password must be at least 8 characters.').show(); ok = false;
+      } else if (pwd.length > 30) {
+        $('#password').addClass('is-invalid'); $('#passwordError').text('Password must not exceed 30 characters.').show(); ok = false;
+      }
+
+      // Re Password: required, min 8, max 30, match
+      if (!repwd) {
+        $('#rePassword').addClass('is-invalid'); $('#rePasswordError').text('Please confirm your password.').show(); ok = false;
+      } else if (repwd.length < 8) {
+        $('#rePassword').addClass('is-invalid'); $('#rePasswordError').text('Re Password must be at least 8 characters.').show(); ok = false;
+      } else if (repwd !== pwd) {
+        $('#rePassword').addClass('is-invalid'); $('#rePasswordError').text('Passwords do not match.').show(); ok = false;
+      }
+
+      if (ok) { window.location.href = 'login.html'; }
+    });
+  </script>
+</body>
+</html>

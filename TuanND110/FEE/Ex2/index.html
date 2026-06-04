@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoardFlow - My Project Board</title>
+  
+  <!-- Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+  
+  <!-- Google Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="boardflow-app">
+
+  <!-- Top Navigation Bar -->
+  <header class="app-header">
+    <div class="app-header__left">
+      <span class="app-header__logo">BoardFlow</span>
+      <nav class="app-header__nav">
+        <a class="app-header__nav-link app-header__nav-link--active" href="#">My Boards</a>
+        <a class="app-header__nav-link" href="#">Team</a>
+        <a class="app-header__nav-link" href="#">Archive</a>
+      </nav>
+    </div>
+    <div class="app-header__right">
+      <div class="app-header__search-container">
+        <input class="app-header__search-input" id="global-search" placeholder="Search tasks..." type="text">
+        <span class="material-symbols-outlined app-header__search-icon">search</span>
+      </div>
+      <span class="material-symbols-outlined app-header__icon" title="Notifications">notifications</span>
+      <span class="material-symbols-outlined app-header__icon" title="Settings">settings</span>
+      <img alt="User profile" class="app-header__avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB3F472lQzLpotza2DEbZPjjJp7sYigqYPNQ7c4kQ_E1YHYPVk9RPV8C0VVcOwg3M6bBDvvHA0w-Lw8VOmJPoSeASxhLLFFGTza22nlcK_CjPRDHFHrk3HtemZRKj8Ku4vjJrghkiKdDZ7PYM1mOTdiJlnATNltml6mlEk05zl083C94pCpJ2HGPQ2NV2CSBblzqgsA5seHsPLwA7S1W6POUMISfF5iYP1vyvR1jrFru26EYm0j87AXcZt73tI7GQBiEB9DEA63U4">
+    </div>
+  </header>
+
+  <!-- Side Navigation Sidebar -->
+  <aside class="app-sidebar">
+    <div class="app-sidebar__profile">
+      <div class="app-sidebar__profile-letter">A</div>
+      <div class="app-sidebar__profile-info">
+        <h3 class="app-sidebar__profile-name">Project Alpha</h3>
+        <p class="app-sidebar__profile-dept">Marketing Team</p>
+      </div>
+    </div>
+    <nav class="app-sidebar__nav">
+      <a class="app-sidebar__nav-link app-sidebar__nav-link--active" href="#">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Board</span>
+      </a>
+      <a class="app-sidebar__nav-link" href="#">
+        <span class="material-symbols-outlined">view_timeline</span>
+        <span>Timeline</span>
+      </a>
+      <a class="app-sidebar__nav-link" href="#">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span>Calendar</span>
+      </a>
+      <a class="app-sidebar__nav-link" href="#">
+        <span class="material-symbols-outlined">analytics</span>
+        <span>Reports</span>
+      </a>
+    </nav>
+    <div class="app-sidebar__footer">
+      <button class="app-sidebar__btn-add" id="sidebar-new-column-btn">
+        <span class="material-symbols-outlined">add</span>
+        <span>New Column</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Canvas Content -->
+  <main class="app-main bg-grid">
+    <div class="board-container">
+      
+      <!-- Board Title Banner -->
+      <div class="board-header">
+        <h1 class="board-header__title">My Project Board</h1>
+        <div class="board-header__actions">
+          <button class="board-header__btn">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>May 2024</span>
+          </button>
+          <button class="board-header__btn board-header__btn--icon" aria-label="Filter columns">
+            <span class="material-symbols-outlined">filter_list</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Kanban Column Grid Grid -->
+      <div class="kanban-grid">
+        
+        <!-- TO DO COLUMN -->
+        <div class="kanban-column" data-column="todo">
+          <div class="kanban-column__header kanban-column__header--todo">
+            <span class="kanban-column__title">To Do</span>
+            <span class="kanban-column__badge" id="badge-todo">2</span>
+          </div>
+          <div class="kanban-column__content">
+            
+            <!-- Quick Add Form -->
+            <div class="quick-add">
+              <input class="quick-add__input" placeholder="Add a task to To Do" type="text">
+              <button class="quick-add__btn" aria-label="Add task to To Do">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+            <p class="quick-add__error" style="display: none;"></p>
+            
+            <!-- Cards Container -->
+            <div class="cards-list" id="list-todo">
+              <!-- Card 1 -->
+              <div class="sticky-card" data-card-id="1">
+                <span class="sticky-card__label">Title</span>
+                <h4 class="sticky-card__title">Website Homepage Redesign</h4>
+                <div class="sticky-card__actions">
+                  <button class="sticky-card__btn sticky-card__btn--start">Start</button>
+                  <button class="sticky-card__btn sticky-card__btn--edit">Edit</button>
+                  <div class="sticky-card__move-wrapper">
+                    <button class="sticky-card__btn sticky-card__btn--move">
+                      Move <span class="material-symbols-outlined">arrow_drop_down</span>
+                    </button>
+                    <div class="move-dropdown" style="display: none;">
+                      <!-- Populated dynamically on click -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Card 2 -->
+              <div class="sticky-card" data-card-id="2">
+                <span class="sticky-card__label">Title</span>
+                <h4 class="sticky-card__title">Market Research Report</h4>
+                <div class="sticky-card__actions">
+                  <button class="sticky-card__btn sticky-card__btn--start">Start</button>
+                  <button class="sticky-card__btn sticky-card__btn--edit">Edit</button>
+                  <div class="sticky-card__move-wrapper">
+                    <button class="sticky-card__btn sticky-card__btn--move">
+                      Move <span class="material-symbols-outlined">arrow_drop_down</span>
+                    </button>
+                    <div class="move-dropdown" style="display: none;">
+                      <!-- Populated dynamically on click -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- IN PROGRESS COLUMN -->
+        <div class="kanban-column" data-column="inprogress">
+          <div class="kanban-column__header kanban-column__header--inprogress">
+            <span class="kanban-column__title">In Progress</span>
+            <span class="kanban-column__badge" id="badge-inprogress">1</span>
+          </div>
+          <div class="kanban-column__content">
+            
+            <!-- Quick Add Form -->
+            <div class="quick-add">
+              <input class="quick-add__input" placeholder="Add a task to In Progress" type="text">
+              <button class="quick-add__btn" aria-label="Add task to In Progress">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+            <p class="quick-add__error" style="display: none;"></p>
+            
+            <!-- Cards Container -->
+            <div class="cards-list" id="list-inprogress">
+              <!-- Card 3 -->
+              <div class="sticky-card" data-card-id="3">
+                <span class="sticky-card__label">Title</span>
+                <h4 class="sticky-card__title">User Testing Sessions</h4>
+                <div class="sticky-card__actions">
+                  <button class="sticky-card__btn sticky-card__btn--edit">Edit</button>
+                  <div class="sticky-card__move-wrapper">
+                    <button class="sticky-card__btn sticky-card__btn--move">
+                      Move <span class="material-symbols-outlined">arrow_drop_down</span>
+                    </button>
+                    <div class="move-dropdown" style="display: none;">
+                      <!-- Populated dynamically on click -->
+                    </div>
+                  </div>
+                  <button class="sticky-card__btn sticky-card__btn--done">Done</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- DONE COLUMN -->
+        <div class="kanban-column" data-column="done">
+          <div class="kanban-column__header kanban-column__header--done">
+            <span class="kanban-column__title">Done</span>
+            <span class="kanban-column__badge" id="badge-done">1</span>
+          </div>
+          <div class="kanban-column__content">
+            
+            <!-- Quick Add Form -->
+            <div class="quick-add">
+              <input class="quick-add__input" placeholder="Add a task to Done" type="text">
+              <button class="quick-add__btn" aria-label="Add task to Done">
+                <span class="material-symbols-outlined">add</span>
+              </button>
+            </div>
+            <p class="quick-add__error" style="display: none;"></p>
+            
+            <!-- Cards Container -->
+            <div class="cards-list" id="list-done">
+              <!-- Card 4 -->
+              <div class="sticky-card sticky-card--done" data-card-id="4">
+                <span class="sticky-card__label">Title</span>
+                <h4 class="sticky-card__title sticky-card__title--done">Completed Features List</h4>
+                <div class="sticky-card__actions">
+                  <button class="sticky-card__btn sticky-card__btn--edit">Edit</button>
+                  <button class="sticky-card__btn sticky-card__btn--archive">Archive</button>
+                  <div class="sticky-card__move-wrapper">
+                    <button class="sticky-card__btn sticky-card__btn--move">
+                      Move <span class="material-symbols-outlined">arrow_drop_down</span>
+                    </button>
+                    <div class="move-dropdown" style="display: none;">
+                      <!-- Populated dynamically on click -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Bottom Navbar for Mobile Viewports -->
+  <footer class="app-footer">
+    <a class="app-footer__link app-footer__link--active" href="#">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="app-footer__label">Board</span>
+    </a>
+    <a class="app-footer__link" href="#">
+      <span class="material-symbols-outlined">view_timeline</span>
+      <span class="app-footer__label">Timeline</span>
+    </a>
+    <button class="app-footer__center-btn" id="mobile-add-task-btn" aria-label="Add column or task">
+      <span class="material-symbols-outlined">add</span>
+    </button>
+    <a class="app-footer__link" href="#">
+      <span class="material-symbols-outlined">calendar_today</span>
+      <span class="app-footer__label">Calendar</span>
+    </a>
+    <a class="app-footer__link" href="#">
+      <span class="material-symbols-outlined">person</span>
+      <span class="app-footer__label">Profile</span>
+    </a>
+  </footer>
+
+  <!-- Inline Modal for Editing Task Names -->
+  <div class="edit-modal" id="edit-modal" style="display: none;">
+    <div class="edit-modal__backdrop"></div>
+    <div class="edit-modal__content">
+      <h3 class="edit-modal__title">Edit Task Title</h3>
+      <input type="text" id="edit-task-input" class="edit-modal__input" placeholder="Type task title...">
+      <p class="edit-modal__error" id="modal-error" style="display: none;">Task title cannot be empty.</p>
+      <div class="edit-modal__actions">
+        <button class="edit-modal__btn edit-modal__btn--cancel" id="edit-cancel-btn">Cancel</button>
+        <button class="edit-modal__btn edit-modal__btn--save" id="edit-save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Load Main Application Code -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

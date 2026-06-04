@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visitor Information - HR</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="page">
+
+<header class="site-header">
+  <div class="site-header__banner" role="img" aria-label="Scenic lake banner"></div>
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="container text-center">
+      <a class="site-nav__link" href="index.html">Home</a>
+      <a class="site-nav__link site-nav__link--active" href="person.html">Person</a>
+      <a class="site-nav__link" href="search.html">Search</a>
+      <a class="site-nav__link" href="help.html">Help</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="visitor-panel" aria-labelledby="personTitle">
+    <h1 class="visitor-panel__title" id="personTitle">Visitor Information</h1>
+
+    <p class="visitor-form__note">Fields marked with <span class="visitor-form__label--required">*</span> are required.</p>
+
+    <div id="formErrors" class="visitor-form__errors" role="alert" aria-live="polite" hidden></div>
+    <div id="formSuccess" class="visitor-form__success" role="status" aria-live="polite" hidden></div>
+
+    <form id="visitorForm" class="visitor-form" novalidate>
+      <div class="form-group row">
+        <label for="firstName" class="col-sm-3 col-form-label visitor-form__label visitor-form__label--required">First name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control visitor-form__input" id="firstName" name="firstName" data-validate="firstName" placeholder="First name" maxlength="20" minlength="1" required aria-required="true" aria-describedby="firstNameError"/>
+          <span class="visitor-form__error" id="firstNameError" data-error-for="firstName" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="lastName" class="col-sm-3 col-form-label visitor-form__label visitor-form__label--required">Last name</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control visitor-form__input" id="lastName" name="lastName" data-validate="lastName" placeholder="Last name" maxlength="20" minlength="1" required aria-required="true" aria-describedby="lastNameError"/>
+          <span class="visitor-form__error" id="lastNameError" data-error-for="lastName" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="gender" class="col-sm-3 col-form-label visitor-form__label">Gender</label>
+        <div class="col-sm-9">
+          <select class="form-control visitor-form__input" id="gender" name="gender" data-validate="gender" aria-describedby="genderError">
+            <option value="Male" selected>Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <span class="visitor-form__error" id="genderError" data-error-for="gender" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="telephone" class="col-sm-3 col-form-label visitor-form__label">Telephone</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control visitor-form__input" id="telephone" name="telephone" data-validate="telephone" placeholder="Telephone" maxlength="11" inputmode="numeric" pattern="[0-9]*" aria-describedby="telephoneError"/>
+          <span class="visitor-form__error" id="telephoneError" data-error-for="telephone" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="email" class="col-sm-3 col-form-label visitor-form__label">Email</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control visitor-form__input" id="email" name="email" data-validate="email" placeholder="Email" maxlength="50" aria-describedby="emailError"/>
+          <span class="visitor-form__error" id="emailError" data-error-for="email" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row visitor-form__group" data-group="region">
+        <div class="col-sm-3">
+          <span class="col-form-label visitor-form__label visitor-form__label--required d-block text-sm-right">You are in</span>
+        </div>
+        <div class="col-sm-9">
+          <fieldset class="visitor-form__fieldset">
+            <legend class="visitor-form__legend visitor-form__legend--hidden">You are in</legend>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="region" id="regionEurope" value="Europe" required aria-required="true"/>
+              <label class="form-check-label" for="regionEurope">Europe</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="region" id="regionAfrica" value="Africa"/>
+              <label class="form-check-label" for="regionAfrica">Africa</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="region" id="regionAustralia" value="Australia"/>
+              <label class="form-check-label" for="regionAustralia">Australia</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="region" id="regionAsia" value="Asia"/>
+              <label class="form-check-label" for="regionAsia">Asia</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="region" id="regionAmerica" value="America"/>
+              <label class="form-check-label" for="regionAmerica">America</label>
+            </div>
+          </fieldset>
+          <span class="visitor-form__error" id="regionError" data-error-for="region" hidden></span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <span class="col-sm-3 col-form-label visitor-form__label">What are your hobbies</span>
+        <div class="col-sm-9 visitor-form__hobbies">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySwimming" value="Swimming"/>
+            <label class="form-check-label" for="hobbySwimming">Swimming</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyCooking" value="Cooking"/>
+            <label class="form-check-label" for="hobbyCooking">Cooking</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyShopping" value="Shopping"/>
+            <label class="form-check-label" for="hobbyShopping">Shopping</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySport" value="Sport"/>
+            <label class="form-check-label" for="hobbySport">Sport</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbyDance" value="Dance"/>
+            <label class="form-check-label" for="hobbyDance">Dance</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="hobbies" id="hobbySing" value="Sing"/>
+            <label class="form-check-label" for="hobbySing">Sing</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="description" class="col-sm-3 col-form-label visitor-form__label">Description</label>
+        <div class="col-sm-9">
+          <textarea class="form-control visitor-form__input" id="description" name="description" data-validate="description" rows="4" placeholder="Description" maxlength="200" aria-describedby="descriptionError descriptionCounter"></textarea>
+          <span class="visitor-form__error" id="descriptionError" data-error-for="description" hidden></span>
+          <span class="visitor-form__counter" id="descriptionCounter">0 / 200</span>
+        </div>
+      </div>
+
+      <div class="visitor-form__actions">
+        <button type="submit" class="visitor-btn" id="registerBtn">Register</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/validators.js"></script>
+<script src="js/form-ui.js"></script>
+<script src="js/data.js"></script>
+<script src="js/validation.js"></script>
+</body>
+</html>

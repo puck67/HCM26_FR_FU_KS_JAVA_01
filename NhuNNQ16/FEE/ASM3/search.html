@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Visitor</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Top Banner Image -->
+    <div class="banner-container">
+        <img src="hidden-land-da-lat-1-1761523868.jpg" alt="Visitor Portal Banner" class="banner-image">
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <span class="navbar-brand font-weight-bold text-success">Visitor Manager</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="person.html">Register Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Search Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">Help & Guide</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                
+                <!-- Page Title Header (Green text in light gray box with thin border) -->
+                <div class="page-title-box">
+                    <h2>Search Visitor</h2>
+                </div>
+
+                <!-- Search Controls Card -->
+                <div class="search-box-container">
+                    <form id="searchForm" class="form-inline">
+                        <div class="form-group mr-3 my-2">
+                            <label for="searchKeyword" class="font-weight-bold mr-2">Fist name:</label>
+                            <input type="text" class="form-control" id="searchKeyword" placeholder="Type search keyword" style="width: 250px;">
+                        </div>
+                        <button type="submit" id="searchBtn" class="btn btn-green my-2">Search...</button>
+                        <span class="search-helper-text font-italic my-2">(Type First name Visitor and Click Search button)</span>
+                    </form>
+                </div>
+
+                <!-- Results Table Container -->
+                <div class="table-responsive table-responsive-custom mb-5">
+                    <table class="table table-custom" id="visitorsTable">
+                        <thead>
+                            <tr>
+                                <th>Fist name</th>
+                                <th>Last name</th>
+                                <th>Gender</th>
+                                <th>Telephone</th>
+                                <th>You're in</th>
+                                <th>Hobbies</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamically loaded rows go here -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 and jQuery JS dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="search.js"></script>
+</body>
+</html>

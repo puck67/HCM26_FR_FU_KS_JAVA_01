@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problem 03 – Shopping List (jQuery)</title>
+  <meta name="description" content="Shopping List Manager refactored with jQuery. Grand Total turns red when total exceeds $500." />
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+
+  <div class="card" role="main">
+
+    <!-- Header -->
+    <div class="card-header">
+      <h1>🛒 Shopping List Manager</h1>
+      <span class="badge">Problem 03 · jQuery &nbsp;·&nbsp; Total &gt; $500 turns red</span>
+    </div>
+
+    <!-- Body -->
+    <div class="card-body">
+
+      <!-- Input Form -->
+      <div class="form-row" role="form" aria-label="Add item form">
+        <div class="form-group">
+          <label for="item-name-jq">Item Name</label>
+          <input
+            type="text"
+            id="item-name-jq"
+            placeholder="e.g., Apples"
+            aria-required="true"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="item-cost-jq">Item Cost ($)</label>
+          <input
+            type="number"
+            id="item-cost-jq"
+            placeholder="e.g., 2.50"
+            min="0.01"
+            step="0.01"
+            aria-required="true"
+          />
+        </div>
+
+        <button id="btn-add-jq" class="btn-add" aria-label="Add item to list">
+          &#43; Add Item
+        </button>
+      </div>
+
+      <!-- Validation Message -->
+      <p id="validation-msg-jq" class="validation-msg" role="alert" aria-live="polite"></p>
+
+      <!-- Table -->
+      <div class="table-wrapper">
+        <table class="shopping-table" aria-label="Shopping list">
+          <thead>
+            <tr>
+              <th scope="col">Item Name</th>
+              <th scope="col">Cost ($)</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody id="list-body-jq">
+            <!-- rows injected by jQuery -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Grand Total -->
+      <div class="grand-total-box" aria-label="Grand Total">
+        <span class="label">Grand Total:</span>
+        <span id="grand-total-jq" class="amount">$0.00</span>
+      </div>
+
+    </div><!-- /.card-body -->
+  </div><!-- /.card -->
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+  <script src="shoppingListJQuery.js"></script>
+  <script>
+    $(function () {
+      ShoppingListJQ.init({
+        nameInputId: 'item-name-jq',
+        costInputId:  'item-cost-jq',
+        addBtnId:    'btn-add-jq',
+        tbodyId:     'list-body-jq',
+        totalId:     'grand-total-jq',
+        msgId:       'validation-msg-jq',
+        overBudget:  500,
+        initialData: [
+          { id: 1, name: 'iPhone 15 Pro Max', cost: 1199.99 },
+          { id: 2, name: 'Phone Case', cost: 29.50 }
+        ]
+      });
+    });
+  </script>
+</body>
+</html>

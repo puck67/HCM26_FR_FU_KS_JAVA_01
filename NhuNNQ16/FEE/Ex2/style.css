@@ -1,0 +1,434 @@
+/* Import Inter font from Google Fonts for a clean, modern look */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Basic reset and typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    color: #333;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+/* Main container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header section */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+/* Navigation tabs to easily switch between Javascript (DOM) and jQuery versions */
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #e2e8f0;
+    color: #4a5568;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #cbd5e0;
+}
+
+.nav-link.active {
+    background-color: #3182ce;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+}
+
+/* Global search bar (used in jQuery version) */
+.search-container {
+    max-width: 500px;
+    margin: 0 auto 30px auto;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #3182ce;
+}
+
+/* Kanban Board Layout using Flexbox */
+.board {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Responsive layout: stack columns on mobile screens */
+@media (max-width: 768px) {
+    .board {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* Individual Column Styling */
+.column {
+    flex: 1;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid #cbd5e0; /* Default border color */
+    transition: transform 0.2s ease;
+}
+
+/* Different top border colors to distinguish columns */
+.column.todo {
+    border-top-color: #ed8936; /* Orange for To Do */
+}
+
+.column.inprogress {
+    border-top-color: #3182ce; /* Blue for In Progress */
+}
+
+.column.done {
+    border-top-color: #48bb78; /* Green for Done */
+}
+
+.column h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2d3748;
+}
+
+/* Form section to add a task at the top of each column */
+.add-task-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-task-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.add-task-input:focus {
+    border-color: #4a5568;
+}
+
+.add-btn {
+    padding: 8px 15px;
+    background-color: #4a5568;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-btn:hover {
+    background-color: #2d3748;
+}
+
+/* Task List Container */
+.task-list {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Sticky note style for Task Cards */
+.task-card {
+    background-color: #fff9db; /* Pastel yellow "sticky note" style */
+    border-left: 5px solid #fcc419; /* Yellow indicator */
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Sticky note variations depending on column */
+.inprogress .task-card {
+    background-color: #e7f5ff; /* Light blue sticky note for In Progress */
+    border-left-color: #339af0;
+}
+
+.done .task-card {
+    background-color: #ebfbee; /* Light green sticky note for Done */
+    border-left-color: #51cf66;
+    text-decoration: line-through; /* Strikethrough for completed tasks */
+    color: #868e96;
+}
+
+.task-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    word-break: break-word;
+}
+
+/* Button styles for task actions */
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.start-btn, .edit-btn, .move-btn, .done-btn, .archive-btn, .delete-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Start button styles */
+.start-btn {
+    background-color: #4c6ef5;
+    color: #ffffff;
+}
+
+.start-btn:hover {
+    background-color: #3b5bdb;
+}
+
+/* Edit button styles */
+.edit-btn {
+    background-color: #868e96;
+    color: #ffffff;
+}
+
+.edit-btn:hover {
+    background-color: #495057;
+}
+
+/* Move button styles */
+.move-btn {
+    background-color: #1098ad;
+    color: #ffffff;
+}
+
+.move-btn:hover {
+    background-color: #0b7285;
+}
+
+/* Done button styles */
+.done-btn {
+    background-color: #37b24d;
+    color: #ffffff;
+}
+
+.done-btn:hover {
+    background-color: #2b8a3e;
+}
+
+/* Archive button styles */
+.archive-btn {
+    background-color: #7048e8;
+    color: #ffffff;
+}
+
+.archive-btn:hover {
+    background-color: #5f3dc4;
+}
+
+/* Delete button styles */
+.delete-btn {
+    background-color: #fa5252;
+    color: #ffffff;
+}
+
+.delete-btn:hover {
+    background-color: #e03131;
+}
+
+/* Archive toggle button styling */
+.archive-toggle-btn {
+    background-color: #2c3e50;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.archive-toggle-btn:hover {
+    background-color: #1a252f;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Slide-out Archive Drawer */
+.archive-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Initially hidden */
+    width: 380px;
+    height: 100%;
+    background-color: #ffffff;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.archive-drawer.open {
+    right: 0;
+}
+
+.drawer-header {
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8fafc;
+}
+
+.drawer-header h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    color: #a0aec0;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #4a5568;
+}
+
+.drawer-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Dark transparent overlay when drawer is open */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.drawer-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Card in Archive list */
+.archived-card {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #7048e8; /* Purple archive color */
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    text-align: left;
+}
+
+.archived-card .task-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4a5568;
+    text-decoration: none; /* remove line-through inside archive */
+}
+
+.restore-btn {
+    background-color: #48bb78;
+    color: #ffffff;
+}
+
+.restore-btn:hover {
+    background-color: #38a169;
+}
+
+.restore-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}

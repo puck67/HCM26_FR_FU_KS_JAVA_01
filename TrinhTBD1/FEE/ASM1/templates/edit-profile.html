@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 font-weight-bold text-dark">Edit Profile</h1>
+</div>
+
+<div id="profile-alert-container"></div>
+
+<div class="card cms-card">
+  <div class="card-header cms-card-header">
+    Profile Form Elements
+  </div>
+  <div class="card-body cms-card-body">
+    <form id="edit-profile-form">
+      <div class="form-group mb-4">
+        <label for="profile-firstname" class="font-weight-semibold text-dark">First Name</label>
+        <input type="text" class="form-control" id="profile-firstname" placeholder="Enter the first name" maxlength="30">
+        <div class="invalid-feedback">First Name is required (3-30 chars).</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="profile-lastname" class="font-weight-semibold text-dark">Last Name</label>
+        <input type="text" class="form-control" id="profile-lastname" placeholder="Enter the last name" maxlength="30">
+        <div class="invalid-feedback">Last Name is required (3-30 chars).</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label class="font-weight-semibold text-dark d-block">Email</label>
+        <div class="text-muted py-2 font-weight-medium" id="profile-email" style="font-size: 0.95rem;">your_email@example.com</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="profile-phone" class="font-weight-semibold text-dark">Phone</label>
+        <input type="text" class="form-control" id="profile-phone" placeholder="Enter your phone number" maxlength="13">
+        <div class="invalid-feedback">Phone is required (9-13 numeric digits).</div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label for="profile-description" class="font-weight-semibold text-dark">Description</label>
+        <textarea class="form-control" id="profile-description" rows="4" placeholder="Enter details about yourself" maxlength="200"></textarea>
+        <div class="invalid-feedback">Description must not exceed 200 characters.</div>
+      </div>
+
+      <div class="form-group mb-0">
+        <button type="submit" class="btn btn-green px-4 mr-2" id="profile-submit-btn">Submit Button</button>
+        <button type="button" class="btn btn-reset px-4" id="profile-reset-btn">Reset Button</button>
+      </div>
+    </form>
+  </div>
+</div>

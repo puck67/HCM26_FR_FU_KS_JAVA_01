@@ -1,0 +1,20 @@
+{
+  "name": "fee.p.a101-cms",
+  "version": "1.0.0",
+  "description": "Content Management System (CMS) implementation for FEE.P.A101 assignment at FSOFT using Bootstrap 4, jQuery and AJAX",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "cms",
+    "fsoft",
+    "bootstrap",
+    "jquery",
+    "ajax",
+    "validation"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}

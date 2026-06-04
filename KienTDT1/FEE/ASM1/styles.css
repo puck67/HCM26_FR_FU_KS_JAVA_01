@@ -1,0 +1,66 @@
+/* Custom styles to override Bootstrap 4 defaults */
+
+/* Green background for all buttons */
+.btn {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+.btn:hover {
+    background-color: #218838 !important;
+    color: white !important;
+    border-color: #218838 !important;
+}
+
+.btn:focus {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5) !important;
+}
+
+/* Light gray placeholder text for all inputs */
+::placeholder {
+    color: #6c757d !important;
+    opacity: 1 !important;
+}
+
+:-ms-input-placeholder {
+    color: #6c757d !important;
+}
+
+::-ms-input-placeholder {
+    color: #6c757d !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        margin: 10px 0;
+    }
+}
+
+/* Additional styling for better appearance */
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.card-header {
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px 8px 0 0 !important;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}

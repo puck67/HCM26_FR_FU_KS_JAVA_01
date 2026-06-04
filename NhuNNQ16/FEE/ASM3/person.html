@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Information - Register</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Top Banner Image -->
+    <div class="banner-container">
+        <img src="hidden-land-da-lat-1-1761523868.jpg" alt="Visitor Portal Banner" class="banner-image">
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <span class="navbar-brand font-weight-bold text-success">Visitor Manager</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="person.html">Register Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">Help & Guide</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-8">
+                
+                <!-- Page Title Header (Green text in light gray box with thin border) -->
+                <div class="page-title-box">
+                    <h2>Visitor Information</h2>
+                </div>
+
+                <!-- Registration Form Panel -->
+                <div class="form-container">
+                    <!-- Success Notification -->
+                    <div id="successAlert" class="alert-custom-success collapse" role="alert">
+                        <strong>Success!</strong> Visitor has been successfully registered and saved.
+                    </div>
+
+                    <form id="registerForm" novalidate>
+                        
+                        <!-- First name (labeled "Fist name:") -->
+                        <div class="form-group row">
+                            <label for="firstName" class="col-sm-4 col-form-label label-align-right">Fist name:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Type Fist name" maxlength="20" required>
+                                <div id="firstNameError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- Last name -->
+                        <div class="form-group row">
+                            <label for="lastName" class="col-sm-4 col-form-label label-align-right">Last name:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Type Last name" maxlength="20" required>
+                                <div id="lastNameError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="form-group row">
+                            <label for="gender" class="col-sm-4 col-form-label label-align-right">Gender:</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="gender" name="gender">
+                                    <option value="Male" selected>Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Telephone -->
+                        <div class="form-group row">
+                            <label for="telephone" class="col-sm-4 col-form-label label-align-right">Telephone:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Type Telephone" maxlength="11">
+                                <div id="telephoneError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-4 col-form-label label-align-right">Email:</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Type Email" maxlength="50">
+                                <div id="emailError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- You are in (Radio buttons group) -->
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label label-align-right">You are in:</label>
+                            <div class="col-sm-8">
+                                <!-- Row 1: Europe, Africa -->
+                                <div class="d-block mb-1">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="continent" id="europe" value="Europe">
+                                        <label class="form-check-label" for="europe">Europe</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="continent" id="africa" value="Africa">
+                                        <label class="form-check-label" for="africa">Africa</label>
+                                    </div>
+                                </div>
+                                <!-- Row 2: Australia, Asia, America -->
+                                <div class="d-block">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="continent" id="australia" value="Australia">
+                                        <label class="form-check-label" for="australia">Australia</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="continent" id="asia" value="Asia">
+                                        <label class="form-check-label" for="asia">Asia</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="continent" id="america" value="America">
+                                        <label class="form-check-label" for="america">America</label>
+                                    </div>
+                                </div>
+                                <div id="continentError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- Hobbies (Checkboxes group) -->
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label label-align-right">What are your hobbies:</label>
+                            <div class="col-sm-8">
+                                <!-- Row 1: Swimming, Cooking, Shopping -->
+                                <div class="d-block mb-1">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="swimming" value="Swimming">
+                                        <label class="form-check-label" for="swimming">Swimming</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="cooking" value="Cooking">
+                                        <label class="form-check-label" for="cooking">Cooking</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="shopping" value="Shopping">
+                                        <label class="form-check-label" for="shopping">Shopping</label>
+                                    </div>
+                                </div>
+                                <!-- Row 2: Sport, Dance, Sing -->
+                                <div class="d-block">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="sport" value="Sport">
+                                        <label class="form-check-label" for="sport">Sport</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="dance" value="Dance">
+                                        <label class="form-check-label" for="dance">Dance</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="hobbies" id="sing" value="Sing">
+                                        <label class="form-check-label" for="sing">Sing</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group row">
+                            <label for="description" class="col-sm-4 col-form-label label-align-right">Description:</label>
+                            <div class="col-sm-8">
+                                <textarea class="form-control" id="description" name="description" placeholder="Type Description" rows="4" maxlength="200"></textarea>
+                                <div id="descriptionError" class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <!-- Register Button (Centered at the bottom of the form container) -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button type="submit" id="registerBtn" class="btn btn-green">Register</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 and jQuery JS dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="person.js"></script>
+</body>
+</html>

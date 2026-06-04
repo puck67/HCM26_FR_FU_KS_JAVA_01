@@ -1,0 +1,387 @@
+/* CSS Styling for Kanban Board */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --bg-color: #f7f9fc;
+    --card-bg: #ffffff;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --border-color: #e2e8f0;
+    
+    /* Column Colors */
+    --todo-header: #bbdefb;
+    --todo-bg: #e3f2fd;
+    --progress-header: #ffe0b2;
+    --progress-bg: #fff3e0;
+    --done-header: #c8e6c9;
+    --done-bg: #e8f5e9;
+    
+    /* Sticky Note Color */
+    --note-bg: #fef9e7;
+    --note-shadow: rgba(0, 0, 0, 0.08);
+    
+    /* System Colors */
+    --primary-color: #2b5c8f;
+    --primary-hover: #1f446c;
+    --danger-color: #e53e3e;
+    --danger-hover: #c53030;
+    --success-color: #38a169;
+    
+    --shadow-md: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.board-container {
+    width: 100%;
+    max-width: 1200px;
+    background: var(--card-bg);
+    border-radius: 4px;
+    box-shadow: var(--shadow-lg);
+    padding: 2rem;
+}
+
+/* Header & Controls */
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1.5px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.board-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.controls-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Search bar styling */
+.search-wrapper {
+    position: relative;
+    max-width: 350px;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    padding-left: 2.5rem;
+    border: 1.5px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(43, 92, 143, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+/* Switcher */
+.mode-switcher-container {
+    display: inline-flex;
+    background: #edf2f7;
+    padding: 0.3rem;
+    border-radius: 4px;
+}
+
+.mode-btn {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 0.5rem 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.mode-btn.active {
+    background: var(--primary-color);
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.mode-indicator {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--success-color);
+}
+
+/* Kanban Board Columns layout */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .kanban-board {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kanban-column {
+    border-radius: 4px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    border: 1.5px solid var(--border-color);
+}
+
+.kanban-column.todo {
+    background-color: var(--todo-bg);
+}
+.kanban-column.progress {
+    background-color: var(--progress-bg);
+}
+.kanban-column.done {
+    background-color: var(--done-bg);
+}
+
+.column-header {
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    border-radius: 4px;
+}
+
+.todo .column-header {
+    background-color: var(--todo-header);
+    color: #0d47a1;
+}
+
+.progress .column-header {
+    background-color: var(--progress-header);
+    color: #e65100;
+}
+
+.done .column-header {
+    background-color: var(--done-header);
+    color: #1b5e20;
+}
+
+/* Column Input form wrapper */
+.column-input-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.column-input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+}
+
+.column-input:focus {
+    border-color: var(--primary-color);
+}
+
+.btn-add-task {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0 0.8rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.todo .btn-add-task:hover {
+    background-color: var(--todo-header);
+}
+
+.progress .btn-add-task:hover {
+    background-color: var(--progress-header);
+}
+
+.done .btn-add-task:hover {
+    background-color: var(--done-header);
+}
+
+/* Tasks Container */
+.tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: 350px;
+    padding-bottom: 2rem;
+}
+
+/* Sticky Note Task Card Style */
+.task-card {
+    background-color: var(--note-bg);
+    border-radius: 4px;
+    box-shadow: 2px 4px 10px var(--note-shadow);
+    padding: 1.25rem;
+    position: relative;
+    border-left: 4px solid #b0bec5;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+/* Folded page effect */
+.task-card::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 16px 16px;
+    border-color: transparent transparent #cfd8dc transparent;
+    box-shadow: -2px -2px 4px rgba(0,0,0,0.05);
+    border-bottom-right-radius: 4px;
+}
+
+.todo .task-card {
+    border-left-color: #2196f3;
+}
+.progress .task-card {
+    border-left-color: #ff9800;
+}
+.done .task-card {
+    border-left-color: #4caf50;
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 8px 15px rgba(0,0,0,0.1);
+}
+
+.task-title-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+
+.task-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #37474f;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-task-action {
+    border: 1px solid #cfd8dc;
+    background-color: #ffffff;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.btn-task-action.move {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-task-action.move:hover {
+    background-color: #ebf3fc;
+}
+
+.btn-task-action.delete {
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+.btn-task-action.delete:hover {
+    background-color: #ffebee;
+}
+
+.empty-column-message {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 2rem;
+    border: 2px dashed rgba(0,0,0,0.05);
+    border-radius: 4px;
+    font-style: italic;
+}

@@ -1,0 +1,238 @@
+/* ============================================================
+   styles.css – Custom overrides for Bootstrap 4
+   Front-End Essentials Project Assignment
+   ============================================================ */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ---------- Base ---------- */
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: #f0f4f8;
+  color: #333;
+}
+
+/* ---------- Navigation Bar ---------- */
+.navbar {
+  background-color: #2c7a4b !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: #fff !important;
+  letter-spacing: 0.5px;
+}
+
+.nav-link {
+  color: rgba(255,255,255,0.85) !important;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+/* ---------- Hero Banner ---------- */
+.hero-banner {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 0 0 8px 8px;
+  display: block;
+}
+
+/* ---------- Page Title ---------- */
+.page-title {
+  color: #2c7a4b;
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 18px 0 10px 0;
+  border-bottom: 2px solid #2c7a4b;
+  padding-bottom: 6px;
+}
+
+/* ---------- Card / Form Container ---------- */
+.form-card {
+  background: #fff;
+  border: 1px solid #d6e4dd;
+  border-radius: 8px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 10px rgba(44,122,75,0.06);
+}
+
+/* ---------- Form Labels ---------- */
+.form-label-col {
+  font-weight: 600;
+  color: #444;
+  padding-top: 7px;
+}
+
+/* ---------- Inputs ---------- */
+.form-control {
+  border-radius: 5px;
+  border: 1px solid #b0c9bb;
+  font-size: 0.93rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #2c7a4b;
+  box-shadow: 0 0 0 0.18rem rgba(44,122,75,0.20);
+}
+
+/* Placeholder color – light gray */
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #b0b8b4 !important;
+  opacity: 1;
+}
+
+/* ---------- Select ---------- */
+select.form-control {
+  background-color: #fff;
+}
+
+/* ---------- Buttons – ALL must be green ---------- */
+.btn-primary,
+.btn-success,
+.btn-register,
+.btn-search,
+button[type="submit"],
+input[type="submit"] {
+  background-color: #2c7a4b !important;
+  border-color: #2c7a4b !important;
+  color: #fff !important;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border-radius: 5px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-register:hover,
+.btn-search:hover,
+button[type="submit"]:hover {
+  background-color: #235f3a !important;
+  border-color: #235f3a !important;
+  box-shadow: 0 3px 8px rgba(44,122,75,0.25);
+}
+
+.btn-primary:focus,
+.btn-success:focus,
+.btn-register:focus,
+.btn-search:focus {
+  box-shadow: 0 0 0 0.2rem rgba(44,122,75,0.30) !important;
+}
+
+/* ---------- Radio & Checkbox ---------- */
+.form-check-input:checked {
+  accent-color: #2c7a4b;
+}
+
+.form-check-label {
+  font-size: 0.92rem;
+}
+
+/* ---------- Error Messages ---------- */
+.error-msg {
+  color: #c0392b;
+  font-size: 0.82rem;
+  margin-top: 3px;
+  display: none;
+}
+
+.is-invalid {
+  border-color: #c0392b !important;
+}
+
+/* ---------- Search Table ---------- */
+.search-table {
+  font-size: 0.88rem;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.search-table thead th {
+  background-color: #2c7a4b;
+  color: #fff;
+  font-weight: 700;
+  padding: 9px 10px;
+  border: 1px solid #25663f;
+}
+
+.search-table tbody td {
+  padding: 8px 10px;
+  border: 1px solid #d6e4dd;
+  vertical-align: top;
+}
+
+.search-table tbody tr:nth-child(even) {
+  background-color: #f4faf7;
+}
+
+.search-table tbody tr:hover {
+  background-color: #dff0e8;
+}
+
+/* ---------- Search bar ---------- */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.search-row label {
+  font-weight: 600;
+  white-space: nowrap;
+  margin: 0;
+}
+
+.search-row input {
+  max-width: 200px;
+}
+
+/* ---------- Help Page ---------- */
+.help-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  border: 1px solid #d6e4dd;
+  box-shadow: 0 2px 8px rgba(44,122,75,0.05);
+}
+
+.help-section h5 {
+  color: #2c7a4b;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: #2c7a4b;
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  padding: 12px;
+  font-size: 0.85rem;
+  margin-top: 40px;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 576px) {
+  .form-card {
+    padding: 16px 12px;
+  }
+
+  .hero-banner {
+    height: 110px;
+  }
+}

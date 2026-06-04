@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>My Image Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/script.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__title">My Image Gallery</h1>
+            <div class="header__actions">
+                <nav class="header__nav">
+                    <a class="header__nav-link header__nav-link--active" href="#">Gallery</a>
+                    <a class="header__nav-link" href="#">Favorites</a>
+                    <a class="header__nav-link" href="#">Analytics</a>
+                    <a class="header__nav-link" href="#">Settings</a>
+                </nav>
+                <div class="header__controls">
+                    <button class="header__icon-btn" aria-label="Grid view">
+                        <span class="material-symbols-outlined">grid_view</span>
+                    </button>
+                    <button class="header__icon-btn" aria-label="Search">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button class="header__icon-btn" aria-label="More options">
+                        <span class="material-symbols-outlined">more_vert</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <section id="gallery" class="gallery">
+            <!-- Card 1 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A smooth abstract gradient transition from mint green to soft teal, designed in a clean minimalist style with high-key lighting for a calm and modern light-mode gallery aesthetic. The colors are vibrant yet soothing, reminiscent of a digital sky." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcs6YHy7Ge4h53ArhnUpJWUcTquoBLHKMAy1Sd137j-noHdrQl4C8r_WPVuSMf7hJY_wqsZvIQyjep3q1SmgCmlwcUTazIwtuZpzi-OebZyFfSZzl3wFSJB7m7pxeMs0v64Dxt9Db9B7wfddqnbkug5SvHkoh3UQXQk1k6QuaJREgoGZ7a_fnczph5yLs2T9LB3BNP5k9Y5YYhhViZ1rMHFuzeHXj3G24XNU4z1aoT_F-7XisRU04StOcxEnLdu5INXsAVP3KS1p0">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon card__favorite-icon--active">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card" data-rating="5">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A warm and inviting abstract background featuring a soft gradient from sunset orange to a delicate peach. The composition is clean and modern, perfectly fitting a professional design portfolio with a tactile feel and bright atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZRnSlH-8siieTaNcGxsHDK4eGHl45da9aYtVMGgyXBXkilW4Rdcz6Kv_O6uoP-bVk1fqtldjJLxfjimWai2q7FI9PRJzLx6rsQR1iu5-e9cIb5On-2OMU5SE_wNXcokFUa3AXszDgPtsz7awdX_UMdD-cGOe9dX-BfL-3iSm0UtuM4afOxCnk0T-8rKyDx-9tUzAYdoobZ-GbyqFLY_eta0IodLdqlfVmoauBtzcfC3DdquXOZqO33Z2c_oJFqQjH_WihyDQPXyU">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon card__favorite-icon--active">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card" data-rating="3">
+                <div class="card__image-container">
+                    <img class="card__image" alt="An elegant deep sapphire blue abstract texture with a subtle geometric pattern, providing depth and a professional feel. The lighting is focused and soft, creating a premium aesthetic suitable for high-end digital galleries." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBoekurUhzumhso2yIybksjfWFa7j_mImY7C-lUfKaHa58C8yzalcFn-uZw4l_K2WyrD3nlGmt6MpchnHXEVhiiEMhs3B7ycEPuuPKdjdzMHilFOMw-0US4KWpU8Pufj_fwKH_0UwCc52HjjJ6OSC6pAEcD9RINtNYRYcOhTrYxEmPL4zq3FvLURRox4L_jc6lfE5_FrqIASPoyRLE8X29qLBhQd5JRA0kt4oeRPYyGBxQzdMwoe2SMmzoAT-hZ4SAvZWWe02CaaF8">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A vibrant cyan to azure blue gradient, clean and airy with a modern digital art feel. The lighting is diffused and bright, creating a cheerful light-mode atmosphere that highlights the crispness of the UI elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUsa-Tbmrl2jM_JGbdrs5npjCq-4r61yFc2025fOGF57e9aGL2q5Uu6LM6kZH4Zdx3rUKsDKD4LgY5mWexdn9xzhRXcM8WWLQO5Vq2RqlDLbNM7bbWPKs6ESFGXwcqtcHc_yG6xYeaFzqYKweUvOR6V-ytrYVH3VceQQ-V7FMXae-lNmmGpeZwzc4y-NonBLzRmLXqSTQ6b1DonA-8-3qLniHOu9mcnYzB1qno47p6SIt1JHnI9GY41Me7HCyZ5ZOMStO8loZOyAM">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon card__favorite-icon--active">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A bold coral to rose pink gradient with a soft, velvet-like texture. The composition is modern and minimalist, utilizing high-key lighting to maintain a bright and professional aesthetic across the entire visual layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD45waNDXKxqqed5azrxvKUkj45ataXRPVOujQfr22ZENOwiiEjdz2yAX-jd_foII4ZrOpDylad2XUFD3JyYqjUDML7-4rMF4xUz4uhtI92lxWAdXOoQJfsBkbvJS9PmarLYDpgM7fvcUbYvy7jJOWjTY_TAVBXWuo2WeiatZjGIyij-qQwe7JkvO2QCl_yTtoKnzyR6y1EVU0IkfA2NXEAMhmOg3ju3mwFJ7T3LufksVeuj0cyyFY3JnwlUm2BBUaCD1gpbrjliSE">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="card" data-rating="3">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A deep crimson to berry red abstract gradient, featuring a subtle grainy texture that adds physical depth. The lighting is dramatic yet soft, creating a warm and sophisticated focal point for a creative workspace gallery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAMNqVu8YU9A77Eq_yatDkQz0eiJd9Q-dVzrkTPVYIoAH9dQ8mvUtilJbH2xuj1zoC_LGQ0wfPC2Ycaq8LRq9msV-nh4sPXEZPsqgrgxQHfD5gwo8r8ptlZ1_vH3wbq_dSB2fSBE2HXWCPk311--N3m5pt_DxZ3VA9I_YwmdS0ClObW1kebR5Kdn3Fr2qqskbvxC0-h_dLSMBShgGaas2RaKIZHPjMfG-dd9csRwwHltF3ghMakuHhAAwu-eZJ7s7tMH8vdzZv-WM">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 7 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A refreshing lime to emerald green gradient, suggesting growth and vitality. The minimalist aesthetic is enhanced by soft, directional lighting that creates a clean, digital-first look for a collaborative tool's interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6B13Ku7GKI4f8PRBJqF5q2D2RuqIVa89FAurUuBzt6y9zBHr__sfYkXxI3xd_HuxkfzdLCLEKbsK4yZyUlF6u_naWQ0R2mYXNwdtxGmNyOxF9mnWwoA3MoX-SLNAlVIPPY6khPvne4xBtWKl_kqTo1ooFEAyTVpCr3RiwOL5whS_o-g5uaR7Ba7LvnqQ76O2vwM9f1qyrxFDyZQnrn30dDqoNIBfHkK-usl5sWXuLgrI_t-B3xSfnM4aaN-F4grGmCSa0SMdlWIs">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon card__favorite-icon--active">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 8 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A calming lavender to deep violet gradient, radiating a sense of creativity and calm. The lighting is soft and uniform, providing a professional backdrop that complements the yellow sticky-note aesthetic of the surrounding UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2-uqe7EbRpo-ffRpEvuWflQon1KsOPCyhr87eKfVh7T-edhvdS1_HnR4_t3rrEDUfHDU-2xAuGbWTL2Hpf_eJQtrl85V4xX5SIccxg87Cd02ZiXR-1kwnVxzI8x2r5psNZxUJlXURqqu2eZcP8B6MdjGt1y0oad6eUnRNycPoa66Z2DRCupmuZab_9y4zpc3OSiP7vQ4LMiegHZHknmp6LYdoaXqak9YVt1NqbE2JIPjluR36GZFVr7IZMqUy-GkqgBGdPVViGjw">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon card__favorite-icon--active">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 9 -->
+            <article class="card" data-rating="4">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A soft golden-yellow to pale lemon gradient, clean and sunny. This abstract piece feels warm and approachable, designed to fit seamlessly into a workspace that values visual clarity and tactile digital elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr4crbMXmqc1pTbY1iGIs4K5xDRuVrXkv1TL7mK4AWcZnK6gKwz3PJf_wocqlCWyd7UvOknWjmVAAcFmtsYdormOSjCEK1mWv3LoXfvKDMKSjl1i8UevyLA2UlOWtRme3KR_CMoBLBmcH518ycDQ1vNw82eu9NBfO6SonaaCVd9s-YRbI3HTBK-rIQb_NFU36BbmMNhN5HEVyPc7b_hp_Y1QMdqYevTwWiiXPkBTXnoYDc7MBtntI1orzttRXmUhbEFD11cF8tiV0">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon">favorite</span>
+                    </button>
+                </div>
+            </article>
+
+            <!-- Card 10 -->
+            <article class="card" data-rating="3">
+                <div class="card__image-container">
+                    <img class="card__image" alt="A sophisticated charcoal to slate gray abstract gradient, providing a neutral and professional aesthetic. The subtle lighting transitions create a sense of sleek, modern digital craft, perfect for a high-end image gallery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEFNllw3OR0jJxkrrz7PZ3hZ5M_AtC87fBI2BxNzXEMmNrTZClObagTjUr-sDSS4-gT9yIpPfpumDWViH1KfuXx8HAj-uXEJHlB-lNpv3xY4FSju2Y0jZZ6TvELrVtN0k6XggrYGHSQfsGXp1xLBjEER3rXkC1sqaKKgsaFYemsfpdnYGpkJnzX-FQlW_w54bGiLAoFXm-wPtNpwKiuCx9Ut_JtjqCbsZBNy4TpxTkp2K289ZSYe_W2pE3UAlSESBa8jVU_9Lre1Q">
+                    <div class="card__badge">Add to Favorites</div>
+                </div>
+                <div class="card__footer">
+                    <div class="card__rating">
+                        <span class="material-symbols-outlined card__rating-star" data-value="1">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="2">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="3">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="4">star</span>
+                        <span class="material-symbols-outlined card__rating-star" data-value="5">star</span>
+                    </div>
+                    <button class="card__favorite-btn" aria-label="Toggle favorite">
+                        <span class="material-symbols-outlined card__favorite-icon">favorite</span>
+                    </button>
+                </div>
+            </article>
+        </section>
+
+        <!-- Summary Bar Section -->
+        <section class="summary" aria-label="Gallery summary">
+            <div class="summary__section summary__section--rating">
+                <div class="summary__text-group">
+                    <span class="summary__title">Average Rating: <span id="average-rating-val">0.0</span> Stars</span>
+                    <span class="summary__subtitle">(based on <span id="total-items-val">0</span> items)</span>
+                </div>
+                <span class="material-symbols-outlined summary__icon">bar_chart</span>
+            </div>
+            <div class="summary__section summary__section--favorites">
+                <span class="summary__title">Total Favorites: <span id="total-favorites-count">0</span></span>
+                <span class="material-symbols-outlined summary__icon material-symbols-outlined--filled">favorite</span>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            <p class="footer-note__text">Built with HTML/CSS & jQuery</p>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation Bar for Mobile -->
+    <nav class="bottom-nav">
+        <button class="bottom-nav__item bottom-nav__item--active" aria-label="Gallery">
+            <span class="material-symbols-outlined">photo_library</span>
+            <span class="bottom-nav__label">Gallery</span>
+        </button>
+        <button class="bottom-nav__item" aria-label="Favorites">
+            <span class="material-symbols-outlined">favorite</span>
+            <span class="bottom-nav__label">Favorites</span>
+        </button>
+        <button class="bottom-nav__item" aria-label="Analytics">
+            <span class="material-symbols-outlined">bar_chart</span>
+            <span class="bottom-nav__label">Analytics</span>
+        </button>
+        <button class="bottom-nav__item" aria-label="Settings">
+            <span class="material-symbols-outlined">settings</span>
+            <span class="bottom-nav__label">Settings</span>
+        </button>
+    </nav>
+</body>
+</html>

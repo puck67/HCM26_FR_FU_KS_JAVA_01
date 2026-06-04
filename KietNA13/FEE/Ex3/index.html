@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Photo Gallery — Vanilla JS | Ex3</title>
+  <meta name="description" content="Dynamic image gallery with 5-star rating system and favorites — built with HTML, CSS, and Vanilla JavaScript.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Problem 01: CSS Gallery UI -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────── -->
+  <header class="site-header" role="banner">
+    <div class="page-wrapper">
+      <p class="site-header__eyebrow">Problem 02 · Vanilla JavaScript</p>
+      <h1 class="site-header__title">📸 Photo Gallery</h1>
+      <p class="site-header__subtitle">
+        Rate your favourite shots and save them to your collection
+      </p>
+    </div>
+  </header>
+
+  <!-- ── Main Gallery ────────────────────────────────── -->
+  <main id="main-content" role="main">
+    <div class="page-wrapper">
+      <!--
+        Problem 01: Gallery Grid (CSS Grid layout)
+        Cards are injected here by gallery.js (Problem 02)
+      -->
+      <section
+        id="gallery-grid"
+        class="gallery"
+        aria-label="Image gallery"
+      >
+        <!-- Cards rendered dynamically by JS -->
+      </section>
+    </div>
+  </main>
+
+  <!-- ── Summary Footer ──────────────────────────────── -->
+  <!--
+    Problem 01: Summary Footer section
+    Values updated dynamically via recalculateSummary() in gallery.js
+  -->
+  <footer class="summary-footer" role="contentinfo" aria-label="Gallery summary">
+    <div class="page-wrapper">
+      <div class="summary-footer__inner">
+
+        <!-- Average Rating Stat -->
+        <div class="summary-stat" id="summary-stat-avg">
+          <span
+            class="summary-stat__value"
+            id="stat-avg-rating"
+            aria-live="polite"
+            aria-label="Average rating"
+          >—</span>
+          <span class="summary-stat__label">⭐ Average Rating</span>
+        </div>
+
+        <div class="summary-divider" aria-hidden="true"></div>
+
+        <!-- Total Favorites Stat -->
+        <div class="summary-stat" id="summary-stat-fav">
+          <span
+            class="summary-stat__value"
+            id="stat-total-favorites"
+            aria-live="polite"
+            aria-label="Total favorites"
+          >0</span>
+          <span class="summary-stat__label">♥ Total Favorites</span>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ─────────────────────────────────────── -->
+  <!-- Gallery Data (shared) -->
+  <script src="js/gallery.data.js"></script>
+
+  <!-- Problem 02: Vanilla JavaScript implementation -->
+  <script src="js/gallery.js"></script>
+
+</body>
+</html>

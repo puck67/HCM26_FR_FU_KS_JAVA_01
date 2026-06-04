@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls Management System</title>
+
+    <!-- Bootstrap 4.6.0 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+    <!-- FontAwesome 5 for clean modern icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- NAVIGATION BAR (Shared Navbar) -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <a class="navbar-brand" href="#" id="nav-logo">
+                <i class="fas fa-poll mr-2"></i>Polls
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" id="nav-vote">
+                        <a class="nav-link" href="#" onclick="switchView('vote')">Vote</a>
+                    </li>
+                    <li class="nav-item" id="nav-create">
+                        <a class="nav-link" href="#" onclick="switchView('create')">Create</a>
+                    </li>
+                    <li class="nav-item" id="nav-list">
+                        <a class="nav-link" href="#" onclick="switchView('list')">List</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="login-btn">
+                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Dynamic Success Toast/Alert Area at top of application -->
+        <div id="global-alert-container"></div>
+
+        <!--  1. VOTE VIEW (HOME PAGE) -->
+        <section id="vote-view" class="view-section active-view">
+            <div class="card-container">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                    <h2 id="vote-poll-title" class="font-weight-bold mb-0">Great poll</h2>
+                    <span class="badge badge-success px-3 py-2">Active</span>
+                </div>
+
+                <form id="vote-form">
+                    <!-- Dynamic Questions Container for Voting -->
+                    <div id="vote-questions-container">
+                        <!-- Questions will be loaded dynamically from app.js -->
+                    </div>
+
+                    <!-- Submit vote button -->
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-lg btn-success px-5 py-3">
+                            <i class="fas fa-check-circle mr-2"></i>Retain
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!--2. CREATE VIEW (CREATE PAGE)-->
+        <section id="create-view" class="view-section">
+            <div class="card-container">
+                <div class="border-bottom pb-3 mb-4">
+                    <h2 class="font-weight-bold">Create Interview</h2>
+                </div>
+
+                <!-- Form level validation errors (placed strictly at the top) -->
+                <div id="validation-summary">
+                    <h5 class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Please correct the errors in the form:
+                    </h5>
+                    <ul id="validation-summary-list"></ul>
+                </div>
+
+                <form id="create-poll-form" novalidate>
+                    <!-- Poll Name Input Group -->
+                    <div class="form-group mb-4" id="grp-poll-name">
+                        <label for="poll-name" class="font-weight-bold text-uppercase"
+                            style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                            Poll Name <span class="required-star">*</span>
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="poll-name" placeholder="Name poll">
+                        <div class="invalid-msg" id="err-poll-name"></div>
+                    </div>
+
+                    <!-- Dynamic Question Blocks Container -->
+                    <div id="questions-builder-container">
+                        <!-- Default Initial Question Block will be rendered by JS -->
+                    </div>
+
+                    <!-- Add Question Button -->
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-success" id="btn-add-question-block">
+                            <i class="fas fa-plus mr-2"></i>Add question
+                        </button>
+                    </div>
+
+                    <!-- Submit / Retain Form Button -->
+                    <div class="text-center border-top pt-4">
+                        <button type="submit" class="btn btn-lg btn-success px-5 py-3" id="btn-submit-create">
+                            <i class="fas fa-save mr-2"></i>Retain
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 3. LIST VIEW (LIST PAGE) -->
+        <section id="list-view" class="view-section">
+            <div class="card-container">
+                <div class="border-bottom pb-3 mb-4 d-flex justify-content-between align-items-center">
+                    <h2 class="font-weight-bold mb-0">Manage Polls</h2>
+                </div>
+
+                <!-- Tab filters for poll state -->
+                <div class="tab-filters">
+                    <button class="btn btn-tab active-tab" onclick="filterPolls('active', this)">Active</button>
+                    <button class="btn btn-tab" onclick="filterPolls('draft', this)">Drafts</button>
+                    <button class="btn btn-tab" onclick="filterPolls('closed', this)">Closed</button>
+                </div>
+
+                <!-- Polls Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover polls-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%">#</th>
+                                <th style="width: 55%">The list of questions and issues within</th>
+                                <th style="width: 37%" class="text-right">Management</th>
+                            </tr>
+                        </thead>
+                        <tbody id="polls-list-tbody">
+                            <!-- Poll items loaded dynamically by app.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- LOGIN POPUP MODAL (MODAL OVERLAY)-->
+    <div class="modal-backdrop-custom" id="login-modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-card-header">
+                <h4>Login User</h4>
+                <button type="button" class="close-x" id="login-modal-close-x">&times;</button>
+            </div>
+            <form id="login-form" novalidate>
+                <div class="modal-card-body">
+                    <div id="login-error-container" class="alert alert-danger" style="display: none;"></div>
+
+                    <div class="form-group">
+                        <label for="login-alias" class="font-weight-bold">Alias <span
+                                class="required-star">*</span></label>
+                        <input type="text" class="form-control" id="login-alias" placeholder="JoeSixpack">
+                        <div class="invalid-msg" id="err-login-alias"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password" class="font-weight-bold">Password <span
+                                class="required-star">*</span></label>
+                        <input type="password" class="form-control" id="login-password" placeholder="********">
+                        <div class="invalid-msg" id="err-login-password"></div>
+                    </div>
+
+                    <div class="form-group form-check mb-0">
+                        <input type="checkbox" class="form-check-input" id="login-remember">
+                        <label class="form-check-label font-weight-500" for="login-remember">Remember me</label>
+                    </div>
+                </div>
+                <div class="modal-card-footer">
+                    <button type="button" class="btn btn-secondary mr-2" id="login-modal-close-btn"
+                        style="background-color: #7f8c8d !important; border-color: #7f8c8d !important;">Close</button>
+                    <button type="submit" class="btn btn-success">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JQUERY & BOOTSTRAP SCRIPTS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Application Logic -->
+    <script src="app.js"></script>
+</body>
+
+</html>

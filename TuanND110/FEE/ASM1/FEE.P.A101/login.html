@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CMS Dashboard</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom Style System -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="auth-wrapper">
+
+    <div class="auth-card">
+        <div class="auth-card__header">
+            <h2 class="auth-card__title">Please Sign In</h2>
+        </div>
+        <div class="auth-card__body">
+            <!-- Alert container for validation errors -->
+            <div id="alertContainer"></div>
+
+            <form class="form" id="loginForm" novalidate>
+                <!-- Email field group -->
+                <div class="form__group">
+                    <input type="email" class="form__control form__control--input-height" id="email" placeholder="E-mail" maxlength="50" required aria-describedby="emailFeedback">
+                    <div class="form__feedback" id="emailFeedback">Please enter a valid email address.</div>
+                </div>
+
+                <!-- Password field group -->
+                <div class="form__group">
+                    <input type="password" class="form__control form__control--input-height" id="password" placeholder="Password" maxlength="50" required aria-describedby="passwordFeedback">
+                    <div class="form__feedback" id="passwordFeedback">Password must be between 8 and 30 characters.</div>
+                </div>
+
+                <!-- Remember me Checkbox -->
+                <div class="form__group form__group--spaced">
+                    <label class="form__label form__label--inline">
+                        <input type="checkbox" id="rememberMe" class="form__checkbox">
+                        Remember Me
+                    </label>
+                </div>
+
+                <!-- Login button (green) -->
+                <button type="submit" class="btn btn--block" id="loginBtn">
+                    Login
+                </button>
+            </form>
+
+            <div class="auth-card__link-group">
+                <a href="./register.html" class="auth-card__link" id="registerLink">Click here to Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Check if user is already logged in, redirect if so
+            if (sessionStorage.getItem('currentUser')) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Validate email format
+            function isValidEmail(email) {
+                const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return regex.test(email);
+            }
+
+            // Alert helper
+            function showAlert(type, message) {
+                const alertHTML = `
+                    <div class="alert alert--${type}">
+                        <span>
+                            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                            ${message}
+                        </span>
+                        <button type="button" class="alert__close-btn" aria-label="Close alert" onclick="$(this).parent().remove()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                `;
+                $('#alertContainer').html(alertHTML);
+            }
+
+            // --- Real-time validations ---
+            $('#email').on('input blur', function() {
+                validateEmailField();
+            });
+
+            $('#password').on('input blur', function() {
+                validatePasswordField();
+            });
+
+            function validateEmailField() {
+                const email = $('#email').val().trim();
+                const $el = $('#email');
+                if (!email) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#emailFeedback').text('Email address is required.');
+                    return false;
+                } else if (!isValidEmail(email)) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#emailFeedback').text('Please enter a valid email address (e.g., user@example.com).');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            function validatePasswordField() {
+                const password = $('#password').val();
+                const $el = $('#password');
+                if (!password) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#passwordFeedback').text('Password is required.');
+                    return false;
+                } else if (password.length < 8 || password.length > 30) {
+                    $el.addClass('form__control--invalid').removeClass('form__control--valid');
+                    $('#passwordFeedback').text('Password must be between 8 and 30 characters in length.');
+                    return false;
+                } else {
+                    $el.removeClass('form__control--invalid').addClass('form__control--valid');
+                    return true;
+                }
+            }
+
+            // Form Submit handler
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+
+                // Clear previous alerts
+                $('#alertContainer').empty();
+
+                // Trigger validations
+                const isEmailValid = validateEmailField();
+                const isPasswordValid = validatePasswordField();
+
+                if (isEmailValid && isPasswordValid) {
+                    const email = $('#email').val().trim();
+                    const password = $('#password').val();
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const foundUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+
+                    const testEmail = "admin@cms.com";
+                    const testPass = "admin123456";
+
+                    let loggedInUser = null;
+
+                    if (foundUser) {
+                        if (foundUser.password === password) {
+                            loggedInUser = foundUser;
+                        } else {
+                            $('#password').addClass('form__control--invalid');
+                            showAlert('danger', 'Incorrect password. Please try again.');
+                            return;
+                        }
+                    } else if (email === testEmail && password === testPass) {
+                        loggedInUser = {
+                            username: "AdminUser",
+                            email: testEmail,
+                            firstName: "System",
+                            lastName: "Administrator",
+                            phone: "0912345678",
+                            description: "Default Administrator Account"
+                        };
+
+                        users.push({ ...loggedInUser, password: testPass });
+                        localStorage.setItem('users', JSON.stringify(users));
+                    } else {
+                        showAlert('danger', 'Account not found. Please register or use: admin@cms.com / admin123456');
+                        return;
+                    }
+
+                    if (loggedInUser) {
+                        showAlert('success', 'Authentication successful! Redirecting you...');
+                        $('#loginBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-2"></i> Logging in...');
+
+                        sessionStorage.setItem('currentUser', JSON.stringify(loggedInUser));
+
+                        setTimeout(function () {
+                            window.location.href = 'index.html';
+                        }, 1200);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

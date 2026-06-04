@@ -1,0 +1,660 @@
+/*
+ * styles.css - Custom stylesheet to override Bootstrap 4 for FEE.P.A102 Polls Management
+ */
+
+/* Import Outfit Font from Google Fonts for a Premium Look */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --primary-green: #28a745;
+  --primary-green-hover: #218838;
+  --primary-green-dark: #1b5e20;
+  --primary-green-light: #81c784;
+  --primary-green-very-light: #e8f5e9;
+  --bg-dark-navbar: #1a1a1a;
+  --text-dark: #2d3748;
+  --text-muted: #718096;
+  --border-color: #e2e8f0;
+  --invalid-color: #e53e3e;
+  --valid-color: #38a169;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #f7fafc;
+  color: var(--text-dark);
+  min-height: 100vh;
+  padding-top: 76px; /* Space for fixed navbar */
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAVBAR CUSTOMIZATION */
+.navbar-polls {
+  background-color: var(--bg-dark-navbar) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 12px 24px;
+}
+
+.navbar-polls .navbar-brand {
+  font-weight: 700;
+  font-size: 1.45rem;
+  color: #ffffff !important;
+  letter-spacing: -0.5px;
+}
+
+.navbar-polls .nav-link {
+  color: #a0aec0 !important;
+  font-weight: 500;
+  padding: 8px 16px !important;
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+}
+
+.navbar-polls .nav-item.active .nav-link,
+.navbar-polls .nav-link:hover {
+  color: #ffffff !important;
+}
+
+.navbar-polls .login-nav-btn {
+  color: #ffffff !important;
+  font-weight: 500;
+  border-radius: 4px;
+  background-color: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 6px 18px !important;
+  transition: all 0.2s ease;
+}
+
+.navbar-polls .login-nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: #ffffff !important;
+}
+
+/* ALL BUTTONS MUST BE GREEN */
+button,
+.btn,
+input[type="submit"],
+input[type="button"] {
+  background-color: var(--primary-green) !important;
+  border-color: var(--primary-green) !important;
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  padding: 10px 22px !important;
+  font-size: 0.95rem !important;
+  box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+button:hover,
+.btn:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background-color: var(--primary-green-hover) !important;
+  border-color: var(--primary-green-hover) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3) !important;
+  transform: translateY(-1px);
+}
+
+button:active,
+.btn:active {
+  transform: translateY(1px) !important;
+}
+
+/* Plus sign button for answers or generic tiny utility button */
+.btn-plus-answer {
+  background-color: var(--primary-green) !important;
+  border-color: var(--primary-green) !important;
+  border-radius: 0 4px 4px 0 !important;
+  padding: 6px 14px !important;
+  height: 38px;
+}
+
+/* PLACEHOLDER IN LIGHT GRAY COLOR */
+input::placeholder,
+textarea::placeholder {
+  color: #cccccc !important;
+  opacity: 1 !important;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #cccccc !important;
+}
+
+input::-ms-input-placeholder,
+textarea::-ms-input-placeholder {
+  color: #cccccc !important;
+}
+
+/* CONTAINER AND PAGES SLIDES */
+.page-section {
+  display: none; /* Controlled via jQuery */
+}
+
+.page-section.active-section {
+  display: block;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* POLL PAGE CUSTOM CARD */
+.poll-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.poll-title {
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #1a202c;
+  margin-bottom: 30px;
+}
+
+.question-item {
+  margin-bottom: 28px;
+}
+
+.question-text {
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: #2d3748;
+  margin-bottom: 12px;
+}
+
+.required-asterisk {
+  color: var(--invalid-color);
+  font-weight: bold;
+  margin-left: 2px;
+}
+
+.option-container {
+  padding-left: 5px;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.option-item input {
+  margin-right: 12px;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+}
+
+.option-label {
+  font-size: 0.98rem;
+  color: #4a5568;
+  margin-bottom: 0;
+}
+
+/* CREATE PAGE STYLES */
+.create-poll-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-group-custom {
+  margin-bottom: 24px;
+}
+
+.form-control-custom {
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  height: auto;
+}
+
+.form-control-custom:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.15);
+  outline: none;
+}
+
+.question-block {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  background-color: #f8fafc;
+  position: relative;
+}
+
+.question-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.question-block-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.answer-row {
+  margin-bottom: 12px;
+}
+
+/* LIST PAGE - TAB CUSTOMIZATION MATCHING THE FIGURES (ALL MUST BE GREEN state colors) */
+.tab-group-custom {
+  display: flex;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  max-width: fit-content;
+}
+
+.tab-btn-custom {
+  border: 1px solid #a5d6a7 !important;
+  border-radius: 0 !important;
+  font-weight: 500 !important;
+  padding: 10px 24px !important;
+  font-size: 0.92rem !important;
+  box-shadow: none !important;
+  text-transform: none;
+}
+
+/* Selected/Active Tab: Active status (Vibrant green background) */
+.tab-btn-active {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  color: #ffffff !important;
+}
+.tab-btn-active:hover {
+  background-color: #218838 !important;
+  border-color: #1e7e34 !important;
+}
+
+/* Selected/Active Tab: Drafts status (Darker green background) */
+.tab-btn-drafts {
+  background-color: #2e7d32 !important;
+  border-color: #2e7d32 !important;
+  color: #ffffff !important;
+}
+.tab-btn-drafts:hover {
+  background-color: #1b5e20 !important;
+  border-color: #1b5e20 !important;
+}
+
+/* Selected/Active Tab: Closed status (Forest/Deep green background) */
+.tab-btn-closed {
+  background-color: #1b5e20 !important;
+  border-color: #1b5e20 !important;
+  color: #ffffff !important;
+}
+.tab-btn-closed:hover {
+  background-color: #144316 !important;
+  border-color: #144316 !important;
+}
+
+/* Inactive Tab style - must also be green, using very light green */
+.tab-btn-inactive-light {
+  background-color: var(--primary-green-very-light) !important;
+  border-color: #a5d6a7 !important;
+  color: #2e7d32 !important;
+}
+.tab-btn-inactive-light:hover {
+  background-color: #c8e6c9 !important;
+  color: #1b5e20 !important;
+}
+
+/* TABLE STYLING */
+.table-custom {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.table-custom th {
+  background-color: #f8fafc;
+  color: #4a5568;
+  font-weight: 600;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 16px;
+  font-size: 0.95rem;
+}
+
+.table-custom td {
+  padding: 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid #edf2f7;
+  color: #4a5568;
+  font-size: 0.95rem;
+}
+
+.table-action-btn {
+  background-color: var(--primary-green) !important;
+  border: 1px solid var(--primary-green) !important;
+  color: #ffffff !important;
+  font-size: 0.8rem !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  margin-right: 5px;
+}
+
+.table-action-btn:hover {
+  background-color: var(--primary-green-hover) !important;
+  border-color: var(--primary-green-hover) !important;
+  color: #ffffff !important;
+}
+
+.table-action-btn-danger:hover {
+  background-color: var(--invalid-color) !important;
+  border-color: var(--invalid-color) !important;
+  color: #ffffff !important;
+}
+
+/* VALIDATION MESSAGE DESIGN */
+.validation-summary {
+  background-color: #fff5f5;
+  border-left: 4px solid var(--invalid-color);
+  border-radius: 6px;
+  padding: 18px 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(229, 62, 62, 0.05);
+}
+
+.validation-summary-title {
+  color: #c53030;
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.validation-summary-list {
+  margin-bottom: 0;
+  padding-left: 20px;
+  color: #9b2c2c;
+  font-size: 0.92rem;
+}
+
+.validation-summary-list li {
+  margin-bottom: 4px;
+}
+
+/* Inline Errors */
+.error-message {
+  color: var(--invalid-color);
+  font-size: 0.82rem;
+  margin-top: 5px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.error-message::before {
+  content: "\f06a";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 6px;
+}
+
+/* CSS classes for marking invalid inputs */
+.label-invalid {
+  color: var(--invalid-color) !important;
+  transition: color 0.2s ease;
+}
+
+.input-invalid {
+  border-color: var(--invalid-color) !important;
+  background-color: #fff5f5 !important;
+}
+
+.input-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15) !important;
+}
+
+/* SUCCESS ALERT */
+.success-alert-custom {
+  background-color: #f0fff4;
+  border-left: 4px solid var(--valid-color);
+  border-radius: 6px;
+  padding: 18px 24px;
+  margin-bottom: 30px;
+  color: #22543d;
+  box-shadow: 0 2px 4px rgba(56, 161, 105, 0.05);
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* MODAL / LOGIN POPUP */
+.login-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.login-modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 440px;
+  overflow: hidden;
+  transform: scale(0.9);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid var(--border-color);
+}
+
+.login-modal-overlay.show .login-modal-card {
+  transform: scale(1);
+}
+
+.login-modal-header {
+  background-color: #ffffff;
+  padding: 24px 32px 12px 32px;
+  border-bottom: none;
+}
+
+.login-modal-body {
+  padding: 12px 32px 24px 32px;
+}
+
+.login-modal-footer {
+  padding: 16px 32px 24px 32px;
+  background-color: #ffffff;
+  border-top: none;
+  text-align: center;
+}
+
+.login-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+/* RESPONSIVE LAYOUT VIA MEDIA QUERIES */
+
+/* Desktop viewports (> 768px) */
+@media (min-width: 769px) {
+  .poll-card {
+    padding: 50px 60px;
+  }
+  .navbar-polls .navbar-nav {
+    margin-left: 20px;
+  }
+}
+
+/* Tablet viewports (576px to 768px) */
+@media (max-width: 768px) and (min-width: 576px) {
+  body {
+    padding-top: 70px;
+  }
+  .poll-card {
+    padding: 30px;
+    margin-bottom: 20px;
+  }
+  .poll-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .question-text {
+    font-size: 1.1rem;
+  }
+  .table-custom th, .table-custom td {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  .tab-btn-custom {
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+/* Mobile viewports (< 576px) */
+@media (max-width: 575px) {
+  body {
+    padding-top: 60px;
+  }
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .poll-card {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  }
+  .poll-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    line-height: 1.2;
+  }
+  .question-text {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  .option-item {
+    margin-bottom: 8px;
+  }
+  .option-label {
+    font-size: 0.9rem;
+  }
+  .btn, button, input[type="submit"] {
+    width: 100% !important; /* Full width buttons on mobile */
+    margin-bottom: 8px;
+    padding: 12px 20px !important;
+  }
+  .btn-plus-answer {
+    width: auto !important; /* Keep the small plus button compact */
+    margin-bottom: 0 !important;
+    padding: 6px 14px !important;
+  }
+  .create-poll-container {
+    padding: 0;
+  }
+  .question-block {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .tab-group-custom {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+  }
+  .tab-btn-custom {
+    flex: 1;
+    padding: 8px 10px !important;
+    font-size: 0.8rem !important;
+    text-align: center;
+  }
+  .table-custom {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  /* Responsive card-like rows for table on extreme mobile */
+  .table-custom thead {
+    display: none; /* Hide header on mobile */
+  }
+  .table-custom tbody tr {
+    display: block;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+  }
+  .table-custom tbody td {
+    display: block;
+    padding: 6px 0;
+    border: none;
+    text-align: left;
+  }
+  .table-custom tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #718096;
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .table-custom tbody td:last-child {
+    border-top: 1px solid #edf2f7;
+    margin-top: 8px;
+    padding-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .table-action-btn {
+    flex: 1;
+    text-align: center;
+    margin-bottom: 0 !important;
+  }
+  /* Login card responsiveness */
+  .login-modal-card {
+    margin: 15px;
+    max-width: 100%;
+  }
+  .login-modal-body {
+    padding: 12px 20px 20px 20px;
+  }
+}

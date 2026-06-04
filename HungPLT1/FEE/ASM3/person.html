@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visitor Portal - Register</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="person.html">Visitor Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="person.html">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="visitor-card">
+                    <div class="banner-container">
+                        <img src="images/banner.png" class="banner-img" alt="Lake Banner">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="visitor-title">Visitor Information</h2>
+                        <form id="register-visitor-form" novalidate>
+                            <div id="validation-alert-summary"></div>
+
+                            <div class="form-group row">
+                                <label for="firstName" class="col-sm-3 col-form-label form-label-bold text-sm-right">First name <span class="text-danger">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="firstName" placeholder="First name" required maxlength="20">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="lastName" class="col-sm-3 col-form-label form-label-bold text-sm-right">Last name <span class="text-danger">*</span></label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="lastName" placeholder="Last name" required maxlength="20">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="gender" class="col-sm-3 col-form-label form-label-bold text-sm-right">Gender</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="gender">
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="telephone" class="col-sm-3 col-form-label form-label-bold text-sm-right">Telephone</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="telephone" placeholder="Telephone" maxlength="11">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label form-label-bold text-sm-right">Email</label>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label form-label-bold text-sm-right">You are in <span class="text-danger">*</span></label>
+                                <div class="col-sm-9 pt-2">
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input class="form-check-input" type="radio" name="region" id="regEurope" value="Europe">
+                                        <label class="form-check-label" for="regEurope">Europe</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input class="form-check-input" type="radio" name="region" id="regAfrica" value="Africa">
+                                        <label class="form-check-label" for="regAfrica">Africa</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input class="form-check-input" type="radio" name="region" id="regAustralia" value="Australia">
+                                        <label class="form-check-label" for="regAustralia">Australia</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input class="form-check-input" type="radio" name="region" id="regAsia" value="Asia">
+                                        <label class="form-check-label" for="regAsia">Asia</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3">
+                                        <input class="form-check-input" type="radio" name="region" id="regAmerica" value="America">
+                                        <label class="form-check-label" for="regAmerica">America</label>
+                                    </div>
+                                    <div id="region-error-placement"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label form-label-bold text-sm-right">What are your hobbies</label>
+                                <div class="col-sm-9 pt-2">
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbySwimming" value="Swimming">
+                                        <label class="form-check-label" for="hobbySwimming">Swimming</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbyCooking" value="Cooking">
+                                        <label class="form-check-label" for="hobbyCooking">Cooking</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbyShopping" value="Shopping">
+                                        <label class="form-check-label" for="hobbyShopping">Shopping</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbySport" value="Sport">
+                                        <label class="form-check-label" for="hobbySport">Sport</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbyDance" value="Dance">
+                                        <label class="form-check-label" for="hobbyDance">Dance</label>
+                                    </div>
+                                    <div class="form-check form-check-inline mr-3 mb-2">
+                                        <input class="form-check-input hobby-checkbox" type="checkbox" id="hobbySing" value="Sing">
+                                        <label class="form-check-label" for="hobbySing">Sing</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-3 col-form-label form-label-bold text-sm-right">Description</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" id="description" rows="4" placeholder="Description" maxlength="200"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mt-4">
+                                <div class="col-sm-9 offset-sm-3 text-center text-sm-left">
+                                    <button type="submit" class="btn px-4">Register</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

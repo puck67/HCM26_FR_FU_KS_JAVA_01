@@ -1,0 +1,340 @@
+/* ============================================================
+   styles.css — Custom overrides on top of Bootstrap 4
+   Polls Web Application
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- CSS Variables ---------- */
+:root {
+  --color-primary:   #28a745;
+  --color-primary-h: #218838;
+  --color-danger:    #dc3545;
+  --color-navbar-bg: #1a1a1a;
+  --color-placeholder: #b0b0b0;
+  --color-border-invalid: #dc3545;
+  --color-label-invalid: #dc3545;
+  --transition-speed: 0.2s;
+  --border-radius: 4px;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Safety: hide Bootstrap modals by default (in case BS JS is slow to init) */
+.modal:not(.show) { display: none !important; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #333;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background-color: var(--color-navbar-bg) !important;
+  padding: 0 1rem;
+  min-height: 50px;
+}
+
+.navbar-brand {
+  color: #ccc !important;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 0;
+}
+
+.nav-link {
+  color: #aaa !important;
+  font-size: 0.875rem;
+  padding: 0.75rem 0.85rem !important;
+  transition: color var(--transition-speed);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #fff !important;
+}
+
+/* ---------- ALL Buttons → Green ---------- */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info,
+.btn-light,
+.btn-dark {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.btn:hover,
+.btn-primary:hover,
+.btn-success:hover {
+  background-color: var(--color-primary-h) !important;
+  border-color: var(--color-primary-h) !important;
+  transform: translateY(-1px);
+}
+
+.btn:active { transform: translateY(0); }
+
+/* Exception: Close/Cancel buttons can be neutral */
+.btn-outline-secondary,
+.btn-close-modal {
+  background-color: #6c757d !important;
+  border-color: #6c757d !important;
+  color: #fff !important;
+}
+.btn-outline-secondary:hover,
+.btn-close-modal:hover {
+  background-color: #5a6268 !important;
+  border-color: #5a6268 !important;
+}
+
+/* small inline "+" add-answer button */
+.btn-add-answer {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+  padding: 0.25rem 0.55rem;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* ---------- Placeholder Light Gray ---------- */
+::placeholder {
+  color: var(--color-placeholder) !important;
+  opacity: 1 !important;
+}
+:-ms-input-placeholder { color: var(--color-placeholder) !important; }
+::-ms-input-placeholder { color: var(--color-placeholder) !important; }
+
+/* ---------- Form Controls ---------- */
+.form-control {
+  font-size: 0.875rem;
+  border-radius: var(--border-radius);
+  transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.15rem rgba(40,167,69,.25);
+}
+
+/* ---------- Validation States ---------- */
+.form-control.is-invalid,
+.is-invalid .form-control {
+  border-color: var(--color-border-invalid) !important;
+  background-image: none; /* remove Bootstrap's icon */
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-danger);
+  margin-top: 2px;
+}
+
+label.invalid-label {
+  color: var(--color-label-invalid) !important;
+  font-weight: 500;
+}
+
+/* ---------- Validation Summary Banner ---------- */
+.validation-summary {
+  display: none;
+  border-left: 4px solid var(--color-danger);
+  background-color: #fff3f3;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+}
+
+.validation-summary.show { display: block; }
+.validation-summary ul { margin: 0.25rem 0 0 1rem; padding: 0; }
+.validation-summary li { font-size: 0.82rem; color: var(--color-danger); }
+
+/* ---------- Success Banner ---------- */
+.success-banner {
+  display: none;
+  border-left: 4px solid var(--color-primary);
+  background-color: #f0fff4;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: #155724;
+}
+.success-banner.show { display: block; }
+
+/* ---------- Page Card Container ---------- */
+.page-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Vote Page ---------- */
+.poll-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.question-block {
+  margin-bottom: 1rem;
+}
+
+.question-label {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 0.35rem;
+  display: block;
+}
+
+.question-label .required-star {
+  color: var(--color-danger);
+  margin-left: 2px;
+}
+
+.answer-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+/* ---------- Create Page ---------- */
+.question-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1rem;
+  background: #fafafa;
+  position: relative;
+}
+
+.question-card .remove-question-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: none !important;
+  border: none !important;
+  color: var(--color-danger) !important;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  transition: transform var(--transition-speed);
+}
+.question-card .remove-question-btn:hover { transform: scale(1.2); }
+
+.answers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.answer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.answer-row .remove-answer-btn {
+  background: none !important;
+  border: none !important;
+  color: #aaa !important;
+  font-size: 1rem;
+  padding: 0 0.2rem;
+  cursor: pointer;
+  transition: color var(--transition-speed);
+}
+.answer-row .remove-answer-btn:hover { color: var(--color-danger) !important; }
+
+/* prevent overflow when user types very long text */
+.form-control.truncate-overflow {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* ---------- List Page ---------- */
+.nav-tabs .nav-link {
+  color: #555 !important;
+  border-radius: 0;
+  font-size: 0.875rem;
+  padding: 0.45rem 1rem !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+  color: var(--color-primary) !important;
+}
+
+.table thead th {
+  background-color: #f8f8f8;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.btn-sm {
+  font-size: 0.75rem !important;
+  padding: 0.2rem 0.55rem !important;
+}
+
+/* ---------- Login Modal ---------- */
+.modal-header {
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-title { font-size: 1rem; font-weight: 600; }
+
+/* ---------- Spinner (loading indicator) ---------- */
+.spinner-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 576px) {
+  .page-card { padding: 1rem; margin-top: 1rem; }
+  .poll-title { font-size: 1.2rem; }
+  .btn-group-manage { display: flex; flex-direction: column; gap: 0.35rem; }
+  .btn-group-manage .btn { width: 100%; }
+  .navbar-brand { font-size: 0.9rem; }
+}
+
+@media (max-width: 768px) {
+  .table-responsive { overflow-x: auto; }
+  .question-card { padding: 0.75rem 1rem; }
+}

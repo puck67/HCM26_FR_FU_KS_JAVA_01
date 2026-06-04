@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Guide - Visitor Portal</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Top Banner Image -->
+    <div class="banner-container">
+        <img src="hidden-land-da-lat-1-1761523868.jpg" alt="Visitor Portal Banner" class="banner-image">
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <span class="navbar-brand font-weight-bold text-success">Visitor Manager</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="person.html">Register Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="help.html">Help & Guide</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+
+                <!-- Page Title Header (Green text in light gray box with thin border) -->
+                <div class="page-title-box">
+                    <h2>Help & Guide</h2>
+                </div>
+
+                <!-- Guide Panel -->
+                <div class="form-container">
+                    <h4 class="text-success font-weight-bold mb-3 border-bottom pb-2">1. Form Validation Rules (Register
+                        Screen)</h4>
+                    <p>When registering a new visitor in the <strong>Register Visitor</strong> page, the system enforces
+                        the following validation checks before saving:</p>
+
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Field Name</th>
+                                    <th>Mandatory</th>
+                                    <th>Max Length</th>
+                                    <th>Validation Rules / Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-weight-bold">Fist name</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>20 chars</td>
+                                    <td>Must contain only alphabetical characters and spaces (no numbers or special
+                                        symbols). Supports Vietnamese accents.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Last name</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>20 chars</td>
+                                    <td>Must contain only alphabetical characters and spaces (no numbers or special
+                                        symbols). Supports Vietnamese accents.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Gender</td>
+                                    <td><span class="badge badge-secondary">No</span></td>
+                                    <td>-</td>
+                                    <td>Select option from dropdown list (default is Male).</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Telephone</td>
+                                    <td><span class="badge badge-secondary">No</span></td>
+                                    <td>11 chars</td>
+                                    <td>If provided, must contain numbers only (no spaces, letters, or symbols).</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Email</td>
+                                    <td><span class="badge badge-secondary">No</span></td>
+                                    <td>50 chars</td>
+                                    <td>If provided, must match the valid email format structure (e.g.,
+                                        <code>username@domain.com</code>).
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">You are in</td>
+                                    <td><span class="badge badge-danger">Yes</span></td>
+                                    <td>-</td>
+                                    <td>Must select one of the available locations (Europe, Africa, Australia, Asia,
+                                        America).</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Hobbies</td>
+                                    <td><span class="badge badge-secondary">No</span></td>
+                                    <td>-</td>
+                                    <td>Select one or more checkboxes corresponding to your hobbies.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-weight-bold">Description</td>
+                                    <td><span class="badge badge-secondary">No</span></td>
+                                    <td>200 chars</td>
+                                    <td>Optional brief notes about the visitor (maximum 200 characters).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="text-success font-weight-bold mb-3 border-bottom pb-2 mt-5">2. Search Visitor
+                        Instructions</h4>
+                    <ul class="pl-3 mb-4">
+                        <li class="mb-2">Enter a search keyword into the text box labeled <strong>Fist name:</strong> in
+                            the <strong>Search Visitor</strong> screen.</li>
+                        <li class="mb-2">Click the <strong>Search...</strong> button to execute the query.</li>
+                        <li class="mb-2"><strong>Multi-column Filter:</strong> As required by the assignment guidelines,
+                            the search matches the keyword against <strong>all columns</strong> in the visitor record
+                            (First name, Last name, Gender, Telephone, Continent/Region, Hobbies, and Description),
+                            making it easy to find records using any piece of information!</li>
+                        <li class="mb-2">If the search field is left blank and <strong>Search...</strong> is clicked,
+                            all visitor records will be displayed in the results table.</li>
+                    </ul>
+
+                    <h4 class="text-success font-weight-bold mb-3 border-bottom pb-2 mt-5">3. Row Highlight Feature</h4>
+                    <p>Hovering your mouse pointer over any visitor record row in the search results table will
+                        dynamically highlight that row with a light green background color (<code>#d4edda</code>). This
+                        is implemented via dynamic classes, ensuring table styles comply with the strict stylesheet
+                        requirement to not override cell backgrounds directly.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-muted border-top bg-white mt-5">
+        <div class="container">
+            <p class="mb-0">NhuNNQ16</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 4 and jQuery JS dependencies -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

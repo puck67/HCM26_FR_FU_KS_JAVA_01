@@ -1,0 +1,31 @@
+/* Base resets and global layout */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--surface);
+  color: var(--text-primary);
+  min-height: 100vh;
+  /* Dot-grid background pattern */
+  background-image: radial-gradient(circle, #C8CADE 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Footer branding */
+.board-footer {
+  text-align: center;
+  padding: 20px 24px 28px;
+  font-size: .74rem;
+  color: var(--text-muted);
+  letter-spacing: .02em;
+}
+
+.board-footer strong {
+  color: var(--col-todo-accent);
+  font-weight: 700;
+}

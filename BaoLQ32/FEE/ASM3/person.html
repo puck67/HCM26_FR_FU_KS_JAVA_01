@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Registry - Register</title>
+  <!-- Bootstrap 4.6.2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <nav class="navbar navbar-expand navbar-dark navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="person.html"><i class="fas fa-id-card mr-2"></i>Visitor Registry</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="person.html">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="search.html">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="help.html">Help</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content Wrapper matching PDF Figure -->
+  <div class="main-wrapper">
+    <!-- Top Lake Banner image -->
+    <img src="lake_banner.png" alt="Lake Banner" class="banner-image">
+
+    <!-- Header bar -->
+    <div class="header-bar-custom">
+      <h2 class="header-bar-title">Visitor Information</h2>
+    </div>
+
+    <!-- Content Body -->
+    <div class="content-body">
+      <!-- Validation Error Alert Container -->
+      <div id="validation-summary-container"></div>
+
+      <form id="registration-form" novalidate>
+        
+        <!-- Fist name: (Note: spelling 'Fist' to match PDF screenshot) -->
+        <div class="form-group row align-items-center mb-3" id="group-first-name">
+          <label for="first-name" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Fist name:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="first-name" placeholder="Fist name" required>
+            <div class="invalid-feedback-custom">First name is mandatory (max 20 characters, no numbers).</div>
+          </div>
+        </div>
+
+        <!-- Last name: -->
+        <div class="form-group row align-items-center mb-3" id="group-last-name">
+          <label for="last-name" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Last name:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="last-name" placeholder="Last name" required>
+            <div class="invalid-feedback-custom">Last name is mandatory (max 20 characters, no numbers).</div>
+          </div>
+        </div>
+
+        <!-- Gender: -->
+        <div class="form-group row align-items-center mb-3" id="group-gender">
+          <label for="gender" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Gender:</label>
+          <div class="col-sm-4">
+            <select class="form-control" id="gender">
+              <option value="Male" selected>Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Telephone: -->
+        <div class="form-group row align-items-center mb-3" id="group-telephone">
+          <label for="telephone" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Telephone:</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control" id="telephone" placeholder="Telephone">
+            <div class="invalid-feedback-custom">Telephone must be numbers only (max 11 digits).</div>
+          </div>
+        </div>
+
+        <!-- Email: -->
+        <div class="form-group row align-items-center mb-3" id="group-email">
+          <label for="email" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Email:</label>
+          <div class="col-sm-6">
+            <input type="email" class="form-control" id="email" placeholder="Email">
+            <div class="invalid-feedback-custom">Email must match email format (max 50 characters).</div>
+          </div>
+        </div>
+
+        <!-- You are in: (Mandatory radio buttons matching layout) -->
+        <div class="form-group row mb-3" id="group-you-are-in">
+          <label class="col-sm-3 col-form-label col-form-label-custom text-sm-right pt-0">You are in:</label>
+          <div class="col-sm-9">
+            <div class="radio-grid">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="you-are-in" id="radio-europe" value="Europe">
+                <label class="form-check-label text-dark" for="radio-europe">Europe</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="you-are-in" id="radio-africa" value="Africa">
+                <label class="form-check-label text-dark" for="radio-africa">Africa</label>
+              </div>
+              <div class="form-check w-100 d-none d-sm-block" style="height: 0;"></div> <!-- Break for row layout matching screenshot -->
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="you-are-in" id="radio-australia" value="Australia">
+                <label class="form-check-label text-dark" for="radio-australia">Australia</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="you-are-in" id="radio-asia" value="Asia">
+                <label class="form-check-label text-dark" for="radio-asia">Asia</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="you-are-in" id="radio-america" value="America">
+                <label class="form-check-label text-dark" for="radio-america">America</label>
+              </div>
+            </div>
+            <div class="invalid-feedback-custom">You must select your location.</div>
+          </div>
+        </div>
+
+        <!-- What are your hobbies: (Checkbox grid layout) -->
+        <div class="form-group row mb-3" id="group-hobbies">
+          <label class="col-sm-3 col-form-label col-form-label-custom text-sm-right pt-0">What are your hobbies:</label>
+          <div class="col-sm-9">
+            <div class="checkbox-grid">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-swimming" value="Swimming">
+                <label class="form-check-label text-dark" for="hobby-swimming">Swimming</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-cooking" value="Cooking">
+                <label class="form-check-label text-dark" for="hobby-cooking">Cooking</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-shopping" value="Shopping">
+                <label class="form-check-label text-dark" for="hobby-shopping">Shopping</label>
+              </div>
+              <div class="form-check w-100 d-none d-sm-block" style="height: 0;"></div> <!-- Break matching screenshot -->
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-sport" value="Sport">
+                <label class="form-check-label text-dark" for="hobby-sport">Sport</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-dance" value="Dance">
+                <label class="form-check-label text-dark" for="hobby-dance">Dance</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="hobby-sing" value="Sing">
+                <label class="form-check-label text-dark" for="hobby-sing">Sing</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description: -->
+        <div class="form-group row mb-4" id="group-description">
+          <label for="description" class="col-sm-3 col-form-label col-form-label-custom text-sm-right">Description:</label>
+          <div class="col-sm-7">
+            <textarea class="form-control" id="description" rows="4" placeholder="Description"></textarea>
+            <div class="invalid-feedback-custom">Description must be under 200 characters.</div>
+          </div>
+        </div>
+
+        <!-- Register Button (Green & Centered) -->
+        <div class="form-group row justify-content-center mt-5">
+          <button type="submit" class="btn btn-green px-5" id="btn-register">Register</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <!-- jQuery 3.6.0 & Bootstrap 4.6.2 JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Mock Visitor Data Store Helpers
+      var defaultVisitors = [
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        },
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        },
+        {
+          firstName: "John",
+          lastName: "Terry",
+          gender: "Male",
+          telephone: "0909090909",
+          youAreIn: "Europe",
+          hobbies: "Shopping, Cooking",
+          description: "One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly."
+        }
+      ];
+
+      function getVisitors() {
+        var stored = localStorage.getItem('visitors');
+        if (!stored) {
+          localStorage.setItem('visitors', JSON.stringify(defaultVisitors));
+          return defaultVisitors;
+        }
+        return JSON.parse(stored);
+      }
+
+      function saveVisitors(visitorsList) {
+        localStorage.setItem('visitors', JSON.stringify(visitorsList));
+      }
+
+      // Initialize storage on load
+      getVisitors();
+
+      // Form Submit Validation
+      $('#registration-form').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset styles and alert
+        $('.form-group').removeClass('is-invalid-group');
+        $('#validation-summary-container').empty();
+        
+        var errors = [];
+        
+        // 1. Validate First name (Mandatory, max 20, character only, no numbers)
+        var firstName = $('#first-name').val().trim();
+        if (firstName.length === 0) {
+          $('#group-first-name').addClass('is-invalid-group');
+          errors.push("Fist name is mandatory.");
+        } else if (firstName.length > 20) {
+          $('#group-first-name').addClass('is-invalid-group');
+          errors.push("Fist name must not exceed 20 characters.");
+        } else if (/[0-9]/.test(firstName)) {
+          $('#group-first-name').addClass('is-invalid-group');
+          errors.push("Fist name must not contain numbers.");
+        }
+
+        // 2. Validate Last name (Mandatory, max 20, character only, no numbers)
+        var lastName = $('#last-name').val().trim();
+        if (lastName.length === 0) {
+          $('#group-last-name').addClass('is-invalid-group');
+          errors.push("Last name is mandatory.");
+        } else if (lastName.length > 20) {
+          $('#group-last-name').addClass('is-invalid-group');
+          errors.push("Last name must not exceed 20 characters.");
+        } else if (/[0-9]/.test(lastName)) {
+          $('#group-last-name').addClass('is-invalid-group');
+          errors.push("Last name must not contain numbers.");
+        }
+
+        // 3. Validate Telephone (Optional, max 11, numbers only)
+        var telephone = $('#telephone').val().trim();
+        if (telephone.length > 0) {
+          if (telephone.length > 11) {
+            $('#group-telephone').addClass('is-invalid-group');
+            errors.push("Telephone must not exceed 11 digits.");
+          } else if (!/^\d+$/.test(telephone)) {
+            $('#group-telephone').addClass('is-invalid-group');
+            errors.push("Telephone must contain numbers only.");
+          }
+        }
+
+        // 4. Validate Email (Optional, max 50, standard/specified format)
+        var email = $('#email').val().trim();
+        if (email.length > 0) {
+          if (email.length > 50) {
+            $('#group-email').addClass('is-invalid-group');
+            errors.push("Email must not exceed 50 characters.");
+          } else {
+            // Check for standard email regex that satisfies: [a..Z][0..9]@...
+            var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            if (!emailRegex.test(email)) {
+              $('#group-email').addClass('is-invalid-group');
+              errors.push("Email is invalid (must match a valid email format).");
+            }
+          }
+        }
+
+        // 5. Validate You are in (Mandatory)
+        var youAreIn = $('input[name="you-are-in"]:checked').val();
+        if (!youAreIn) {
+          $('#group-you-are-in').addClass('is-invalid-group');
+          errors.push("You are in field is mandatory.");
+        }
+
+        // 6. Validate Description (Optional, max 200)
+        var description = $('#description').val().trim();
+        if (description.length > 200) {
+          $('#group-description').addClass('is-invalid-group');
+          errors.push("Description must not exceed 200 characters.");
+        }
+
+        // Show error summary or process success
+        if (errors.length > 0) {
+          var alertHtml = `
+            <div class="alert alert-danger border mb-4">
+              <h5 class="alert-heading font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Validation Failure</h5>
+              <p class="mb-2">Please correct the following invalid fields:</p>
+              <ul class="mb-0 pl-4">
+                ${errors.map(err => `<li>${err}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+          $('#validation-summary-container').html(alertHtml);
+          // Scroll to summary
+          $([document.documentElement, document.body]).animate({
+              scrollTop: $("#validation-summary-container").offset().top - 120
+          }, 300);
+        } else {
+          // Success! Save to local storage and redirect
+          var visitorsList = getVisitors();
+          
+          // Collect selected hobbies
+          var hobbiesList = [];
+          $('.checkbox-grid input:checked').each(function() {
+            hobbiesList.push($(this).val());
+          });
+          
+          var newVisitor = {
+            firstName: firstName,
+            lastName: lastName,
+            gender: $('#gender').val(),
+            telephone: telephone || "-",
+            youAreIn: youAreIn,
+            hobbies: hobbiesList.length > 0 ? hobbiesList.join(', ') : "-",
+            description: description || "-"
+          };
+          
+          visitorsList.push(newVisitor);
+          saveVisitors(visitorsList);
+          
+          alert("Registration successful! Redirecting to search screen.");
+          window.location.href = "search.html";
+        }
+      });
+
+      // Real-time error removal
+      $(document).on('input change', '.form-control, input[name="you-are-in"]', function() {
+        var $input = $(this);
+        var group = $input.closest('.form-group');
+        
+        // Simple real-time checks to clear errors early
+        if ($input.attr('id') === 'first-name') {
+          var val = $input.val().trim();
+          if (val.length > 0 && val.length <= 20 && !/[0-9]/.test(val)) {
+            group.removeClass('is-invalid-group');
+          }
+        } else if ($input.attr('id') === 'last-name') {
+          var val = $input.val().trim();
+          if (val.length > 0 && val.length <= 20 && !/[0-9]/.test(val)) {
+            group.removeClass('is-invalid-group');
+          }
+        } else if ($input.attr('id') === 'telephone') {
+          var val = $input.val().trim();
+          if (val.length === 0 || (val.length <= 11 && /^\d+$/.test(val))) {
+            group.removeClass('is-invalid-group');
+          }
+        } else if ($input.attr('id') === 'email') {
+          var val = $input.val().trim();
+          var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+          if (val.length === 0 || (val.length <= 50 && emailRegex.test(val))) {
+            group.removeClass('is-invalid-group');
+          }
+        } else if ($input.attr('name') === 'you-are-in') {
+          group.removeClass('is-invalid-group');
+        } else if ($input.attr('id') === 'description') {
+          if ($input.val().trim().length <= 200) {
+            group.removeClass('is-invalid-group');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

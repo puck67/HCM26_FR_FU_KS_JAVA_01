@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Dashboard - Admin Panel</title>
+    <!-- Bootstrap 4.6.2 CSS (Needed for basic utilities, grids, dropdown js positioning) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom BEM Styles -->
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+    <!-- 5-Second Loading Screen Overlay -->
+    <div class="loading-screen" id="globalLoader">
+        <div class="loading-screen__spinner"></div>
+        <div class="loading-screen__counter" id="loaderCountdown">5</div>
+        <div class="loading-screen__text" id="loaderMessage">Simulating Network Request...</div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard__sidebar sidebar">
+            <div class="sidebar__brand">CMS Dashboard</div>
+            <div class="sidebar__search-wrap">
+                <div class="sidebar__search">
+                    <input type="text" class="sidebar__search-input" id="sidebarSearch" placeholder="Search..." aria-label="Search items">
+                    <button class="sidebar__search-btn" type="button" aria-label="Perform search">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <ul class="sidebar__menu" id="sidebarMenu">
+                <li class="sidebar__item sidebar__item--active" id="menuViewContent">
+                    <a class="sidebar__link" data-page="view_content" href="#contentContainer" aria-label="View content list">
+                        <i class="fas fa-table sidebar__icon" aria-hidden="true"></i> View contents
+                    </a>
+                </li>
+                <li class="sidebar__item" id="menuAddContent">
+                    <a class="sidebar__link" data-page="add_content" href="#contentContainer" aria-label="Open content form">
+                        <i class="far fa-edit sidebar__icon" aria-hidden="true"></i> Form content
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Right Side Panel Wrapper -->
+        <div class="dashboard__content-wrapper">
+            <!-- Top Header Bar -->
+            <header class="header-bar">
+                <a href="#contentContainer" class="header-bar__brand" aria-label="Go to dashboard home">CMS</a>
+
+                <!-- Profile dropdown -->
+                <div class="dropdown">
+                    <button class="dropdown__toggle" type="button" id="profileDropdown" aria-haspopup="true" aria-expanded="false" aria-label="User profile options">
+                        <i class="fas fa-user-circle dropdown__toggle-icon" aria-hidden="true"></i>
+                        <span id="navbarUsername">Loading User...</span>
+                    </button>
+                    <div class="dropdown__menu dropdown__menu-right" id="profileDropdownMenu" aria-labelledby="profileDropdown">
+                        <button class="dropdown__item" type="button" id="dropdownEditProfile">
+                            <i class="fas fa-user dropdown__icon" aria-hidden="true"></i> User Profile
+                        </button>
+                        <div class="dropdown__divider"></div>
+                        <button class="dropdown__item dropdown__item--danger" type="button" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt dropdown__icon" aria-hidden="true"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content Container -->
+            <main class="dashboard__main">
+                <div id="contentContainer"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- jQuery 3.6.0 and Bootstrap 4 Bundle JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Central Application Script -->
+    <script src="./js/app.js"></script>
+</body>
+</html>
