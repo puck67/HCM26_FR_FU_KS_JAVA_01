@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Visitors</title>
+    <!-- Bootstrap 4 CSS via CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- Custom Style overriding Bootstrap 4 -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Main Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-3">
+        <div class="container-fluid max-viewport-width" style="max-width: 1000px;">
+            <a class="navbar-brand" href="person.html">HR Admin Portal</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHR" aria-controls="navbarHR" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarHR">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="person.html">Register Visitor</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Search Visitors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Outer Frame Container matching Mock Figures -->
+    <div class="frame-container">
+        <div class="inner-content">
+            
+            <!-- Hero Lake Banner -->
+            <div class="hero-banner"></div>
+
+            <!-- Page Title Bar -->
+            <div class="section-title-bar">
+                <h2 class="section-title">Search Visitor</h2>
+            </div>
+
+            <!-- Search Form Area -->
+            <div class="search-form-wrapper">
+                <form id="search-form" class="form-inline">
+                    <div class="form-group mb-2">
+                        <label for="search-input" class="sr-only">Search</label>
+                        <span class="font-weight-bold mr-2">First name:</span>
+                        <input type="text" class="form-control" id="search-input" placeholder="Enter keyword..." style="width: 250px;">
+                    </div>
+                    <button type="submit" class="btn mb-2 ml-2" id="btn-search">Search...</button>
+                    <span class="search-description mb-2 ml-2">(Type First name Visitor and Click Search button)</span>
+                </form>
+            </div>
+
+            <!-- Visitor Data Table Area -->
+            <div class="table-responsive-wrapper">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>First name</th>
+                            <th>Last name</th>
+                            <th>Gender</th>
+                            <th>Telephone</th>
+                            <th>You're in</th>
+                            <th>Hobbies</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="visitor-table-body">
+                        <!-- Loaded dynamically via app.js -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 dependencies via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <!-- Custom Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

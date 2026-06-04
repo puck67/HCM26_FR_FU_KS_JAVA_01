@@ -1,0 +1,403 @@
+/* ==========================================================================
+   PREMIUM CMS DESIGN SYSTEM (FEE.P.A101 CMS)
+   Overrides Bootstrap 4 with Modern Glassmorphism & High-End UX
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #2ecc71;
+    --primary-hover: #27ae60;
+    --primary-rgba: rgba(46, 204, 113, 0.15);
+    --bg-main: #f4f7f6;
+    --bg-card: #ffffff;
+    --sidebar-bg: #1e293b;
+    --sidebar-hover: #334155;
+    --sidebar-text: #94a3b8;
+    --sidebar-active-text: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --placeholder-color: #cbd5e1;
+    --error: #ef4444;
+    --success: #10b981;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* ==========================================================================
+   BUTTONS (Must be Green as per specification)
+   ========================================================================== */
+.btn-primary, .btn-success, .btn-submit {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 6px -1px rgba(46, 204, 113, 0.2), 0 2px 4px -1px rgba(46, 204, 113, 0.1) !important;
+}
+
+.btn-primary:hover, .btn-success:hover, .btn-submit:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 15px -3px rgba(46, 204, 113, 0.3), 0 4px 6px -2px rgba(46, 204, 113, 0.15) !important;
+}
+
+.btn-primary:active, .btn-success:active, .btn-submit:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: var(--text-secondary) !important;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: all 0.25s ease !important;
+}
+
+.btn-secondary:hover {
+    background-color: #e2e8f0 !important;
+    color: var(--text-primary) !important;
+}
+
+/* ==========================================================================
+   INPUTS & PLACEHOLDERS (Must be Light Gray)
+   ========================================================================== */
+.form-control {
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    height: auto;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    transition: all 0.25s ease;
+    background-color: #f8fafc;
+}
+
+.form-control:focus {
+    background-color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-rgba);
+}
+
+/* Placeholder specific color override (Light Gray) */
+.form-control::placeholder {
+    color: var(--placeholder-color) !important;
+    opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+.form-control::-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+
+/* Form Groups & Real-time Validation styling */
+.form-group label {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control.is-invalid {
+    border-color: var(--error) !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+.form-control.is-valid {
+    border-color: var(--success) !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15) !important;
+}
+
+.invalid-feedback {
+    color: var(--error);
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    display: none;
+}
+
+/* ==========================================================================
+   GLASSMORPHISM AUTH TEMPLATE
+   ========================================================================== */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 10% 20%, rgb(243, 246, 245) 0%, rgb(218, 238, 225) 90%);
+    padding: 20px;
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+    width: 100%;
+    max-width: 440px;
+    transition: transform 0.3s ease;
+}
+
+.auth-card:hover {
+    transform: translateY(-2px);
+}
+
+.auth-logo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.auth-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   DASHBOARD CMS LAYOUT
+   ========================================================================== */
+#wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 280px;
+    max-width: 280px;
+    background: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 100vh;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+}
+
+#sidebar .sidebar-header {
+    padding: 30px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#sidebar .sidebar-brand {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+}
+
+#sidebar ul.components {
+    padding: 24px 16px;
+}
+
+#sidebar ul li {
+    margin-bottom: 6px;
+}
+
+#sidebar ul li a {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    color: var(--sidebar-text);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+#sidebar ul li a i {
+    font-size: 1.1rem;
+    margin-right: 12px;
+    transition: transform 0.2s ease;
+}
+
+#sidebar ul li a:hover {
+    color: var(--sidebar-active-text);
+    background: var(--sidebar-hover);
+}
+
+#sidebar ul li a:hover i {
+    transform: scale(1.1);
+}
+
+#sidebar ul li.active > a {
+    color: var(--sidebar-active-text);
+    background: var(--primary);
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.25);
+}
+
+/* Content Area */
+#content {
+    width: 100%;
+    padding: 30px;
+    min-height: 100vh;
+    background-color: var(--bg-main);
+    transition: all 0.3s;
+}
+
+/* Header bar */
+.navbar-custom {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.03);
+    padding: 16px 24px;
+}
+
+/* Cards & Layout */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.02);
+}
+
+.card-header {
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+}
+
+/* ==========================================================================
+   5 SECONDS PREMIUM LOADING SCREEN
+   ========================================================================== */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(244, 247, 246, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease;
+}
+
+/* Pulsing Custom Spinner */
+.spinner-premium {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+.spinner-premium::before, .spinner-premium::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);
+    opacity: 0.6;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.spinner-premium::after {
+    animation-delay: -1.0s;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(0); }
+    50% { transform: scale(1); }
+}
+
+/* Dynamic text counters inside loading screen */
+.loading-progress {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   PREMIUM TABLES
+   ========================================================================== */
+.table {
+    color: var(--text-primary);
+}
+
+.table thead th {
+    background-color: #f8fafc;
+    border-bottom: 2px solid var(--border-color);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    padding: 16px;
+}
+
+.table tbody td {
+    padding: 16px;
+    vertical-align: middle;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.95rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8fafc;
+    cursor: pointer;
+}
+
+/* Shake Animation for Invalid Inputs */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+
+.shake-input {
+    animation: shake 0.4s ease-in-out;
+}

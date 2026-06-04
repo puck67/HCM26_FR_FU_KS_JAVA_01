@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS - Premium Portal Login</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Premium Style -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-wrapper">
+
+    <div class="auth-card">
+        <div class="auth-logo"><i class="fas fa-cubes mr-2"></i>CMS</div>
+        <div class="auth-title">Sign in to your Dashboard</div>
+        
+        <form id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-transparent border-right-0"><i class="far fa-envelope text-muted"></i></span>
+                    </div>
+                    <input type="email" id="email" class="form-control border-left-0 pl-0" placeholder="Enter your email" required>
+                </div>
+                <div class="invalid-feedback" id="emailError">Please enter a valid email address (between 5 and 50 characters).</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-transparent border-right-0"><i class="fas fa-lock text-muted"></i></span>
+                    </div>
+                    <input type="password" id="password" class="form-control border-left-0 pl-0" placeholder="Enter password" required>
+                </div>
+                <div class="invalid-feedback" id="passwordError">Password must be between 8 and 30 characters.</div>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe">
+                    <label class="form-check-label text-muted small" for="rememberMe">Keep me logged in</label>
+                </div>
+                <a href="#" class="text-success small font-weight-bold">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block btn-submit shadow">Login to CMS</button>
+            
+            <div class="text-center mt-4">
+                <span class="text-muted small">New to platform?</span>
+                <a href="register.html" class="text-success small font-weight-bold ml-1">Create an account</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            const $email = $('#email');
+            const $password = $('#password');
+            const validator = CMSApp.validator;
+
+            // Inline real-time validation (Events on blur and keyup)
+            $email.on('blur keyup', function() {
+                validator.validateField($email, val => validator.rules.email(val) && validator.rules.range(val.trim(), 5, 50), '#emailError');
+            });
+
+            $password.on('blur keyup', function() {
+                validator.validateField($password, val => validator.rules.range(val, 8, 30), '#passwordError');
+            });
+
+            // Form Submit Trigger
+            $('#loginForm').on('submit', function(e) {
+                e.preventDefault();
+
+                const isEmailValid = validator.validateField($email, val => validator.rules.email(val) && validator.rules.range(val.trim(), 5, 50), '#emailError');
+                const isPasswordValid = validator.validateField($password, val => validator.rules.range(val, 8, 30), '#passwordError');
+
+                if (!isEmailValid) validator.shakeField($email);
+                if (!isPasswordValid) validator.shakeField($password);
+
+                if (isEmailValid && isPasswordValid) {
+                    // Store mock auth session
+                    CMSApp.storage.set('userEmail', $email.val().trim());
+                    // Direct to Dashboard
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

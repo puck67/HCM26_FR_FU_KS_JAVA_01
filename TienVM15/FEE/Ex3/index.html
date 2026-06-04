@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Image Gallery (jQuery)</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google CDN for jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>My Image Gallery</h1>
+            <div class="version-toggle">
+                <a href="vanilla.html" class="version-btn">Vanilla JS</a>
+                <a href="index.html" class="version-btn active">jQuery</a>
+            </div>
+        </header>
+
+        <!-- Gallery Grid -->
+        <main class="gallery-grid">
+            <!-- Card 1 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-1">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                        <span class="star" data-value="2">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                        <span class="star" data-value="3">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                        <span class="star" data-value="4">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                        <span class="star" data-value="5">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-2">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-3">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-4">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-5">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-6">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-7">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-8">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-9">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 10 -->
+            <div class="card" data-rating="0">
+                <div class="image-block grad-10">
+                    <span class="fav-tooltip">Add to Favorites</span>
+                </div>
+                <div class="card-controls">
+                    <div class="rating-stars">
+                        <span class="star" data-value="1"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="2"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="3"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="4"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                        <span class="star" data-value="5"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                    </div>
+                    <button class="fav-btn" aria-label="Add to Favorites">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Summary Footer -->
+        <footer class="summary-footer">
+            <div class="summary-container">
+                <div class="summary-section average-rating-section">
+                    AVERAGE RATING:&nbsp;<span id="avg-rating-value">0.0</span>&nbsp;Stars
+                    <span class="subtext">(based on <span id="total-items-value">10</span> items)</span>
+                    <span class="summary-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-section total-favorites-section">
+                    TOTAL FAVORITES:&nbsp;<span id="total-fav-value">0</span>
+                    <span class="summary-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    </span>
+                </div>
+            </div>
+            <div class="footer-credit">Built with HTML/CSS Grid</div>
+        </footer>
+    </div>
+
+    <!-- jQuery Event Handling, Visual Effects, Animations, and Query Selectors -->
+    <script>
+        $(document).ready(function() {
+            // Keep track of current totals to only animate on change
+            let lastAverage = '0.0';
+            let lastFavorites = 0;
+
+            // Initial computation
+            updateTotals(true); // silent initial load (no animations)
+
+            // 1. Rating Hover Preview Effect (Problem 03 specification)
+            $('.rating-stars').on('mouseenter', '.star', function() {
+                const hoverValue = $(this).data('value');
+                const $stars = $(this).closest('.rating-stars').find('.star');
+
+                $stars.each(function() {
+                    const starVal = $(this).data('value');
+                    if (starVal <= hoverValue) {
+                        $(this).addClass('hover-pre');
+                    } else {
+                        $(this).removeClass('hover-pre');
+                    }
+                });
+            }).on('mouseleave', function() {
+                // Remove pre-fill styles when leaving the rating stars container
+                $(this).find('.star').removeClass('hover-pre');
+            });
+
+            // 2. Rating click logic via jQuery delegation
+            $('.rating-stars').on('click', '.star', function() {
+                const clickedValue = $(this).data('value');
+                const $card = $(this).closest('.card');
+                const currentRating = parseInt($card.attr('data-rating') || 0, 10);
+
+                // If user clicks the current rating, they can reset it to 0, otherwise set it
+                const newRating = (currentRating === clickedValue) ? 0 : clickedValue;
+                $card.attr('data-rating', newRating);
+
+                // Update star rendering inside this card
+                const $stars = $(this).closest('.rating-stars').find('.star');
+                $stars.each(function() {
+                    const starVal = $(this).data('value');
+                    if (starVal <= newRating) {
+                        $(this).addClass('active');
+                    } else {
+                        $(this).removeClass('active');
+                    }
+                });
+
+                updateTotals();
+            });
+
+            // 3. Favorites button toggle logic via jQuery delegation
+            $('.gallery-grid').on('click', '.fav-btn', function() {
+                const $btn = $(this);
+                const $card = $btn.closest('.card');
+                const $tooltip = $card.find('.fav-tooltip');
+
+                // Toggle active state
+                const isFavorited = $btn.toggleClass('active').hasClass('active');
+
+                // Update UI text and ARIA properties
+                if (isFavorited) {
+                    $tooltip.text('Remove Favorite');
+                    $btn.attr('aria-label', 'Remove Favorite');
+                } else {
+                    $tooltip.text('Add to Favorites');
+                    $btn.attr('aria-label', 'Add to Favorites');
+                }
+
+                updateTotals();
+            });
+
+            // 4. Update and Math Logic with jQuery selectors and iteration methods (.each)
+            function updateTotals(isInitialLoad = false) {
+                let totalRating = 0;
+                let activeCardsCount = $('.card').length;
+                let totalFavorites = 0;
+
+                // Iterate through cards using jQuery .each()
+                $('.card').each(function() {
+                    const cardRating = parseInt($(this).attr('data-rating') || 0, 10);
+                    totalRating += cardRating;
+
+                    const isFav = $(this).find('.fav-btn').hasClass('active');
+                    if (isFav) {
+                        totalFavorites++;
+                    }
+                });
+
+                const averageRatingStr = activeCardsCount > 0 ? (totalRating / activeCardsCount).toFixed(1) : '0.0';
+
+                // 5. Visual animations using jQuery's fadeIn/fadeOut for number changes (Problem 03 specification)
+                const $avgLabel = $('#avg-rating-value');
+                const $totalFavLabel = $('#total-fav-value');
+
+                if (isInitialLoad) {
+                    $avgLabel.text(averageRatingStr);
+                    $('#total-items-value').text(activeCardsCount);
+                    $totalFavLabel.text(totalFavorites);
+                } else {
+                    // Animate Average Rating if changed
+                    if (averageRatingStr !== lastAverage) {
+                        $avgLabel.fadeOut(150, function() {
+                            $(this).text(averageRatingStr).fadeIn(150);
+                        });
+                    }
+
+                    // Animate Total Favorites if changed
+                    if (totalFavorites !== lastFavorites) {
+                        $totalFavLabel.fadeOut(150, function() {
+                            $(this).text(totalFavorites).fadeIn(150);
+                        });
+                    }
+                }
+
+                // Cache values for future comparisons
+                lastAverage = averageRatingStr;
+                lastFavorites = totalFavorites;
+            }
+        });
+    </script>
+</body>
+</html>
