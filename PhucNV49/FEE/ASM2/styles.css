@@ -1,0 +1,313 @@
+/* Google Fonts for premium typography */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #10b981; /* Premium Emerald Green */
+    --primary-hover: #059669;
+    --primary-glow: rgba(16, 185, 129, 0.2);
+    --bg-dark: #1e293b;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    --font-family: 'Outfit', sans-serif;
+    --placeholder-color: #a0aec0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: #f8fafc;
+    color: #334155;
+    min-height: 100vh;
+}
+
+/* Custom placeholder styling as per requirement */
+::placeholder {
+    color: var(--placeholder-color) !important;
+    opacity: 1 !important; /* Firefox override */
+    font-size: 0.9rem;
+}
+:-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+::-ms-input-placeholder {
+    color: var(--placeholder-color) !important;
+}
+
+/* Green Buttons style as per requirement */
+.btn, 
+button,
+input[type="submit"],
+input[type="button"],
+.btn-primary,
+.btn-success {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+    border: none !important;
+    color: #ffffff !important;
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15), 0 2px 4px -1px rgba(16, 185, 129, 0.1) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.btn:hover, 
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.btn-primary:hover,
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.25), 0 4px 6px -2px rgba(16, 185, 129, 0.15) !important;
+    filter: brightness(1.05);
+}
+
+.btn:active, 
+button:active {
+    transform: translateY(0);
+}
+
+/* Subtitle button styling (such as + Add Answer, still green, but distinct style) */
+.btn-add-answer {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.85rem;
+}
+
+.btn-secondary, .btn-close-modal {
+    background: linear-gradient(135deg, #cbd5e1, #94a3b8) !important;
+    color: #1e293b !important;
+    box-shadow: 0 4px 6px -1px rgba(148, 163, 184, 0.15) !important;
+}
+.btn-secondary:hover, .btn-close-modal:hover {
+    box-shadow: 0 10px 15px -3px rgba(148, 163, 184, 0.25) !important;
+}
+
+/* Navbar Styling */
+.polls-navbar {
+    background-color: var(--bg-dark);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.polls-navbar .navbar-brand {
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+.polls-navbar .navbar-brand span {
+    color: var(--primary-color);
+}
+
+.polls-navbar .nav-link {
+    color: #cbd5e1 !important;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.polls-navbar .nav-link:hover, 
+.polls-navbar .nav-item.active .nav-link {
+    color: var(--primary-color) !important;
+}
+
+/* Content Container */
+.polls-container {
+    max-width: 960px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.polls-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid #e2e8f0;
+    padding: 2.5rem;
+    position: relative;
+}
+
+.polls-card-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 0.75rem;
+}
+
+/* Question blocks styling for voting and create view */
+.question-block {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s;
+}
+
+.question-block:hover {
+    border-color: #cbd5e1;
+}
+
+.question-number {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.question-label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Form Input and Control Adjustments */
+.form-group label {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 0.65rem 0.75rem;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* Dynamic answer inputs wrapper */
+.dynamic-answer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.75rem;
+}
+
+.btn-remove-answer {
+    background: linear-gradient(135deg, #fca5a5, #ef4444) !important;
+    color: #fff !important;
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.15) !important;
+}
+
+.btn-remove-answer:hover {
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.25) !important;
+}
+
+/* Error Summary alert block at the top */
+.validation-error-summary {
+    border-radius: 10px;
+    border-left: 5px solid #ef4444 !important;
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+/* Required labels asterisk styling */
+.required-star {
+    color: #ef4444;
+    margin-left: 2px;
+}
+
+/* Validation errors style for field highlighting */
+.is-invalid-label {
+    color: #ef4444 !important;
+}
+
+.form-control.is-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2;
+}
+
+.invalid-field-feedback {
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* List Tabbed View Styles */
+.nav-pills-custom {
+    gap: 8px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+.nav-pills-custom .nav-link {
+    background-color: #e2e8f0 !important;
+    color: #475569 !important;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    transition: all 0.2s;
+    box-shadow: none !important;
+}
+
+.nav-pills-custom .nav-link.active {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Custom Table Styles */
+.polls-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.polls-table th {
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+    padding: 1rem;
+}
+
+.polls-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.polls-table tr:hover td {
+    background-color: #f8fafc;
+}
+
+/* Custom Modal Mimic for Delete Confirmation */
+.modal-mimic-card {
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-mimic-header {
+    background-color: #f1f5f9;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+/* SPA Dynamic Loading overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    backdrop-filter: blur(2px);
+}

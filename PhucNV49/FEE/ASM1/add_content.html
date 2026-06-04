@@ -1,0 +1,53 @@
+<div class="content-title">
+    Add Content
+</div>
+
+<div class="content-card">
+    <div class="card-header bg-light border-bottom-0 font-weight-bold text-secondary mb-4">
+        Content Form Elements
+    </div>
+    <div id="add-content-alert" class="alert alert-success d-none" role="alert">
+        Content added successfully!
+    </div>
+    <form id="add-content-form" novalidate>
+        <div class="form-group">
+            <label for="content-title-input">Title</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="content-title-input" 
+                name="title" 
+                placeholder="Enter the title" 
+                required 
+                minlength="10" 
+                maxlength="200"
+            >
+        </div>
+        <div class="form-group">
+            <label for="content-brief-input">Brief</label>
+            <textarea 
+                class="form-control" 
+                id="content-brief-input" 
+                name="brief" 
+                rows="3" 
+                required 
+                minlength="30" 
+                maxlength="150"
+            ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="content-body-input">Content</label>
+            <textarea 
+                class="form-control" 
+                id="content-body-input" 
+                name="content" 
+                rows="6" 
+                required 
+                minlength="50" 
+                maxlength="1000"
+            ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="add-content-submit-btn">Submit Button</button>
+        <button type="reset" class="btn btn-reset ml-2">Reset Button</button>
+    </form>
+</div>

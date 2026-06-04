@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Guide - HR Portal</title>
+    <!-- Bootstrap 4 CSS CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="hr-wrapper">
+        <!-- Top Navigation -->
+        <nav class="hr-top-nav">
+            <a href="person.html" class="hr-nav-item"><i class="fas fa-user-plus mr-1"></i> Register</a>
+            <a href="search.html" class="hr-nav-item"><i class="fas fa-search mr-1"></i> Search Visitors</a>
+            <a href="help.html" class="hr-nav-item active"><i class="fas fa-question-circle mr-1"></i> Help</a>
+        </nav>
+
+        <div class="hr-card">
+            <!-- Lake Banner Image -->
+            <div class="hr-banner-container">
+                <img src="lake_banner.png" alt="Lake Banner" class="hr-banner-image">
+            </div>
+
+            <div class="hr-card-body">
+                <h3 class="hr-header-title">Help Guide</h3>
+
+                <div class="accordion" id="helpAccordion">
+                    
+                    <!-- Registration Validation Rules Card -->
+                    <div class="card border-0 mb-3 shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                        <div class="card-header bg-light border-0 py-3" id="headingOne">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-decoration-none text-dark w-100 text-left font-weight-bold d-flex align-items-center justify-content-between" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <span><i class="fas fa-clipboard-check text-success mr-2"></i> Registration Validation Rules</span>
+                                    <i class="fas fa-chevron-down text-muted"></i>
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#helpAccordion">
+                            <div class="card-body bg-white border-top text-secondary">
+                                <p>To complete the registration process, the following parameters are enforced:</p>
+                                <table class="table table-sm table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Field</th>
+                                            <th>Mandatory</th>
+                                            <th>Max Length</th>
+                                            <th>Constraints</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="font-weight-bold">First name</td>
+                                            <td>Yes</td>
+                                            <td>20 characters</td>
+                                            <td>Letters only (no digits/numbers allowed).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Last name</td>
+                                            <td>Yes</td>
+                                            <td>20 characters</td>
+                                            <td>Letters only (no digits/numbers allowed).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Telephone</td>
+                                            <td>No</td>
+                                            <td>11 characters</td>
+                                            <td>Digits only (no letters allowed).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Email</td>
+                                            <td>No</td>
+                                            <td>50 characters</td>
+                                            <td>Must follow standard email formats.</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">You are in</td>
+                                            <td>Yes</td>
+                                            <td>N/A</td>
+                                            <td>Must select one region (Europe, Africa, Australia, Asia, America).</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="font-weight-bold">Description</td>
+                                            <td>No</td>
+                                            <td>200 characters</td>
+                                            <td>Max length 200 characters.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Instructions Card -->
+                    <div class="card border-0 mb-3 shadow-sm" style="border-radius: 8px; overflow: hidden;">
+                        <div class="card-header bg-light border-0 py-3" id="headingTwo">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-decoration-none text-dark w-100 text-left font-weight-bold d-flex align-items-center justify-content-between collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <span><i class="fas fa-search text-success mr-2"></i> Searching Visitor Database</span>
+                                    <i class="fas fa-chevron-down text-muted"></i>
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#helpAccordion">
+                            <div class="card-body bg-white border-top text-secondary">
+                                <p>The **Search Visitor** tool lets you filter the database of registered people in real-time:</p>
+                                <ol class="pl-3">
+                                    <li class="mb-2">Enter any keyword (e.g. name, telephone number, region, hobby, or description term) into the search text field.</li>
+                                    <li class="mb-2">Click the **Search...** button.</li>
+                                    <li>The system dynamically parses **every cell of every row** in the table, hiding records that do not contain a match and highlighting matches.</li>
+                                </ol>
+                                <p class="mb-0 text-muted"><i class="fas fa-info-circle mr-1"></i> Row hovering highlights the details under your cursor with a soft green indicator.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap bundle -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

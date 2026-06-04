@@ -1,0 +1,66 @@
+<div class="polls-card-title">
+    Great poll
+</div>
+
+<div id="vote-alert" class="alert alert-success d-none" role="alert">
+    Your vote has been submitted successfully! Thank you.
+</div>
+
+<form id="vote-poll-form" novalidate>
+    <!-- Question 1 -->
+    <div class="question-block" id="vote-q1-block">
+        <label class="question-label">
+            1. It is necessary to you? <span class="required-star">*</span>
+        </label>
+        <div class="options-list">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q1-opt1" name="q1" value="Yes" class="custom-control-input" required>
+                <label class="custom-control-label" for="vote-q1-opt1">Yes</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q1-opt2" name="q1" value="No" class="custom-control-input" required>
+                <label class="custom-control-label" for="vote-q1-opt2">No</label>
+            </div>
+        </div>
+        <div class="invalid-field-feedback d-none" id="q1-error">Please select an option.</div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-block">
+        <label class="question-label">
+            2. Often pass polls?
+        </label>
+        <div class="options-list">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q2-opt1" name="q2" value="Once a month" class="custom-control-input">
+                <label class="custom-control-label" for="vote-q2-opt1">Once a month</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q2-opt2" name="q2" value="Once a week" class="custom-control-input">
+                <label class="custom-control-label" for="vote-q2-opt2">Once a week</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-block">
+        <label class="question-label">
+            3. How old are you?
+        </label>
+        <div class="options-list">
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q3-opt1" name="q3" value="18-20" class="custom-control-input">
+                <label class="custom-control-label" for="vote-q3-opt1">18-20</label>
+            </div>
+            <div class="custom-control custom-radio">
+                <input type="radio" id="vote-q3-opt2" name="q3" value="21-23" class="custom-control-input">
+                <label class="custom-control-label" for="vote-q3-opt2">21-23</label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary px-5" id="vote-submit-btn">Retain</button>
+    </div>
+</form>
