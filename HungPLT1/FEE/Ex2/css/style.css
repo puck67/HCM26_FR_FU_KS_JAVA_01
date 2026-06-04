@@ -1,9 +1,6 @@
-/* CSS Design System for Kanban Board Lite */
-
 :root {
     --primary-font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
     
-    /* Column Color Themes */
     --todo-accent: #3b82f6;
     --todo-accent-hover: #2563eb;
     --todo-bg: #f0f7ff;
@@ -22,13 +19,11 @@
     --done-header: #dcfce7;
     --done-text: #064e3b;
     
-    /* Sticky Note Styling */
     --sticky-bg: #fefcf0;
     --sticky-border: #fef08a;
     --sticky-text: #451a03;
     --sticky-curl: #eab308;
     
-    /* Global System Colors */
     --bg-dark: #0f172a;
     --bg-light: #f8fafc;
     --card-bg: #ffffff;
@@ -39,7 +34,6 @@
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     
-    /* Delete Action Colors */
     --danger-accent: #ef4444;
     --danger-hover: #dc2626;
     --danger-bg: #fef2f2;
@@ -64,9 +58,6 @@ body {
     flex-direction: column;
 }
 
-/* ==========================================================================
-   PORTAL / LANDING PAGE STYLE
-   ========================================================================== */
 .portal-body {
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     justify-content: center;
@@ -220,9 +211,6 @@ body {
     }
 }
 
-/* ==========================================================================
-   KANBAN BOARD INTERFACE STYLE
-   ========================================================================== */
 .board-container {
     padding: 30px 40px;
     max-width: 1400px;
@@ -233,7 +221,6 @@ body {
     flex-direction: column;
 }
 
-/* Navigation Header */
 .board-header {
     display: flex;
     justify-content: space-between;
@@ -309,7 +296,6 @@ body {
     background-color: #f1f5f9;
 }
 
-/* Global Search Bar (jQuery Problem 3) */
 .search-wrapper {
     position: relative;
     max-width: 400px;
@@ -343,7 +329,6 @@ body {
     pointer-events: none;
 }
 
-/* Kanban Board Layout */
 .kanban-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -353,7 +338,6 @@ body {
     padding: 10px 0;
 }
 
-/* Kanban Columns */
 .kanban-column {
     border-radius: 16px;
     overflow: hidden;
@@ -365,7 +349,6 @@ body {
     transition: transform 0.2s ease;
 }
 
-/* Column specific coloring styles */
 .col-todo {
     background-color: var(--todo-bg);
     border-color: rgba(59, 130, 246, 0.2);
@@ -379,7 +362,6 @@ body {
     border-color: rgba(16, 185, 129, 0.2);
 }
 
-/* Column Header */
 .column-header {
     padding: 18px 20px;
     display: flex;
@@ -416,7 +398,6 @@ body {
     font-weight: 700;
 }
 
-/* Input Form inside Columns */
 .column-input-group {
     padding: 16px 20px;
     background-color: rgba(255, 255, 255, 0.5);
@@ -441,7 +422,6 @@ body {
     border-color: var(--column-theme-accent);
 }
 
-/* Theme accent binding via CSS attributes */
 .col-todo .column-input:focus {
     border-color: var(--todo-accent);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
@@ -491,7 +471,6 @@ body {
     background-color: var(--done-accent-hover);
 }
 
-/* Card List */
 .card-list {
     padding: 20px;
     display: flex;
@@ -499,11 +478,10 @@ body {
     gap: 16px;
     flex: 1;
     min-height: 350px;
-    max-height: 60vh; /* Giới hạn chiều cao danh sách theo màn hình để cuộn độc lập */
-    overflow-y: auto;  /* Tự động hiển thị thanh cuộn khi danh sách quá dài */
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
-/* Custom Scrollbar for Card List (Premium UI scrollbar) */
 .card-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -521,17 +499,16 @@ body {
     background: rgba(0, 0, 0, 0.18);
 }
 
-/* Task Cards (Sticky Notes) */
 .kanban-card {
     position: relative;
     background-color: var(--sticky-bg);
     border: 1px solid var(--sticky-border);
-    border-radius: 6px 6px 18px 6px; /* gives custom feel */
+    border-radius: 6px 6px 18px 6px;
     padding: 20px;
     box-shadow: 
         0 4px 6px -1px rgba(0, 0, 0, 0.05), 
         0 2px 4px -1px rgba(0, 0, 0, 0.03),
-        inset 0 -8px 12px rgba(234, 179, 8, 0.05); /* inner shadow matching yellow tone */
+        inset 0 -8px 12px rgba(234, 179, 8, 0.05);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -551,7 +528,6 @@ body {
     z-index: 10;
 }
 
-/* Corner Curl Effect */
 .kanban-card::after {
     content: "";
     position: absolute;
@@ -570,7 +546,6 @@ body {
     border-color: transparent transparent rgba(0, 0, 0, 0.12) transparent;
 }
 
-/* Card Content styling */
 .card-meta {
     font-size: 0.75rem;
     font-weight: 700;
@@ -587,7 +562,6 @@ body {
     word-break: break-word;
 }
 
-/* Inline Edit Input Styling */
 .card-edit-input {
     width: 100%;
     padding: 6px 10px;
@@ -615,7 +589,6 @@ body {
     padding-top: 12px;
 }
 
-/* Card Buttons */
 .btn-card {
     padding: 6px 14px;
     font-size: 0.8rem;
@@ -629,7 +602,6 @@ body {
     gap: 4px;
 }
 
-/* Move button primary styling */
 .btn-move {
     background-color: var(--todo-accent);
     color: white;
@@ -649,7 +621,6 @@ body {
     background-color: var(--inprogress-accent-hover);
 }
 
-/* Delete button styling */
 .btn-delete {
     background-color: var(--danger-accent);
     color: white;
@@ -659,7 +630,6 @@ body {
     background-color: var(--danger-hover);
 }
 
-/* Decorative Card elements (e.g. Edit) to match image aesthetics */
 .btn-edit-dummy {
     background-color: transparent;
     color: var(--text-secondary);
@@ -670,7 +640,6 @@ body {
     color: var(--bg-dark);
 }
 
-/* No tasks placeholder styling */
 .no-tasks {
     display: flex;
     flex-direction: column;
@@ -684,7 +653,6 @@ body {
     border-radius: 10px;
 }
 
-/* Responsive columns breakpoint styling */
 @media (max-width: 992px) {
     .kanban-board {
         grid-template-columns: 1fr;
@@ -709,7 +677,6 @@ body {
     }
 }
 
-/* Visual Validation & Shake Animation */
 .column-input.input-error {
     border-color: var(--danger-accent) !important;
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Board - jQuery Version</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +11,6 @@
 </head>
 <body>
     <div class="board-container">
-        <!-- Header -->
         <header class="board-header">
             <div class="header-left">
                 <div class="board-title-wrapper">
@@ -22,7 +20,6 @@
                 <p class="board-subtitle">Phiên bản cải tiến và tối ưu hóa bằng jQuery</p>
             </div>
             
-            <!-- Real-time Search Bar (Problem 3 spec) -->
             <div class="search-wrapper">
                 <span class="search-icon">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -40,9 +37,7 @@
             </div>
         </header>
 
-        <!-- Board -->
         <main class="kanban-board" id="kanban-board">
-            <!-- TO DO Column -->
             <section class="kanban-column col-todo" id="col-todo">
                 <div class="column-header">
                     <h2 class="column-title">To Do</h2>
@@ -53,11 +48,9 @@
                     <button class="btn-add-task" id="btn-add-todo">+</button>
                 </div>
                 <div class="card-list" id="list-todo">
-                    <!-- Cards will be added here -->
                 </div>
             </section>
 
-            <!-- IN PROGRESS Column -->
             <section class="kanban-column col-inprogress" id="col-inprogress">
                 <div class="column-header">
                     <h2 class="column-title">In Progress</h2>
@@ -68,11 +61,9 @@
                     <button class="btn-add-task" id="btn-add-inprogress">+</button>
                 </div>
                 <div class="card-list" id="list-inprogress">
-                    <!-- Cards will be added here -->
                 </div>
             </section>
 
-            <!-- DONE Column -->
             <section class="kanban-column col-done" id="col-done">
                 <div class="column-header">
                     <h2 class="column-title">Done</h2>
@@ -83,15 +74,12 @@
                     <button class="btn-add-task" id="btn-add-done">+</button>
                 </div>
                 <div class="card-list" id="list-done">
-                    <!-- Cards will be added here -->
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Local jQuery Library (Offline-ready) -->
     <script src="js/jquery-3.7.1.min.js"></script>
-    <!-- jQuery Custom Scripts -->
     <script src="js/app-jquery.js"></script>
 </body>
 </html>
