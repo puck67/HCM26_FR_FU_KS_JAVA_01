@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Person - Visitor Registration</title>
+  <meta name="description" content="Register visitor information including name, gender, hobbies and more." />
+
+  <!-- Bootstrap 4 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">🌐 Visitor Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"><a class="nav-link" href="person.html">Person</a></li>
+        <li class="nav-item"><a class="nav-link" href="search.html">Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page wrapper: light blue background like mockup -->
+  <div class="outer-wrapper">
+    <div class="page-card">
+
+      <!-- Banner -->
+      <img src="banner.png" alt="Beautiful Lake Banner" class="page-banner" />
+
+      <!-- Section Title -->
+      <div class="section-title">Visitor Information</div>
+
+      <!-- Error Summary -->
+      <div id="error-summary" class="alert alert-danger mx-3" role="alert" style="display:none;">
+        <strong>Please fix the following errors:</strong>
+        <ul id="error-list" class="mb-0 mt-1"></ul>
+      </div>
+
+      <!-- Form box centered -->
+      <div class="form-box">
+        <form id="registrationForm" novalidate>
+          <table class="form-table">
+
+            <!-- First Name -->
+            <tr>
+              <td class="lbl">Fist name:</td>
+              <td>
+                <input type="text" id="firstName" name="firstName" class="form-input"
+                       placeholder="First name" maxlength="20" />
+                <span class="field-error" id="err-firstName"></span>
+              </td>
+            </tr>
+
+            <!-- Last Name -->
+            <tr>
+              <td class="lbl">Last name:</td>
+              <td>
+                <input type="text" id="lastName" name="lastName" class="form-input"
+                       placeholder="Last name" maxlength="20" />
+                <span class="field-error" id="err-lastName"></span>
+              </td>
+            </tr>
+
+            <!-- Gender -->
+            <tr>
+              <td class="lbl">Gender:</td>
+              <td>
+                <select id="gender" name="gender" class="form-select-sm">
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </td>
+            </tr>
+
+            <!-- Telephone -->
+            <tr>
+              <td class="lbl">Telephone:</td>
+              <td>
+                <input type="text" id="telephone" name="telephone" class="form-input"
+                       placeholder="Telephone number" maxlength="11" />
+                <span class="field-error" id="err-telephone"></span>
+              </td>
+            </tr>
+
+            <!-- Email -->
+            <tr>
+              <td class="lbl">Email:</td>
+              <td>
+                <input type="text" id="email" name="email" class="form-input"
+                       placeholder="Email address" maxlength="50" />
+                <span class="field-error" id="err-email"></span>
+              </td>
+            </tr>
+
+            <!-- You are in -->
+            <tr>
+              <td class="lbl" style="vertical-align:top; padding-top:4px;">You are in:</td>
+              <td>
+                <!-- Row 1 -->
+                <div class="radio-row">
+                  <label class="radio-lbl"><input type="radio" name="region" value="Europe" /> Europe</label>
+                  <label class="radio-lbl"><input type="radio" name="region" value="Africa" /> Africa</label>
+                </div>
+                <!-- Row 2 -->
+                <div class="radio-row">
+                  <label class="radio-lbl"><input type="radio" name="region" value="Australia" /> Australia</label>
+                  <label class="radio-lbl"><input type="radio" name="region" value="Asia" /> Asia</label>
+                  <label class="radio-lbl"><input type="radio" name="region" value="America" /> America</label>
+                </div>
+                <span class="field-error" id="err-region"></span>
+              </td>
+            </tr>
+
+            <!-- Hobbies -->
+            <tr>
+              <td class="lbl" style="vertical-align:top; padding-top:4px;">What are your hobbies:</td>
+              <td>
+                <!-- Row 1 -->
+                <div class="radio-row">
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Swimming" /> Swimming</label>
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Cooking" /> Cooking</label>
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Shopping" /> Shopping</label>
+                </div>
+                <!-- Row 2 -->
+                <div class="radio-row">
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Sport" /> Sport</label>
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Dance" /> Dance</label>
+                  <label class="radio-lbl"><input type="checkbox" name="hobbies" value="Sing" /> Sing</label>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Description -->
+            <tr>
+              <td class="lbl" style="vertical-align:top; padding-top:4px;">Description:</td>
+              <td>
+                <textarea id="description" name="description" class="form-textarea"
+                          placeholder="Description (max 200 characters)" maxlength="200"></textarea>
+                <span class="field-error" id="err-description"></span>
+              </td>
+            </tr>
+
+            <!-- Register button -->
+            <tr>
+              <td colspan="2" style="text-align:center; padding-top:10px;">
+                <button type="submit" id="btnRegister" class="btn-register">Register</button>
+              </td>
+            </tr>
+
+          </table>
+        </form>
+      </div><!-- /form-box -->
+
+    </div><!-- /page-card -->
+  </div><!-- /outer-wrapper -->
+
+  <!-- Footer -->
+  <footer>
+    <p class="mb-0">&copy; 2026 Visitor Portal - ASM3 Front-End Essentials</p>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="person.js"></script>
+</body>
+</html>

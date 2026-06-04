@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polls & Surveys Application</title>
+  
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Google Fonts for premium look -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Custom CSS style -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a class="navbar-brand font-weight-bold" href="#" id="brand-logo">Polls</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="nav-vote">Vote</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav-create">Create</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="nav-list">List</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <button class="btn btn-outline-light nav-link px-3 text-white" id="btn-login-trigger" style="border-radius: 4px; font-weight: 500;">Login</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="container py-5">
+    
+    <!-- 1. VOTE SECTION (Home page) -->
+    <section id="vote-section" class="app-section">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+          <div class="card shadow-sm border-0 p-4 bg-white rounded-lg">
+            
+            <div id="vote-messages"></div>
+            
+            <h2 class="section-title text-dark font-weight-bold mb-4" id="vote-poll-title">Great poll</h2>
+            
+            <form id="vote-form">
+              <!-- Questions will be dynamically loaded here, default questions shown initially -->
+              <div id="vote-questions-container">
+                <!-- Q1 -->
+                <div class="vote-question-block mb-4" data-required="true" data-type="single">
+                  <h6 class="font-weight-bold text-secondary mb-2">1. It is necessary to you? <span class="text-danger">*</span></h6>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="q1" id="q1-yes" value="Yes">
+                    <label class="form-check-label" for="q1-yes">Yes</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="q1" id="q1-no" value="No">
+                    <label class="form-check-label" for="q1-no">No</label>
+                  </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="vote-question-block mb-4" data-required="false" data-type="single">
+                  <h6 class="font-weight-bold text-secondary mb-2">2. Often pass polls?</h6>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="q2" id="q2-month" value="Once a month">
+                    <label class="form-check-label" for="q2-month">Once a month</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="q2" id="q2-week" value="Once a week">
+                    <label class="form-check-label" for="q2-week">Once a week</label>
+                  </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="vote-question-block mb-4" data-required="false" data-type="multiple">
+                  <h6 class="font-weight-bold text-secondary mb-2">3. How old are you?</h6>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" name="q3[]" id="q3-18-20" value="18-20">
+                    <label class="form-check-label" for="q3-18-20">18-20</label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" name="q3[]" id="q3-21-23" value="21-23">
+                    <label class="form-check-label" for="q3-21-23">21-23</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center mt-5">
+                <button type="submit" class="btn btn-green px-5 py-2 font-weight-bold text-white">Retain</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CREATE SECTION (Create Page) -->
+    <section id="create-section" class="app-section d-none">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-md-11">
+          <div class="card shadow-sm border-0 p-4 bg-white rounded-lg">
+            
+            <!-- Error message container at the top of the form -->
+            <div id="create-error-container" class="mb-4"></div>
+            
+            <h2 class="section-title text-dark font-weight-bold mb-4">Create Interview</h2>
+            
+            <form id="create-poll-form" novalidate>
+              <!-- Name Poll Input -->
+              <div class="form-group mb-4" id="grp-poll-name">
+                <input type="text" class="form-control form-control-lg custom-input" id="poll-name" name="pollName" placeholder="Name poll">
+                <div class="invalid-feedback-custom"></div>
+              </div>
+
+              <!-- Questions Container -->
+              <div id="create-questions-wrapper">
+                
+                <!-- Initial Question Block -->
+                <div class="card card-question mb-4 p-4 border border-light shadow-xs bg-light-gray" data-index="0">
+                  <div class="form-group mb-3 grp-question-text">
+                    <input type="text" class="form-control custom-input" name="questions[0][text]" placeholder="Enter your question">
+                    <div class="invalid-feedback-custom"></div>
+                  </div>
+
+                  <div class="form-row mb-3">
+                    <div class="col-md-6 mb-2">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="mandatory-0" name="questions[0][mandatory]">
+                        <label class="custom-control-label text-secondary" for="mandatory-0">Mandatory</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="multiple-0" name="questions[0][multiple]">
+                        <label class="custom-control-label text-secondary" for="multiple-0">You can select multiple options</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Answers List -->
+                  <div class="answers-wrapper" data-qindex="0">
+                    <label class="form-label font-weight-bold text-secondary text-sm">Possible answers</label>
+                    <div class="answer-item-row d-flex align-items-center mb-2">
+                      <div class="flex-grow-1 mr-2 grp-answer-text">
+                        <input type="text" class="form-control custom-input" name="questions[0][answers][]" placeholder="Type your answer">
+                        <div class="invalid-feedback-custom"></div>
+                      </div>
+                      <button type="button" class="btn btn-primary btn-add-answer font-weight-bold" style="border-radius: 4px; height: 38px; width: 38px;">+</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Add Question button -->
+              <div class="mb-4">
+                <button type="button" class="btn btn-green text-white font-weight-bold" id="btn-add-question">+ Add question</button>
+              </div>
+
+              <!-- Retain button -->
+              <div class="text-center mt-5">
+                <button type="submit" class="btn btn-green px-5 py-2 font-weight-bold text-white">Retain</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. LIST SECTION (List Page) -->
+    <section id="list-section" class="app-section d-none">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="card shadow-sm border-0 p-4 bg-white rounded-lg">
+            
+            <div id="list-messages"></div>
+
+            <!-- Tab Controls -->
+            <div class="btn-group mb-4" role="group" aria-label="Poll state tabs">
+              <button type="button" class="btn btn-tab active px-4 font-weight-bold" data-status="active">Active</button>
+              <button type="button" class="btn btn-tab px-4 font-weight-bold" data-status="drafts">Drafts</button>
+              <button type="button" class="btn btn-tab px-4 font-weight-bold" data-status="closed">Closed</button>
+            </div>
+
+            <!-- Polls Table -->
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped" id="polls-table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" style="width: 80px;">#</th>
+                    <th scope="col">The list of questions and issues within</th>
+                    <th scope="col" style="width: 320px;" class="text-center">Management</th>
+                  </tr>
+                </thead>
+                <tbody id="polls-table-body">
+                  <!-- Rows loaded dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content shadow-lg border-0" id="login-modal-content" style="border-radius: 8px;">
+        <!-- Content will be injected dynamically via AJAX from login.html -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional View Results Modal -->
+  <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content shadow-lg border-0" style="border-radius: 8px;">
+        <div class="modal-header border-0 bg-light">
+          <h5 class="modal-title font-weight-bold text-dark" id="resultsModalLabel">Poll Results</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-4" id="results-modal-body">
+          <!-- Results rendered dynamically -->
+        </div>
+        <div class="modal-footer border-0">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery, Popper.js, and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+  
+  <!-- Custom JS Application Logic -->
+  <script src="main.js"></script>
+</body>
+</html>
