@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="#">System</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="person.html">Person</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="help.html">Help</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Search</h2>
+        <div class="form-row mb-4">
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="searchKeyword" placeholder="Enter keyword to search...">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success w-100" id="btnSearch">Search</button>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped" id="resultsTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Telephone</th>
+                    <th>Email</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dummy data to search -->
+                <tr>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>0123456789</td>
+                    <td>john.doe@example.com</td>
+                    <td>Hanoi</td>
+                </tr>
+                <tr>
+                    <td>Jane</td>
+                    <td>Smith</td>
+                    <td>0987654321</td>
+                    <td>jane.smith@example.com</td>
+                    <td>Ho Chi Minh</td>
+                </tr>
+                <tr>
+                    <td>Nguyen</td>
+                    <td>Van A</td>
+                    <td>0912345678</td>
+                    <td>nva@example.com</td>
+                    <td>Da Nang</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="noResults" class="alert alert-warning d-none">No results found for your search.</div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

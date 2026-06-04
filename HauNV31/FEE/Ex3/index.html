@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Image Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- jQuery for Problem 03 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>My Image Gallery</h1>
+        </header>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- 10 Image Cards -->
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #f6d365, #fda085);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #84fab0, #8fd3f4);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #a6c0fe, #f68084);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #fccb90, #d57eeb);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #e0c3fc, #8ec5fc);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #43e97b, #38f9d7);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="img-placeholder" style="background: linear-gradient(135deg, #fa709a, #fee140);"></div>
+                <div class="card-footer">
+                    <div class="stars">
+                        <span class="star" data-val="1">★</span>
+                        <span class="star" data-val="2">★</span>
+                        <span class="star" data-val="3">★</span>
+                        <span class="star" data-val="4">★</span>
+                        <span class="star" data-val="5">★</span>
+                    </div>
+                    <button class="fav-btn">♡</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Footer -->
+        <div class="summary-footer">
+            <div class="avg-box">
+                <span class="summary-label">AVERAGE RATING: </span>
+                <span class="summary-value">
+                    <span id="avgRatingValue">0.0</span> Stars
+                </span> 
+                <span class="based-on">(based on <span id="totalRatedItems">0</span> items)</span>
+            </div>
+            <div class="fav-box">
+                <span class="summary-label">TOTAL FAVORITES: </span>
+                <span class="summary-value" id="totalFavoritesValue">0</span>
+                <span class="heart-icon">♥</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Script: Problem 03 (jQuery Refactored) -->
+    <script src="script-jq.js"></script>
+
+    <!-- Uncomment below and comment above to use Pure JS (Problem 02) -->
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>

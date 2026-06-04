@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls - Create</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Polls App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="create.html">Create <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="manage.html">Manage</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginBtn">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h2>Create Interview/Poll</h2>
+        <div id="createError" class="alert alert-danger d-none" role="alert">
+            Please fill in all mandatory fields correctly.
+        </div>
+        <div id="createSuccess" class="alert alert-success d-none" role="alert">
+            Poll created successfully!
+        </div>
+        
+        <form id="createForm" class="mt-4">
+            <div class="form-group">
+                <label for="pollTitle">Poll Title <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="pollTitle" placeholder="Enter poll title">
+                <div class="invalid-feedback">Poll title is required.</div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Questions</h5>
+                </div>
+                <div class="card-body" id="questionsContainer">
+                    <!-- Dynamic questions will be added here -->
+                    <div class="question-block border-bottom pb-3 mb-3">
+                        <div class="form-group">
+                            <label>Question 1 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control question-input" placeholder="Enter question">
+                            <div class="invalid-feedback">Question text is required.</div>
+                        </div>
+                        <div class="answers-container pl-4">
+                            <div class="form-group row answer-row">
+                                <label class="col-sm-2 col-form-label">Answer 1 <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control answer-input" placeholder="Enter answer">
+                                    <div class="invalid-feedback">Answer is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group row answer-row">
+                                <label class="col-sm-2 col-form-label">Answer 2 <span class="text-danger">*</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control answer-input" placeholder="Enter answer">
+                                    <div class="invalid-feedback">Answer is required.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-success add-answer-btn ml-4">+ Add Answer</button>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-outline-success" id="addQuestionBtn">+ Add New Question</button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg mb-5">Save Poll</button>
+        </form>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <!-- (Same as index.html) -->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <!-- ... -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="loginError" class="alert alert-danger d-none" role="alert">
+                        Please fix the errors below.
+                    </div>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" placeholder="Enter username">
+                            <div class="invalid-feedback">Username is required.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" placeholder="Password">
+                            <div class="invalid-feedback">Password is required.</div>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

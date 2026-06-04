@@ -1,0 +1,50 @@
+/* Custom CSS styles as required by specifications */
+
+/* Background color of all button must be green */
+button, 
+.btn,
+input[type="button"], 
+input[type="submit"] {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: white !important;
+}
+
+button:hover, 
+.btn:hover,
+input[type="button"]:hover, 
+input[type="submit"]:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+}
+
+/* Placeholder text in inputs must be in light gray color */
+::placeholder {
+    color: #d3d3d3 !important;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #d3d3d3 !important;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #d3d3d3 !important;
+}
+
+/* Custom form invalid styles for Bootstrap */
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
