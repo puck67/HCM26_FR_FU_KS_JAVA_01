@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visitor Information - Search</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg app-nav">
+    <div class="container">
+      <ul class="navbar-nav mr-auto flex-row">
+        <li class="nav-item mr-3"><a class="nav-link" href="person.html">Register Visitor</a></li>
+        <li class="nav-item mr-3"><a class="nav-link" href="search.html">Search</a></li>
+        <li class="nav-item"><a class="nav-link" href="help.html">Help</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <!-- Header Image -->
+    <img src="https://images.unsplash.com/photo-1439853949127-fa647821eba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Lake Scene" class="header-image">
+    
+    <div class="content-area">
+      <h2 class="page-title">Search Visitor</h2>
+      
+      <div class="search-controls">
+        <label for="searchInput" style="margin-right: 10px; font-size: 0.9rem;">First name:</label>
+        <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+        <button type="button" id="btnSearch" class="btn">Search...</button>
+        <span>(Type keyword and Click Search button)</span>
+      </div>
+
+      <table class="visitor-table" id="visitorTable">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Gender</th>
+            <th>Telephone</th>
+            <th>You're in</th>
+            <th>Hobbies</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Hardcoded sample data based on screenshot -->
+          <tr>
+            <td>John</td>
+            <td>Terry</td>
+            <td>Male</td>
+            <td>0909090909</td>
+            <td>Europe</td>
+            <td>Shopping, Cooking</td>
+            <td>One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly.</td>
+          </tr>
+          <tr>
+            <td>Jane</td>
+            <td>Doe</td>
+            <td>Female</td>
+            <td>0123456789</td>
+            <td>America</td>
+            <td>Swimming, Sing</td>
+            <td>Sample description for Jane. Make sure the search can find this!</td>
+          </tr>
+          <tr>
+            <td>Peter</td>
+            <td>Parker</td>
+            <td>Male</td>
+            <td>0987654321</td>
+            <td>America</td>
+            <td>Sport</td>
+            <td>Friendly neighborhood visitor.</td>
+          </tr>
+          <tr>
+            <td>Mary</td>
+            <td>Jane</td>
+            <td>Female</td>
+            <td>0808080808</td>
+            <td>Australia</td>
+            <td>Dance</td>
+            <td>One thing to note is you should make sure not to define the background color of a table cell in your stylesheet as that'll stop the row highlight code from working properly.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

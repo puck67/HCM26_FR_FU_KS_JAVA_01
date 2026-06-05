@@ -1,0 +1,65 @@
+<!-- view-contents.html — AJAX content fragment loaded into cms.html -->
+<div class="page-title">View Content</div>
+<p class="section-label">View Content List</p>
+
+<div class="table-responsive">
+  <table class="view-table" id="content-table">
+    <thead>
+      <tr>
+        <th class="col-num">#</th>
+        <th>Title</th>
+        <th>Brief</th>
+        <th class="col-date">Created Date</th>
+      </tr>
+    </thead>
+    <tbody id="content-table-body">
+      <!-- Rows populated by JavaScript from localStorage + sample data -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  // Populate table when this fragment is loaded
+  (function () {
+    // Sample pre-existing data (as shown in the spec)
+    var sampleData = [
+      {
+        title:  'Lorem ipsum dolor sit amet',
+        brief:  'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        date:   '01/05/2016 10:05'
+      },
+      {
+        title:  'Vestibulum tincidunt est aliquet',
+        brief:  'Aliquam ornare lacus adipiscing leo, posuere lectus at, fringilla augue.',
+        date:   '01/05/2016 11:15'
+      },
+      {
+        title:  'Aliquam ornare lacus adipiscing',
+        brief:  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est aliquet et vitae ultrices accumsan.',
+        date:   '01/05/2016 15:09'
+      }
+    ];
+
+    // Merge with any user-added entries from localStorage
+    var userEntries = JSON.parse(localStorage.getItem('cms_entries') || '[]');
+    var allEntries  = sampleData.concat(userEntries);
+
+    var $tbody = $('#content-table-body');
+    $tbody.empty();
+
+    if (allEntries.length === 0) {
+      $tbody.append('<tr><td colspan="4" class="text-center text-muted py-3">No content yet.</td></tr>');
+      return;
+    }
+
+    $.each(allEntries, function (i, item) {
+      var row = '<tr>' +
+        '<td class="col-num">' + (i + 1) + '</td>' +
+        '<td>' + $('<div>').text(item.title).html() + '</td>' +
+        '<td>' + $('<div>').text(item.brief).html() + '</td>' +
+        '<td class="col-date">' + item.date + '</td>' +
+        '</tr>';
+      $tbody.append(row);
+    });
+  })();
+</script>
