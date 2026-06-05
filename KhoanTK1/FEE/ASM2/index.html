@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polls Management System</title>
+
+    <!-- bootstrap 4.6.0 css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+    <!-- fontawesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- our stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- navbar header -->
+        <nav class="navbar navbar-expand-lg navbar-dark main-navigation-bar">
+            <a class="navbar-brand" href="#" id="brand-logo">
+                <i class="fas fa-poll mr-2"></i>Polls
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active" id="tab-vote">
+                        <a class="nav-link" href="#" onclick="toggleSection('vote')">Vote</a>
+                    </li>
+                    <li class="nav-item" id="tab-create">
+                        <a class="nav-link" href="#" onclick="toggleSection('create')">Create</a>
+                    </li>
+                    <li class="nav-item" id="tab-list">
+                        <a class="nav-link" href="#" onclick="toggleSection('list')">List</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="auth-toggle-btn">
+                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- alerts popped here -->
+        <div id="message-box-area"></div>
+
+        <!-- voting tab panel -->
+        <section id="voting-section" class="app-view-panel visible-panel">
+            <div class="content-wrapper-card">
+                <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                    <h2 id="vote-title-text" class="font-weight-bold mb-0">IT Service Feedback</h2>
+                    <span class="badge badge-success px-3 py-2">Active</span>
+                </div>
+
+                <form id="voting-form">
+                    <!-- question list loaded dynamically -->
+                    <div id="vote-q-list"></div>
+
+                    <!-- submit button -->
+                    <div class="text-center mt-5">
+                        <button type="submit" class="btn btn-lg btn-success px-5 py-3">
+                            <i class="fas fa-check-circle mr-2"></i>Retain
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- create new poll tab panel -->
+        <section id="builder-section" class="app-view-panel">
+            <div class="content-wrapper-card">
+                <div class="border-bottom pb-3 mb-4">
+                    <h2 class="font-weight-bold">Create Interview</h2>
+                </div>
+
+                <!-- errors container -->
+                <div id="error-alert-list">
+                    <h5 class="d-flex align-items-center">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Please correct the errors in the form:
+                    </h5>
+                    <ul id="error-details"></ul>
+                </div>
+
+                <form id="poll-builder-form" novalidate>
+                    <!-- poll title field -->
+                    <div class="form-group mb-4" id="form-group-title">
+                        <label for="input-poll-title" class="font-weight-bold text-uppercase"
+                            style="font-size: 0.85rem; letter-spacing: 0.5px;">
+                            Poll Name <span class="mandatory-mark">*</span>
+                        </label>
+                        <input type="text" class="form-control form-control-lg" id="input-poll-title" placeholder="Name poll">
+                        <div class="field-error-msg" id="error-poll-title"></div>
+                    </div>
+
+                    <!-- builder blocks -->
+                    <div id="question-blocks-area"></div>
+
+                    <!-- add question btn -->
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-success" id="add-question-section-btn">
+                            <i class="fas fa-plus mr-2"></i>Add question
+                        </button>
+                    </div>
+
+                    <!-- save button -->
+                    <div class="text-center border-top pt-4">
+                        <button type="submit" class="btn btn-lg btn-success px-5 py-3" id="save-poll-btn">
+                            <i class="fas fa-save mr-2"></i>Retain
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- manage lists tab panel -->
+        <section id="manage-section" class="app-view-panel">
+            <div class="content-wrapper-card">
+                <div class="border-bottom pb-3 mb-4 d-flex justify-content-between align-items-center">
+                    <h2 class="font-weight-bold mb-0">Manage Polls</h2>
+                </div>
+
+                <!-- filter tabs -->
+                <div class="filter-buttons-group">
+                    <button class="btn btn-filter-option selected-filter" onclick="applyStatusFilter('active', this)">Active</button>
+                    <button class="btn btn-filter-option" onclick="applyStatusFilter('draft', this)">Drafts</button>
+                    <button class="btn btn-filter-option" onclick="applyStatusFilter('closed', this)">Closed</button>
+                </div>
+
+                <!-- table data -->
+                <div class="table-responsive">
+                    <table class="table table-hover poll-data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%">#</th>
+                                <th style="width: 55%">The list of questions and issues within</th>
+                                <th style="width: 37%" class="text-right">Management</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-polls"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- login overlay container -->
+    <div class="popup-modal-overlay" id="auth-modal-wrapper">
+        <div class="popup-modal-container">
+            <div class="custom-popup-head">
+                <h4>Login User</h4>
+                <button type="button" class="close-x" id="close-icon-btn">&times;</button>
+            </div>
+            <form id="auth-form-submit" novalidate>
+                <div class="popup-modal-body">
+                    <div id="auth-err-summary" class="alert alert-danger" style="display: none;"></div>
+
+                    <div class="form-group">
+                        <label for="alias-input" class="font-weight-bold">Alias <span
+                                class="mandatory-mark">*</span></label>
+                        <input type="text" class="form-control" id="alias-input" placeholder="JoeSixpack">
+                        <div class="field-error-msg" id="error-alias-input"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pwd-input" class="font-weight-bold">Password <span
+                                class="mandatory-mark">*</span></label>
+                        <input type="password" class="form-control" id="pwd-input" placeholder="********">
+                        <div class="field-error-msg" id="error-pwd-input"></div>
+                    </div>
+
+                    <div class="form-group form-check mb-0">
+                        <input type="checkbox" class="form-check-input" id="remember-checkbox">
+                        <label class="form-check-label font-weight-500" for="remember-checkbox">Remember me</label>
+                    </div>
+                </div>
+                <div class="popup-modal-footer">
+                    <button type="button" class="btn btn-secondary mr-2" id="close-footer-btn"
+                        style="background-color: #7f8c8d !important; border-color: #7f8c8d !important;">Close</button>
+                    <button type="submit" class="btn btn-success">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

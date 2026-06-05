@@ -1,0 +1,275 @@
+/* Typography & Base styles */
+body {
+    font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #102a43;
+    background-color: #f0f4f8;
+}
+
+/* hero banner styling */
+.hero-banner-wrap {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    border-bottom: 4px solid #f59e0b; /* gold divider */
+}
+
+.hero-gradient-bg {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0f1e32 0%, #1c355e 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Page header container */
+.section-header-card {
+    background-color: #102a43;
+    border: 1px solid #0f1e32;
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.section-header-card h2 {
+    color: #f59e0b;
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+/* Form panel container */
+.panel-entry-card {
+    border: 1px solid #d9e2ec;
+    border-radius: 4px;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    margin-bottom: 40px;
+}
+
+/* Button overrides - Navy and Gold theme */
+.btn-navy-gold,
+.btn-success,
+button,
+input[type="submit"],
+input[type="button"] {
+    background-color: #102a43 !important;
+    border: 2px solid #f59e0b !important;
+    color: #f59e0b !important;
+    font-weight: 600 !important;
+    padding: 8px 24px !important;
+    transition: all 0.2s ease-in-out !important;
+    border-radius: 4px !important;
+}
+
+.btn-navy-gold:hover,
+.btn-success:hover,
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #f59e0b !important;
+    border-color: #f59e0b !important;
+    color: #102a43 !important;
+    box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3) !important;
+    transform: translateY(-1px);
+}
+
+.btn-navy-gold:active,
+button:active {
+    transform: translateY(1px);
+}
+
+/* Inputs, Textarea, Select styling */
+.form-control {
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 0.2rem rgba(245, 158, 11, 0.25);
+}
+
+/* Placeholder styling - Must be light gray */
+.form-control::placeholder {
+    color: #cccccc !important;
+    opacity: 1;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.form-control:-ms-input-placeholder {
+    color: #cccccc !important;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.form-control::-ms-input-placeholder {
+    color: #cccccc !important;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Form validation styling */
+.validation-feedback-msg {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    display: none;
+    font-weight: 500;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+    background-image: none !important;
+}
+
+.is-invalid:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+.is-valid {
+    border-color: #198754 !important;
+    background-image: none !important;
+}
+
+.is-valid:focus {
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25) !important;
+}
+
+/* Align labels right in 2-column layout */
+.form-label-right {
+    text-align: right;
+    font-weight: 600;
+    align-self: center;
+    margin-bottom: 0;
+    color: #486581;
+}
+
+@media (max-width: 575.98px) {
+    .form-label-right {
+        text-align: left;
+        margin-bottom: 5px;
+    }
+}
+
+/* Custom Checkbox and Radio styling */
+.form-check-inline {
+    margin-right: 20px;
+    margin-bottom: 8px;
+}
+
+.form-check-label {
+    font-weight: 500;
+    color: #486581;
+    cursor: pointer;
+}
+
+.form-check-input {
+    cursor: pointer;
+}
+
+/* Navbar styling */
+.navigation-bar-theme {
+    background-color: #ffffff;
+    border-bottom: 1px solid #d9e2ec;
+    margin-bottom: 25px;
+}
+
+.navigation-bar-theme .nav-link {
+    color: #486581;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: all 0.2s ease;
+}
+
+.navigation-bar-theme .nav-link:hover {
+    color: #102a43;
+    background-color: #f0f4f8;
+}
+
+.navigation-bar-theme .nav-link.active {
+    color: #ffffff !important;
+    background-color: #102a43 !important;
+    border-bottom: 3px solid #f59e0b;
+}
+
+/* Search bar styling */
+.panel-query-card {
+    border: 1px solid #d9e2ec;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 25px;
+}
+
+.helper-caption-text {
+    font-size: 0.9rem;
+    color: #627d98;
+    margin-left: 15px;
+    align-self: center;
+}
+
+/* Results Table Styling */
+.grid-viewport-wrap {
+    border: 1px solid #d9e2ec;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
+}
+
+.grid-data-table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.grid-data-table th {
+    background-color: #102a43;
+    border-bottom: 2px solid #0f1e32;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 12px;
+    font-size: 0.95rem;
+}
+
+.grid-data-table td {
+    padding: 12px;
+    border-top: 1px solid #d9e2ec;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    color: #334e68;
+}
+
+/* Highlight Row on Hover (Requirement: NO background-color on td to let this show through) */
+.grid-data-table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+.grid-data-table tbody tr.focused-row-style {
+    background-color: #fef3c7 !important;
+    /* amber gold highlight */
+    cursor: pointer;
+}
+
+/* Alert styling */
+.notify-card-success {
+    background-color: #fef3c7;
+    border-color: #fde68a;
+    color: #92400e;
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
