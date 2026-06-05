@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Polls — Create a new interview poll with custom questions and answers." />
+  <title>Polls — Create Interview</title>
+
+  <!-- Bootstrap 4 CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg poll-navbar" id="main-navbar">
+    <a class="navbar-brand" href="index.html">Polls</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"
+      aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html" id="nav-vote">Vote</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="create.html" id="nav-create">Create</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="list.html" id="nav-list">List</a>
+        </li>
+      </ul>
+      <button class="btn-login" id="btn-login-trigger" type="button">Login</button>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="poll-container">
+    <h1 class="poll-title">Create Interview</h1>
+
+    <!-- Error summary — shown at top when validation fails -->
+    <div id="error-summary" role="alert">
+      <strong>Please fix the following errors:</strong>
+      <ul id="error-list" class="mb-0 mt-1 pl-3"></ul>
+    </div>
+
+    <!-- Success message -->
+    <div id="create-success" class="alert-success-inline" role="alert">
+      Poll created successfully! <a href="list.html" class="font-weight-bold">View in list &rarr;</a>
+    </div>
+
+    <form id="create-form" novalidate>
+
+      <!-- Name Poll -->
+      <div class="form-group">
+        <input type="text" class="form-control" id="poll-name"
+          name="pollName"
+          placeholder="Name poll"
+          maxlength="255"
+          autocomplete="off" />
+        <div class="invalid-feedback" id="poll-name-error">Name poll is required (min 3, max 255 characters).</div>
+      </div>
+
+      <!-- ===== QUESTION BLOCKS CONTAINER ===== -->
+      <div id="questions-container">
+
+        <!-- Default Question Block #1 -->
+        <div class="question-block" data-question-index="1">
+          <button type="button" class="remove-question-btn" title="Remove question">&times;</button>
+
+          <div class="form-group">
+            <input type="text" class="form-control question-input" name="question[]"
+              placeholder="Enter your question"
+              maxlength="255"
+              autocomplete="off" />
+            <div class="invalid-feedback">Question is required (min 3, max 255 characters).</div>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="mandatory-1" name="mandatory[]" />
+            <label class="form-check-label" for="mandatory-1">Mandatory</label>
+          </div>
+
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" id="multiple-1" name="multiple[]" />
+            <label class="form-check-label" for="multiple-1">You can select multiple options</label>
+          </div>
+
+          <!-- Answers -->
+          <div class="answers-wrapper">
+            <div class="answer-row">
+              <span class="answers-label">Possible answers</span>
+              <input type="text" class="form-control answer-input" name="answers[]"
+                placeholder="Type your answer"
+                maxlength="200"
+                autocomplete="off" />
+              <button type="button" class="btn btn-add-answer btn-add-answer-btn" title="Add answer">+</button>
+            </div>
+            <div class="invalid-feedback answer-error" style="margin-left:118px;">
+              Answer is required (min 3, max 200 characters).
+            </div>
+          </div>
+
+        </div>
+        <!-- /Default Question Block -->
+
+      </div>
+      <!-- /questions-container -->
+
+      <!-- Add Question Button -->
+      <div class="mb-3">
+        <button type="button" class="btn btn-add-question" id="btn-add-question">
+          + Add question
+        </button>
+      </div>
+
+      <!-- Retain (Submit) -->
+      <div class="mt-2">
+        <button type="submit" class="btn btn-primary btn-retain" id="btn-create-retain">Retain</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- ===== LOGIN MODAL ===== -->
+  <div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog"
+    aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form" novalidate>
+            <div class="form-group">
+              <label for="login-alias">Alias:</label>
+              <input type="text" class="form-control" id="login-alias"
+                placeholder="Joetbepack" autocomplete="username" />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password:</label>
+              <input type="password" class="form-control" id="login-password"
+                placeholder="••••••••" autocomplete="current-password" />
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="remember-me" />
+              <label class="form-check-label" for="remember-me">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-signin" id="btn-sign-in">Sign in</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-close-modal" data-dismiss="modal" id="btn-close-login">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 4 JS + jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JS -->
+  <script src="polls.js"></script>
+</body>
+</html>

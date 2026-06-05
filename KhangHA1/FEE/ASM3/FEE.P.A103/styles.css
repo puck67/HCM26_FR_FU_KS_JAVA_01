@@ -1,0 +1,202 @@
+/* ============================================================
+   styles.css — Custom CSS to override Bootstrap 4 defaults
+   Assignment: Front-End Essentials ASM3 (Visitor App)
+   ============================================================ */
+
+/* ---------- Root Variables ---------- */
+:root {
+  --app-green:       #4CAF50; /* A pleasant green matching the screenshots */
+  --app-green-dark:  #388E3C;
+  --app-placeholder: #d3d3d3; /* Light gray */
+  --app-bg:          #e8ebf5; /* Light blue-ish background from screenshot */
+  --app-text:        #333333;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+  font-family: Arial, sans-serif;
+}
+
+/* ============================================================
+   MAIN CONTAINER & HEADER
+   ============================================================ */
+.main-container {
+  max-width: 900px;
+  margin: 30px auto;
+  background-color: #ffffff;
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.header-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.content-area {
+  padding: 20px 30px;
+}
+
+.page-title {
+  color: var(--app-green);
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+.app-nav {
+  background-color: #333;
+  padding: 10px 0;
+}
+.app-nav .nav-link {
+  color: #fff;
+}
+.app-nav .nav-link:hover {
+  color: var(--app-green);
+}
+
+/* ============================================================
+   BUTTONS — ALL must be green (functional requirement)
+   ============================================================ */
+.btn,
+.btn-primary,
+button[type="submit"],
+input[type="submit"] {
+  background-color: var(--app-green) !important;
+  border-color: var(--app-green-dark) !important;
+  color: #fff !important;
+}
+
+.btn:hover,
+.btn-primary:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--app-green-dark) !important;
+  border-color: #2e7d32 !important;
+}
+
+/* ============================================================
+   PLACEHOLDER TEXT — light gray (functional requirement)
+   ============================================================ */
+::placeholder {
+  color: var(--app-placeholder) !important;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: var(--app-placeholder) !important;
+}
+
+::-ms-input-placeholder {
+  color: var(--app-placeholder) !important;
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.form-horizontal .form-group {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.form-horizontal label {
+  width: 150px;
+  text-align: left;
+  font-size: 0.9rem;
+  padding-top: 5px;
+  color: #555;
+}
+
+.form-horizontal .input-group {
+  flex: 1;
+  max-width: 300px;
+}
+
+.form-control {
+  border-radius: 0;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+/* Radio & Checkbox grids */
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.form-check-label {
+  font-size: 0.85rem;
+}
+
+textarea.form-control {
+  max-width: 400px;
+  height: 100px;
+}
+
+/* Error states */
+.error-msg {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  display: none;
+}
+
+.is-invalid {
+  border-color: red !important;
+}
+
+/* ============================================================
+   SEARCH PAGE & TABLE
+   ============================================================ */
+.search-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-controls input {
+  max-width: 200px;
+  margin-right: 10px;
+}
+
+.search-controls span {
+  font-size: 0.85rem;
+  color: #666;
+  margin-left: 10px;
+}
+
+.visitor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.visitor-table th {
+  background-color: #cccccc;
+  color: #333;
+  padding: 10px;
+  border: 1px solid #aaa;
+  text-align: left;
+}
+
+.visitor-table td {
+  padding: 10px;
+  border: 1px solid #aaa;
+  background-color: transparent; /* Note: don't set bg color to allow highlight */
+}
+
+/* Highlight search results */
+.highlight-row {
+  background-color: #ffffcc !important;
+}

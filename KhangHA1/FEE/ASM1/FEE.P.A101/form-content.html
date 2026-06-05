@@ -1,0 +1,62 @@
+<!-- form-content.html — AJAX content fragment loaded into cms.html -->
+<div class="page-title">Add Content</div>
+
+<div id="content-alert" class="ajax-alert"></div>
+
+<div class="form-panel">
+  <div class="form-panel-header">Content Form Elements</div>
+  <div class="form-panel-body">
+
+    <form id="content-form" novalidate>
+
+      <div class="form-group">
+        <label for="cont-title">Title</label>
+        <input
+          type="text"
+          id="cont-title"
+          name="title"
+          class="form-control"
+          placeholder="Enter the title"
+          maxlength="200"
+          data-label="Title"
+        />
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="cont-brief">Brief</label>
+        <textarea
+          id="cont-brief"
+          name="brief"
+          class="form-control"
+          rows="4"
+          maxlength="150"
+          placeholder=""
+          data-label="Brief"
+        ></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="cont-content">Content</label>
+        <textarea
+          id="cont-content"
+          name="content"
+          class="form-control"
+          rows="6"
+          maxlength="1000"
+          placeholder=""
+          data-label="Content"
+        ></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success mr-2">Submit Button</button>
+        <button type="button" id="content-reset" class="btn btn-secondary">Reset Button</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
