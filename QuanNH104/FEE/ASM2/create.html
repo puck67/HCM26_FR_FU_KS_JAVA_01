@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - Polls</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <a class="navbar-brand" href="index.html">Polls</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Vote</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="create.html">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list.html">List</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link login-btn" href="#" id="loginBtn">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+        <h2>Create Interview</h2>
+        
+        <div id="errorSummary" class="error-message-top">
+            Please correct the errors below before proceeding.
+        </div>
+
+        <form id="createPollForm" novalidate>
+            <div class="form-group row mt-4">
+                <label class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control poll-input" id="pollName" placeholder="Name poll">
+                    <div class="invalid-feedback">Name poll is required and must be between 3 and 255 characters.</div>
+                </div>
+            </div>
+
+            <div id="questionsContainer">
+                <div class="question-block" data-question-index="1">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control question-input" placeholder="Enter your question">
+                            <div class="invalid-feedback">Question is required and must be between 3 and 255 characters.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="mandatory1">
+                                <label class="form-check-label text-muted" for="mandatory1">Mandatory</label>
+                            </div>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="multiple1">
+                                <label class="form-check-label text-muted" for="multiple1">You can select multiple options</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row answer-group">
+                        <label class="col-sm-3 col-form-label text-right">Possible answers</label>
+                        <div class="col-sm-6 answers-container">
+                            <div class="answer-row d-flex">
+                                <input type="text" class="form-control answer-input flex-grow-1" placeholder="Type your answer">
+                                <button type="button" class="btn btn-sm ml-2 add-answer-btn">+</button>
+                                <div class="invalid-feedback w-100">Answer is required and must be between 3 and 200 characters.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label"></label>
+                <div class="col-sm-6">
+                    <button type="button" id="addQuestionBtn" class="btn">+ Add question</button>
+                </div>
+            </div>
+
+            <div class="form-group row mt-5">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" class="btn">Retain</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="loginPopupContainer"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

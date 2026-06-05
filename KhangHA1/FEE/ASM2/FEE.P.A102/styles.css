@@ -1,0 +1,549 @@
+/* ============================================================
+   styles.css — Custom CSS to override Bootstrap 4 defaults
+   Assignment: Front-End Essentials ASM2 (Polls App)
+   ============================================================ */
+
+/* ---------- Google Font ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ---------- Root Variables ---------- */
+:root {
+  --poll-green:       #28a745;
+  --poll-green-dark:  #218838;
+  --poll-green-light: #e8f5e9;
+  --poll-blue:        #17a2b8;
+  --poll-border:      #dee2e6;
+  --poll-text:        #343a40;
+  --poll-muted:       #6c757d;
+  --poll-placeholder: #b0b0b0;
+  --poll-input-focus: #80bdff;
+  --poll-navbar-bg:   #222222;
+  --poll-navbar-h:    50px;
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--poll-text);
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+/* ============================================================
+   NAVBAR — dark background, white text/links
+   ============================================================ */
+.navbar.poll-navbar {
+  background-color: var(--poll-navbar-bg) !important;
+  padding: 0 1rem;
+  min-height: var(--poll-navbar-h);
+}
+
+.navbar.poll-navbar .navbar-brand {
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.navbar.poll-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  transition: color 0.15s;
+}
+
+.navbar.poll-navbar .nav-link:hover,
+.navbar.poll-navbar .nav-link.active {
+  color: #fff !important;
+}
+
+/* Login button in navbar — styled distinctly */
+.navbar.poll-navbar .btn-login {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  color: #fff !important;
+  font-size: 0.8rem;
+  padding: 4px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.navbar.poll-navbar .btn-login:hover {
+  background: rgba(255,255,255,0.15) !important;
+  border-color: #fff !important;
+}
+
+/* ============================================================
+   BUTTONS — ALL must be green (functional requirement)
+   ============================================================ */
+.btn-primary,
+.btn-success,
+.btn-retain,
+button[type="submit"],
+input[type="submit"] {
+  background-color: var(--poll-green) !important;
+  border-color:     var(--poll-green-dark) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-retain:hover,
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--poll-green-dark) !important;
+  border-color: #1e7e34 !important;
+}
+
+/* Add-answer plus button — blue teal */
+.btn-add-answer {
+  background-color: var(--poll-blue) !important;
+  border-color: #138496 !important;
+  color: #fff !important;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.btn-add-answer:hover {
+  background-color: #138496 !important;
+  border-color: #117a8b !important;
+}
+
+/* Add-question button — green */
+.btn-add-question {
+  background-color: var(--poll-green) !important;
+  border-color: var(--poll-green-dark) !important;
+  color: #fff !important;
+  font-size: 0.875rem;
+  padding: 6px 14px;
+}
+
+.btn-add-question:hover {
+  background-color: var(--poll-green-dark) !important;
+}
+
+/* Management table buttons */
+.btn-view-details {
+  background-color: #6c757d !important;
+  border-color: #5a6268 !important;
+  color: #fff !important;
+  font-size: 0.78rem;
+  padding: 3px 8px;
+}
+
+.btn-view-details:hover {
+  background-color: #5a6268 !important;
+}
+
+.btn-close-poll {
+  background-color: #fd7e14 !important;
+  border-color: #e8690a !important;
+  color: #fff !important;
+  font-size: 0.78rem;
+  padding: 3px 8px;
+}
+
+.btn-close-poll:hover {
+  background-color: #e8690a !important;
+}
+
+.btn-delete {
+  background-color: #dc3545 !important;
+  border-color: #c82333 !important;
+  color: #fff !important;
+  font-size: 0.78rem;
+  padding: 3px 8px;
+}
+
+.btn-delete:hover {
+  background-color: #c82333 !important;
+}
+
+/* ============================================================
+   PLACEHOLDER TEXT — light gray (functional requirement)
+   ============================================================ */
+::placeholder {
+  color: var(--poll-placeholder) !important;
+  opacity: 1;
+}
+
+:-ms-input-placeholder { color: var(--poll-placeholder) !important; }
+::-ms-input-placeholder { color: var(--poll-placeholder) !important; }
+
+/* ============================================================
+   FORM CONTROLS
+   ============================================================ */
+.form-control {
+  border-radius: 3px;
+  border: 1px solid var(--poll-border);
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+  color: var(--poll-text);
+}
+
+.form-control:focus {
+  border-color: var(--poll-input-focus);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+  background-image: none;
+}
+
+.form-control.is-valid {
+  border-color: var(--poll-green);
+  background-image: none;
+}
+
+/* ---------- Validation feedback ---------- */
+.invalid-feedback {
+  display: none;
+  font-size: 0.78rem;
+  color: #dc3545;
+  margin-top: 3px;
+}
+
+.form-control.is-invalid ~ .invalid-feedback,
+.form-control.is-invalid + .invalid-feedback {
+  display: block;
+}
+
+/* Error summary box shown above form */
+#error-summary {
+  display: none;
+  border-left: 4px solid #dc3545;
+  background: #fff5f5;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+  color: #dc3545;
+}
+
+#error-summary.show {
+  display: block;
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.poll-container {
+  max-width: 700px;
+  margin: 2.5rem auto;
+  padding: 0 1rem;
+}
+
+.poll-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: var(--poll-text);
+}
+
+/* ============================================================
+   VOTE PAGE — question list
+   ============================================================ */
+.question-item {
+  margin-bottom: 1.25rem;
+}
+
+.question-item .question-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: var(--poll-text);
+}
+
+.question-item .form-check {
+  margin-bottom: 0.25rem;
+}
+
+.question-item .form-check-label {
+  font-size: 0.875rem;
+  color: var(--poll-text);
+}
+
+/* ============================================================
+   CREATE PAGE — question block
+   ============================================================ */
+.question-block {
+  border: 1px solid var(--poll-border);
+  border-radius: 4px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  background: #fdfdfd;
+  position: relative;
+}
+
+.question-block .remove-question-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.question-block .remove-question-btn:hover {
+  color: #dc3545;
+}
+
+.question-block .form-group {
+  margin-bottom: 0.65rem;
+}
+
+.question-block .form-check {
+  margin-bottom: 0.35rem;
+}
+
+.question-block .form-check-label {
+  font-size: 0.85rem;
+  color: var(--poll-muted);
+}
+
+/* Possible answers row */
+.answers-wrapper {
+  margin-top: 0.5rem;
+}
+
+.answer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.answers-label {
+  font-size: 0.85rem;
+  color: var(--poll-muted);
+  min-width: 110px;
+  text-align: right;
+}
+
+.answer-row .form-control {
+  flex: 1;
+}
+
+/* ============================================================
+   LIST PAGE — tabs
+   ============================================================ */
+.poll-tabs .nav-tabs {
+  border-bottom: 2px solid var(--poll-border);
+  margin-bottom: 1rem;
+}
+
+.poll-tabs .nav-tabs .nav-link {
+  border-radius: 3px 3px 0 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 6px 18px;
+  color: var(--poll-muted);
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.poll-tabs .nav-tabs .nav-link:hover {
+  color: var(--poll-text);
+  background: #f8f9fa;
+}
+
+/* Active tab — blue */
+.poll-tabs .nav-tabs .nav-link.active-tab[data-tab="active"] {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+/* Drafts tab — orange */
+.poll-tabs .nav-tabs .nav-link.active-tab[data-tab="drafts"] {
+  background-color: #fd7e14;
+  color: #fff;
+  border-color: #fd7e14;
+}
+
+/* Closed tab — gray */
+.poll-tabs .nav-tabs .nav-link.active-tab[data-tab="closed"] {
+  background-color: #6c757d;
+  color: #fff;
+  border-color: #6c757d;
+}
+
+/* Poll list table */
+.poll-list-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.poll-list-table thead th {
+  background: #f8f9fa;
+  border: 1px solid var(--poll-border);
+  padding: 8px 12px;
+  font-weight: 600;
+  color: var(--poll-text);
+}
+
+.poll-list-table tbody td {
+  border: 1px solid var(--poll-border);
+  padding: 8px 12px;
+  vertical-align: middle;
+}
+
+.poll-list-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.management-btns {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+/* Tab content panels */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ============================================================
+   LOGIN MODAL
+   ============================================================ */
+.login-modal .modal-header {
+  background: var(--poll-navbar-bg);
+  color: #fff;
+  border-bottom: none;
+  padding: 0.75rem 1.25rem;
+}
+
+.login-modal .modal-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.login-modal .modal-header .close {
+  color: #fff;
+  opacity: 0.7;
+  text-shadow: none;
+}
+
+.login-modal .modal-header .close:hover {
+  opacity: 1;
+}
+
+.login-modal .modal-body {
+  padding: 1.5rem 1.75rem;
+  background: #555;
+}
+
+.login-modal .modal-footer {
+  background: #555;
+  border-top: none;
+  padding: 0 1.75rem 1.25rem;
+  justify-content: center;
+}
+
+.login-modal .form-group label {
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+.login-modal .form-control {
+  background: #fff;
+  border-color: #999;
+  font-size: 0.875rem;
+}
+
+.login-modal .form-check-label {
+  color: #ccc;
+  font-size: 0.82rem;
+}
+
+.login-modal .btn-signin {
+  background-color: var(--poll-green) !important;
+  border-color: var(--poll-green-dark) !important;
+  color: #fff !important;
+  font-size: 0.875rem;
+  padding: 6px 24px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.login-modal .btn-signin:hover {
+  background-color: var(--poll-green-dark) !important;
+}
+
+.login-modal .btn-close-modal {
+  background: transparent !important;
+  border: 1px solid #ccc !important;
+  color: #ddd !important;
+  font-size: 0.875rem;
+  padding: 5px 24px;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.login-modal .btn-close-modal:hover {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+/* ============================================================
+   AJAX / SUCCESS FEEDBACK
+   ============================================================ */
+.alert-success-inline {
+  display: none;
+  padding: 0.5rem 1rem;
+  background: var(--poll-green-light);
+  border: 1px solid var(--poll-green);
+  border-radius: 3px;
+  color: var(--poll-green-dark);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+.alert-success-inline.show {
+  display: block;
+}
+
+/* Fade-out deleted row */
+.row-deleting {
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .poll-container {
+    margin: 1.5rem auto;
+  }
+
+  .answers-label {
+    min-width: 80px;
+    font-size: 0.8rem;
+  }
+
+  .management-btns {
+    flex-direction: column;
+  }
+}

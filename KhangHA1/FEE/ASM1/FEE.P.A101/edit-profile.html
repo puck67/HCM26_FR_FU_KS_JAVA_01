@@ -1,0 +1,89 @@
+<!-- edit-profile.html — AJAX content fragment loaded into cms.html -->
+<div class="page-title">Edit Profile</div>
+
+<div id="profile-alert" class="ajax-alert"></div>
+
+<div class="form-panel">
+  <div class="form-panel-header">Profile Form Elements</div>
+  <div class="form-panel-body">
+
+    <form id="profile-form" novalidate>
+
+      <div class="form-group">
+        <label for="prof-firstname">First Name</label>
+        <input
+          type="text"
+          id="prof-firstname"
+          name="firstname"
+          class="form-control"
+          placeholder="Enter the first name"
+          maxlength="30"
+          data-label="First Name"
+        />
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="prof-lastname">Last Name</label>
+        <input
+          type="text"
+          id="prof-lastname"
+          name="lastname"
+          class="form-control"
+          placeholder="Enter the last name"
+          maxlength="30"
+          data-label="Last Name"
+        />
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="prof-email">Email</label>
+        <input
+          type="email"
+          id="prof-email"
+          name="email"
+          class="form-control"
+          placeholder="your_email@example.com"
+          data-label="Email"
+        />
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="prof-phone">Phone</label>
+        <input
+          type="text"
+          id="prof-phone"
+          name="phone"
+          class="form-control"
+          placeholder="Enter your phone number"
+          maxlength="13"
+          data-label="Phone"
+        />
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="prof-desc">Description</label>
+        <textarea
+          id="prof-desc"
+          name="description"
+          class="form-control"
+          rows="4"
+          maxlength="200"
+          placeholder="Enter a short description"
+          data-label="Description"
+        ></textarea>
+        <div class="invalid-feedback"></div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn btn-success mr-2">Submit Button</button>
+        <button type="button" id="profile-reset" class="btn btn-secondary">Reset Button</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

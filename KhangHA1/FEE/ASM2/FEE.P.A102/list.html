@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Polls — Manage your polls: view active, draft, and closed polls." />
+  <title>Polls — List</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg poll-navbar">
+    <a class="navbar-brand" href="index.html">Polls</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Vote</a></li>
+        <li class="nav-item"><a class="nav-link" href="create.html">Create</a></li>
+        <li class="nav-item"><a class="nav-link active" href="list.html">List</a></li>
+      </ul>
+      <button class="btn-login" id="btn-login-trigger" type="button">Login</button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="poll-container">
+    <div id="delete-feedback" class="alert-success-inline" role="alert">Poll deleted successfully.</div>
+
+    <div class="poll-tabs">
+      <ul class="nav nav-tabs" id="poll-tab-nav">
+        <li class="nav-item">
+          <a class="nav-link active-tab" href="#" id="tab-active" data-tab="active">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="tab-drafts" data-tab="drafts">Drafts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="tab-closed" data-tab="closed">Closed</a>
+        </li>
+      </ul>
+
+      <!-- Active -->
+      <div class="tab-panel active" id="panel-active">
+        <table class="poll-list-table">
+          <thead>
+            <tr>
+              <th style="width:50px;">#</th>
+              <th>The list of questions and issues within</th>
+              <th style="width:230px;">Management</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-poll-id="1">
+              <td>1</td><td>Great poll</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="1">View details</button>
+                <button class="btn btn-close-poll" data-poll-id="1">Close poll</button>
+                <button class="btn btn-delete" data-poll-id="1">Delete</button>
+              </div></td>
+            </tr>
+            <tr data-poll-id="2">
+              <td>2</td><td>Employee satisfaction survey</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="2">View details</button>
+                <button class="btn btn-close-poll" data-poll-id="2">Close poll</button>
+                <button class="btn btn-delete" data-poll-id="2">Delete</button>
+              </div></td>
+            </tr>
+            <tr data-poll-id="3">
+              <td>3</td><td>Product feedback 2024</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="3">View details</button>
+                <button class="btn btn-close-poll" data-poll-id="3">Close poll</button>
+                <button class="btn btn-delete" data-poll-id="3">Delete</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Drafts -->
+      <div class="tab-panel" id="panel-drafts">
+        <table class="poll-list-table">
+          <thead>
+            <tr>
+              <th style="width:50px;">#</th>
+              <th>The list of questions and issues within</th>
+              <th style="width:230px;">Management</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-poll-id="4">
+              <td>4</td><td>New product launch survey (draft)</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="4">View details</button>
+                <button class="btn btn-close-poll" data-poll-id="4">Close poll</button>
+                <button class="btn btn-delete" data-poll-id="4">Delete</button>
+              </div></td>
+            </tr>
+            <tr data-poll-id="5">
+              <td>5</td><td>Customer service evaluation (draft)</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="5">View details</button>
+                <button class="btn btn-close-poll" data-poll-id="5">Close poll</button>
+                <button class="btn btn-delete" data-poll-id="5">Delete</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Closed -->
+      <div class="tab-panel" id="panel-closed">
+        <table class="poll-list-table">
+          <thead>
+            <tr>
+              <th style="width:50px;">#</th>
+              <th>The list of questions and issues within</th>
+              <th style="width:230px;">Management</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-poll-id="6">
+              <td>6</td><td>Annual company survey 2023</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="6">View details</button>
+                <button class="btn btn-delete" data-poll-id="6">Delete</button>
+              </div></td>
+            </tr>
+            <tr data-poll-id="7">
+              <td>7</td><td>Q3 market research poll</td>
+              <td><div class="management-btns">
+                <button class="btn btn-view-details" data-poll-id="7">View details</button>
+                <button class="btn btn-delete" data-poll-id="7">Delete</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal fade login-modal" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form id="login-form" novalidate>
+            <div class="form-group">
+              <label for="login-alias">Alias:</label>
+              <input type="text" class="form-control" id="login-alias" placeholder="Joetbepack" autocomplete="username" />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password:</label>
+              <input type="password" class="form-control" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" id="remember-me" />
+              <label class="form-check-label" for="remember-me">Remember me</label>
+            </div>
+            <button type="submit" class="btn btn-signin" id="btn-sign-in">Sign in</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-close-modal" data-dismiss="modal" id="btn-close-login">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="polls.js"></script>
+</body>
+</html>
