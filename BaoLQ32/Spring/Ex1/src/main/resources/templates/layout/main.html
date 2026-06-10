@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Management System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS (included for forms and tables grid system support) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. Header / Banner -->
+    <header class="main-banner">
+        <a class="brand" th:href="@{/}">LMS Management System</a>
+        
+        <div class="banner-center" th:text="${bannerTitle != null ? bannerTitle : 'Banner'}">
+            Banner
+        </div>
+
+        <div class="header-right">
+            <!-- Search bar -->
+            <form action="#" method="get" class="search-bar">
+                <input type="text" placeholder="Search">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <!-- User avatar -->
+            <div class="profile-avatar">
+                B
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. Main Layout Split -->
+    <div class="app-container">
+        
+        <!-- Sidebar (MenuLeft) -->
+        <aside class="sidebar-menu">
+            <a th:href="@{/courses/new}" class="nav-link">
+                <span class="title-vi">➕ Thêm mới Khóa học</span>
+                <span class="title-en">Add a new Course</span>
+            </a>
+            <a th:href="@{/courses}" class="nav-link">
+                <span class="title-vi">⚙️ Quản lý Khóa học</span>
+                <span class="title-en">Courses Management</span>
+            </a>
+            <a th:href="@{/students}" class="nav-link">
+                <span class="title-vi">👥 Quản lý Học viên</span>
+                <span class="title-en">Students Management</span>
+            </a>
+            
+            <div class="menuleft-title">MenuLeft</div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-body">
+                <div th:replace="~{this :: content}">
+                    <!-- Child content will be injected here -->
+                </div>
+            </div>
+            
+            <div class="body-footer-label">Footer</div>
+        </main>
+        
+    </div>
+
+    <!-- 3. Footer -->
+    <footer class="main-footer">
+        <div class="footer-left">© 2023 - All rights reserved. Built with Spring Framework</div>
+        <div class="footer-right">Footer</div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
