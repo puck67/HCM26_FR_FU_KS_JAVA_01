@@ -1,5 +1,6 @@
 package fa.training.ex1_lms.controllers;
 
+import fa.training.ex1_lms.controllers.base.GenericController;
 import fa.training.ex1_lms.entities.Course;
 import fa.training.ex1_lms.entities.CourseId;
 import fa.training.ex1_lms.entities.Lesson;
@@ -16,15 +17,49 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/courses")
-public class LessonController {
+public class LessonController extends GenericController<Lesson, Long, LessonService> {
 
     private final CourseService courseService;
-    private final LessonService lessonService;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public LessonController(CourseService courseService, LessonService lessonService) {
+        super(lessonService);
         this.courseService = courseService;
-        this.lessonService = lessonService;
+    }
+
+    @Override
+    protected String getListView() {
+        return "lesson_detail";
+    }
+
+    @Override
+    protected String getFormView() {
+        return "lesson_detail";
+    }
+
+    @Override
+    protected String getListName() {
+        return "lessons";
+    }
+
+    @Override
+    protected String getEntityName() {
+        return "lesson";
+    }
+
+    @Override
+    protected String getActivePageList() {
+        return "courses";
+    }
+
+    @Override
+    protected String getActivePageForm() {
+        return "courses";
+    }
+
+    @Override
+    protected Lesson createEmptyEntity() {
+        return new Lesson();
     }
 
     @GetMapping("/{courseCode}/{startDate}/lessons")
@@ -37,17 +72,17 @@ public class LessonController {
         Course course = courseService.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Khóa học không tồn tại"));
 
-        List<Lesson> lessons = lessonService.getLessonsByCourse(course);
+        List<Lesson> lessons = service.getLessonsByCourse(course);
 
-        Lesson lesson = new Lesson();
+        Lesson lesson = createEmptyEntity();
         lesson.setCourse(course);
 
         model.addAttribute("course", course);
-        model.addAttribute("lessons", lessons);
-        model.addAttribute("lesson", lesson);
-        model.addAttribute("activePage", "courses");
+        model.addAttribute(getListName(), lessons);
+        model.addAttribute(getEntityName(), lesson);
+        model.addAttribute("activePage", getActivePageList());
 
-        return "lesson_detail";
+        return getListView();
     }
 
     @PostMapping("/{courseCode}/{startDate}/lessons/save")
@@ -61,7 +96,7 @@ public class LessonController {
                 .orElseThrow(() -> new IllegalArgumentException("Khóa học không tồn tại"));
 
         lesson.setCourse(course);
-        lessonService.save(lesson);
+        service.save(lesson);
 
         return "redirect:/courses/" + courseCode + "/" + dateFormat.format(startDate) + "/lessons";
     }
@@ -77,17 +112,17 @@ public class LessonController {
         Course course = courseService.findById(courseId)
                 .orElseThrow(() -> new IllegalArgumentException("Khóa học không tồn tại"));
 
-        Lesson lesson = lessonService.findById(id)
+        Lesson lesson = service.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Bài học không tồn tại"));
 
-        List<Lesson> lessons = lessonService.getLessonsByCourse(course);
+        List<Lesson> lessons = service.getLessonsByCourse(course);
 
         model.addAttribute("course", course);
-        model.addAttribute("lessons", lessons);
-        model.addAttribute("lesson", lesson);
-        model.addAttribute("activePage", "courses");
+        model.addAttribute(getListName(), lessons);
+        model.addAttribute(getEntityName(), lesson);
+        model.addAttribute("activePage", getActivePageList());
 
-        return "lesson_detail";
+        return getListView();
     }
 
     @GetMapping("/{courseCode}/{startDate}/lessons/delete/{id}")
@@ -96,8 +131,9 @@ public class LessonController {
             @PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @PathVariable("id") Long id) {
 
-        lessonService.deleteById(id);
+        doDelete(id);
 
         return "redirect:/courses/" + courseCode + "/" + dateFormat.format(startDate) + "/lessons";
     }
 }
+

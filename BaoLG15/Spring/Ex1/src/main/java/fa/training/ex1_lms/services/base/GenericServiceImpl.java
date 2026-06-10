@@ -1,6 +1,5 @@
-package fa.training.ex1_lms.services.impl;
+package fa.training.ex1_lms.services.base;
 
-import fa.training.ex1_lms.services.GenericService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package fa.training.ex1_lms.services;
+package fa.training.ex1_lms.services.base;
 
 import java.util.List;
 import java.util.Optional;
