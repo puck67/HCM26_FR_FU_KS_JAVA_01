@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Danh sách tất cả khóa học trong hệ thống LMS"/>
+    <title>LMS Management - Quản lý Khóa học</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <!-- Banner -->
+    <header th:replace="~{fragments/layout :: banner}"></header>
+
+    <div class="main-container">
+        <!-- Menu Left -->
+        <nav th:replace="~{fragments/layout :: menuLeft('courses')}"></nav>
+
+        <!-- Body Content -->
+        <main class="body-content">
+
+            <!-- Courses Table -->
+            <div class="table-container" id="courses-table-section">
+                <h2 class="table-title">Danh sách Khóa học / Course Management</h2>
+
+                <table class="data-table" id="courses-table">
+                    <thead>
+                        <tr>
+                            <th>Mã khóa học</th>
+                            <th>Tên khóa học</th>
+                            <th>Ngày khai giảng</th>
+                            <th>Danh mục</th>
+                            <th>Giảng viên</th>
+                            <th>Số bài học</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${courses}"
+                            th:id="'course-row-' + ${course.id.courseCode}">
+                            <td th:text="${course.id.courseCode}">CRS101</td>
+                            <td th:text="${course.courseName}">Java Programming</td>
+                            <td th:text="${course.id.startDate}">2024-01-01</td>
+                            <td th:text="${course.category}">Technology</td>
+                            <td th:text="${course.instructor}">Nguyen Van A</td>
+                            <td th:text="${course.lessons.size()}">0</td>
+                            <td class="action-links">
+                                <a th:href="@{'/courses/' + ${course.id.courseCode} + '/' + ${course.id.startDate} + '/lessons'}"
+                                   class="action-edit"
+                                   th:id="'lesson-' + ${course.id.courseCode}">Lesson Detail</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(courses)}">
+                            <td colspan="7" class="empty-table">Chưa có khóa học nào. Hãy thêm khóa học mới!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
