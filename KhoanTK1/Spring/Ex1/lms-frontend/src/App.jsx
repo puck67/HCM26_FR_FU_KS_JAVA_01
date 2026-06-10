@@ -4,7 +4,7 @@ import MainLayout from './components/MainLayout';
 import HomePage from './components/HomePage';
 import AddCoursePage from './components/AddCoursePage';
 import CoursesPage from './components/CoursesPage';
-import StudentsPage from './components/StudentsPage';
+import LessonsPage from './components/LessonsPage';
 import LessonDetailPage from './components/LessonDetailPage';
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="courses/new" element={<AddCoursePage />} />
           <Route path="courses" element={<CoursesPage />} />
-          <Route path="students" element={<StudentsPage />} />
+          <Route path="lessons" element={<LessonsPage />} />
           <Route path="courses/:courseCode/:startDate/lessons" element={<LessonDetailPage />} />
         </Route>
       </Routes>

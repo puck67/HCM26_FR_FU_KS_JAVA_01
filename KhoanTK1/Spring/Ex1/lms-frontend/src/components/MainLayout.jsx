@@ -30,10 +30,10 @@ function MainLayout() {
               </li>
               <li>
                 <NavLink 
-                  to="/students" 
+                  to="/lessons" 
                   className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
                 >
-                  Students Management
+                  Lessons Management
                 </NavLink>
               </li>
             </ul>
