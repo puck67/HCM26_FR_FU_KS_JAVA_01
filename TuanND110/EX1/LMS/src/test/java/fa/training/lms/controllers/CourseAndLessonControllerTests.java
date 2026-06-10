@@ -228,5 +228,19 @@ class CourseAndLessonControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidStatusUpdate)))
                 .andExpect(status().isBadRequest());
+
+        // 8. Test PUT Validation: Empty Course Name on Update
+        Course courseForPut = new Course(courseId, "  ", "IT", "Instructor", new ArrayList<>());
+        mockMvc.perform(put("/api/courses/JAVA101_2026-06-10")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(courseForPut)))
+                .andExpect(status().isBadRequest());
+
+        // 9. Test PUT Validation: Negative Lesson Duration on Update
+        Lesson lessonForPut = new Lesson(lesson1.getId(), "Valid Name", -5, ContentType.VIDEO, LessonStatus.ACTIVE, course);
+        mockMvc.perform(put("/api/lessons/" + lesson1.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(lessonForPut)))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -24,12 +24,22 @@ public class CourseServiceImpl extends GenericServiceImpl<Course, CourseId> impl
         return courseRepository.findByCategory(category);
     }
 
-    @Override
-    public Course save(Course entity) {
+    private void validate(Course entity) {
         if (entity.getCourseName() == null || entity.getCourseName().trim().isEmpty()) {
             throw new IllegalArgumentException("Course name must not be empty");
         }
+    }
+
+    @Override
+    public Course save(Course entity) {
+        validate(entity);
         return super.save(entity);
+    }
+
+    @Override
+    public Course update(CourseId id, Course entity) {
+        validate(entity);
+        return super.update(id, entity);
     }
 
     @Override
