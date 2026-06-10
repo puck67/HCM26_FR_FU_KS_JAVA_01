@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - LMS Management'">LMS Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Banner -->
+    <header class="banner">
+        <div class="banner-left">
+            <span class="logo-icon">📖</span>
+            <span class="logo-text">LMS MANAGEMENT SYSTEM</span>
+        </div>
+        <div class="banner-center">
+            <span th:text="${pageTitle}">Banner</span>
+        </div>
+        <div class="banner-right">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="user-icon">👤</div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- MenuLeft -->
+        <aside class="menu-left">
+            <nav>
+                <ul>
+                    <li th:class="${activeMenu} == 'add-course' ? 'active' : ''">
+                        <a th:href="@{/courses/new}">
+                            <span class="menu-icon">⚙️</span>
+                            <div class="menu-text">
+                                <span class="menu-title-vi">Thêm mới Khóa học</span>
+                                <span class="menu-title-en">Add a new Course</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li th:class="${activeMenu} == 'courses' ? 'active' : ''">
+                        <a th:href="@{/courses/list}">
+                            <span class="menu-icon">📚</span>
+                            <div class="menu-text">
+                                <span class="menu-title-vi">Quản lý Khóa học</span>
+                                <span class="menu-title-en">Courses Management</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li th:class="${activeMenu} == 'students' ? 'active' : ''">
+                        <a th:href="@{/courses/students}">
+                            <span class="menu-icon">👥</span>
+                            <div class="menu-text">
+                                <span class="menu-title-vi">Quản lý Học viên</span>
+                                <span class="menu-title-en">Students Management</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="menu-label">MenuLeft</div>
+        </aside>
+
+        <!-- Body -->
+        <main class="body-content">
+            <div layout:fragment="content">
+                <!-- Default content -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2023 - All rights reserved. Built with Spring Framework</p>
+            <div class="social-icons">
+                <span>📘</span>
+                <span>🐦</span>
+                <span>📷</span>
+                <span>▶️</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
