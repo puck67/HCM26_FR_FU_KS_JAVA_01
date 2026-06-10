@@ -26,8 +26,7 @@ public class LessonServiceImpl extends GenericServiceImpl<Lesson, Long> implemen
         return lessonRepository.findByCourseId(courseId);
     }
 
-    @Override
-    public Lesson save(Lesson entity) {
+    private void validate(Lesson entity) {
         if (entity.getLessonName() == null || entity.getLessonName().trim().isEmpty()) {
             throw new IllegalArgumentException("Lesson name must not be empty");
         }
@@ -40,7 +39,18 @@ public class LessonServiceImpl extends GenericServiceImpl<Lesson, Long> implemen
         if (entity.getStatus() == null) {
             throw new IllegalArgumentException("Lesson status must not be null");
         }
+    }
+
+    @Override
+    public Lesson save(Lesson entity) {
+        validate(entity);
         return super.save(entity);
+    }
+
+    @Override
+    public Lesson update(Long id, Lesson entity) {
+        validate(entity);
+        return super.update(id, entity);
     }
 
     @Override
