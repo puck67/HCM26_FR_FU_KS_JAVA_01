@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS Homepage</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. Banner -->
+    <header class="banner">
+        <div>
+            <h1>LMS Learning Management System</h1>
+            <div class="subtitle">Welcome Admin</div>
+        </div>
+
+    </header>
+
+    <!-- 2. MenuLeft -->
+    <aside class="menu-left">
+        <a th:href="@{/courses/add}" th:class="${activePage == 'add_course' ? 'active' : ''}">Add a new Course</a>
+        <a th:href="@{/courses}" th:class="${activePage == 'courses_list' ? 'active' : ''}">Courses Management</a>
+        <a th:href="@{/students}" th:class="${activePage == 'students_list' ? 'active' : ''}">Students Management</a>
+    </aside>
+
+    <!-- 3. Body -->
+    <main class="body-content">
+        <div class="welcome-message">
+            <h2>WELCOME TO LMS MANAGEMENT SYSTEM - Quynh Nhu</h2>
+            <p>Use the navigation panel on the left to manage courses, lessons, and students.</p>
+        </div>
+    </main>
+
+    <!-- 4. Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Learning Management System. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

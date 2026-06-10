@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new Course</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. Banner -->
+    <header class="banner">
+        <div>
+            <h1>LMS Learning Management System</h1>
+            <div class="subtitle">Welcome Admin</div>
+        </div>
+
+    </header>
+
+    <!-- 2. MenuLeft -->
+    <aside class="menu-left">
+        <a th:href="@{/courses/add}" th:class="${activePage == 'add_course' ? 'active' : ''}">Add a new Course</a>
+        <a th:href="@{/courses}" th:class="${activePage == 'courses_list' ? 'active' : ''}">Courses Management</a>
+        <a th:href="@{/students}" th:class="${activePage == 'students_list' ? 'active' : ''}">Students Management</a>
+    </aside>
+
+    <!-- 3. Body -->
+    <main class="body-content">
+        <div class="page-header">
+            <h2 class="page-title">Course Registration</h2>
+            <p class="page-subtitle">Fill in details to register a new course in the system</p>
+        </div>
+
+        <!-- Success Notification -->
+        <div th:if="${success == true}" class="alert-success">
+            <div>
+                <strong>Success!</strong> Add a new Course successfully.
+            </div>
+            <div>
+                <a th:href="@{/lessons/detail(courseCode=${savedCourseCode}, startDate=${savedStartDate})}" class="alert-success-link">Lesson Detail</a>
+            </div>
+        </div>
+
+        <!-- Course Detail Form -->
+        <div class="card">
+            <h3 class="card-title">Course Detail Form</h3>
+            <form th:action="@{/courses/add}" th:object="${course}" method="post">
+                <div class="form-grid">
+                    <!-- Course Code -->
+                    <div class="form-group">
+                        <label for="courseCode">Mã khóa học *</label>
+                        <input type="text" id="courseCode" th:field="*{courseCode}" placeholder="E.g., PRO101" th:readonly="${success == true}"/>
+                        <span class="error-message" th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}">Mã khóa học không hợp lệ</span>
+                    </div>
+
+                    <!-- Start Date -->
+                    <div class="form-group">
+                        <label for="startDate">Ngày khai giảng *</label>
+                        <input type="date" id="startDate" th:field="*{startDate}" th:readonly="${success == true}"/>
+                        <span class="error-message" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Ngày khai giảng không hợp lệ</span>
+                    </div>
+
+                    <!-- Course Name -->
+                    <div class="form-group">
+                        <label for="courseName">Tên khóa học *</label>
+                        <input type="text" id="courseName" th:field="*{courseName}" placeholder="E.g., Intro to Java Programming" th:readonly="${success == true}"/>
+                        <span class="error-message" th:if="${#fields.hasErrors('courseName')}" th:errors="*{courseName}">Tên khóa học không hợp lệ</span>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="form-group">
+                        <label for="category">Danh mục học tập *</label>
+                        <input type="text" id="category" th:field="*{category}" placeholder="E.g., Software Engineering" th:readonly="${success == true}"/>
+                        <span class="error-message" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Danh mục không hợp lệ</span>
+                    </div>
+
+                    <!-- Instructor -->
+                    <div class="form-group full-width">
+                        <label for="instructor">Giảng viên phụ trách *</label>
+                        <input type="text" id="instructor" th:field="*{instructor}" placeholder="E.g., Dr. John Doe" th:readonly="${success == true}"/>
+                        <span class="error-message" th:if="${#fields.hasErrors('instructor')}" th:errors="*{instructor}">Tên giảng viên không hợp lệ</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a th:href="@{/home}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary" th:if="${success != true}">Save Course</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- 4. Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Learning Management System. All rights reserved.</p>
+    </footer>
+
+    <!-- Native JavaScript alert popup on successful submission -->
+    <script th:if="${success == true}">
+        window.onload = function() {
+            alert("Add a new Course successfully");
+        };
+    </script>
+</body>
+</html>
