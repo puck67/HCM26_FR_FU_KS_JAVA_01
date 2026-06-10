@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Add or Edit student details in LMS system"/>
+    <title>LMS Management - Học viên</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <!-- Banner -->
+    <header th:replace="~{fragments/layout :: banner}"></header>
+
+    <div class="main-container">
+        <!-- Menu Left -->
+        <nav th:replace="~{fragments/layout :: menuLeft('students')}"></nav>
+
+        <!-- Body Content -->
+        <main class="body-content">
+
+            <!-- Student Form -->
+            <div class="form-container">
+                <h2 class="form-title" th:text="${student.id == null} ? 'Thêm mới Học viên / Add New Student' : 'Chỉnh sửa Học viên / Edit Student'">Thêm mới Học viên</h2>
+
+                <form th:action="@{/students/save}" th:object="${student}" method="post" id="student-form">
+                    <!-- Hidden field for ID when editing -->
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div class="form-group">
+                        <label for="name">Họ và tên / Student Name</label>
+                        <input type="text" id="name" th:field="*{name}" required placeholder="Nhập họ và tên học viên"/>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" th:field="*{email}" required placeholder="email@example.com"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại / Phone Number</label>
+                            <input type="text" id="phone" th:field="*{phone}" placeholder="Nhập số điện thoại"/>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="save-student-btn">Save Student</button>
+                        <a th:href="@{/students}" class="btn btn-secondary" id="cancel-student-btn">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
