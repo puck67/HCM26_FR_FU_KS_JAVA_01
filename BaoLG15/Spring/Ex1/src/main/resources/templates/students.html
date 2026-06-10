@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::#students-content})}">
+<head>
+    <title>Quản lý Học viên - LMS</title>
+</head>
+<body>
+    <div id="students-content" class="welcome-container">
+        <h1 class="welcome-title"><i class="fa-solid fa-users" style="color: var(--primary-color);"></i> STUDENTS MANAGEMENT SYSTEM</h1>
+        <p class="welcome-subtitle">Chức năng quản lý thông tin học viên đang được phát triển. Vui lòng quay lại sau.</p>
+        <div style="margin-top: 2rem;">
+            <a th:href="@{/}" class="btn btn-primary">Quay lại Trang chủ</a>
+        </div>
+    </div>
+</body>
+</html>
