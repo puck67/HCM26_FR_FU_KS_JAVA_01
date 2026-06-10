@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses Management - LMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{layout :: banner}"></div>
+
+<div class="container-fluid flex-grow-1">
+    <div class="row h-100">
+        <div th:replace="~{layout :: menuLeft}"></div>
+
+        <div class="col-md-10 main-content">
+            <div class="container-fluid mt-4">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0"><i class="bi bi-journal-bookmark me-2"></i>Courses Management</h4>
+                    <a th:href="@{/courses/add}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-1"></i> Add a new Course
+                    </a>
+                </div>
+
+                <!-- Flash message after delete -->
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span th:text="${successMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <div class="card shadow-sm">
+                    <div class="card-body p-0">
+                        <table class="table table-striped table-hover mb-0">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Course ID</th>
+                                    <th>Start Date</th>
+                                    <th>Course Name</th>
+                                    <th>Category</th>
+                                    <th>Instructor</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:if="${#lists.isEmpty(courses)}">
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                                        No courses found. <a th:href="@{/courses/add}">Add a new course</a>.
+                                    </td>
+                                </tr>
+                                <tr th:each="c, iterStat : ${courses}">
+                                    <td th:text="${iterStat.count}">1</td>
+                                    <td>
+                                        <span class="badge bg-secondary" th:text="${c.course_code}"></span>
+                                    </td>
+                                    <td th:text="${#dates.format(c.start_date, 'dd/MM/yyyy')}"></td>
+                                    <td th:text="${c.course_name}"></td>
+                                    <td>
+                                        <span class="badge bg-info text-dark" th:text="${c.category}"></span>
+                                    </td>
+                                    <td th:text="${c.instructor}"></td>
+                                    <td class="text-center">
+                                        <a th:href="@{/courses/{code}/{date}/lessons(code=${c.course_code}, date=${#dates.format(c.start_date, 'yyyy-MM-dd')})}"
+                                           class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="bi bi-list-ul"></i> Lessons
+                                        </a>
+                                        <a href="#"
+                                           th:data-course-code="${c.course_code}"
+                                           th:data-start-date="${#dates.format(c.start_date, 'yyyy-MM-dd')}"
+                                           th:data-course-name="${c.course_name}"
+                                           class="btn btn-sm btn-outline-danger btn-delete">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                Do you want to delete this lesson?<br>
+                <strong id="courseNameToDelete"></strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a id="confirmDeleteBtn" href="#" class="btn btn-danger">Yes, Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.btn-delete').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const courseCode = this.getAttribute('data-course-code');
+            const startDate = this.getAttribute('data-start-date');
+            const courseName = this.getAttribute('data-course-name');
+
+            document.getElementById('courseNameToDelete').textContent = `[${courseCode}] ${courseName}`;
+            document.getElementById('confirmDeleteBtn').setAttribute('href', `/courses/delete/${courseCode}/${startDate}`);
+
+            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+        });
+    });
+</script>
+</body>
+</html>
