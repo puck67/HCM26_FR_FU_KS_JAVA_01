@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson Detail - LMS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{layout :: banner}"></div>
+
+<div class="container-fluid flex-grow-1">
+    <div class="row h-100">
+        <div th:replace="~{layout :: menuLeft}"></div>
+        
+        <div class="col-md-10 main-content">
+            <div class="container mt-4">
+                
+                <div class="card mb-4 bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title text-muted">Course Summary</h6>
+                        <p class="mb-1"><strong>Mã khóa học / Course ID:</strong> <span th:text="${course.course_code}"></span></p>
+                        <p class="mb-0"><strong>Ngày khai giảng / Start Date:</strong> <span th:text="${#dates.format(course.start_date, 'MM/dd/yyyy')}"></span></p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header bg-light font-weight-bold d-flex justify-content-between align-items-center">
+                        <span>Add/Edit Lesson Detail</span>
+                        <span class="text-danger font-weight-bold" style="font-size: 1.1rem;">Chức năng 3.2. Chi tiết Bài học</span>
+                    </div>
+                    <div class="card-body bg-light">
+                        <form th:action="@{/courses/{code}/{date}/lessons/save(code=${course.course_code}, date=${#dates.format(course.start_date, 'yyyy-MM-dd')})}" th:object="${newLesson}" method="post">
+                            <input type="hidden" th:field="*{id}" id="lessonId">
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Tên bài học / Lesson Name</label>
+                                    <input type="text" class="form-control" th:field="*{lesson_name}" id="lessonName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Thời lượng / Duration (min)</label>
+                                    <input type="number" class="form-control" th:field="*{duration}" id="lessonDuration" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Loại nội dung / Content Type</label>
+                                    <select class="form-select" th:field="*{content_type}" id="lessonType">
+                                        <option value="Video">Video</option>
+                                        <option value="Theory">Theory</option>
+                                        <option value="Practice">Practice</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-muted">Trạng thái / Status</label>
+                                    <select class="form-select" th:field="*{status}" id="lessonStatus">
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                        <option value="Draft">Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <button type="submit" class="btn btn-primary px-4">Save Lesson</button>
+                                <button type="button" class="btn btn-secondary px-4" onclick="resetForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">List of Lessons for <span th:text="${course.course_code}"></span></h5>
+                    <span class="text-muted">Lesson Detail/Edit Screen</span>
+                </div>
+                
+                <table class="table table-bordered table-striped">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>ID</th>
+                            <th>Lesson Name</th>
+                            <th>Duration</th>
+                            <th>Content Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="l, iterStat : ${lessons}">
+                            <td th:text="${iterStat.count}">1</td>
+                            <td th:text="${l.lesson_name}">Name</td>
+                            <td th:text="${l.duration}">0</td>
+                            <td th:text="${l.content_type}">Video</td>
+                            <td th:text="${l.status}">Active</td>
+                            <td>
+                                <a href="#" class="text-primary text-decoration-none me-2" 
+                                   th:onclick="editLesson([[${l.id}]], [[${l.lesson_name}]], [[${l.duration}]], [[${l.content_type}]], [[${l.status}]])">Edit</a>
+                                |
+                                <a href="#" class="text-danger text-decoration-none ms-2" 
+                                   th:onclick="confirmDelete([[${course.course_code}]], [[${#dates.format(course.start_date, 'yyyy-MM-dd')}]], [[${l.id}]])">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{layout :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function confirmDelete(courseCode, startDate, lessonId) {
+        if(confirm("Do you want to delete this lesson?")) {
+            window.location.href = `/courses/${courseCode}/${startDate}/lessons/delete/${lessonId}`;
+        }
+    }
+
+    function editLesson(id, name, duration, type, status) {
+        document.getElementById('lessonId').value = id;
+        document.getElementById('lessonName').value = name;
+        document.getElementById('lessonDuration').value = duration;
+        document.getElementById('lessonType').value = type;
+        document.getElementById('lessonStatus').value = status;
+        window.scrollTo(0, 0);
+    }
+    
+    function resetForm() {
+        document.getElementById('lessonId').value = '';
+        document.getElementById('lessonName').value = '';
+        document.getElementById('lessonDuration').value = '';
+        document.getElementById('lessonType').value = 'Video';
+        document.getElementById('lessonStatus').value = 'Active';
+    }
+</script>
+</body>
+</html>

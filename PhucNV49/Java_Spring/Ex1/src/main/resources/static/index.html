@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Course Management System</title>
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 1. Banner -->
+        <header class="app-header">
+            <div class="logo-area">
+                <i class="fa-solid fa-book-open logo-icon"></i>
+                <span class="logo-text">LMS MANAGEMENT SYSTEM</span>
+            </div>
+            <div id="banner-title" class="banner-title">Banner</div>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="profile-icon">
+                    <i class="fa-solid fa-circle-user"></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- 2. MenuLeft -->
+            <aside class="menu-left">
+                <nav class="nav-menu">
+                    <a href="#" class="nav-item" id="nav-add-course" onclick="app.showAddCourse()">
+                        <div class="nav-icon-wrapper">
+                            <i class="fa-solid fa-circle-plus"></i>
+                        </div>
+                        <div class="nav-text-wrapper">
+                            <span class="nav-title">Thêm mới Khóa học</span>
+                            <span class="nav-subtitle">Add a new Course</span>
+                        </div>
+                    </a>
+                    <a href="#" class="nav-item" id="nav-manage-courses" onclick="app.showManageCourses()">
+                        <div class="nav-icon-wrapper">
+                            <i class="fa-solid fa-book"></i>
+                        </div>
+                        <div class="nav-text-wrapper">
+                            <span class="nav-title">Quản lý Khóa học</span>
+                            <span class="nav-subtitle">Courses Management</span>
+                        </div>
+                    </a>
+                    <a href="#" class="nav-item" id="nav-manage-students" onclick="app.showManageStudents()">
+                        <div class="nav-icon-wrapper">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="nav-text-wrapper">
+                            <span class="nav-title">Quản lý Học viên</span>
+                            <span class="nav-subtitle">Students Management</span>
+                        </div>
+                    </a>
+                </nav>
+                <div class="sidebar-label">MenuLeft</div>
+            </aside>
+
+            <!-- 3. Body -->
+            <main class="content-body">
+                <div id="alert-container" class="alert-container hidden">
+                    <div class="alert success-alert">
+                        <i class="fa-solid fa-circle-check alert-icon"></i>
+                        <span id="alert-message">Add a new Course successfully!</span>
+                    </div>
+                </div>
+
+                <!-- Screen 1: Default Welcome -->
+                <div id="screen-welcome" class="screen-panel">
+                    <div class="welcome-box">
+                        <h1>WELCOME TO LMS MANAGEMENT SYSTEM</h1>
+                        <p class="welcome-subtitle">BASED ON SPRING FRAMEWORK</p>
+                    </div>
+                </div>
+
+                <!-- Screen 2: Add / Edit Course Form -->
+                <div id="screen-course-form" class="screen-panel hidden">
+                    <!-- Dynamic Lesson Detail Link on Course Save Success -->
+                    <div id="lesson-detail-link-container" class="lesson-link-container hidden">
+                        <a href="#" class="btn-lesson-detail" id="btn-to-lesson-detail">
+                            Lesson Detail <span class="vn-text">Thêm chi tiết bài học</span>
+                        </a>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">Create New Course</div>
+                        <div class="card-body">
+                            <form id="course-form" onsubmit="app.saveCourse(event)">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="courseCode">Mã khóa học / Course ID</label>
+                                        <input type="text" id="courseCode" name="courseCode" required placeholder="e.g. CRS101">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="startDate">Ngày khai giảng / Start Date</label>
+                                        <input type="text" id="startDate" name="startDate" required placeholder="DD/MM/YYYY">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="courseName">Tên khóa học / Course Name</label>
+                                    <input type="text" id="courseName" name="courseName" required placeholder="e.g. Java Web Development">
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Danh mục / Category</label>
+                                    <select id="category" name="category" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="Business">Business</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Languages">Languages</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instructor">Giảng viên / Instructor</label>
+                                    <input type="text" id="instructor" name="instructor" required placeholder="e.g. Dr. Nguyen Van A">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Save Course</button>
+                                    <button type="button" class="btn btn-secondary" onclick="app.resetCourseForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Lesson Detail (Manage lessons of a course) -->
+                <div id="screen-lesson-detail" class="screen-panel hidden">
+                    <!-- Course Summary Box -->
+                    <div class="card summary-card">
+                        <div class="card-header">Course Summary</div>
+                        <div class="card-body summary-body">
+                            <p><strong>Mã khóa học / Course ID:</strong> <span id="summary-course-code">CRS101</span></p>
+                            <p><strong>Ngày khai giảng / Start Date:</strong> <span id="summary-start-date">15/10/2023</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Add/Edit Lesson Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header" id="lesson-form-title">Add/Edit Lesson Detail</div>
+                        <div class="card-body">
+                            <form id="lesson-form" onsubmit="app.saveLesson(event)">
+                                <input type="hidden" id="lessonId" name="lessonId">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="lessonName">Tên bài học / Lesson Name</label>
+                                        <input type="text" id="lessonName" name="lessonName" required placeholder="e.g. Intro to Java">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duration">Thời lượng / Duration (mins)</label>
+                                        <input type="number" id="duration" name="duration" required min="1" placeholder="e.g. 60">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="contentType">Loại nội dung / Content Type</label>
+                                        <select id="contentType" name="contentType" required>
+                                            <option value="" disabled selected>Select content type</option>
+                                            <option value="Video">Video</option>
+                                            <option value="Lý thuyết">Lý thuyết</option>
+                                            <option value="Thực hành">Thực hành</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status">Trạng thái / Status</label>
+                                        <select id="status" name="status" required>
+                                            <option value="" disabled selected>Select status</option>
+                                            <option value="Bản nháp">Bản nháp</option>
+                                            <option value="Đang mở">Đang mở</option>
+                                            <option value="Đã khóa">Đã khóa</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary" id="btn-save-lesson">Save Lesson</button>
+                                    <button type="button" class="btn btn-secondary" onclick="app.resetLessonForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Lessons List Table Card -->
+                    <div class="card table-card">
+                        <div class="card-header">List of Lessons for <span id="table-course-code">CRS101</span></div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Lesson Name</th>
+                                            <th>Duration (mins)</th>
+                                            <th>Content Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="lessons-table-body">
+                                        <!-- Dynamic lessons list will go here -->
+                                        <tr>
+                                            <td colspan="6" class="empty-table-message">No lessons found. Add one above!</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 4: Courses List Management -->
+                <div id="screen-courses-list" class="screen-panel hidden">
+                    <div class="card">
+                        <div class="card-header">Registered Courses Management</div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Course Code</th>
+                                            <th>Start Date</th>
+                                            <th>Course Name</th>
+                                            <th>Category</th>
+                                            <th>Instructor</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="courses-table-body">
+                                        <tr>
+                                            <td colspan="6" class="empty-table-message">Loading courses...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Screen 5: Students Management -->
+                <div id="screen-students-list" class="screen-panel hidden">
+                    <div class="card">
+                        <div class="card-header">Students Management</div>
+                        <div class="card-body welcome-box">
+                            <i class="fa-solid fa-user-graduate placeholder-icon"></i>
+                            <h2>Student Management Service</h2>
+                            <p class="welcome-subtitle">Feature coming soon! Currently managing courses and lessons.</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- 4. Footer -->
+        <footer class="app-footer">
+            <div class="footer-copyright">&copy; 2026 - All rights reserved. Built with Spring Framework</div>
+            <div class="footer-links">
+                <a href="#" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter" title="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="footer-label">Footer</div>
+        </footer>
+    </div>
+
+    <!-- Confirm Delete Modal (matches custom dialog design in screenshot) -->
+    <div id="confirm-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <div class="modal-header">
+                <i class="fa-solid fa-trash-can modal-header-icon"></i>
+                <span class="modal-title">Confirm Delete</span>
+            </div>
+            <div class="modal-body">
+                <p>Do you want to delete this lesson?</p>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-primary modal-btn-yes" id="btn-modal-yes">Yes</button>
+                <button type="button" class="btn btn-secondary modal-btn-no" id="btn-modal-no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS app script -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

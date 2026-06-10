@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. Banner -->
+    <header class="banner">
+        <div>
+            <h1>LMS Learning Management System</h1>
+            <div class="subtitle">Welcome Admin</div>
+        </div>
+
+    </header>
+
+    <!-- 2. MenuLeft -->
+    <aside class="menu-left">
+        <a th:href="@{/courses/add}" th:class="${activePage == 'add_course' ? 'active' : ''}">Add a new Course</a>
+        <a th:href="@{/courses}" th:class="${activePage == 'courses_list' ? 'active' : ''}">Courses Management</a>
+        <a th:href="@{/students}" th:class="${activePage == 'students_list' ? 'active' : ''}">Students Management</a>
+    </aside>
+
+    <!-- 3. Body -->
+    <main class="body-content">
+        <div class="page-header">
+            <h2 class="page-title">Courses Management</h2>
+            <p class="page-subtitle">List of all active/upcoming courses</p>
+        </div>
+
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 class="card-title" style="margin-bottom: 0; border-bottom: none; padding-bottom: 0;">Registered Courses</h3>
+                <a th:href="@{/courses/add}" class="btn btn-primary">Add New Course</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Mã khóa học</th>
+                            <th>Ngày khai giảng</th>
+                            <th>Tên khóa học</th>
+                            <th>Danh mục</th>
+                            <th>Giảng viên</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${courses}">
+                            <td th:text="${c.courseCode}">PRO101</td>
+                            <td th:text="${c.startDate}">2026-06-10</td>
+                            <td th:text="${c.courseName}">Introduction to Programming</td>
+                            <td th:text="${c.category}">Software Development</td>
+                            <td th:text="${c.instructor}">Dr. John</td>
+                            <td>
+                                <a th:href="@{/lessons/detail(courseCode=${c.courseCode}, startDate=${c.startDate})}" class="action-link edit">Lesson Detail</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(courses)}">
+                            <td colspan="6" style="text-align: center; color: #94a3b8; padding: 30px;">
+                                No courses registered yet. Click "Add New Course" to get started.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- 4. Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Learning Management System. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

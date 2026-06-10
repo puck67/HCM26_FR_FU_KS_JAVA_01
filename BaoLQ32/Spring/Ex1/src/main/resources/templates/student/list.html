@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(bannerTitle='Banner')}">
+<head>
+    <title>Quản lý Học viên</title>
+</head>
+<body>
+    <div th:fragment="content">
+        
+        <!-- Students Table Box -->
+        <div class="table-container-box">
+            <div class="box-header">
+                <h5>Students Management</h5>
+                <span class="right-text">Student Directory Screen</span>
+            </div>
+            <div class="box-body" style="padding: 0;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Enrolled Courses</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SV001</td>
+                            <td>Nguyễn Văn Minh</td>
+                            <td>minhnv@gmail.com</td>
+                            <td>0987654321</td>
+                            <td>CRS101</td>
+                        </tr>
+                        <tr>
+                            <td>SV002</td>
+                            <td>Trần Thị Hồng</td>
+                            <td>hongtt@gmail.com</td>
+                            <td>0912345678</td>
+                            <td>CRS102</td>
+                        </tr>
+                        <tr>
+                            <td>SV003</td>
+                            <td>Lê Hoàng Nam</td>
+                            <td>namlh@gmail.com</td>
+                            <td>0909090909</td>
+                            <td>CRS101, CRS102</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

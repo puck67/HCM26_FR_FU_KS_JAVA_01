@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. Banner -->
+    <header class="banner">
+        <div>
+            <h1>LMS Learning Management System</h1>
+            <div class="subtitle">Welcome Admin</div>
+        </div>
+      
+    </header>
+
+    <!-- 2. MenuLeft -->
+    <aside class="menu-left">
+        <a th:href="@{/courses/add}" th:class="${activePage == 'add_course' ? 'active' : ''}">Add a new Course</a>
+        <a th:href="@{/courses}" th:class="${activePage == 'courses_list' ? 'active' : ''}">Courses Management</a>
+        <a th:href="@{/students}" th:class="${activePage == 'students_list' ? 'active' : ''}">Students Management</a>
+    </aside>
+
+    <!-- 3. Body -->
+    <main class="body-content">
+        <div class="page-header">
+            <h2 class="page-title">Students Management</h2>
+            <p class="page-subtitle">List of enrolled students in the LMS platform</p>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Enrolled Students</h3>
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Full Name</th>
+                            <th>Email Address</th>
+                            <th>Chuyên ngành</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SV001</td>
+                            <td>Nguyễn Văn A</td>
+                            <td>sv001@lms.edu.vn</td>
+                            <td>Software Engineering</td>
+                            <td><span class="badge badge-open">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>SV002</td>
+                            <td>Trần Thị B</td>
+                            <td>sv002@lms.edu.vn</td>
+                            <td>Information Assurance</td>
+                            <td><span class="badge badge-open">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>SV003</td>
+                            <td>Lê Hoàng C</td>
+                            <td>sv003@lms.edu.vn</td>
+                            <td>Digital Art Design</td>
+                            <td><span class="badge badge-draft">Inactive</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- 4. Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Learning Management System. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
