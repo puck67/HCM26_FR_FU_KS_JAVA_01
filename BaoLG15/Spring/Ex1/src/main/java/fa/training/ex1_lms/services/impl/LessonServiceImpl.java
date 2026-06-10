@@ -4,6 +4,7 @@ import fa.training.ex1_lms.entities.Course;
 import fa.training.ex1_lms.entities.Lesson;
 import fa.training.ex1_lms.repositories.LessonRepository;
 import fa.training.ex1_lms.services.LessonService;
+import fa.training.ex1_lms.services.base.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
