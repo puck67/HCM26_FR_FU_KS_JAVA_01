@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page">
+    <header class="banner">
+        <h1>LMS Management System</h1>
+    </header>
+    <main class="main">
+        <nav class="menu-left">
+            <ul>
+                <li><a th:href="@{/courses/new}">Add a new Course</a></li>
+                <li><a th:href="@{/courses}">Courses Management</a></li>
+                <li><a th:href="@{/students}">Students Management</a></li>
+            </ul>
+        </nav>
+        <section class="body-content">
+            <div class="message" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+            <form class="form-panel" th:action="@{/courses}" th:object="${course}" method="post">
+                <div class="form-row">
+                    <label for="courseCode">Course Code</label>
+                    <input id="courseCode" type="text" th:field="*{courseCode}" required>
+                </div>
+                <div class="form-row">
+                    <label for="startDate">Start Date</label>
+                    <input id="startDate" type="date" th:field="*{startDate}" required>
+                </div>
+                <div class="form-row">
+                    <label for="courseName">Course Name</label>
+                    <input id="courseName" type="text" th:field="*{courseName}" required>
+                </div>
+                <div class="form-row">
+                    <label for="category">Category</label>
+                    <input id="category" type="text" th:field="*{category}" required>
+                </div>
+                <div class="form-row">
+                    <label for="instructor">Instructor</label>
+                    <input id="instructor" type="text" th:field="*{instructor}" required>
+                </div>
+                <div class="actions">
+                    <button type="submit">Save Course</button>
+                </div>
+            </form>
+
+            <p th:if="${savedCourseId != null}">
+                <a th:href="@{/courses/{courseCode}/{startDate}/lessons(courseCode=${savedCourseId.courseCode},startDate=${savedCourseId.startDate})}">
+                    Lesson Detail
+                </a>
+            </p>
+        </section>
+    </main>
+    <footer class="footer">Copyright © LMS Management System</footer>
+</div>
+<script th:if="${successMessage}">
+    alert('Add a new Course successfully');
+</script>
+</body>
+</html>
