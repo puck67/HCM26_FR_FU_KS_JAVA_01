@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <div th:replace="~{fragments/components :: header}"></div>
+
+    <div class="main-container">
+        <div th:replace="~{fragments/components :: sidebar}"></div>
+        
+        <main layout:fragment="content">
+            <!-- Page content will be injected here -->
+        </main>
+    </div>
+
+    <div th:replace="~{fragments/components :: footer}"></div>
+
+</body>
+</html>

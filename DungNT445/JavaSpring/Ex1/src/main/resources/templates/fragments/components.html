@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <header th:fragment="header">
+        <div class="logo">
+            <span>&#128214; LMS MANAGEMENT SYSTEM</span>
+        </div>
+        <div class="banner-title">
+            <h2>Banner</h2>
+        </div>
+        <div class="user-info">
+            <input type="text" placeholder="Search" style="padding: 5px; border-radius: 4px; border: none;">
+            <span style="margin-left: 10px;">&#128100;</span>
+        </div>
+    </header>
+
+    <aside th:fragment="sidebar">
+        <ul>
+            <li>
+                <a th:href="@{/courses/new}">
+                    <strong>Thêm mới Khóa học</strong><br>
+                    <small>Add a new Course</small>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <strong>Quản lý Khóa học</strong><br>
+                    <small>Courses Management</small>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <strong>Quản lý Học viên</strong><br>
+                    <small>Students Management</small>
+                </a>
+            </li>
+        </ul>
+        <div style="padding: 20px; margin-top: 50px;">
+            <h2>MenuLeft</h2>
+        </div>
+    </aside>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer">
+        &copy; 2023 - All rights reserved. Built with <strong>Spring Framework</strong><br>
+        <small>Footer</small>
+    </footer>
+
+</body>
+</html>

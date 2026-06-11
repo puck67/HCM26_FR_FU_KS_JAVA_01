@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title>Add Course</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+        <div style="margin-bottom: 20px;" th:if="${successMessage}">
+            <a th:href="@{/courses/{code}/{date}/lessons(code=${course.courseCode}, date=${course.startDate})}" style="font-size: 1.2rem; text-decoration: underline; color: #007bff;">Lesson Detail</a>
+            <span style="color: #dc3545; margin-left: 10px;">Thêm chi tiết bài học</span>
+        </div>
+
+        <div style="border: 1px solid #ced4da; padding: 20px; border-radius: 4px;">
+            <h3>Create New Course</h3>
+            <form th:action="@{/courses/new}" th:object="${course}" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Mã khóa học / Course ID</label>
+                        <input type="text" class="form-control" th:field="*{courseCode}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày khai giảng / Start Date</label>
+                        <input type="date" class="form-control" th:field="*{startDate}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Tên khóa học / Course Name</label>
+                    <input type="text" class="form-control" th:field="*{courseName}" required>
+                </div>
+                <div class="form-group">
+                    <label>Danh mục / Category</label>
+                    <select class="form-control" th:field="*{category}">
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                        <option value="Design">Design</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Giảng viên / Instructor</label>
+                    <input type="text" class="form-control" th:field="*{instructor}" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Save Course</button>
+                <a href="#" class="btn btn-secondary">Cancel</a>
+                <span style="margin-left: 20px; float: right;">Add a new Course (Course Detail Screen)</span>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
