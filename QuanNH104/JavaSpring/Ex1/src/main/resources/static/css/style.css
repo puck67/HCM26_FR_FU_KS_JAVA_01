@@ -1,0 +1,265 @@
+/* Custom style sheet for LMS Management System */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --accent-blue: #3b82f6;
+    --accent-blue-hover: #2563eb;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 1. BANNER SECTION */
+header.banner {
+    background-color: var(--bg-secondary);
+    color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon-svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--accent-blue);
+}
+
+.logo-text h1 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    color: #ffffff;
+    outline: none;
+    font-size: 14px;
+    width: 200px;
+}
+
+.search-box input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-icon {
+    width: 16px;
+    height: 16px;
+    fill: var(--text-muted);
+    margin-left: 8px;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--text-muted);
+    cursor: pointer;
+    transition: fill 0.2s ease;
+}
+
+.profile-icon:hover {
+    fill: #ffffff;
+}
+
+/* 2. MAIN LAYOUT (MenuLeft + Body) */
+.main-wrapper {
+    display: flex;
+    flex: 1;
+}
+
+/* MenuLeft Section */
+aside.menu-left {
+    width: 280px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-links li {
+    width: 100%;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 25px;
+    border-bottom: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.nav-links li:first-child a {
+    border-top: 1px solid var(--border-color);
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+    color: #ffffff;
+}
+
+.nav-links li.active a {
+    background-color: rgba(59, 130, 246, 0.08);
+    color: var(--accent-blue);
+    font-weight: 600;
+    border-left: 4px solid var(--accent-blue);
+    padding-left: 21px;
+}
+
+.nav-icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
+.nav-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-subtext {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+/* Body Section */
+main.body-content {
+    flex: 1;
+    padding: 40px;
+    background-color: var(--bg-primary);
+    overflow-y: auto;
+}
+
+/* 3. FOOTER SECTION */
+footer.main-footer {
+    background-color: #0b0f19;
+    color: var(--text-muted);
+    padding: 25px 0;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-text {
+    font-size: 13px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--text-muted);
+    cursor: pointer;
+    transition: fill 0.2s ease;
+}
+
+.social-icons svg:hover {
+    fill: #ffffff;
+}
+
+/* Welcome Box */
+.welcome-container {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 60px;
+    text-align: center;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    margin-top: 20px;
+}
+
+.welcome-title {
+    font-size: 26px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.welcome-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Base Card styles for other pages */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    overflow: hidden;
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
