@@ -3,12 +3,7 @@ package fa.training.lms.controllers;
 import fa.training.lms.controllers.base.GenericController;
 import fa.training.lms.entities.Course;
 import fa.training.lms.entities.CourseId;
-import fa.training.lms.repositories.CourseRepository;
-import fa.training.lms.repositories.LessonRepository;
 import fa.training.lms.services.CourseService;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

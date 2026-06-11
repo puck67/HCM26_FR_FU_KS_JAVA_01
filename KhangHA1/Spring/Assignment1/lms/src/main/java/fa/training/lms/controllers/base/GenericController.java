@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 public abstract class GenericController<T, ID> {
 
     protected final GenericService<T, ID> service;
-    protected final String viewFolder; // Thư mục chứa view Thymeleaf (VD: "courses")
-    protected final String modelName; // Tên biến dùng trong form/list (VD: "course")
+    protected final String viewFolder;
+    protected final String modelName;
 
     protected GenericController(GenericService<T, ID> service, String viewFolder, String modelName) {
         this.service = service;
@@ -24,8 +24,6 @@ public abstract class GenericController<T, ID> {
 
     @GetMapping("/create")
     public String createForm(Model model) throws Exception {
-        // Tự động khởi tạo instance mới cho Model (Yêu cầu Class có No-Args
-        // Constructor)
         model.addAttribute(modelName, getEntityClass().getDeclaredConstructor().newInstance());
         return viewFolder + "/form";
     }
@@ -48,6 +46,5 @@ public abstract class GenericController<T, ID> {
         return "redirect:/" + viewFolder;
     }
 
-    // Phương thức bổ trợ để lấy Class type của Entity phục vụ tạo mới instance
     protected abstract Class<T> getEntityClass();
 }
