@@ -2,7 +2,6 @@ package fa.training.ex3.controllers;
 
 import fa.training.ex3.dto.request.CreateRoleRequest;
 import fa.training.ex3.dto.request.UpdateRoleRequest;
-import fa.training.ex3.dto.request.CreateRoleRequest;
 import fa.training.ex3.entities.Role;
 import fa.training.ex3.enums.RoleEnum;
 import fa.training.ex3.services.RoleService;
@@ -29,17 +28,15 @@ public class RoleController {
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("roleRequest", new CreateRoleRequest());
-        model.addAttribute("isEdit", false);
+        model.addAttribute("createRoleRequest", new CreateRoleRequest());
         model.addAttribute("roleEnums", RoleEnum.values());
         return "roles/form";
     }
 
     @PostMapping("/add")
-    public String createRole(@Valid @ModelAttribute("roleRequest") CreateRoleRequest request,
-                             BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String createRole(@Valid @ModelAttribute("createRoleRequest") CreateRoleRequest request,
+            BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("isEdit", false);
             model.addAttribute("roleEnums", RoleEnum.values());
             return "roles/form";
         }
@@ -49,7 +46,6 @@ public class RoleController {
             return "redirect:/roles";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("isEdit", false);
             model.addAttribute("roleEnums", RoleEnum.values());
             return "roles/form";
         }
@@ -65,18 +61,16 @@ public class RoleController {
                 .role_name(role.getRole_name())
                 .build();
 
-        model.addAttribute("roleRequest", request);
-        model.addAttribute("isEdit", true);
+        model.addAttribute("updateRoleRequest", request);
         model.addAttribute("roleEnums", RoleEnum.values());
         return "roles/form";
     }
 
     @PostMapping("/edit/{id}")
     public String updateRole(@PathVariable("id") Long id,
-                             @Valid @ModelAttribute("roleRequest") UpdateRoleRequest request,
-                             BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+            @Valid @ModelAttribute("updateRoleRequest") UpdateRoleRequest request,
+            BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("isEdit", true);
             model.addAttribute("roleEnums", RoleEnum.values());
             return "roles/form";
         }
@@ -87,7 +81,6 @@ public class RoleController {
             return "redirect:/roles";
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("isEdit", true);
             model.addAttribute("roleEnums", RoleEnum.values());
             return "roles/form";
         }
