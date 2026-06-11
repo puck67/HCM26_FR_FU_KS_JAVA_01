@@ -1,0 +1,154 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    
+    <!-- Course Summary Block -->
+    <div class="card" style="margin-bottom: 25px; text-align: left;">
+        <h3 style="margin-bottom: 15px; font-size: 1.1rem; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Course Summary</h3>
+        <div style="font-size: 14px; line-height: 1.8; color: var(--text-muted);">
+            <div>Mã khóa học / Course ID: <strong style="color: #ffffff;" th:text="${courseCode}">CRS101</strong></div>
+            <div>Ngày khai giảng / Start Date: <strong style="color: #ffffff;" th:text="${#temporals.format(startDate, 'dd/MM/yyyy')}">15/10/2023</strong></div>
+        </div>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card" style="margin-bottom: 25px; text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Add/Edit Lesson Detail</h3>
+            <span style="color: #ef4444; font-size: 1.15rem; font-weight: 600;">Chức năng 3.2: Chi tiết Bài học</span>
+        </div>
+
+        <!-- Error Alert -->
+        <div th:if="${errorMessage}" class="alert-box alert-danger" style="margin-bottom: 20px; text-align: left; background-color: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #ef4444; padding: 12px 20px; border-radius: 8px; display: flex; align-items: center; gap: 8px;">
+            <svg class="alert-icon-svg" viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <span th:text="${errorMessage}">Error message</span>
+        </div>
+
+        <form th:action="@{/lesson/save}" method="post" th:object="${lesson}">
+            <!-- Hidden inputs to track course code, start date, and lesson id -->
+            <input type="hidden" name="courseCode" th:value="${courseCode}">
+            <input type="hidden" name="startDate" th:value="${startDate}">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-grid">
+                <!-- Tên bài học -->
+                <div class="form-group">
+                    <label for="lessonName" style="margin-bottom: 6px; font-size: 13px; color: var(--text-muted); font-weight: 500;">Tên bài học / Lesson Name</label>
+                    <input type="text" id="lessonName" th:field="*{lessonName}" required placeholder="e.g., Intro to Java" style="background-color: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; color: #ffffff;" />
+                    <div th:if="${#fields.hasErrors('lessonName')}" th:errors="*{lessonName}" style="color: #ef4444; font-size: 12px; margin-top: 5px;"></div>
+                </div>
+
+                <!-- Thời lượng -->
+                <div class="form-group">
+                    <label for="duration" style="margin-bottom: 6px; font-size: 13px; color: var(--text-muted); font-weight: 500;">Thời lượng / Duration (mins)</label>
+                    <input type="number" id="duration" th:field="*{duration}" min="1" required placeholder="e.g., 60" style="background-color: rgba(15, 23, 42, 0.4); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; color: #ffffff;" />
+                    <div th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" style="color: #ef4444; font-size: 12px; margin-top: 5px;"></div>
+                </div>
+
+                <!-- Loại nội dung -->
+                <div class="form-group">
+                    <label for="contentType" style="margin-bottom: 6px; font-size: 13px; color: var(--text-muted); font-weight: 500;">Loại nội dung / Content Type</label>
+                    <select id="contentType" th:field="*{contentType}" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; color: #ffffff; cursor: pointer;">
+                        <option value="Video">Video</option>
+                        <option value="Lý thuyết">Lý thuyết</option>
+                        <option value="Thực hành">Thực hành</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}" style="color: #ef4444; font-size: 12px; margin-top: 5px;"></div>
+                </div>
+
+                <!-- Trạng thái -->
+                <div class="form-group">
+                    <label for="status" style="margin-bottom: 6px; font-size: 13px; color: var(--text-muted); font-weight: 500;">Trạng thái / Status</label>
+                    <select id="status" th:field="*{status}" style="background-color: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 14px; color: #ffffff; cursor: pointer;">
+                        <option value="Bản nháp">Bản nháp</option>
+                        <option value="Đang mở">Đang mở</option>
+                        <option value="Đã khóa">Đã khóa</option>
+                    </select>
+                    <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" style="color: #ef4444; font-size: 12px; margin-top: 5px;"></div>
+                </div>
+            </div>
+
+            <div class="btn-group" style="margin-top: 25px; display: flex; gap: 12px;">
+                <button type="submit" class="btn btn-primary" style="background-color: var(--accent-blue); color: #ffffff; border: none; border-radius: 6px; padding: 10px 20px; font-weight: 600; cursor: pointer; transition: background-color 0.2s;">Save Lesson</button>
+                <a th:href="@{/lesson/detail(courseCode=${courseCode}, startDate=${startDate})}" class="btn btn-secondary" style="background-color: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 6px; padding: 10px 20px; font-weight: 600; text-decoration: none; text-align: center; transition: background-color 0.2s;">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Lessons Table Card -->
+    <div class="card" style="text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;" th:text="'List of Lessons for ' + ${courseCode}">List of Lessons for CRS101</h3>
+            <span style="color: var(--text-muted); font-size: 0.95rem; font-weight: 500;">Lesson Detail Screen</span>
+        </div>
+        
+        <div class="table-responsive">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">ID</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Lesson Name</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Duration</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Content Type</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Status</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="les, iter : ${lessons}" style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${iter.count}">1</td>
+                        <td style="padding: 14px 15px; font-size: 14px; color: #ffffff; font-weight: 500;" th:text="${les.lessonName}">Intro</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${les.duration} + ' mins'">45 mins</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${les.contentType}">Video</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${les.status}">Active</td>
+                        <td style="padding: 14px 15px; font-size: 14px;">
+                            <!-- Edit link -->
+                            <a th:href="@{/lesson/detail(courseCode=${courseCode}, startDate=${startDate}, editLessonId=${les.id})}" 
+                               style="color: var(--accent-blue); text-decoration: none; font-weight: 600; margin-right: 12px;">Edit</a>
+                            <!-- Delete link -->
+                            <a th:href="@{/lesson/delete(id=${les.id}, courseCode=${courseCode}, startDate=${startDate})}" 
+                               style="color: #ef4444; text-decoration: none; font-weight: 600;"
+                               onclick="return confirmDelete(event, this.href);">Delete</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(lessons)}">
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 14px;">No lessons added yet.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Styled Modal Confirmation Dialog -->
+    <div id="confirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+        <div style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); width: 380px; border-radius: 12px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); overflow: hidden;">
+            <div style="padding: 20px 25px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-color);">
+                <svg style="width: 24px; height: 24px; fill: #ef4444;" viewBox="0 0 24 24">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                </svg>
+                <span style="font-size: 16px; font-weight: 600; color: #ffffff;">Confirm Delete</span>
+            </div>
+            <div style="padding: 20px 25px; font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+                Bạn có chắc chắn muốn xóa bài học này không?
+            </div>
+            <div style="padding: 15px 25px; background-color: rgba(15, 23, 42, 0.4); display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color);">
+                <button onclick="closeConfirmModal()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 13px; border: 1px solid var(--border-color); background: transparent; color: #ffffff; border-radius: 6px; cursor: pointer;">Hủy</button>
+                <a id="confirmYesBtn" href="#" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px; background-color: #ef4444; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Xóa</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deleteUrl = "";
+        function confirmDelete(event, url) {
+            event.preventDefault();
+            deleteUrl = url;
+            document.getElementById("confirmYesBtn").href = deleteUrl;
+            document.getElementById("confirmModal").style.display = "flex";
+            return false;
+        }
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").style.display = "none";
+        }
+    </script>
+</div>
