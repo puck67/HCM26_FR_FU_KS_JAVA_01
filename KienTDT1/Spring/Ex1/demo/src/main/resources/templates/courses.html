@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="page">
+    <header class="banner">
+        <h1>LMS Management System</h1>
+    </header>
+    <main class="main">
+        <nav class="menu-left">
+            <ul>
+                <li><a th:href="@{/courses/new}">Add a new Course</a></li>
+                <li><a th:href="@{/courses}">Courses Management</a></li>
+                <li><a th:href="@{/students}">Students Management</a></li>
+            </ul>
+        </nav>
+        <section class="body-content">
+            <table th:if="${!courses.isEmpty()}">
+                <thead>
+                <tr>
+                    <th>Course Code</th>
+                    <th>Start Date</th>
+                    <th>Course Name</th>
+                    <th>Category</th>
+                    <th>Instructor</th>
+                    <th>Lessons</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="course : ${courses}">
+                    <td th:text="${course.courseCode}"></td>
+                    <td th:text="${course.startDate}"></td>
+                    <td th:text="${course.courseName}"></td>
+                    <td th:text="${course.category}"></td>
+                    <td th:text="${course.instructor}"></td>
+                    <td>
+                        <a th:href="@{/courses/{courseCode}/{startDate}/lessons(courseCode=${course.courseCode},startDate=${course.startDate})}">
+                            Lesson Detail
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="empty" th:if="${courses.isEmpty()}">No courses have been added.</p>
+        </section>
+    </main>
+    <footer class="footer">Copyright © LMS Management System</footer>
+</div>
+</body>
+</html>
