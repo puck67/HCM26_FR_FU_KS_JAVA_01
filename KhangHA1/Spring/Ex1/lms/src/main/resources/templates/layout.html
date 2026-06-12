@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, title)">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LMS Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Banner -->
+        <header class="banner">
+            <div class="logo">📖 LMS MANAGEMENT SYSTEM</div>
+            <div class="banner-title" th:text="${title}">Banner</div>
+            <div class="search-user">
+                <input type="text" placeholder="🔍 Search">
+                <div class="user-icon">👤</div>
+            </div>
+        </header>
+
+        <div class="main-container">
+            <!-- MenuLeft -->
+            <nav class="menu-left">
+                <ul>
+                    <li th:classappend="${#httpServletRequest.requestURI == '/courses/new' ? 'active' : ''}">
+                        <a th:href="@{/courses/new}">➕ Thêm mới Khóa học<br><small>Add a new Course</small></a>
+                    </li>
+                    <li>
+                        <a href="#">📖 Quản lý Khóa học<br><small>Courses Management</small></a>
+                    </li>
+                    <li>
+                        <a href="#">👥 Quản lý Học viên<br><small>Students Management</small></a>
+                    </li>
+                </ul>
+                <div class="menu-text">MenuLeft</div>
+            </nav>
+
+            <!-- Body -->
+            <main class="body-content" th:insert="${content}">
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2023 - All rights reserved. Built with Spring Framework</p>
+            <div class="footer-text">Footer</div>
+        </footer>
+    </div>
+</body>
+
+</html>

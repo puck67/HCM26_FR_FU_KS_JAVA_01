@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: layout(~{::div}, ${title})">
+
+<body>
+    <div class="content-wrapper">
+        <!-- Course Summary -->
+        <div class="summary-box">
+            <h4>Course Summary</h4>
+            <p>Mã khóa học / Course ID: <span th:text="${course.id.courseCode}"></span></p>
+            <p>Ngày khai giảng / Start Date: <span th:text="${course.id.startDate}"></span></p>
+        </div>
+
+        <!-- Add/Edit Lesson Form -->
+        <div class="form-container">
+            <h3>Add/Edit Lesson Detail</h3>
+            <form
+                th:action="@{/courses/{code}/{date}/lessons/save(code=${course.id.courseCode}, date=${course.id.startDate})}"
+                th:object="${lesson}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tên bài học / Lesson Name</label>
+                        <input type="text" th:field="*{lessonName}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời lượng / Duration (mins)</label>
+                        <input type="number" th:field="*{duration}" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Loại nội dung / Content Type</label>
+                        <select th:field="*{contentType}">
+                            <option value="Video">Video</option>
+                            <option value="Document">Document</option>
+                            <option value="Practice">Practice</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Trạng thái / Status</label>
+                        <select th:field="*{status}">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="Draft">Draft</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Lesson</button>
+                    <a th:href="@{/courses/{code}/{date}/lessons(code=${course.id.courseCode}, date=${course.id.startDate})}"
+                        class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lesson Table -->
+        <h4>List of Lessons for <span th:text="${course.id.courseCode}"></span></h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Lesson Name</th>
+                    <th>Duration</th>
+                    <th>Content Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="l : ${lessons}">
+                    <td th:text="${l.id}"></td>
+                    <td th:text="${l.lessonName}"></td>
+                    <td th:text="${l.duration}"></td>
+                    <td th:text="${l.contentType}"></td>
+                    <td th:text="${l.status}"></td>
+                    <td>
+                        <a
+                            th:href="@{/courses/{code}/{date}/lessons(code=${course.id.courseCode}, date=${course.id.startDate}, editLessonId=${l.id})}">Edit</a>
+                        /
+                        <a href="#"
+                            th:attr="onclick=|confirmDelete('@{/courses/{code}/{date}/lessons/delete/{id}(code=${course.id.courseCode}, date=${course.id.startDate}, id=${l.id})}')|">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Script Xóa Bài Học -->
+    <script>
+        function confirmDelete(url) {
+            if (confirm("Do you want to delete this lesson?")) {
+                window.location.href = url;
+            }
+        }
+    </script>
+</body>
+
+</html>

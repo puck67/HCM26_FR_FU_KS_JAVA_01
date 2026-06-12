@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:replace="~{layout/layout :: html(${isEdit} ? 'Edit User' : 'Add User', ~{::#main-content})}">
+    <div id="main-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card card-custom">
+                    <div class="card-header bg-white py-3 border-0">
+                        <h4 class="mb-0 fw-bold text-dark">
+                            <i class="bi me-2 text-primary" th:classappend="${isEdit} ? 'bi-pencil-square' : 'bi-person-plus-fill'"></i>
+                            <span th:text="${isEdit} ? 'Edit User Profile' : 'Create New User'"></span>
+                        </h4>
+                    </div>
+                    <div class="card-body px-4 pb-4">
+                        <!-- Server side error -->
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span th:text="${errorMessage}"></span>
+                        </div>
+
+                        <form th:action="${isEdit ? '/users/edit/' + userRequest.user_id : '/users/add'}" 
+                              th:object="${userRequest}" 
+                              method="post">
+                              
+                            <input type="hidden" th:if="${isEdit}" th:field="*{user_id}" />
+                              
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="username" class="form-label fw-semibold">Username</label>
+                                    <input type="text" id="username" th:field="*{username}" class="form-control" 
+                                           th:errorclass="is-invalid" placeholder="Enter username" th:readonly="${isEdit}">
+                                    <div class="invalid-feedback" th:errors="*{username}"></div>
+                                </div>
+                                <div class="col-md-6" th:if="${!isEdit}">
+                                    <label for="password" class="form-label fw-semibold">Password</label>
+                                    <input type="password" id="password" th:field="*{password}" class="form-control" 
+                                           th:errorclass="is-invalid" placeholder="Enter password">
+                                    <div class="invalid-feedback" th:errors="*{password}"></div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="full_name" class="form-label fw-semibold">Full Name</label>
+                                    <input type="text" id="full_name" th:field="*{full_name}" class="form-control" 
+                                           th:errorclass="is-invalid" placeholder="Enter full name">
+                                    <div class="invalid-feedback" th:errors="*{full_name}"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="status" class="form-label fw-semibold">Status</label>
+                                    <select id="status" th:field="*{status}" class="form-select" th:errorclass="is-invalid">
+                                        <option th:value="ACTIVE" th:text="ACTIVE"></option>
+                                        <option th:value="INACTIVE" th:text="INACTIVE"></option>
+                                    </select>
+                                    <div class="invalid-feedback" th:errors="*{status}"></div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold d-block">Assign Roles</label>
+                                <div class="card p-3 bg-light border-0">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-2" th:each="role : ${allRoles}">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" 
+                                                       th:field="*{roleIds}" th:value="${role.role_id}" 
+                                                       th:id="'role_' + ${role.role_id}">
+                                                <label class="form-check-label" th:for="'role_' + ${role.role_id}" 
+                                                       th:text="${role.role_name}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#fields.hasErrors('roleIds')}" class="text-danger mt-2 small" th:errors="*{roleIds}"></div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="/users" class="btn btn-outline-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <span th:text="${isEdit} ? 'Save Changes' : 'Create User'"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

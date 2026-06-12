@@ -1,6 +1,7 @@
 package fa.training.lms.controllers;
 
 import fa.training.lms.controllers.base.GenericController;
+import fa.training.lms.dto.ApiResponse;
 import fa.training.lms.entities.Lesson;
 import fa.training.lms.interfaces.LessonService;
 import fa.training.lms.entities.CourseId;
@@ -20,12 +21,15 @@ public class LessonController extends GenericController<Lesson, Long> {
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<Lesson>> getByCourseId(@PathVariable CourseId courseId) {
-        return ResponseEntity.ok(lessonService.getLessonsByCourseId(courseId));
+    public ResponseEntity<ApiResponse<List<Lesson>>> getByCourseId(@PathVariable CourseId courseId) {
+        List<Lesson> data = lessonService.getLessonsByCourseId(courseId);
+        return ResponseEntity.ok(new ApiResponse<>("Lấy danh sách thành công", data));
     }
 
+    @Override
     @PatchMapping("/{id}")
-    public ResponseEntity<Lesson> patch(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
-        return ResponseEntity.ok(lessonService.patch(id, updates));
+    public ResponseEntity<ApiResponse<Lesson>> patch(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Lesson data = lessonService.patch(id, updates);
+        return ResponseEntity.ok(new ApiResponse<>("Cập nhật thành công", data));
     }
 }
