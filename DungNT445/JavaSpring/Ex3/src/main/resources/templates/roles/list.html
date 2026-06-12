@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main-layout :: layout(content=~{::main})}">
+<body>
+<main>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Role Management</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/roles/add" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Role
+            </a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Role Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="role : ${roles}">
+                    <td th:text="${role.roleId}"></td>
+                    <td><span class="badge bg-secondary" th:text="${role.roleName}"></span></td>
+                    <td>
+                        <form th:action="@{/roles/delete/{id}(id=${role.roleId})}" method="post" class="d-inline" onsubmit="return confirm('Are you sure?');">
+                            <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(roles)}">
+                    <td colspan="3" class="text-center">No roles found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
