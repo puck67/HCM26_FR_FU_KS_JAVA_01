@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::main}, ${pageTitle})}">
+<body>
+    <main class="animated-fade">
+        
+        <!-- Reusable Generic Toolbar Fragment -->
+        <div th:replace="~{fragments/crud-toolbar :: toolbar(${pageTitle}, null, null, null, null)}"></div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 col-lg-8">
+                <div class="p-4 glass-panel">
+                    <h4 class="fw-bold mb-4 text-dark" th:text="${menu.id == null ? 'New Menu Info' : 'Edit Menu Info'}">Menu Information</h4>
+                    
+                    <form th:action="@{/menus/save}" th:object="${menu}" method="POST" id="menuForm">
+                        <!-- Hidden ID for edit -->
+                        <input type="hidden" th:field="*{id}" />
+                        
+                        <!-- Hidden Roles input compiled from checkboxes -->
+                        <input type="hidden" th:field="*{roles}" id="hiddenRoles" />
+
+                        <div class="row g-3">
+                            <!-- Name -->
+                            <div class="col-12 col-md-6">
+                                <label for="name" class="form-label">Menu Name <span class="text-danger">*</span></label>
+                                <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="e.g. Exam Management" required />
+                            </div>
+
+                            <!-- Display Order -->
+                            <div class="col-12 col-md-6">
+                                <label for="displayOrder" class="form-label">Display Order <span class="text-danger">*</span></label>
+                                <input type="number" th:field="*{displayOrder}" class="form-control" id="displayOrder" min="1" required />
+                            </div>
+
+                            <!-- URL -->
+                            <div class="col-12 col-md-6">
+                                <label for="url" class="form-label">Target URL <small class="text-muted">(Optional - leave blank if group header)</small></label>
+                                <input type="text" th:field="*{url}" class="form-control" id="url" placeholder="e.g. /exams or /courses/online" />
+                            </div>
+
+                            <!-- Parent Menu -->
+                            <div class="col-12 col-md-6">
+                                <label for="parent" class="form-label">Parent Menu <small class="text-muted">(Optional)</small></label>
+                                <select name="parentId" id="parent" class="form-select">
+                                    <option value="">[ None - Set as Root Menu ]</option>
+                                    <option th:each="p : ${parents}" 
+                                            th:value="${p.id}" 
+                                            th:selected="${menu.parent != null && menu.parent.id == p.id}"
+                                            th:text="${p.displayName}">
+                                        └── Training Management
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Icon class -->
+                            <div class="col-12 col-md-6">
+                                <label for="icon" class="form-label">Icon Class <small class="text-muted">(Bootstrap Icons)</small></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-secondary text-dark" id="icon-preview-box">
+                                        <i id="icon-preview" th:class="${menu.icon != null && !menu.icon.isEmpty() ? menu.icon : 'bi bi-app'}"></i>
+                                    </span>
+                                    <input type="text" th:field="*{icon}" class="form-control" id="icon" placeholder="e.g. bi bi-speedometer2" />
+                                </div>
+                                <small class="text-muted mt-1 d-block">
+                                    Find icons at <a href="https://icons.getbootstrap.com/" target="_blank" class="text-primary text-decoration-none">Bootstrap Icons <i class="bi bi-box-arrow-up-right"></i></a>
+                                </small>
+                            </div>
+
+                            <!-- Status Toggle -->
+                            <div class="col-12 col-md-6 d-flex align-items-center">
+                                <div class="form-check form-switch mt-4">
+                                    <input class="form-check-input" type="checkbox" th:field="*{status}" id="status" checked />
+                                    <label class="form-check-label ms-2" for="status">Active (Display in navigation)</label>
+                                </div>
+                            </div>
+
+                            <!-- Roles Selection (Dynamic checkboxes) -->
+                            <div class="col-12 mt-4">
+                                <label class="form-label d-block">Allowed Roles <small class="text-muted">(Choose roles allowed to view this menu)</small></label>
+                                <div class="d-flex flex-wrap gap-4 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input role-checkbox" type="checkbox" value="ADMIN" id="roleAdmin" />
+                                        <label class="form-check-label ms-1" for="roleAdmin">Admin</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input role-checkbox" type="checkbox" value="TEACHER" id="roleTeacher" />
+                                        <label class="form-check-label ms-1" for="roleTeacher">Teacher</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input role-checkbox" type="checkbox" value="STUDENT" id="roleStudent" />
+                                        <label class="form-check-label ms-1" for="roleStudent">Student</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-end gap-3 mt-5 pt-3 border-top">
+                            <a th:href="@{/menus}" class="btn btn-outline-secondary d-flex align-items-center gap-2">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary d-flex align-items-center gap-2">
+                                <i class="bi bi-check-circle"></i> Save Menu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role checkbox synchronization and icon preview scripting -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const iconInput = document.getElementById('icon');
+                const iconPreview = document.getElementById('icon-preview');
+                const hiddenRoles = document.getElementById('hiddenRoles');
+                const checkboxes = document.querySelectorAll('.role-checkbox');
+                const form = document.getElementById('menuForm');
+
+                // 1. Live Icon Preview
+                iconInput.addEventListener('input', function() {
+                    const val = iconInput.value.trim();
+                    iconPreview.className = val ? val : 'bi bi-app';
+                });
+
+                // 2. Initialize checkboxes from the hidden roles field
+                const currentRoles = hiddenRoles.value ? hiddenRoles.value.split(',') : [];
+                checkboxes.forEach(cb => {
+                    if (currentRoles.map(r => r.trim().toUpperCase()).includes(cb.value)) {
+                        cb.checked = true;
+                    }
+                });
+
+                // 3. Update hidden roles field before submission
+                form.addEventListener('submit', function() {
+                    const checkedRoles = [];
+                    checkboxes.forEach(cb => {
+                        if (cb.checked) {
+                            checkedRoles.push(cb.value);
+                        }
+                    });
+                    hiddenRoles.value = checkedRoles.join(',');
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>
