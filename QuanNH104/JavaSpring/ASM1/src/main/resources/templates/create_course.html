@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Course</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --background: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --error: #EF4444;
+            --error-bg: #FEF2F2;
+            --success: #10B981;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background-color: #FFFFFF;
+            transition: all 0.2s ease-in-out;
+            outline: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.825rem;
+            margin-top: 0.35rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-input {
+            border-color: var(--error) !important;
+            background-color: var(--error-bg);
+        }
+
+        .error-input:focus {
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Create New Course</h2>
+    <p class="subtitle">Enter details to add a new course to the LMS</p>
+
+    <form th:action="@{/courses/create}" th:object="${course}" method="post">
+        <!-- Course Title -->
+        <div class="form-group">
+            <label for="title">Course Title</label>
+            <input type="text" id="title" th:field="*{title}" placeholder="e.g., Introduction to Java Spring Boot"
+                   th:classappend="${#fields.hasErrors('title')} ? 'error-input' : ''"/>
+            <div class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <!-- Row: Instructor Name & Instructor Email -->
+        <div class="row">
+            <div class="form-group">
+                <label for="instructorName">Instructor Name</label>
+                <input type="text" id="instructorName" th:field="*{instructorName}" placeholder="e.g., John Doe"
+                       th:classappend="${#fields.hasErrors('instructorName')} ? 'error-input' : ''"/>
+                <div class="error-message" th:if="${#fields.hasErrors('instructorName')}" th:errors="*{instructorName}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="instructorEmail">Instructor Email</label>
+                <input type="text" id="instructorEmail" th:field="*{instructorEmail}" placeholder="e.g., john.doe@example.com"
+                       th:classappend="${#fields.hasErrors('instructorEmail')} ? 'error-input' : ''"/>
+                <div class="error-message" th:if="${#fields.hasErrors('instructorEmail')}" th:errors="*{instructorEmail}"></div>
+            </div>
+        </div>
+
+        <!-- Duration Hours -->
+        <div class="form-group">
+            <label for="durationHours">Duration (Hours)</label>
+            <input type="number" id="durationHours" th:field="*{durationHours}" placeholder="e.g., 40"
+                   th:classappend="${#fields.hasErrors('durationHours')} ? 'error-input' : ''"/>
+            <div class="error-message" th:if="${#fields.hasErrors('durationHours')}" th:errors="*{durationHours}"></div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+            <label for="description">Course Description</label>
+            <textarea id="description" th:field="*{description}" placeholder="Provide a brief description of the course content..."
+                      th:classappend="${#fields.hasErrors('description')} ? 'error-input' : ''"></textarea>
+            <div class="error-message" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Create Course</button>
+    </form>
+</div>
+
+</body>
+</html>
