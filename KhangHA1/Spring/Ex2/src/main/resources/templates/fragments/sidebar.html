@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <div th:fragment="sidebar">
+
+        <div class="bg-dark text-white p-3 vh-100">
+
+            <h4>Training System</h4>
+
+            <hr>
+
+            <ul class="nav flex-column">
+
+                <th:block th:each="menu : ${sidebarMenus}">
+
+                    <span th:text="${menu == null ? 'NULL MENU' : menu.name}"></span>
+
+                    <th:block th:if="${menu != null}" th:replace="~{fragments/menu-node :: node(${menu})}">
+                    </th:block>
+
+                </th:block>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
