@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: html_head('User Management')}"></head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="~{fragments :: app_sidebar('users')}"></div>
+
+<!-- Main Area -->
+<div class="main-content">
+    
+    <!-- Top Header -->
+    <div th:replace="~{fragments :: app_header}"></div>
+    
+    <!-- Body Content -->
+    <div class="container-fluid py-4 animated-content">
+        
+        <!-- Page Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">User Management</h2>
+                <p class="text-secondary small mb-0">Create, edit, delete users and adjust permissions.</p>
+            </div>
+            
+            <a th:href="@{/users/add}" class="btn btn-primary-custom">
+                <i class="fa-solid fa-plus me-2"></i>Add User
+            </a>
+        </div>
+
+        <!-- Alerts -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show border-0 rounded-3 py-2.5 px-4 mb-4" role="alert" style="background-color: rgba(16, 185, 129, 0.15); color: #10b981;">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <span th:text="${successMessage}">Success!</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.8rem 1rem;"></button>
+        </div>
+        
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show border-0 rounded-3 py-2.5 px-4 mb-4" role="alert" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444;">
+            <i class="fa-solid fa-circle-exclamation me-2"></i>
+            <span th:text="${errorMessage}">Error!</span>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close" style="padding: 0.8rem 1rem;"></button>
+        </div>
+
+        <!-- Users Table Card -->
+        <div class="glass-card">
+            <div class="table-responsive">
+                <table class="table table-custom w-100">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">User ID</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Roles</th>
+                            <th>Status</th>
+                            <th style="width: 320px; text-align: center;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td class="fw-semibold text-white" th:text="'#' + ${user.userId}">#1</td>
+                            <td class="text-white fw-medium" th:text="${user.username}">username</td>
+                            <td th:text="${user.fullName}">Full Name</td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <span th:each="role : ${user.roles}" 
+                                          class="role-badge" 
+                                          th:classappend="${role.roleName == 'SUPER_ADMIN'} ? 'superadmin' : (${role.roleName == 'ADMIN'} ? 'admin' : 'teacher')"
+                                          th:text="${role.roleName}">Role</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-badge" 
+                                      th:classappend="${user.status == 'ACTIVE'} ? 'active' : 'inactive'"
+                                      th:text="${user.status}">Status</span>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center justify-content-center gap-2">
+                                    <!-- Edit Link -->
+                                    <a th:href="@{/users/edit/{id}(id=${user.userId})}" class="btn btn-sm btn-secondary-custom py-1.5 px-2.5" title="Edit User">
+                                        <i class="fa-solid fa-user-pen text-indigo-400"></i> Edit
+                                    </a>
+                                    
+                                    <!-- Reset Password Button -->
+                                    <button type="button" class="btn btn-sm btn-secondary-custom py-1.5 px-2.5" 
+                                            th:attr="data-bs-userId=${user.userId}, data-bs-username=${user.username}"
+                                            data-bs-toggle="modal" data-bs-target="#resetPasswordModal" title="Reset Password">
+                                        <i class="fa-solid fa-key text-warning"></i> Reset PW
+                                    </button>
+                                    
+                                    <!-- Delete Link -->
+                                    <a th:href="@{/users/delete/{id}(id=${user.userId})}" 
+                                       class="btn btn-sm btn-secondary-custom py-1.5 px-2.5" 
+                                       th:classappend="${user.username == 'superadmin'} ? 'disabled opacity-50' : ''"
+                                       onclick="return confirm('Are you sure you want to delete this user?')" title="Delete User">
+                                        <i class="fa-solid fa-trash-can text-danger"></i> Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 14px;">
+            <div class="modal-header border-bottom-0 pb-0" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
+                <h5 class="modal-title fw-bold text-white" id="resetPasswordModalLabel">Reset User Password</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form th:action="@{/users/reset-password}" method="post">
+                <div class="modal-body" style="padding: 1rem 1.5rem;">
+                    <!-- Hidden User ID -->
+                    <input type="hidden" id="resetUserId" name="userId">
+                    
+                    <p class="text-secondary small mb-3">Resetting password for user: <strong class="text-white" id="resetUsernameDisplay">username</strong>.</p>
+                    
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label small fw-semibold text-secondary">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" class="form-control form-control-custom" placeholder="Enter new password" required>
+                    </div>
+                </div>
+                
+                <div class="modal-footer border-top-0 pt-0" style="padding: 0.5rem 1.5rem 1.5rem 1.5rem;">
+                    <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-key me-1"></i>Reset Password
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    // Script to pass data to reset password modal
+    const resetPasswordModal = document.getElementById('resetPasswordModal');
+    if (resetPasswordModal) {
+        resetPasswordModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const userId = button.getAttribute('data-bs-userId');
+            const username = button.getAttribute('data-bs-username');
+            
+            const modalUserIdInput = resetPasswordModal.querySelector('#resetUserId');
+            const modalUsernameDisplay = resetPasswordModal.querySelector('#resetUsernameDisplay');
+            const newPasswordInput = resetPasswordModal.querySelector('#newPassword');
+            
+            modalUserIdInput.value = userId;
+            modalUsernameDisplay.textContent = username;
+            newPasswordInput.value = ''; // clear previous inputs
+        });
+    }
+</script>
+</body>
+</html>

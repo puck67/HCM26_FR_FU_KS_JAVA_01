@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle != null ? pageTitle + ' | Menu System' : 'Menu Management System'}">Menu List</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container-fluid">
+            <button class="btn btn-link sidebar-toggle text-white me-3" id="sidebarToggle">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cogs me-2"></i>Training System
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
+                       id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <div class="avatar-circle me-2">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex" id="wrapper">
+        <!-- Dynamic Sidebar -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <div class="content-wrapper p-4">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li class="breadcrumb-item active" th:text="${pageTitle}">Menu Management</li>
+                    </ol>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="page-title mb-1">
+                            <i class="fas fa-list-alt me-2"></i>Menu Management
+                        </h1>
+                        <p class="page-subtitle text-muted mb-0">View, add, edit, or delete dynamic menu structure</p>
+                    </div>
+                    <a href="/menus/add" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Add New Menu
+                    </a>
+                </div>
+
+                <!-- Success Alert -->
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-check-circle fa-lg me-2"></i>
+                        <span th:text="${successMessage}">Success message</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Menu Structure Table/List -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0 text-dark font-weight-bold"><i class="fas fa-sitemap me-2 text-primary"></i>Menu Hierarchical Hierarchy</h5>
+                        <span class="badge bg-light text-dark border"><i class="fas fa-info-circle me-1"></i>Cascade delete is enabled</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light text-uppercase font-size-sm">
+                                    <tr>
+                                        <th style="width: 35%">Menu Name</th>
+                                        <th style="width: 25%">URL Path</th>
+                                        <th style="width: 15%"><i class="fas fa-icons me-1"></i>Icon</th>
+                                        <th style="width: 8%" class="text-center">Order</th>
+                                        <th style="width: 8%" class="text-center">Status</th>
+                                        <th style="width: 10%" class="text-end pe-4">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Render list of Root, Child and Grandchild Menus -->
+                                    <th:block th:each="menu : ${rootMenus}">
+                                        <!-- Root Menu Row (Level 1) -->
+                                        <tr class="table-row-level-1 font-weight-bold bg-light-subtle">
+                                            <td>
+                                                <div class="d-flex align-items-center ps-2">
+                                                    <i th:class="${menu.icon != null ? menu.icon : 'fas fa-folder'}" class="me-2 text-primary"></i>
+                                                    <span th:text="${menu.name}">Dashboard</span>
+                                                </div>
+                                            </td>
+                                            <td><code th:text="${menu.url}">/</code></td>
+                                            <td><span class="badge bg-secondary-subtle text-secondary" th:text="${menu.icon}">fas fa-tachometer-alt</span></td>
+                                            <td class="text-center" th:text="${menu.displayOrder}">1</td>
+                                            <td class="text-center">
+                                                <span class="badge bg-success" th:if="${menu.status}">Active</span>
+                                                <span class="badge bg-danger" th:unless="${menu.status}">Inactive</span>
+                                            </td>
+                                            <td class="text-end pe-4">
+                                                <div class="btn-group btn-group-sm" role="group">
+                                                    <a th:href="@{'/menus/edit/' + ${menu.id}}" class="btn btn-outline-secondary" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a th:href="@{'/menus/delete/' + ${menu.id}}" class="btn btn-outline-danger" 
+                                                       onclick="return confirm('Are you sure you want to delete this menu? Deleting a parent menu will also delete all its sub-menus (Cascade Delete)!')" title="Delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Level 2 Sub-Menus -->
+                                        <th:block th:each="child : ${menu.children}">
+                                            <tr class="table-row-level-2">
+                                                <td>
+                                                    <div class="d-flex align-items-center ps-4">
+                                                        <span class="tree-line me-2 text-muted">├──</span>
+                                                        <i th:class="${child.icon != null ? child.icon : 'fas fa-file-alt'}" class="me-2 text-success"></i>
+                                                        <span th:text="${child.name}">Student Management</span>
+                                                    </div>
+                                                </td>
+                                                <td><code th:text="${child.url}">/students</code></td>
+                                                <td><span class="badge bg-secondary-subtle text-secondary" th:text="${child.icon}">fas fa-user-graduate</span></td>
+                                                <td class="text-center" th:text="${child.displayOrder}">1</td>
+                                                <td class="text-center">
+                                                    <span class="badge bg-success" th:if="${child.status}">Active</span>
+                                                    <span class="badge bg-danger" th:unless="${child.status}">Inactive</span>
+                                                </td>
+                                                <td class="text-end pe-4">
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <a th:href="@{'/menus/edit/' + ${child.id}}" class="btn btn-outline-secondary" title="Edit">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a th:href="@{'/menus/delete/' + ${child.id}}" class="btn btn-outline-danger" 
+                                                           onclick="return confirm('Are you sure you want to delete this sub-menu? If this menu has child menus, they will also be deleted!')" title="Delete">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Level 3 Sub-Menus (Bonus) -->
+                                            <th:block th:each="grandchild : ${child.children}">
+                                                <tr class="table-row-level-3">
+                                                    <td>
+                                                        <div class="d-flex align-items-center ps-5">
+                                                            <span class="tree-line-indent me-1 text-muted">│</span>
+                                                            <span class="tree-line me-2 text-muted">└──</span>
+                                                            <i th:class="${grandchild.icon != null ? grandchild.icon : 'fas fa-link'}" class="me-2 text-info"></i>
+                                                            <span th:text="${grandchild.name}">Online Courses</span>
+                                                        </div>
+                                                    </td>
+                                                    <td><code th:text="${grandchild.url}">/courses/online</code></td>
+                                                    <td><span class="badge bg-secondary-subtle text-secondary" th:text="${grandchild.icon}">fas fa-globe</span></td>
+                                                    <td class="text-center" th:text="${grandchild.displayOrder}">1</td>
+                                                    <td class="text-center">
+                                                        <span class="badge bg-success" th:if="${grandchild.status}">Active</span>
+                                                        <span class="badge bg-danger" th:unless="${grandchild.status}">Inactive</span>
+                                                    </td>
+                                                    <td class="text-end pe-4">
+                                                        <div class="btn-group btn-group-sm" role="group">
+                                                            <a th:href="@{'/menus/edit/' + ${grandchild.id}}" class="btn btn-outline-secondary" title="Edit">
+                                                                <i class="fas fa-edit"></i>
+                                                            </a>
+                                                            <a th:href="@{'/menus/delete/' + ${grandchild.id}}" class="btn btn-outline-danger" 
+                                                               onclick="return confirm('Are you sure you want to delete this menu?')" title="Delete">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </th:block>
+                                        </th:block>
+                                    </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('wrapper').classList.toggle('sidebar-collapsed');
+        });
+    </script>
+</body>
+</html>

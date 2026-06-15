@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Course – LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a href="/" class="navbar-brand">
+        🎓 LMS Platform <span class="badge">Beta</span>
+    </a>
+</nav>
+
+<div class="page-wrapper">
+
+    <div class="form-card">
+
+        <!-- Form Header -->
+        <div class="form-card-header">
+            <h2>📘 Create New Course</h2>
+            <p>Fill in the details below to add a new course to the LMS.</p>
+        </div>
+
+        <!-- Form Body -->
+        <div class="form-body">
+            <form th:action="@{/courses/create}" th:object="${course}" method="post">
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="title">Course Title</label>
+                    <input type="text" id="title" th:field="*{title}"
+                           class="form-control" th:errorclass="is-invalid"
+                           placeholder="e.g. Introduction to Spring Boot" />
+                    <span class="error-message"
+                          th:if="${#fields.hasErrors('title')}"
+                          th:errors="*{title}"></span>
+                </div>
+
+                <!-- Instructor Name -->
+                <div class="form-group">
+                    <label for="instructorName">Instructor Name</label>
+                    <input type="text" id="instructorName" th:field="*{instructorName}"
+                           class="form-control" th:errorclass="is-invalid"
+                           placeholder="e.g. John Doe" />
+                    <span class="error-message"
+                          th:if="${#fields.hasErrors('instructorName')}"
+                          th:errors="*{instructorName}"></span>
+                </div>
+
+                <!-- Instructor Email -->
+                <div class="form-group">
+                    <label for="instructorEmail">Instructor Email</label>
+                    <input type="email" id="instructorEmail" th:field="*{instructorEmail}"
+                           class="form-control" th:errorclass="is-invalid"
+                           placeholder="e.g. john@example.com" />
+                    <span class="error-message"
+                          th:if="${#fields.hasErrors('instructorEmail')}"
+                          th:errors="*{instructorEmail}"></span>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" th:field="*{description}"
+                              class="form-control" th:errorclass="is-invalid"
+                              placeholder="Provide a brief description of the course..."></textarea>
+                    <span class="field-hint">10 – 200 characters</span>
+                    <span class="error-message"
+                          th:if="${#fields.hasErrors('description')}"
+                          th:errors="*{description}"></span>
+                </div>
+
+                <!-- Duration Hours -->
+                <div class="form-group">
+                    <label for="durationHours">Duration (Hours)</label>
+                    <input type="number" id="durationHours" th:field="*{durationHours}"
+                           class="form-control" th:errorclass="is-invalid"
+                           placeholder="e.g. 40" min="1" />
+                    <span class="error-message"
+                          th:if="${#fields.hasErrors('durationHours')}"
+                          th:errors="*{durationHours}"></span>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        🚀 Create Course
+                    </button>
+                    <a th:href="@{/courses/management}" class="btn" style="background:var(--gray-100);color:var(--gray-700);">
+                        ← Back
+                    </a>
+                </div>
+
+            </form>
+        </div><!-- /form-body -->
+
+    </div><!-- /form-card -->
+
+</div><!-- /page-wrapper -->
+</body>
+</html>

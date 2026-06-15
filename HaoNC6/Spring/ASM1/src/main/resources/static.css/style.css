@@ -1,0 +1,98 @@
+/* --- Các Style Chung --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* --- Style Cho Trang Thêm Mới (Create/Add Form) --- */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.form-control {
+    width: 300px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+textarea.form-control {
+    height: 100px;
+    resize: vertical;
+}
+/* Style cho ô nhập liệu khi có lỗi */
+.is-invalid {
+    border: 2px solid #dc3545;
+    background-color: #f8d7da;
+}
+/* Style cho dòng thông báo lỗi */
+.error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+.btn-submit {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* --- Style Cho Trang Quản Lý (Management) --- */
+.header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.btn-add {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.btn-add:hover {
+    background-color: #218838;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #dee2e6;
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #f8f9fa;
+    color: #333;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+tr:hover {
+    background-color: #f1f1f1;
+}
+.alert-success {
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+.no-data {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+}

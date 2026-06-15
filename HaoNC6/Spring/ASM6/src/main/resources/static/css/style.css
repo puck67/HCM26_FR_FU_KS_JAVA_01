@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+    color: #1e293b;
+    margin: 0;
+    padding-bottom: 60px;
+}
+
+.navbar-custom {
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #f8fafc !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #94a3b8 !important;
+    transition: color 0.15s ease;
+}
+
+.nav-link:hover, .nav-item.active .nav-link {
+    color: #f8fafc !important;
+}
+
+/* Card Styling */
+.course-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    border-color: #cbd5e1;
+}
+
+.course-card .card-title {
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.course-card .card-text {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.badge-custom {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 6px;
+    text-transform: uppercase;
+}
+
+/* Left-border review card */
+.review-card {
+    border-left: 4px solid #3b82f6;
+    background: #ffffff;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #f1f5f9;
+    border-right: 1px solid #f1f5f9;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.review-card.pending {
+    border-left-color: #f59e0b;
+}
+
+.review-card .reviewer-name {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.review-card .stars {
+    color: #fbbf24;
+    font-size: 1.1rem;
+    margin: 4px 0 8px 0;
+}
+
+/* Categories & Sidebar Blocks */
+.sidebar-block {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-block-header {
+    background: #475569;
+    color: #ffffff;
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.sidebar-block-body {
+    padding: 20px;
+}
+
+/* Tag Cloud */
+.tag-cloud-item {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #f1f5f9;
+    color: #475569;
+    font-weight: 500;
+    text-decoration: none !important;
+    transition: all 0.15s ease;
+}
+
+.tag-cloud-item:hover {
+    background: #3b82f6;
+    color: #ffffff !important;
+}
+
+/* Metrics Dashboard */
+.metric-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.metric-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+
+.metric-number.blue { color: #2563eb; }
+.metric-number.green { color: #16a34a; }
+.metric-number.yellow { color: #d97706; }
+
+.metric-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Markdown container */
+.markdown-body {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 200px;
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: #475569;
+    border-color: #e2e8f0;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+/* Centered Login Box */
+.login-box {
+    max-width: 440px;
+    margin: 80px auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
