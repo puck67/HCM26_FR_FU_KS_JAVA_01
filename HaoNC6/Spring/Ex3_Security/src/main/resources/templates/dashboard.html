@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: html_head('Dashboard')}"></head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="~{fragments :: app_sidebar('dashboard')}"></div>
+
+<!-- Main Area -->
+<div class="main-content">
+    
+    <!-- Top Header -->
+    <div th:replace="~{fragments :: app_header}"></div>
+    
+    <!-- Dashboard Body -->
+    <div class="container-fluid py-4 animated-content">
+        
+        <!-- Welcome Card -->
+        <div class="glass-card mb-4 border-0 position-relative overflow-hidden" 
+             style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(30, 41, 59, 0.8) 100%); border: 1px solid rgba(99, 102, 241, 0.2) !important;">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="fw-bold mb-2">Welcome Back, <span class="text-indigo-400" th:text="${currentUserFullName != null ? currentUserFullName : currentUsername}">User</span>!</h2>
+                    <p class="text-secondary mb-3">You are logged in as <strong class="text-white" th:text="${currentUsername}">username</strong> with the security authority <span class="role-badge" th:classappend="${currentUserRole == 'SUPER_ADMIN'} ? 'superadmin' : (${currentUserRole == 'ADMIN'} ? 'admin' : 'teacher')" th:text="${currentUserRole}">Role</span>.</p>
+                    <p class="text-muted small mb-0"><i class="fa-regular fa-clock me-1"></i> Current Session started recently. Everything is secure.</p>
+                </div>
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <i class="fa-solid fa-shield-halved text-indigo-500 opacity-25" style="font-size: 7rem; color: var(--accent-primary);"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Permissions Info Matrix -->
+        <h4 class="fw-bold mb-3 mt-5">Your Security Access Matrix</h4>
+        <div class="row g-4">
+            <!-- Dashboard Access -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="fs-4 text-indigo-400"><i class="fa-solid fa-chart-line"></i></span>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1" style="font-size: 0.75rem;">GRANTED</span>
+                        </div>
+                        <h5 class="fw-bold text-white mb-2">Dashboard Access</h5>
+                        <p class="text-secondary small mb-0">Allows viewing system metrics, security logs, and session overviews.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Management -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="fs-4 text-indigo-400"><i class="fa-solid fa-users-gear"></i></span>
+                            <span th:if="${currentUserRole == 'SUPER_ADMIN' || currentUserRole == 'ADMIN'}" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1" style="font-size: 0.75rem;">GRANTED</span>
+                            <span th:unless="${currentUserRole == 'SUPER_ADMIN' || currentUserRole == 'ADMIN'}" class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-1" style="font-size: 0.75rem;">RESTRICTED</span>
+                        </div>
+                        <h5 class="fw-bold text-white mb-2">User Management</h5>
+                        <p class="text-secondary small mb-0">Allows creating, modifying, deleting users, resetting passwords, and changing user statuses.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Role Management -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <span class="fs-4 text-indigo-400"><i class="fa-solid fa-user-shield"></i></span>
+                            <span th:if="${currentUserRole == 'SUPER_ADMIN'}" class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1" style="font-size: 0.75rem;">GRANTED</span>
+                            <span th:unless="${currentUserRole == 'SUPER_ADMIN'}" class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-1" style="font-size: 0.75rem;">RESTRICTED</span>
+                        </div>
+                        <h5 class="fw-bold text-white mb-2">Role Management</h5>
+                        <p class="text-secondary small mb-0">Allows creating, modifying, and deleting system roles. (Super Admin Only)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

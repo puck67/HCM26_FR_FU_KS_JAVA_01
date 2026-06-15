@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard - CourseShare</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/instructor/dashboard">CourseShare</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link" href="/instructor/dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/instructor/courses">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="/instructor/reviews">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="form-inline d-inline">
+                        <button class="btn btn-link nav-link p-0 border-0 align-baseline" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4" style="max-width: 900px;">
+    
+    <h3 class="mb-4 font-weight-bold">Dashboard Overview</h3>
+    
+    <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="metric-card">
+                <div class="metric-number blue" th:text="${totalCourses}">24</div>
+                <div class="metric-label">Total Courses</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="metric-card">
+                <div class="metric-number green" th:text="${publishedCourses}">15</div>
+                <div class="metric-label">Published Courses</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="metric-card">
+                <div class="metric-number yellow" th:text="${pendingReviews}">4</div>
+                <div class="metric-label">Pending Reviews</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="metric-card">
+                <div class="metric-number blue" th:text="${totalCategories}">8</div>
+                <div class="metric-label">Total Categories</div>
+            </div>
+        </div>
+    </div>
+    
+    <h3 class="mt-4 mb-4 font-weight-bold">Quick Actions</h3>
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <a href="/instructor/course/new" class="btn btn-primary btn-block font-weight-bold py-3" style="border-radius: 8px; font-size: 1.05rem;">Create New Course</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="/instructor/courses" class="btn btn-outline-primary btn-block font-weight-bold py-3" style="border-radius: 8px; font-size: 1.05rem; border-width: 2px;">Manage Courses</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="/instructor/reviews" class="btn btn-outline-primary btn-block font-weight-bold py-3" style="border-radius: 8px; font-size: 1.05rem; border-width: 2px;">Pending Reviews</a>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

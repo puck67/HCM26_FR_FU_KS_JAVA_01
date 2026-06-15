@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Management – LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a href="/" class="navbar-brand">
+        🎓 LMS Platform <span class="badge">Beta</span>
+    </a>
+</nav>
+
+<div class="page-wrapper">
+
+    <!-- Flash success message -->
+    <div class="alert-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h2>Courses Management</h2>
+        <a th:href="@{/courses/new}" class="btn btn-primary btn-add">
+            + Add New Course
+        </a>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Instructor Name</th>
+                <th>Instructor Email</th>
+                <th>Description</th>
+                <th>Duration (Hours)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.id}">1</td>
+                <td th:text="${course.title}">Java Spring Boot</td>
+                <td th:text="${course.instructorName}">John Doe</td>
+                <td th:text="${course.instructorEmail}">john@example.com</td>
+                <td th:text="${course.description}">Description...</td>
+                <td th:text="${course.durationHours}">40</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(courses)}">
+                <td colspan="6" class="no-data">
+                    📭 No courses available. Click "+ Add New Course" to create one.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

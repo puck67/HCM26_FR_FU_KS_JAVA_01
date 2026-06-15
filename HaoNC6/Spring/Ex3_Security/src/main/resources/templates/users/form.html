@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: html_head(${isEdit} ? 'Edit User' : 'Add User')}"></head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="~{fragments :: app_sidebar('users')}"></div>
+
+<!-- Main Area -->
+<div class="main-content">
+    
+    <!-- Top Header -->
+    <div th:replace="~{fragments :: app_header}"></div>
+    
+    <!-- Body Content -->
+    <div class="container-fluid py-4 animated-content">
+        
+        <!-- Page Header -->
+        <div class="mb-4">
+            <h2 class="fw-bold mb-1" th:text="${isEdit} ? 'Edit User' : 'Create New User'">Create User</h2>
+            <p class="text-secondary small mb-0" th:text="${isEdit} ? 'Update fields and save details below.' : 'Fill out security credentials and details below.'">User Form</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="glass-card" style="max-width: 600px;">
+            
+            <!-- Error message alert -->
+            <div th:if="${errorMessage}" class="alert alert-danger border-0 rounded-3 py-2 px-3 mb-4" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444; font-size: 0.85rem;">
+                <i class="fa-solid fa-circle-exclamation me-1"></i>
+                <span th:text="${errorMessage}">Error Message</span>
+            </div>
+            
+            <form th:action="@{/users/save}" th:object="${user}" method="post">
+                <!-- Hidden inputs -->
+                <input type="hidden" th:field="*{userId}">
+                <input type="hidden" name="isEdit" th:value="${isEdit}">
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label for="username" class="form-label small fw-semibold text-secondary">Username</label>
+                    <input type="text" id="username" th:field="*{username}" class="form-control form-control-custom" placeholder="e.g. johndoe" required th:readonly="${isEdit}">
+                </div>
+
+                <!-- Password (Only shown if creating new user) -->
+                <div class="mb-3" th:if="${!isEdit}">
+                    <label for="password" class="form-label small fw-semibold text-secondary">Password</label>
+                    <input type="password" id="password" th:field="*{password}" class="form-control form-control-custom" placeholder="Enter password" required>
+                </div>
+
+                <!-- Full Name -->
+                <div class="mb-3">
+                    <label for="fullName" class="form-label small fw-semibold text-secondary">Full Name</label>
+                    <input type="text" id="fullName" th:field="*{fullName}" class="form-control form-control-custom" placeholder="e.g. John Doe" required>
+                </div>
+
+                <!-- Status -->
+                <div class="mb-3">
+                    <label for="status" class="form-label small fw-semibold text-secondary">Account Status</label>
+                    <select id="status" th:field="*{status}" class="form-select form-control-custom" required>
+                        <option value="ACTIVE">Active (Can Login)</option>
+                        <option value="INACTIVE">Inactive (Locked Out)</option>
+                    </select>
+                </div>
+
+                <!-- Roles Checklist -->
+                <div class="mb-4">
+                    <label class="form-label small fw-semibold text-secondary d-block">Roles / Authorities</label>
+                    <div class="d-flex flex-wrap gap-3 mt-2">
+                        <div class="form-check form-check-inline m-0" th:each="roleOption : ${allRoles}">
+                            <input class="form-check-input" type="checkbox" 
+                                   th:field="*{roles}" 
+                                   th:value="${roleOption.roleId}" 
+                                   th:id="'role-' + ${roleOption.roleId}"
+                                   style="background-color: var(--bg-primary); border-color: var(--border-color);">
+                            <label class="form-check-label text-white small fw-medium" 
+                                   th:for="'role-' + ${roleOption.roleId}" 
+                                   th:text="${roleOption.roleName}">ROLE_NAME</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit / Cancel -->
+                <div class="d-flex align-items-center gap-2 pt-3">
+                    <a th:href="@{/users}" class="btn btn-secondary-custom">Cancel</a>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save User
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

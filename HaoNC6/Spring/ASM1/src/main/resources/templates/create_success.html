@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Created Successfully – LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <a href="/" class="navbar-brand">
+        🎓 LMS Platform <span class="badge">Beta</span>
+    </a>
+</nav>
+
+<div class="page-wrapper">
+    <div class="success-card">
+        <div class="success-icon">✅</div>
+        <h2>Course Created Successfully!</h2>
+        <p>Thank you for adding a new course to the LMS.<br>Your course is now available in the system.</p>
+        <a th:href="@{/courses/management}" class="btn btn-primary">
+            ← Back to Course List
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

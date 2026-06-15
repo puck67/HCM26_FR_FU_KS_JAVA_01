@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle != null ? pageTitle + ' | Menu System' : 'Menu Management System'}">Menu Form</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container-fluid">
+            <button class="btn btn-link sidebar-toggle text-white me-3" id="sidebarToggle">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cogs me-2"></i>Training System
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
+                       id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <div class="avatar-circle me-2">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex" id="wrapper">
+        <!-- Dynamic Sidebar -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <div class="content-wrapper p-4">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/menus">Menu Management</a></li>
+                        <li class="breadcrumb-item active" th:text="${pageTitle}">Add Menu</li>
+                    </ol>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header mb-4">
+                    <h1 class="page-title">
+                        <i class="fas fa-edit me-2"></i><span th:text="${pageTitle}">Add Menu</span>
+                    </h1>
+                    <p class="page-subtitle text-muted" th:text="${menu.id == null} ? 'Create a brand new menu item' : 'Update the details of the menu item'"></p>
+                </div>
+
+                <!-- Form Card -->
+                <div class="card shadow-sm border-0 max-width-form">
+                    <div class="card-body p-4">
+                        <form th:action="@{${formAction}}" th:object="${menu}" method="post" class="needs-validation" novalidate>
+                            <!-- Hidden ID for Editing -->
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Menu Name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label font-weight-bold">Menu Name <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                                    <input type="text" id="name" th:field="*{name}" class="form-control" 
+                                           placeholder="e.g. Exam Management" th:errorclass="is-invalid" required />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                        Please enter a valid menu name.
+                                    </div>
+                                </div>
+                                <div class="form-text">Keep it clear and concise. This name appears directly in the sidebar.</div>
+                            </div>
+
+                            <!-- URL -->
+                            <div class="mb-3">
+                                <label for="url" class="form-label font-weight-bold">URL Path</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-link"></i></span>
+                                    <input type="text" id="url" th:field="*{url}" class="form-control" 
+                                           placeholder="e.g. /exams or # (for parent menus)" th:errorclass="is-invalid" />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">
+                                        Please enter a valid URL path.
+                                    </div>
+                                </div>
+                                <div class="form-text">Use <code>#</code> if this menu only acts as a container for submenu items.</div>
+                            </div>
+
+                            <!-- Icon (Font Awesome Class) -->
+                            <div class="mb-3">
+                                <label for="icon" class="form-label font-weight-bold">Icon Class</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><span id="icon-preview"><i class="fas fa-circle-question"></i></span></span>
+                                    <input type="text" id="icon" th:field="*{icon}" class="form-control" 
+                                           placeholder="e.g. fas fa-graduation-cap" th:errorclass="is-invalid" />
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}">
+                                        Please enter a valid Font Awesome class.
+                                    </div>
+                                </div>
+                                <div class="form-text">Use <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">Font Awesome 6 Free</a> class names (e.g. <code>fas fa-book</code>).</div>
+                            </div>
+
+                            <!-- Parent Menu -->
+                            <div class="mb-3">
+                                <label for="parent" class="form-label font-weight-bold">Parent Menu</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-sitemap"></i></span>
+                                    <select id="parent" name="parentId" class="form-select">
+                                        <option value="">[ None - Set as Root Menu ]</option>
+                                        <th:block th:each="parentOpt : ${parentMenus}">
+                                            <!-- Simple visual hierarchy indicator in dropdown -->
+                                            <option th:value="${parentOpt.id}" 
+                                                    th:selected="${menu.parent != null && menu.parent.id == parentOpt.id}"
+                                                    th:text="${parentOpt.parent == null ? parentOpt.name : '  ├── ' + parentOpt.name}">
+                                                Parent Category
+                                            </option>
+                                        </th:block>
+                                    </select>
+                                </div>
+                                <div class="form-text">Choose the category under which this menu will reside. Select None to make it a primary navigation link.</div>
+                            </div>
+
+                            <!-- Display Order & Status Grid -->
+                            <div class="row mb-4">
+                                <!-- Display Order -->
+                                <div class="col-md-6">
+                                    <label for="displayOrder" class="form-label font-weight-bold">Display Order</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-sort-numeric-down"></i></span>
+                                        <input type="number" id="displayOrder" th:field="*{displayOrder}" class="form-control" min="0" required />
+                                    </div>
+                                    <div class="form-text">Controls sorting (lowest first).</div>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-md-6 d-flex align-items-center pt-4 ps-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="status" th:field="*{status}" />
+                                        <label class="form-check-label font-weight-bold" for="status">Active Status</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                                <a href="/menus" class="btn btn-outline-secondary">
+                                    <i class="fas fa-times me-1"></i>Cancel
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Save Menu
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('wrapper').classList.toggle('sidebar-collapsed');
+        });
+
+        // Icon preview update
+        const iconInput = document.getElementById('icon');
+        const iconPreview = document.getElementById('icon-preview');
+
+        function updateIconPreview() {
+            const val = iconInput.value.trim();
+            if (val) {
+                iconPreview.innerHTML = '<i class="' + val + '"></i>';
+            } else {
+                iconPreview.innerHTML = '<i class="fas fa-circle-question"></i>';
+            }
+        }
+
+        iconInput.addEventListener('input', updateIconPreview);
+        updateIconPreview();
+    </script>
+</body>
+</html>
