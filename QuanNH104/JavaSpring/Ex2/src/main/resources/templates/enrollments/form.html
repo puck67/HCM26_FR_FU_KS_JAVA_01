@@ -1,0 +1,42 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="card-title">Đăng ký Học phần (New Enrollment)</h2>
+        
+        <!-- Error Alerts -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span th:text="${errorMessage}">Lỗi xảy ra</span>
+        </div>
+
+        <form th:action="@{/enrollments/save}" method="post">
+            
+            <!-- Student Selection -->
+            <div class="form-group">
+                <label for="studentId">Chọn Học viên</label>
+                <select id="studentId" name="studentId" class="form-control" required>
+                    <option value="" disabled selected>-- Chọn học viên --</option>
+                    <option th:each="student : ${students}" 
+                            th:value="${student.id}" 
+                            th:text="${student.name} + ' (ID: ' + ${student.id} + ', Tuổi: ' + ${student.age} + ')'"></option>
+                </select>
+            </div>
+
+            <!-- Course Selection -->
+            <div class="form-group">
+                <label for="courseId">Chọn Khóa học</label>
+                <select id="courseId" name="courseId" class="form-control" required>
+                    <option value="" disabled selected>-- Chọn khóa học --</option>
+                    <option th:each="course : ${courses}" 
+                            th:value="${course.id}" 
+                            th:text="${course.title} + ' (ID: ' + ${course.id} + ', Tín chỉ: ' + ${course.credit} + ')'"></option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group" style="margin-top: 30px;">
+                <button type="submit" class="btn btn-success">Đăng ký học</button>
+                <a th:href="@{/enrollments}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card-header-flex">
+        <h2 class="card-title">Quản lý Học viên (Students Management)</h2>
+        <a th:href="@{/students/create}" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Thêm học viên mới
+        </a>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filter-card">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <!-- Filter by Name -->
+            <form th:action="@{/students}" method="get" class="filter-form" style="flex: 1;">
+                <div class="form-group" style="width: 100%;">
+                    <label for="searchName">Tìm kiếm theo tên</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="text" id="searchName" name="searchName" th:value="${searchName}" class="form-control" placeholder="Nhập tên học viên...">
+                        <button type="submit" class="btn btn-secondary">Tìm</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Filter by Age Threshold -->
+            <form th:action="@{/students}" method="get" class="filter-form" style="flex: 1;">
+                <div class="form-group" style="width: 100%;">
+                    <label for="searchAge">Tìm học viên lớn tuổi hơn</label>
+                    <div style="display: flex; gap: 8px;">
+                        <input type="number" id="searchAge" name="searchAge" th:value="${searchAge}" class="form-control" placeholder="Mốc tuổi (Ví dụ: 20)...">
+                        <button type="submit" class="btn btn-secondary">Lọc</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Clear filters -->
+            <div style="display: flex; align-items: flex-end;" th:if="${searchName != null or searchAge != null}">
+                <a th:href="@{/students}" class="btn btn-secondary" style="height: 45px; display: flex; align-items: center;">Xóa lọc</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="card">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ và tên</th>
+                        <th>Tuổi</th>
+                        <th>Số lượng khóa học</th>
+                        <th style="text-align: right;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${students}">
+                        <td th:text="${student.id}">1</td>
+                        <td>
+                            <a th:href="@{/students/details/{id}(id=${student.id})}" th:text="${student.name}" style="color: var(--accent-blue); text-decoration: none; font-weight: 600; font-size: 15px;">Nguyễn Văn A</a>
+                        </td>
+                        <td th:text="${student.age}">20</td>
+                        <td>
+                            <span class="badge badge-info" th:text="${#sets.size(student.courses)} + ' khóa học'">0 khóa học</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" style="justify-content: flex-end;">
+                                <a th:href="@{/students/details/{id}(id=${student.id})}" class="btn btn-sm btn-secondary">Chi tiết</a>
+                                <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-sm btn-primary" style="background-color: var(--accent-purple); color: white;">Sửa</a>
+                                <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa học viên này không? Thao tác này cũng sẽ xóa các đăng ký lớp của học viên.');">Xóa</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(students)}">
+                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">Không tìm thấy học viên nào khớp với điều kiện lọc.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

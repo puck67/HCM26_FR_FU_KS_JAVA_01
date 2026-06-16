@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đã xảy ra lỗi - System Error</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <style>
+        .error-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            background-color: #0b0f19;
+        }
+        .error-card {
+            background-color: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            text-align: left;
+        }
+        .error-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .error-icon {
+            width: 48px;
+            height: 48px;
+            fill: #f43f5e;
+        }
+        .error-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .error-info {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            row-gap: 12px;
+            font-size: 14px;
+            color: #9ca3af;
+            margin-bottom: 30px;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .error-trace-container {
+            margin-top: 25px;
+        }
+        .trace-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .trace-box {
+            background-color: #05070c;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            color: #f9fafb;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 350px;
+        }
+        .back-btn {
+            display: inline-block;
+            background-color: #6366f1;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .back-btn:hover {
+            background-color: #4f46e5;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-wrapper">
+        <div class="error-card">
+            <div class="error-header">
+                <svg class="error-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <div>
+                    <h2 class="error-title">Hệ thống đã xảy ra sự cố!</h2>
+                    <p style="color: #9ca3af; font-size: 14px; margin-top: 4px;">Thông tin chi tiết lỗi bên dưới sẽ giúp ích cho việc gỡ lỗi (debugging).</p>
+                </div>
+            </div>
+            
+            <div class="error-info">
+                <div class="info-label">Đường dẫn (Path):</div>
+                <div th:text="${path}">/courses/save</div>
+                
+                <div class="info-label">Thời gian (Time):</div>
+                <div th:text="${timestamp}">11-06-2026 09:30:00</div>
+                
+                <div class="info-label">Mã lỗi (Status):</div>
+                <div th:text="${status}">500</div>
+                
+                <div class="info-label">Thông điệp (Message):</div>
+                <div style="color: #f43f5e; font-weight: 500;" th:text="${message}">Chi tiết lỗi kỹ thuật ở đây</div>
+            </div>
+            
+            <div class="error-trace-container" th:if="${trace}">
+                <h3 class="trace-title">StackTrace chi tiết:</h3>
+                <pre class="trace-box" th:text="${trace}">...stacktrace...</pre>
+            </div>
+            
+            <div style="margin-top: 35px; display: flex; gap: 15px;">
+                <a th:href="@{/}" class="back-btn">Quay về trang chủ</a>
+                <a href="javascript:history.back()" class="back-btn" style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.08); color: #ffffff;">Quay lại trang trước</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

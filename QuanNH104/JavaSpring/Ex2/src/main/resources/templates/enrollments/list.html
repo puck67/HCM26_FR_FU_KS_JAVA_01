@@ -1,0 +1,59 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card-header-flex">
+        <h2 class="card-title">Quản lý Đăng ký Học phần (Student Enrollments)</h2>
+        <a th:href="@{/enrollments/enroll}" class="btn btn-success">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            Đăng ký học phần mới
+        </a>
+    </div>
+
+    <!-- Enrollments Table -->
+    <div class="card">
+        <h3 class="card-title" style="font-size: 18px; margin-bottom: 20px;">Danh sách tất cả các đăng ký học (HQL Join View)</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã HV</th>
+                        <th>Học viên</th>
+                        <th>Mã KH</th>
+                        <th>Khóa học</th>
+                        <th>Tín chỉ</th>
+                        <th style="text-align: right;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- We can loop through students, and inside them loop through their courses to print rows -->
+                    <th:block th:each="student : ${students}">
+                        <tr th:each="course : ${student.courses}">
+                            <td th:text="${student.id}">1</td>
+                            <td>
+                                <a th:href="@{/students/details/{id}(id=${student.id})}" th:text="${student.name}" style="color: var(--accent-blue); text-decoration: none; font-weight: 600;">Nguyễn Văn A</a>
+                            </td>
+                            <td th:text="${course.id}">10</td>
+                            <td>
+                                <a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${course.title}" style="color: var(--accent-purple); text-decoration: none; font-weight: 600;">Lập trình Java</a>
+                            </td>
+                            <td th:text="${course.credit}">3</td>
+                            <td>
+                                <div class="btn-group" style="justify-content: flex-end;">
+                                    <form th:action="@{/enrollments/unenroll}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn hủy đăng ký lớp này không?');">
+                                        <input type="hidden" name="studentId" th:value="${student.id}">
+                                        <input type="hidden" name="courseId" th:value="${course.id}">
+                                        <input type="hidden" name="redirectUri" value="/enrollments">
+                                        <button type="submit" class="btn btn-sm btn-danger">Hủy đăng ký</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </th:block>
+                    
+                    <!-- Fallback if there are no enrollments at all -->
+                    <tr th:if="${#lists.isEmpty(students) or #lists.isEmpty(students.?[!courses.isEmpty()])}">
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Hiện tại chưa có lượt đăng ký học phần nào được ghi nhận.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

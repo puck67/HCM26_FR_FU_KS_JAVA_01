@@ -1,0 +1,64 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card-header-flex">
+        <h2 class="card-title">Quản lý Khóa học (Courses Management)</h2>
+        <a th:href="@{/courses/create}" class="btn btn-primary" style="background-color: var(--accent-purple);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Thêm khóa học mới
+        </a>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filter-card">
+        <form th:action="@{/courses}" method="get" class="filter-form">
+            <div class="form-group" style="max-width: 350px;">
+                <label for="searchCredit">Tìm khóa học có số tín chỉ tối thiểu</label>
+                <div style="display: flex; gap: 8px;">
+                    <input type="number" id="searchCredit" name="searchCredit" th:value="${searchCredit}" class="form-control" placeholder="Tín chỉ tối thiểu (Ví dụ: 3)...">
+                    <button type="submit" class="btn btn-secondary">Lọc</button>
+                    <a th:href="@{/courses}" th:if="${searchCredit != null}" class="btn btn-secondary" style="display: flex; align-items: center;">Xóa</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Courses Table -->
+    <div class="card">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã KH (ID)</th>
+                        <th>Tên khóa học</th>
+                        <th>Số tín chỉ</th>
+                        <th>Sỉ số học viên</th>
+                        <th style="text-align: right;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- In the main list, coursesWithCounts is List<Object[]>: index 0 is Course, index 1 is count -->
+                    <tr th:each="row : ${coursesWithCounts}">
+                        <td th:text="${row[0].id}">1</td>
+                        <td>
+                            <a th:href="@{/courses/details/{id}(id=${row[0].id})}" th:text="${row[0].title}" style="color: var(--accent-purple); text-decoration: none; font-weight: 600; font-size: 15px;">Lập trình Web</a>
+                        </td>
+                        <td th:text="${row[0].credit}">3</td>
+                        <td>
+                            <span class="badge badge-success" th:text="${row[1]} + ' học viên'">0 học viên</span>
+                        </td>
+                        <td>
+                            <div class="btn-group" style="justify-content: flex-end;">
+                                <a th:href="@{/courses/details/{id}(id=${row[0].id})}" class="btn btn-sm btn-secondary">Chi tiết</a>
+                                <a th:href="@{/courses/edit/{id}(id=${row[0].id})}" class="btn btn-sm btn-primary">Sửa</a>
+                                <a th:href="@{/courses/delete/{id}(id=${row[0].id})}" class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này không? Tất cả đăng ký lớp của khóa học cũng sẽ bị xóa bỏ.');">Xóa</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(coursesWithCounts)}">
+                        <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">Không tìm thấy khóa học nào khớp với điều kiện lọc.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
