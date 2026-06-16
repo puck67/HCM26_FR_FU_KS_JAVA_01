@@ -1,0 +1,35 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <h2 class="card-title" th:text="${isEdit} ? 'Cập nhật Khóa học' : 'Thêm Khóa học Mới'">Thêm Khóa học Mới</h2>
+        
+        <!-- Error Alerts -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <span th:text="${errorMessage}">Lỗi xảy ra</span>
+        </div>
+
+        <form th:action="${isEdit} ? @{/courses/update/{id}(id=${course.id})} : @{/courses/save}" 
+              th:object="${course}" method="post">
+            
+            <!-- Course Title -->
+            <div class="form-group">
+                <label for="title">Tên khóa học (Tiêu đề)</label>
+                <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Nhập tên khóa học...">
+                <div class="form-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Tên lỗi</div>
+            </div>
+
+            <!-- Course Credits -->
+            <div class="form-group">
+                <label for="credit">Số tín chỉ</label>
+                <input type="number" id="credit" th:field="*{credit}" class="form-control" placeholder="Nhập số tín chỉ...">
+                <div class="form-error" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}">Tín chỉ lỗi</div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-group" style="margin-top: 30px;">
+                <button type="submit" class="btn btn-primary">Lưu khóa học</button>
+                <a th:href="@{/courses}" class="btn btn-secondary">Hủy bỏ</a>
+            </div>
+        </form>
+    </div>
+</div>

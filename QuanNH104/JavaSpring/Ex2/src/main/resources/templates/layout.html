@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Course & Student Enrollment System</title>
+    <!-- Link to Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. BANNER SECTION -->
+    <header class="banner">
+        <div class="logo-area">
+            <!-- Book/Graduation Icon SVG -->
+            <svg class="logo-icon-svg" viewBox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                <path d="M19 14.22V19c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2v-4.78l7 3.82 7-3.82z"/>
+            </svg>
+            <div class="logo-text">
+                <h1>LMS Enrollment System</h1>
+            </div>
+        </div>
+
+        <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+            <!-- Bộ chuyển đổi Vai trò (Role Switcher Form) -->
+            <form th:action="@{/switch-role}" method="get" id="roleForm" style="display: flex; align-items: center; gap: 8px; background-color: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                <label for="roleSelect" style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Vai trò:</label>
+                <select id="roleSelect" name="role" onchange="document.getElementById('roleForm').submit();" style="background: none; border: none; color: #ffffff; font-size: 13px; font-weight: 600; outline: none; cursor: pointer;">
+                    <option value="ADMIN" th:selected="${currentRole == 'ADMIN'}" style="background-color: var(--bg-secondary); color: #fff;">ADMIN</option>
+                    <option value="TEACHER" th:selected="${currentRole == 'TEACHER'}" style="background-color: var(--bg-secondary); color: #fff;">TEACHER</option>
+                    <option value="STUDENT" th:selected="${currentRole == 'STUDENT'}" style="background-color: var(--bg-secondary); color: #fff;">STUDENT</option>
+                </select>
+            </form>
+            
+            <svg class="profile-icon" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <!-- 2. MENU LEFT SECTION (Dynamic sidebar loaded from database) -->
+        <aside class="menu-left">
+            <ul class="nav-links">
+                <!-- Level 1 Menu -->
+                <li th:each="menu1 : ${sidebarMenus}" class="menu-item-wrapper">
+                    <a th:href="${#lists.isEmpty(menu1.subMenus)} ? @{${menu1.url}} : '#'" 
+                       th:classappend="${#lists.isEmpty(menu1.subMenus)} ? '' : 'has-children'"
+                       th:style="${!#lists.isEmpty(menu1.subMenus)} ? 'cursor: default;' : ''">
+                        
+                        <!-- Chọn icon dựa trên tên của Menu hoặc dùng icon mặc định -->
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path th:if="${menu1.name == 'Dashboard'}" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                            <path th:if="${menu1.name == 'User Management'}" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                            <path th:if="${menu1.name == 'System Management' or menu1.name == 'Course Management' or menu1.name == 'Training Management'}" d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.2 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM2 6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2s-2-.9-2-2V8c0-1.1.9-2 2-2zm20 2c0-1.1-.9-2-2-2s-2 .9-2 2v12c0 1.1.9 2 2 2s2-.9 2-2V8z"/>
+                            <path th:if="${menu1.name == 'My Courses'}" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z"/>
+                            <!-- Fallback default icon -->
+                            <path th:if="${menu1.name != 'Dashboard' and menu1.name != 'User Management' and menu1.name != 'System Management' and menu1.name != 'Course Management' and menu1.name != 'My Courses' and menu1.name != 'Training Management'}" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                        </svg>
+                        
+                        <div class="nav-text-container">
+                            <span th:text="${menu1.name}">Tên Menu Cấp 1</span>
+                        </div>
+                        <span class="menu-toggle-arrow" th:if="${!#lists.isEmpty(menu1.subMenus)}" style="margin-left: auto; font-size: 10px;">▼</span>
+                    </a>
+
+                    <!-- Level 2 Submenu -->
+                    <ul th:if="${!#lists.isEmpty(menu1.subMenus)}" class="sub-menu-l2" style="list-style: none; padding-left: 20px; background-color: rgba(0, 0, 0, 0.15);">
+                        <li th:each="menu2 : ${menu1.subMenus}" class="menu-item-l2-wrapper">
+                            <a th:href="${#lists.isEmpty(menu2.subMenus)} ? @{${menu2.url}} : '#'"
+                               th:classappend="${#lists.isEmpty(menu2.subMenus)} ? '' : 'has-children'"
+                               th:style="${!#lists.isEmpty(menu2.subMenus)} ? 'cursor: default; padding: 10px 20px;' : 'padding: 10px 20px;'"
+                               style="border-bottom: none; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+                                <span class="bullet" style="color: var(--text-muted);">&bull;</span>
+                                <span th:text="${menu2.name}">Tên Menu Cấp 2</span>
+                                <span class="menu-toggle-arrow" th:if="${!#lists.isEmpty(menu2.subMenus)}" style="margin-left: auto; font-size: 9px;">▼</span>
+                            </a>
+
+                            <!-- Level 3 Submenu -->
+                            <ul th:if="${!#lists.isEmpty(menu2.subMenus)}" class="sub-menu-l3" style="list-style: none; padding-left: 15px; background-color: rgba(0, 0, 0, 0.25);">
+                                <li th:each="menu3 : ${menu2.subMenus}">
+                                    <a th:href="@{${menu3.url}}" style="border-bottom: none; font-size: 12px; padding: 8px 20px; display: flex; align-items: center; gap: 8px;">
+                                        <span class="bullet-l3" style="color: var(--text-muted); font-size: 9px;">&mdash;</span>
+                                        <span th:text="${menu3.name}">Tên Menu Cấp 3</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- 3. BODY SECTION -->
+        <main class="body-content">
+            <!-- Dynamic Content Injected Here -->
+            <div th:replace="~{__${content}__}"></div>
+        </main>
+    </div>
+
+    <!-- 4. FOOTER SECTION -->
+    <footer class="main-footer">
+    </footer>
+
+</body>
+</html>
+
