@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: header}"></head>
+<body>
+
+<div th:replace="~{layout :: navbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{layout :: sidebar}"></div>
+        
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2" th:text="${role.roleId == null ? 'Add Role' : 'Edit Role'}"></h1>
+            </div>
+
+            <div class="card col-md-6 mx-auto shadow-sm">
+                <div class="card-body">
+                    <form th:action="${role.roleId == null ? '/roles/add' : '/roles/edit/' + role.roleId}" 
+                          th:object="${role}" method="post">
+                        
+                        <input type="hidden" th:field="*{roleId}">
+                        
+                        <div class="form-group">
+                            <label for="roleName">Role Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="roleName" th:field="*{roleName}" required>
+                            <small class="form-text text-muted">Ex: SUPER_ADMIN, ADMIN, TEACHER</small>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a th:href="@{/roles}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>
