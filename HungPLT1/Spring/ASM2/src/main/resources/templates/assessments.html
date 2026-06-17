@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Materials - LMS</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, rgb(4, 5, 23) 0%, rgb(19, 21, 48) 90%);
+            min-height: 100vh;
+            color: #f8fafc;
+            padding: 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-top: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .main-layout {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.7s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title .icon {
+            font-size: 1.4rem;
+        }
+
+        /* Alert messages */
+        .alert {
+            border-radius: 10px;
+            padding: 0.875rem 1.25rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.10);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #f87171;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #cbd5e1;
+            margin-bottom: 0.4rem;
+        }
+
+        input[type="text"],
+        textarea {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        /* File input custom style */
+        .file-upload-wrapper {
+            position: relative;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px dashed rgba(99, 102, 241, 0.5);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            border-color: #6366f1;
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .file-hint {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 0.4rem;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 0.875rem;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            margin-top: 0.5rem;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* Materials list */
+        .empty-state {
+            text-align: center;
+            color: #475569;
+            padding: 2.5rem 0;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+        }
+
+        .material-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .material-item {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.25s ease;
+        }
+
+        .material-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateX(4px);
+        }
+
+        .material-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(99, 102, 241, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .material-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .material-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .material-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .material-filename {
+            font-size: 0.75rem;
+            color: #475569;
+            margin-top: 0.15rem;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(99, 102, 241, 0.15);
+            color: #a5b4fc;
+            text-decoration: none;
+            padding: 0.5rem 0.875rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .download-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            color: #c7d2fe;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>📋 Assessment Materials</h1>
+        <p>Upload and manage course assessment materials for the LMS</p>
+    </div>
+
+    <div class="main-layout">
+
+        <!-- LEFT: Upload Form (Task 4) -->
+        <div class="card">
+            <div class="card-title">
+                <span class="icon">📤</span> Upload New Material
+            </div>
+
+            <!-- Success / Error Flash Messages (Task 6) -->
+            <div class="alert alert-success" th:if="${message}" th:text="${message}"></div>
+            <div class="alert alert-error"   th:if="${error}"   th:text="${error}"></div>
+
+            <form method="post" action="/assessments/upload" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="e.g. Midterm Assignment Brief" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Brief description of this material..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">File</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="file" name="file" required />
+                    </div>
+                    <span class="file-hint">Accepted: PDF, DOC, DOCX, images, text files, etc.</span>
+                </div>
+
+                <button type="submit">⬆ Upload Material</button>
+            </form>
+        </div>
+
+        <!-- RIGHT: Uploaded Materials List (Task 5) -->
+        <div class="card">
+            <div class="card-title">
+                <span class="icon">📂</span>
+                Uploaded Materials
+                <span class="badge" th:text="${#lists.size(materials)}">0</span>
+            </div>
+
+            <!-- Empty state -->
+            <div class="empty-state" th:if="${#lists.isEmpty(materials)}">
+                <div class="empty-icon">📭</div>
+                <p>No materials uploaded yet.<br>Use the form on the left to get started.</p>
+            </div>
+
+            <!-- Materials list (Task 5: th:each loop, title, description, download link) -->
+            <ul class="material-list" th:if="${!#lists.isEmpty(materials)}">
+                <li class="material-item" th:each="material : ${materials}">
+                    <div class="material-icon">📄</div>
+                    <div class="material-info">
+                        <div class="material-title" th:text="${material.title}">Title</div>
+                        <div class="material-desc" th:text="${material.description}">Description</div>
+                        <div class="material-filename" th:text="'📎 ' + ${material.fileName}">file.pdf</div>
+                    </div>
+                    <!-- Task 5: download link pointing to /assessments/download/{filename} -->
+                    <a class="download-btn"
+                       th:href="@{/assessments/download/{fn}(fn=${material.fileName})}">
+                        ⬇ Download
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
