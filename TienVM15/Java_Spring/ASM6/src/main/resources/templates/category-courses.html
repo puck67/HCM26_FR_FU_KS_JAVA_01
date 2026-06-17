@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main>
+        <div class="grid-layout">
+            <!-- Courses belonging to the category -->
+            <div>
+                <a th:href="@{/}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.3s ease;">
+                    <i class="fa-solid fa-arrow-left"></i> All Courses
+                </a>
+
+                <div class="card" style="margin-bottom: 2rem; border-color: rgba(99, 102, 241, 0.2);">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">
+                        Courses in Category: <span th:text="${categoryName}" style="color: #818cf8;">Category</span>
+                    </h2>
+                </div>
+
+                <div th:each="course : ${coursePage.content}" class="card course-item">
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="course-title" th:text="${course.title}">Course Title</a>
+                    <div class="course-meta">
+                        <span><i class="fa-regular fa-user" style="margin-right: 0.25rem;"></i> Instructor</span>
+                        <span>
+                            <i class="fa-regular fa-tag" style="margin-right: 0.25rem;"></i>
+                            <span th:each="tag : ${#strings.arraySplit(course.category, ',')}" 
+                                  th:text="${tag.trim()}" class="badge badge-tag">Tag</span>
+                        </span>
+                    </div>
+                    <p class="course-desc" th:text="${course.description}">Short description of the course.</p>
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="btn-action-primary">
+                        View Course Details
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </div>
+
+                <div th:if="${coursePage.isEmpty()}" class="card" style="text-align: center; padding: 4rem 0;">
+                    <i class="fa-regular fa-folder" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
+                    <p style="color: var(--text-muted);">No courses found in this category.</p>
+                </div>
+
+                <!-- Pagination -->
+                <div th:if="${coursePage.totalPages > 1}" class="pagination">
+                    <a th:href="@{/categories/{name}(name=${categoryName}, page=${coursePage.number - 1})}" th:if="${coursePage.hasPrevious()}" class="page-item">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                    <a th:each="i : ${#numbers.sequence(0, coursePage.totalPages - 1)}" 
+                       th:href="@{/categories/{name}(name=${categoryName}, page=${i})}" th:text="${i + 1}"
+                       class="page-item" th:classappend="${i == coursePage.number} ? 'active'">1</a>
+                    <a th:href="@{/categories/{name}(name=${categoryName}, page=${coursePage.number + 1})}" th:if="${coursePage.hasNext()}" class="page-item">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Categories Sidebar -->
+            <aside>
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-tags"></i>
+                        Categories
+                    </h3>
+                    <div class="tag-cloud">
+                        <a th:each="category : ${categories}" 
+                           th:href="@{/categories/{name}(name=${category.name})}"
+                           class="tag-cloud-item"
+                           th:classappend="${category.name == categoryName} ? 'active'"
+                           th:style="${category.name == categoryName} ? 'background: rgba(99, 102, 241, 0.25); border-color: #6366f1; color: white;' : ''">
+                            <span th:text="${category.name}">Tag</span>
+                            <span th:text="${'(' + category.frequency + ')'}" style="font-size: 0.75rem; color: #818cf8; margin-left: 0.25rem;">(1)</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

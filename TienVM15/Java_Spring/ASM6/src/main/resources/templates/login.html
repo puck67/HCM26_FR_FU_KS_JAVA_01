@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main>
+        <div style="max-width: 400px; margin: 4rem auto 0 auto;">
+            <div class="card">
+                <h2 class="card-title" style="justify-content: center; border-bottom: none; margin-bottom: 2rem;">
+                    <i class="fa-solid fa-lock" style="color: #818cf8;"></i>
+                    Instructor Login
+                </h2>
+
+                <!-- Login Error Alert -->
+                <div th:if="${param.error}" class="alert alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Invalid username or password.</span>
+                </div>
+                
+                <!-- Logout Alert -->
+                <div th:if="${param.logout}" class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>You have been logged out.</span>
+                </div>
+
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn-action-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+                        Sign In
+                    </button>
+                </form>
+                
+                <div style="margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                    <p>Demo Credentials:</p>
+                    <code style="color: #818cf8; display: block; margin-top: 0.25rem;">username: instructor / password: instructor123</code>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>Menu Form - Menu Management</title>
+</head>
+<body>
+    <div th:fragment="body">
+
+        <!-- Error banner for cyclic check / circular reference -->
+        <div th:if="${errorMessage}" class="alert-box alert-danger">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 20px;"></i>
+            <span th:text="${errorMessage}">Error Message!</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header" th:text="${menu.id != null} ? 'Edit Menu Item' : 'Add New Menu Item'">
+                Add New Menu Item
+            </div>
+            
+            <div class="card-body">
+                <form th:action="@{/menus/save}" method="post" th:object="${menu}">
+                    <!-- Hidden ID to track record -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-grid">
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="name">Menu Name (Tên Menu)</label>
+                            <input type="text" id="name" th:field="*{name}" required placeholder="e.g., Exam Management">
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- URL -->
+                        <div class="form-group">
+                            <label for="url">URL Path (Link)</label>
+                            <input type="text" id="url" th:field="*{url}" placeholder="e.g., /exams (use '#' for parent placeholders)">
+                            <span th:if="${#fields.hasErrors('url')}" th:errors="*{url}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="form-group">
+                            <label for="icon">Icon Class (Bootstrap Icon name)</label>
+                            <input type="text" id="icon" th:field="*{icon}" placeholder="e.g., people, house, gear (omit 'bi-')">
+                            <span th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Parent Menu -->
+                        <div class="form-group">
+                            <label for="parentId">Parent Menu (Menu Cha)</label>
+                            <select id="parentId" name="parentId">
+                                <option value="">(None - Root Menu)</option>
+                                <option th:each="p : ${potentialParents}" 
+                                        th:value="${p.id}" 
+                                        th:text="${p.name}"
+                                        th:selected="${menu.parent != null && menu.parent.id == p.id}">
+                                    Parent Option
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Display Order -->
+                        <div class="form-group">
+                            <label for="displayOrder">Display Order (Thứ tự hiển thị)</label>
+                            <input type="number" id="displayOrder" th:field="*{displayOrder}" required min="0">
+                            <span th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="form-group">
+                            <label for="status">Status (Trạng thái hoạt động)</label>
+                            <select id="status" th:field="*{status}">
+                                <option th:value="true">Active (Hoạt động)</option>
+                                <option th:value="false">Inactive (Khóa)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Save Menu
+                        </button>
+                        <a th:href="@{/menus}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
