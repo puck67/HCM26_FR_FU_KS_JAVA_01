@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Security Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css?v=3}" rel="stylesheet">
+</head>
+<body class="login-body">
+    
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <i class="bi bi-shield-lock-fill text-indigo fs-1" style="color: #6366f1;"></i>
+            <h3 class="mt-2 fw-bold text-white">Security Portal</h3>
+            <p class="text-muted small">Please sign in to access your account</p>
+        </div>
+        
+        <!-- Alerts for Error / Success -->
+        <div th:if="${errorMessage}" class="alert alert-danger py-2 px-3 small border-0 bg-danger bg-opacity-20 text-danger mb-3" role="alert">
+            <i class="bi bi-exclamation-octagon-fill me-2"></i>
+            <span th:text="${errorMessage}">Error Message</span>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success py-2 px-3 small border-0 bg-success bg-opacity-20 text-success mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <span th:text="${successMessage}">Success Message</span>
+        </div>
+        
+        <!-- Login Form -->
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label text-muted small fw-semibold">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary border-opacity-25 text-muted"><i class="bi bi-person"></i></span>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required autofocus>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="password" class="form-label text-muted small fw-semibold">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary border-opacity-25 text-muted"><i class="bi bi-key"></i></span>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-premium w-100 mb-3">
+                <i class="bi bi-box-arrow-in-right me-2"></i> Sign In
+            </button>
+        </form>
+        
+        <!-- Helper Seed Info Box for first launch (Business Scenario) -->
+        <div class="p-3 mt-4 rounded border border-secondary border-opacity-25 bg-secondary bg-opacity-10 small">
+            <div class="fw-semibold text-white mb-2"><i class="bi bi-info-circle-fill text-info me-2"></i>First Time Installation?</div>
+            <div class="text-muted">Use the default bootstrap Super Admin credentials:</div>
+            <code class="d-block mt-2 text-indigo" style="color: #a5b4fc; font-size: 0.85rem;">
+                Username: superadmin<br>
+                Password: admin123
+            </code>
+        </div>
+    </div>
+    
+</body>
+</html>

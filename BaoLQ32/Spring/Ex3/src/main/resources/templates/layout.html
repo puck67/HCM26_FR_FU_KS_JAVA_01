@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title + ' - Security Portal'}">Security Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css?v=3}" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Menu Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a th:href="@{/dashboard}" class="sidebar-brand">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Security Portal</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-menu">
+                <ul class="nav flex-column">
+                    <!-- Dashboard Link: Available to all authenticated roles -->
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard}" class="nav-link" th:classappend="${title == 'Dashboard' ? 'active' : ''}">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    
+                    <!-- Security Management Folders: Visible to SUPER_ADMIN and ADMIN -->
+                    <th:block sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                        <li class="nav-item mt-3">
+                            <span class="text-muted text-uppercase px-3 font-monospace small" style="font-size: 0.75rem; letter-spacing: 1px;">Security Management</span>
+                        </li>
+                        
+                        <!-- User Management Link: Visible to both SUPER_ADMIN and ADMIN -->
+                        <li class="nav-item">
+                            <a th:href="@{/users}" class="nav-link" th:classappend="${title == 'User Management' ? 'active' : ''}">
+                                <i class="bi bi-people"></i>
+                                <span>User Management</span>
+                            </a>
+                        </li>
+                        
+                        <!-- Role Management Link: Visible ONLY to SUPER_ADMIN -->
+                        <li class="nav-item" sec:authorize="hasRole('SUPER_ADMIN')">
+                            <a th:href="@{/roles}" class="nav-link" th:classappend="${title == 'Role Management' ? 'active' : ''}">
+                                <i class="bi bi-person-lock"></i>
+                                <span>Role Management</span>
+                            </a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            
+            <!-- Sidebar Bottom logout area -->
+            <div class="p-3 border-top border-secondary border-opacity-25 mt-auto">
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="btn btn-outline-danger w-100 btn-sm">
+                        <i class="bi bi-box-arrow-left me-2"></i> Log Out
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Main Panel -->
+        <div class="main-content">
+            
+            <!-- Header Nav containing Logged User Info -->
+            <header class="top-nav">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                        <li class="breadcrumb-item active" th:text="${title}">Dashboard</li>
+                    </ol>
+                </nav>
+                
+                <!-- Display active session user info (Bonus 2) -->
+                <div class="d-flex align-items-center gap-3" th:if="${currentUser != null}">
+                    <div class="text-end">
+                        <div class="fw-semibold text-dark" th:text="'Welcome, ' + ${currentUser.fullName}">Welcome, User</div>
+                        <div class="small text-muted font-monospace">
+                            Username: <strong th:text="${currentUser.username}">user</strong> | 
+                            Role: 
+                            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-0.5" 
+                                  th:each="role : ${currentUser.roles}" 
+                                  th:text="${role.roleName}">ROLE</span>
+                        </div>
+                    </div>
+                    
+                    <div class="avatar-placeholder rounded-circle bg-secondary bg-opacity-10 text-primary d-flex align-items-center justify-content-center border" style="width: 42px; height: 42px;">
+                        <i class="bi bi-person-fill fs-4"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Content Fragment Destination -->
+            <main class="content-body">
+                <!-- Flash messages for operation statuses -->
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span th:text="${successMessage}">Success message.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span th:text="${errorMessage}">Error message.</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div th:replace="${content}"></div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

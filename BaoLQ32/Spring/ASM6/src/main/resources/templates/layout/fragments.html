@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Head Fragment -->
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - LMS Course Sharing'">LMS Portal</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Header Fragment -->
+    <header th:fragment="header(activePage)">
+        <nav class="navbar">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>LMS</span> Course Sharing
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a></li>
+                <li><a th:href="@{/reviews/recent}" th:classappend="${activePage == 'reviews'} ? 'active'">Reviews</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/instructor/dashboard}" th:classappend="${activePage == 'dashboard'} ? 'active'">Dashboard</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/instructor/courses}" th:classappend="${activePage == 'manage_courses'} ? 'active'">Courses</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/instructor/reviews}" th:classappend="${activePage == 'manage_reviews'} ? 'active'">Manage Reviews</a>
+                </li>
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="btn-primary">Login</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" class="btn-outline">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sidebar Fragment -->
+    <aside th:fragment="sidebar" class="sidebar">
+        <!-- Category Cloud Widget -->
+        <div class="widget">
+            <h3 class="widget-title"><i class="fa-solid fa-tags"></i> Category Cloud</h3>
+            <div class="category-cloud">
+                <span th:if="${#lists.isEmpty(categories)}" class="text-muted">No categories available</span>
+                <a th:each="cat : ${categories}" th:href="@{/category/{name}(name=${cat.name})}" class="tag">
+                    <span th:text="${cat.name}">Category</span>
+                    <span class="tag-freq" th:text="${cat.frequency}">0</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Reviews Widget -->
+        <div class="widget">
+            <h3 class="widget-title"><i class="fa-solid fa-comments"></i> Recent Reviews</h3>
+            <div class="recent-reviews-list">
+                <span th:if="${#lists.isEmpty(recentReviews)}" class="text-muted">No reviews yet</span>
+                <div th:each="rev : ${recentReviews}" class="review-item">
+                    <div class="course-meta">
+                        <span class="review-author" th:text="${rev.authorName}">Author</span>
+                        <span>on</span>
+                        <a th:href="@{/courses/{id}(id=${rev.course.id})}" th:text="${rev.course.title}">Course</a>
+                    </div>
+                    <div class="review-stars">
+                        <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                           th:class="${star <= rev.rating} ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+                    </div>
+                    <p class="review-text" th:text="${rev.content}">Excellent course.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 LMS Course Sharing System. Designed with <i class="fa-solid fa-heart" style="color: var(--error-color)"></i> for Spring Core training.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

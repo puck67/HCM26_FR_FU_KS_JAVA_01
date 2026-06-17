@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout('Menu Management', ~{::content})}">
+<body>
+    <div th:fragment="content">
+        
+        <!-- Cascade Delete Danger Alert (If triggered) -->
+        <div th:if="${showCascadeOptionId}" class="card border-danger mb-4 shadow-sm">
+            <div class="card-header bg-danger text-white d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                <h5 class="mb-0 fw-bold">Cascade Deletion Warning</h5>
+            </div>
+            <div class="card-body bg-danger bg-opacity-10">
+                <p class="mb-3 text-dark">
+                    The menu <strong th:text="${cascadeMenuName}">User Management</strong> cannot be deleted normally because it contains submenus (child links). 
+                    Please choose one of the following actions:
+                </p>
+                <div class="d-flex gap-2">
+                    <form th:action="@{/admin/menus/delete/{id}(id=${showCascadeOptionId})}" method="post">
+                        <input type="hidden" name="cascade" value="true">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash-fill me-1"></i> Yes, Cascade Delete (Delete Menu & Submenus)
+                        </button>
+                    </form>
+                    <a th:href="@{/admin/menus}" class="btn btn-secondary btn-sm">
+                        <i class="bi bi-x-circle me-1"></i> Cancel Deletion
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card-premium">
+            <div class="card-header-premium">
+                <div>
+                    <h4 class="fw-bold mb-1">Menus Database</h4>
+                    <p class="text-muted small mb-0">List of all menus configured in the database. Changes will be reflected in the sidebar in real time.</p>
+                </div>
+                <a th:href="@{/admin/menus/new}" class="btn btn-premium d-flex align-items-center gap-2">
+                    <i class="bi bi-plus-lg"></i> Add New Menu
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-premium table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Target URL</th>
+                            <th>Icon</th>
+                            <th>Parent Menu</th>
+                            <th class="text-center">Display Order</th>
+                            <th class="text-center">Status</th>
+                            <th>Roles Authorized</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="menu : ${menus}">
+                            <!-- Name with hierarchical tree indentation -->
+                            <td>
+                                <div class="font-monospace text-dark">
+                                    <span th:utext="${menu.getTreePrefix()}"></span>
+                                    <span class="fw-semibold" th:text="${menu.name}">Dashboard</span>
+                                </div>
+                            </td>
+                            
+                            <!-- URL Target -->
+                            <td>
+                                <span th:if="${menu.url != null && !menu.url.isEmpty()}" class="badge bg-light text-primary border px-2 py-1">
+                                    <code th:text="${menu.url}">/dashboard</code>
+                                </span>
+                                <span th:if="${menu.url == null || menu.url.isEmpty()}" class="text-muted small italic">
+                                    <i class="bi bi-dash"></i> Parent Folder Only
+                                </span>
+                            </td>
+                            
+                            <!-- Icon -->
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i th:class="${menu.icon != null ? menu.icon : 'bi bi-slash-circle'}" class="text-indigo fs-5"></i>
+                                    <span class="text-muted small" th:text="${menu.icon != null ? menu.icon : 'None'}">bi-speedometer2</span>
+                                </div>
+                            </td>
+                            
+                            <!-- Parent Name -->
+                            <td>
+                                <span th:if="${menu.parent != null}" class="badge bg-light text-dark border px-2 py-1" th:text="${menu.parent.name}">
+                                    User Management
+                                </span>
+                                <span th:if="${menu.parent == null}" class="text-muted small">
+                                    <i class="bi bi-globe2 me-1"></i> Root Level
+                                </span>
+                            </td>
+                            
+                            <!-- Display Order -->
+                            <td class="text-center">
+                                <span class="fw-semibold" th:text="${menu.displayOrder}">1</span>
+                            </td>
+                            
+                            <!-- Status -->
+                            <td class="text-center">
+                                <span th:if="${menu.status}" class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Active
+                                </span>
+                                <span th:if="${!menu.status}" class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1">
+                                    <i class="bi bi-x-circle-fill me-1"></i> Inactive
+                                </span>
+                            </td>
+                            
+                            <!-- Roles -->
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <th:block th:if="${menu.roles != null && !menu.roles.trim().isEmpty()}">
+                                        <span th:each="role : ${#strings.arraySplit(menu.roles, ',')}" 
+                                              class="badge px-2 py-1"
+                                              th:classappend="${role.trim() == 'ADMIN' ? 'bg-primary' : (role.trim() == 'TEACHER' ? 'bg-success' : 'bg-warning text-dark')}"
+                                              th:text="${role.trim()}">
+                                            ADMIN
+                                        </span>
+                                    </th:block>
+                                    <th:block th:if="${menu.roles == null || menu.roles.trim().isEmpty()}">
+                                        <span class="badge bg-secondary px-2 py-1">ALL</span>
+                                    </th:block>
+                                </div>
+                            </td>
+                            
+                            <!-- Actions -->
+                            <td class="text-end">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a th:href="@{/admin/menus/edit/{id}(id=${menu.id})}" class="btn btn-sm btn-outline-primary" title="Edit Menu">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    
+                                    <!-- Delete form -->
+                                    <form th:action="@{/admin/menus/delete/{id}(id=${menu.id})}" method="post" 
+                                          onsubmit="return confirm('Are you sure you want to delete this menu?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Menu">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

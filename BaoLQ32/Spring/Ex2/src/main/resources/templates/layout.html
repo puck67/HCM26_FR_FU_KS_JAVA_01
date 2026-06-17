@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title + ' - Dynamic Menu System'}">Dynamic Menu System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom Premium Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a th:href="@{/dashboard}" class="sidebar-brand">
+                    <i class="bi bi-cpu-fill"></i>
+                    <span>Academy Portal</span>
+                </a>
+            </div>
+            
+            <div class="sidebar-menu">
+                <ul class="nav flex-column">
+                    <!-- LEVEL 1 (Root Menus) -->
+                    <th:block th:each="menu1 : ${sidebarMenus}">
+                        <li class="nav-item">
+                            <!-- Direct Link (No Children) -->
+                            <a th:if="${#lists.isEmpty(menu1.children)}" 
+                               th:href="${menu1.url != null ? menu1.url : '#'}" 
+                               class="nav-link" 
+                               th:classappend="${pageUri == menu1.url ? 'active' : ''}">
+                                <i th:class="${menu1.icon != null ? menu1.icon : 'bi bi-link-45deg'}"></i>
+                                <span th:text="${menu1.name}">Dashboard</span>
+                            </a>
+                            
+                            <!-- Collapsible Trigger (Has Children) -->
+                            <a th:if="${!#lists.isEmpty(menu1.children)}" 
+                               class="nav-link collapsed" 
+                               data-bs-toggle="collapse" 
+                               th:href="'#collapse-' + ${menu1.id}" 
+                               role="button" 
+                               aria-expanded="false" 
+                               th:aria-controls="'collapse-' + ${menu1.id}">
+                                <i th:class="${menu1.icon != null ? menu1.icon : 'bi bi-folder-fill'}"></i>
+                                <span th:text="${menu1.name}">User Management</span>
+                                <i class="bi bi-chevron-down ms-auto toggle-arrow"></i>
+                            </a>
+                            
+                            <!-- LEVEL 2 -->
+                            <div th:if="${!#lists.isEmpty(menu1.children)}" 
+                                 class="collapse" 
+                                 th:id="'collapse-' + ${menu1.id}">
+                                <ul class="submenu-level-2">
+                                    <th:block th:each="menu2 : ${menu1.children}">
+                                        <li class="nav-item">
+                                            <!-- Direct Link (No Children) -->
+                                            <a th:if="${#lists.isEmpty(menu2.children)}" 
+                                               th:href="${menu2.url != null ? menu2.url : '#'}" 
+                                               class="nav-link" 
+                                               th:classappend="${pageUri == menu2.url ? 'active' : ''}">
+                                                <i th:class="${menu2.icon != null ? menu2.icon : 'bi bi-link-45deg'}"></i>
+                                                <span th:text="${menu2.name}">Student Management</span>
+                                            </a>
+                                            
+                                            <!-- Collapsible Trigger (Has Level 3 Children) -->
+                                            <a th:if="${!#lists.isEmpty(menu2.children)}" 
+                                               class="nav-link collapsed" 
+                                               data-bs-toggle="collapse" 
+                                               th:href="'#collapse-' + ${menu2.id}" 
+                                               role="button" 
+                                               aria-expanded="false" 
+                                               th:aria-controls="'collapse-' + ${menu2.id}">
+                                                <i th:class="${menu2.icon != null ? menu2.icon : 'bi bi-folder2-open'}"></i>
+                                                <span th:text="${menu2.name}">Course Management</span>
+                                                <i class="bi bi-chevron-down ms-auto toggle-arrow"></i>
+                                            </a>
+                                            
+                                            <!-- LEVEL 3 -->
+                                            <div th:if="${!#lists.isEmpty(menu2.children)}" 
+                                                 class="collapse" 
+                                                 th:id="'collapse-' + ${menu2.id}">
+                                                <ul class="submenu-level-3">
+                                                    <li class="nav-item" th:each="menu3 : ${menu2.children}">
+                                                        <a th:href="${menu3.url != null ? menu3.url : '#'}" 
+                                                           class="nav-link" 
+                                                           th:classappend="${pageUri == menu3.url ? 'active' : ''}">
+                                                            <i th:class="${menu3.icon != null ? menu3.icon : 'bi bi-dot'}"></i>
+                                                            <span th:text="${menu3.name}">Online Courses</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            
+            <!-- Management Portal Button at Bottom of Sidebar -->
+            <div class="p-3 border-top border-secondary border-opacity-25 mt-auto">
+                <a th:href="@{/admin/menus}" class="btn btn-outline-light w-100 btn-sm" th:classappend="${activePage == 'menus' ? 'active' : ''}">
+                    <i class="bi bi-sliders me-2"></i> Menu Manager
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Application Content Area -->
+        <div class="main-content">
+            
+            <!-- Top Navigation / Role Selector -->
+            <header class="top-nav">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                        <li class="breadcrumb-item active" th:text="${title}">Dashboard</li>
+                    </ol>
+                </nav>
+                
+                <!-- Role Switcher Control -->
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="text-muted small">Current Role:</span>
+                        <span class="badge role-badge" th:text="${currentRole}">ADMIN</span>
+                    </div>
+                    
+                    <select class="form-select role-switcher-dropdown form-select-sm" 
+                            onchange="location = '/change-role?role=' + this.value;">
+                        <option value="ADMIN" th:selected="${currentRole == 'ADMIN'}">Administrator</option>
+                        <option value="TEACHER" th:selected="${currentRole == 'TEACHER'}">Teacher / Lecturer</option>
+                        <option value="STUDENT" th:selected="${currentRole == 'STUDENT'}">Student</option>
+                    </select>
+                </div>
+            </header>
+            
+            <!-- Dynamic Content Area -->
+            <main class="content-body">
+                <!-- Flash Messages -->
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    <span th:text="${successMessage}">Success!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <span th:text="${errorMessage}">Error!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                
+                <!-- Child Content Fragment Injection -->
+                <div th:replace="${content}"></div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Automatic collapse opening for active child menus -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find active link
+            const activeLink = document.querySelector(".sidebar .nav-link.active");
+            if (activeLink) {
+                // Find all parent collapse divisions and open them
+                let parentCollapse = activeLink.closest(".collapse");
+                while (parentCollapse) {
+                    const bsCollapse = new bootstrap.Collapse(parentCollapse, { toggle: false });
+                    bsCollapse.show();
+                    
+                    // Also find the trigger link for this collapse and change class
+                    const triggerLink = document.querySelector(`a[href="#${parentCollapse.id}"]`);
+                    if (triggerLink) {
+                        triggerLink.classList.remove("collapsed");
+                        triggerLink.setAttribute("aria-expanded", "true");
+                    }
+                    
+                    // Traverse upwards to check for double collapses (3rd level)
+                    const outerContainer = parentCollapse.parentElement;
+                    if (outerContainer) {
+                        parentCollapse = outerContainer.closest(".collapse");
+                    } else {
+                        parentCollapse = null;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

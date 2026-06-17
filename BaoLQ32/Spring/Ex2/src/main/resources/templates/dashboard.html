@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout('Dashboard', ~{::content})}">
+<body>
+    <div th:fragment="content">
+        <!-- Welcome Jumbotron -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card-premium p-4 text-white" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);">
+                    <h2 class="fw-bold mb-1">Dynamic Menu Dashboard</h2>
+                    <p class="text-white-50 mb-0">Manage training application sidebar dynamically from database. Switch roles above to preview different access structures.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="row g-4 mb-4">
+            <!-- Total Menus -->
+            <div class="col-md-4">
+                <div class="card stat-card p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted text-uppercase fs-7 fw-semibold">Total Menus</span>
+                            <h2 class="fw-bold mt-1 mb-0" th:text="${totalMenus}">15</h2>
+                        </div>
+                        <div class="stat-icon-container bg-purple-light">
+                            <i class="bi bi-grid-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Parent Menus -->
+            <div class="col-md-4">
+                <div class="card stat-card p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted text-uppercase fs-7 fw-semibold">Parent Menus</span>
+                            <h2 class="fw-bold mt-1 mb-0" th:text="${totalParentMenus}">6</h2>
+                        </div>
+                        <div class="stat-icon-container bg-blue-light">
+                            <i class="bi bi-folder-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Sub Menus -->
+            <div class="col-md-4">
+                <div class="card stat-card p-3">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-muted text-uppercase fs-7 fw-semibold">Sub Menus</span>
+                            <h2 class="fw-bold mt-1 mb-0" th:text="${totalSubMenus}">9</h2>
+                        </div>
+                        <div class="stat-icon-container bg-cyan-light">
+                            <i class="bi bi-folder-symlink-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Quick Actions & System Info -->
+            <div class="col-lg-6">
+                <div class="card-premium h-100">
+                    <div class="card-header-premium">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-rocket-takeoff-fill me-2 text-indigo"></i>Quick Actions</h5>
+                    </div>
+                    <div class="d-grid gap-3">
+                        <a th:href="@{/admin/menus}" class="btn btn-premium d-flex align-items-center justify-content-center gap-2 py-3">
+                            <i class="bi bi-sliders"></i> Go to Menu Manager
+                        </a>
+                        <a th:href="@{/admin/menus/new}" class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 py-3">
+                            <i class="bi bi-plus-circle-fill"></i> Create New Parent Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Role-based Menu Matrix Info -->
+            <div class="col-lg-6">
+                <div class="card-premium h-100">
+                    <div class="card-header-premium">
+                        <h5 class="fw-bold mb-0"><i class="bi bi-shield-lock-fill me-2 text-indigo"></i>Access matrix by Role</h5>
+                    </div>
+                    <p class="text-muted small">Switch roles in the top-right corner to see the menu dynamically filters:</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center">
+                            <span><strong class="text-indigo">ADMIN</strong></span>
+                            <span class="badge bg-secondary">Dashboard, User Mgmt, Exam Mgmt, System Mgmt</span>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center">
+                            <span><strong class="text-indigo">TEACHER</strong></span>
+                            <span class="badge bg-secondary">Dashboard, Training Mgmt, Exam Mgmt</span>
+                        </li>
+                        <li class="list-group-item px-0 py-2 d-flex justify-content-between align-items-center">
+                            <span><strong class="text-indigo">STUDENT</strong></span>
+                            <span class="badge bg-secondary">Dashboard, Result (Exam), My Courses</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
