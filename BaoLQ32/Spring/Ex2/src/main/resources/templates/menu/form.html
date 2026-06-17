@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(${menu.id == null ? 'Create Menu' : 'Edit Menu'}, ~{::content})}">
+<body>
+    <div th:fragment="content">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card-premium">
+                    <div class="card-header-premium">
+                        <h4 class="fw-bold mb-1" th:text="${menu.id == null ? 'Create Menu' : 'Edit Menu'}">Create Menu</h4>
+                        <a th:href="@{/admin/menus}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+                    
+                    <form th:action="@{/admin/menus/save}" th:object="${menu}" method="post" class="needs-validation" novalidate>
+                        <!-- Hidden ID field for update operations -->
+                        <input type="hidden" th:field="*{id}">
+                        
+                        <div class="row g-3">
+                            <!-- Name -->
+                            <div class="col-md-6">
+                                <label for="name" class="form-label form-label-premium">Menu Name</label>
+                                <input type="text" class="form-control form-control-premium" th:field="*{name}" id="name" placeholder="e.g. Exam Management" required>
+                                <div class="invalid-feedback text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+                            
+                            <!-- URL Target -->
+                            <div class="col-md-6">
+                                <label for="url" class="form-label form-label-premium">Target URL</label>
+                                <input type="text" class="form-control form-control-premium" th:field="*{url}" id="url" placeholder="e.g. /exams (leave empty for folder style)">
+                                <div class="form-text text-muted small">For menus with submenus, you can leave this empty.</div>
+                            </div>
+                            
+                            <!-- Parent Menu Select -->
+                            <div class="col-md-6">
+                                <label for="parent" class="form-label form-label-premium">Parent Menu</label>
+                                <select class="form-select form-control-premium" th:field="*{parent.id}" id="parent">
+                                    <option value="">None (Root Level Menu)</option>
+                                    <option th:each="p : ${possibleParents}" 
+                                            th:value="${p.id}" 
+                                            th:text="${p.name + (p.parent != null ? ' (Sub of ' + p.parent.name + ')' : '')}">
+                                        User Management
+                                    </option>
+                                </select>
+                                <div class="form-text text-muted small">Select a parent menu to convert this into a submenu.</div>
+                            </div>
+                            
+                            <!-- Display Order -->
+                            <div class="col-md-6">
+                                <label for="displayOrder" class="form-label form-label-premium">Display Order</label>
+                                <input type="number" class="form-control form-control-premium" th:field="*{displayOrder}" id="displayOrder" min="0" required>
+                                <div class="form-text text-muted small">Menus will be sorted in ascending order of this value.</div>
+                            </div>
+                            
+                            <!-- Status & Roles Row -->
+                            <div class="col-12 border-top border-bottom py-3 my-3">
+                                <div class="row">
+                                    <!-- Status Toggle -->
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" th:field="*{status}" id="status" checked>
+                                            <label class="form-check-label fw-semibold" for="status">Active (Visible in Sidebar)</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Authorized Roles -->
+                                    <div class="col-md-8">
+                                        <label class="form-label-premium d-block">Authorized Roles</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="roleList" value="ADMIN" id="roleAdmin"
+                                                   th:checked="${menu.roles != null && #strings.contains(menu.roles, 'ADMIN')}">
+                                            <label class="form-check-label" for="roleAdmin"><span class="badge bg-primary">ADMIN</span></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="roleList" value="TEACHER" id="roleTeacher"
+                                                   th:checked="${menu.roles != null && #strings.contains(menu.roles, 'TEACHER')}">
+                                            <label class="form-check-label" for="roleTeacher"><span class="badge bg-success">TEACHER</span></label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="roleList" value="STUDENT" id="roleStudent"
+                                                   th:checked="${menu.roles != null && #strings.contains(menu.roles, 'STUDENT')}">
+                                            <label class="form-check-label" for="roleStudent"><span class="badge bg-warning text-dark">STUDENT</span></label>
+                                        </div>
+                                        <div class="form-text text-muted small mt-1">If no roles are selected, the menu will be visible to everyone.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Icon Input & Picker -->
+                            <div class="col-12">
+                                <label for="icon" class="form-label form-label-premium">Menu Icon (Bootstrap Icon Class)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light text-indigo" id="selected-icon-preview">
+                                        <i th:class="${menu.icon != null && !menu.icon.isEmpty() ? menu.icon : 'bi bi-slash-circle'}"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-premium" th:field="*{icon}" id="icon" placeholder="e.g. bi bi-book" oninput="updateIconPreview(this.value)">
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <label class="form-label-premium d-block text-muted small">Or click an icon below to select it:</label>
+                                    <div class="d-flex flex-wrap gap-2 border rounded p-3 bg-light" style="max-height: 150px; overflow-y: auto;">
+                                        <!-- Sample Icons -->
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-speedometer2" onclick="selectIcon(this)"><i class="bi bi-speedometer2 fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-people" onclick="selectIcon(this)"><i class="bi bi-people fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-mortarboard" onclick="selectIcon(this)"><i class="bi bi-mortarboard fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-person-badge" onclick="selectIcon(this)"><i class="bi bi-person-badge fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-book" onclick="selectIcon(this)"><i class="bi bi-book fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-list-task" onclick="selectIcon(this)"><i class="bi bi-list-task fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-laptop" onclick="selectIcon(this)"><i class="bi bi-laptop fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-building" onclick="selectIcon(this)"><i class="bi bi-building fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-file-earmark-text" onclick="selectIcon(this)"><i class="bi bi-file-earmark-text fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-question-circle" onclick="selectIcon(this)"><i class="bi bi-question-circle fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-pencil-square" onclick="selectIcon(this)"><i class="bi bi-pencil-square fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-award" onclick="selectIcon(this)"><i class="bi bi-award fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-gear" onclick="selectIcon(this)"><i class="bi bi-gear fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-shield-lock" onclick="selectIcon(this)"><i class="bi bi-shield-lock fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-person-gear" onclick="selectIcon(this)"><i class="bi bi-person-gear fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-card-checklist" onclick="selectIcon(this)"><i class="bi bi-card-checklist fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-bell" onclick="selectIcon(this)"><i class="bi bi-bell fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-chat" onclick="selectIcon(this)"><i class="bi bi-chat fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-graph-up" onclick="selectIcon(this)"><i class="bi bi-graph-up fs-5"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary py-2 px-3 icon-picker-btn" data-icon="bi bi-database" onclick="selectIcon(this)"><i class="bi bi-database fs-5"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Form Actions -->
+                            <div class="col-12 mt-4 text-end">
+                                <a th:href="@{/admin/menus}" class="btn btn-light me-2">Cancel</a>
+                                <button type="submit" class="btn btn-premium">
+                                    <i class="bi bi-save2 me-1"></i> Save Menu Configuration
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- JavaScript for Interactive Icon Selector -->
+        <script>
+            function selectIcon(button) {
+                const iconClass = button.getAttribute("data-icon");
+                document.getElementById("icon").value = iconClass;
+                updateIconPreview(iconClass);
+                
+                // Highlight selected button
+                document.querySelectorAll(".icon-picker-btn").forEach(btn => {
+                    btn.classList.replace("btn-secondary", "btn-outline-secondary");
+                });
+                button.classList.replace("btn-outline-secondary", "btn-secondary");
+            }
+            
+            function updateIconPreview(iconClass) {
+                const previewSpan = document.getElementById("selected-icon-preview");
+                if (iconClass && iconClass.trim() !== "") {
+                    previewSpan.innerHTML = `<i class="${iconClass}"></i>`;
+                } else {
+                    previewSpan.innerHTML = `<i class="bi bi-slash-circle"></i>`;
+                }
+            }
+            
+            // On load, try to match current icon input with buttons to highlight
+            document.addEventListener("DOMContentLoaded", () => {
+                const currentVal = document.getElementById("icon").value;
+                if (currentVal) {
+                    const matchedBtn = document.querySelector(`.icon-picker-btn[data-icon="${currentVal}"]`);
+                    if (matchedBtn) {
+                        matchedBtn.classList.replace("btn-outline-secondary", "btn-secondary");
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
