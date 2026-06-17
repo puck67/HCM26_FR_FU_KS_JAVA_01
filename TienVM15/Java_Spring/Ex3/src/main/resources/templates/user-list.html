@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" th:replace="~{layout :: html}">
+<head>
+    <title>User Management - Security System</title>
+</head>
+<body>
+    <div th:fragment="body">
+        
+        <div class="card">
+            <div class="card-title">
+                <span>User Management System</span>
+                <a th:href="@{/users/create}" class="btn btn-primary" style="padding: 8px 16px;">
+                    <i class="bi bi-person-plus-fill"></i> Add New User
+                </a>
+            </div>
+
+            <div class="card-body" style="padding: 0;">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">ID</th>
+                                <th>Username</th>
+                                <th>Full Name</th>
+                                <th>Status</th>
+                                <th>Roles</th>
+                                <th style="width: 280px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="u : ${allUsers}">
+                                <td th:text="${u.id}">1</td>
+                                <td>
+                                    <strong th:text="${u.username}" style="color: #0f172a;">superadmin</strong>
+                                </td>
+                                <td th:text="${u.fullName}">Super Admin</td>
+                                <td>
+                                    <span th:class="'status-badge ' + (${u.status == 'ACTIVE'} ? 'status-active' : 'status-inactive')"
+                                          th:text="${u.status}">ACTIVE</span>
+                                </td>
+                                <td>
+                                    <span th:each="r : ${u.roles}" th:text="${r.name}" class="role-badge" style="margin-right: 5px;">SUPER_ADMIN</span>
+                                </td>
+                                <td>
+                                    <!-- Edit -->
+                                    <a th:href="@{/users/edit/{id}(id=${u.id})}" class="action-link action-edit">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    
+                                    <!-- Delete (except superadmin) -->
+                                    <span th:if="${u.username == 'superadmin'}" style="color: var(--text-muted); font-size: 13px; margin-right: 15px;">
+                                        <i class="bi bi-trash-fill" style="opacity: 0.5;"></i> System
+                                    </span>
+                                    <a th:unless="${u.username == 'superadmin'}" 
+                                       th:href="@{/users/delete/{id}(id=${u.id})}" 
+                                       class="action-link action-delete"
+                                       onclick="return confirm('Are you sure you want to delete this user?');">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+
+                                    <!-- Reset Password -->
+                                    <a th:href="@{/users/reset-password/{id}(id=${u.id})}" 
+                                       class="action-link" 
+                                       style="color: var(--text-muted);"
+                                       onclick="return confirm('Reset this user\'s password to \'password123\'?');">
+                                        <i class="bi bi-arrow-counterclockwise"></i> Reset PW
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

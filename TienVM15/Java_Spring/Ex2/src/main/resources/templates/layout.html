@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Menu Management System</title>
+    <!-- Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- 1. BANNER SECTION -->
+    <header class="banner">
+        <div class="logo-area">
+            <i class="bi bi-menu-app" style="font-size: 28px; color: #ffffff;"></i>
+            <div class="logo-text">
+                <h1>Menu Management System</h1>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Role Switcher Form -->
+            <div class="role-switcher">
+                <span>Active Role:</span>
+                <select onchange="location = this.value;">
+                    <option th:value="@{/switch-role(role='Admin')}" th:selected="${currentRole == 'Admin'}">Admin</option>
+                    <option th:value="@{/switch-role(role='Teacher')}" th:selected="${currentRole == 'Teacher'}">Teacher</option>
+                    <option th:value="@{/switch-role(role='Student')}" th:selected="${currentRole == 'Student'}">Student</option>
+                </select>
+            </div>
+            
+            <i class="bi bi-person-circle" style="font-size: 28px; cursor: pointer;"></i>
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+        <!-- 2. MENU LEFT SECTION (SIDEBAR) -->
+        <aside class="menu-left">
+            <ul class="nav-links">
+                <!-- Dynamically populated menus using th:each -->
+                <th:block th:each="m : ${menus}">
+                    <!-- Check status of menu item -->
+                    <li class="menu-item" th:if="${m.status}">
+                        <!-- Level 1 Menu Link -->
+                        <a th:href="${m.url != '#' ? m.url : 'javascript:void(0)'}" 
+                           th:class="'menu-link' + (${#request.getRequestURI() == m.url} ? ' active' : '')">
+                            <span class="menu-icon-text">
+                                <i th:class="'bi bi-' + ${m.icon != null && m.icon != '' ? m.icon : 'hash'}"></i>
+                                <span th:text="${m.name}">Menu Item</span>
+                            </span>
+                            <i th:if="${not #lists.isEmpty(m.children)}" class="bi bi-chevron-down" style="font-size: 10px;"></i>
+                        </a>
+                        
+                        <!-- Level 2 Submenus -->
+                        <ul class="submenu" th:if="${not #lists.isEmpty(m.children)}">
+                            <th:block th:each="sub : ${m.children}">
+                                <li class="menu-item" th:if="${sub.status}">
+                                    <!-- Level 2 Link -->
+                                    <a th:href="${sub.url != '#' ? sub.url : 'javascript:void(0)'}" 
+                                       th:class="'menu-link' + (${#request.getRequestURI() == sub.url} ? ' active' : '')">
+                                        <span class="menu-icon-text">
+                                            <i th:class="'bi bi-' + ${sub.icon != null && sub.icon != '' ? sub.icon : 'circle-fill'}"></i>
+                                            <span th:text="${sub.name}">Sub Item</span>
+                                        </span>
+                                        <i th:if="${not #lists.isEmpty(sub.children)}" class="bi bi-chevron-down" style="font-size: 10px;"></i>
+                                    </a>
+                                    
+                                    <!-- Level 3 Sub-submenus (Bonus) -->
+                                    <ul class="sub-submenu" th:if="${not #lists.isEmpty(sub.children)}">
+                                        <th:block th:each="subsub : ${sub.children}">
+                                            <li class="menu-item" th:if="${subsub.status}">
+                                                <!-- Level 3 Link -->
+                                                <a th:href="${subsub.url != '#' ? subsub.url : 'javascript:void(0)'}" 
+                                                   th:class="'menu-link' + (${#request.getRequestURI() == subsub.url} ? ' active' : '')">
+                                                    <span class="menu-icon-text">
+                                                        <i th:class="'bi bi-' + ${subsub.icon != null && subsub.icon != '' ? subsub.icon : 'circle'}"></i>
+                                                        <span th:text="${subsub.name}">Sub-Sub Item</span>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </th:block>
+                
+                <!-- System Config (only visible to Admin) -->
+                <li class="menu-item" style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 15px;" th:if="${currentRole == 'Admin'}">
+                    <a th:href="@{/menus}" th:class="'menu-link' + (${#request.getRequestURI() == '/menus'} ? ' active' : '')">
+                        <span class="menu-icon-text">
+                            <i class="bi bi-gear-fill"></i>
+                            <span>Menu Configuration</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- 3. BODY SECTION -->
+        <main class="body-content">
+            <div th:replace="~{:: body}">
+                <!-- Content will be injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 4. FOOTER SECTION -->
+    <footer class="main-footer">
+        <div class="footer-text">&copy; 2026 - Dynamic Menu Management System. All rights reserved.</div>
+    </footer>
+
+</body>
+</html>

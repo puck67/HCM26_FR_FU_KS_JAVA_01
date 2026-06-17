@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CourseShare Portal</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <a th:href="@{/}" class="brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                CourseShare
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a th:href="@{/}" th:classappend="${activePage == 'home'} ? 'active'">Home</a></li>
+                <li><a th:href="@{/reviews}" th:classappend="${activePage == 'reviews'} ? 'active'">Recent Reviews</a></li>
+                
+                <!-- If Logged In as Instructor -->
+                <li sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                    <a th:href="@{/instructor/dashboard}" th:classappend="${activePage == 'dashboard'} ? 'active'">Dashboard</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                    <a th:href="@{/instructor/courses}" th:classappend="${activePage == 'courses'} ? 'active'">Manage Courses</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                    <a th:href="@{/instructor/reviews}" th:classappend="${activePage == 'manage-reviews'} ? 'active'">Approve Reviews</a>
+                </li>
+                <li sec:authorize="hasRole('ROLE_INSTRUCTOR')">
+                    <a th:href="@{/logout}" class="btn-login" style="background: var(--danger); box-shadow: none;">Logout</a>
+                </li>
+                
+                <!-- If Not Logged In -->
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="btn-login">Instructor Login</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Content Area -->
+    <main>
+        <div th:replace="${content}"></div>
+    </main>
+</body>
+</html>

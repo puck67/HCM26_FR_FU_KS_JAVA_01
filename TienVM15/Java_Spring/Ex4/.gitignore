@@ -1,0 +1,16 @@
+# Maven build output
+target/
+
+# Eclipse / VS Code Java compiler build output
+bin/
+db/
+# Local VS Code settings
+.vscode/
+
+# Ignore physical file uploads folder
+uploads/
+
+# Temporary and OS-specific files
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" th:replace="~{layout :: html}">
+<head>
+    <title>Dashboard - Security System</title>
+</head>
+<body>
+    <div th:fragment="body">
+        
+        <div class="welcome-container">
+            <h2 class="welcome-title">WELCOME, <span sec:authentication="name" style="color: var(--accent-blue-hover);">User</span>!</h2>
+            <p class="welcome-subtitle">You have successfully logged into the Security Management System. Your roles and permissions are configured dynamically.</p>
+            <div style="margin-top: 15px;">
+                <span class="user-role-badge" style="font-size: 14px; padding: 6px 16px;">
+                    Role Authority: 
+                    <span sec:authorize="hasRole('SUPER_ADMIN')">SUPER_ADMIN</span>
+                    <span sec:authorize="hasRole('ADMIN') and !hasRole('SUPER_ADMIN')">ADMIN</span>
+                    <span sec:authorize="hasRole('TEACHER') and !hasRole('ADMIN') and !hasRole('SUPER_ADMIN')">TEACHER</span>
+                </span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
