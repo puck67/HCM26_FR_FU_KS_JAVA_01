@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('Login')}"></head>
+<body>
+    <header th:replace="~{layout/fragments :: header('')}"></header>
+
+    <main class="main-container">
+        <div style="max-width: 450px; margin: 3rem auto; width: 100%;">
+            <div class="card">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <i class="fa-solid fa-lock" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+                    <h2 style="font-size: 1.5rem; font-weight: 700;">Instructor Login</h2>
+                    <p class="text-secondary" style="font-size: 0.9rem;">Sign in to manage courses and reviews</p>
+                </div>
+
+                <!-- Error message -->
+                <div th:if="${param.error}" class="alert alert-danger">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>Invalid username or password.</span>
+                </div>
+
+                <!-- Logout message -->
+                <div th:if="${param.logout}" class="alert alert-success">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>You have been successfully logged out.</span>
+                </div>
+
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="username"><i class="fa-solid fa-user"></i> Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required autofocus />
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 2rem;">
+                        <label for="password"><i class="fa-solid fa-key"></i> Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required />
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 0.75rem;">Login</button>
+                </form>
+                
+                <div style="margin-top: 1.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                    <p>Demo Credentials: <strong>instructor</strong> / <strong>password</strong></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

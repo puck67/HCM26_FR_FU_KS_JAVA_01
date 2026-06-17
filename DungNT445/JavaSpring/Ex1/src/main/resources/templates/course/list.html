@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(bannerTitle='Banner')}">
+<head>
+    <title>Quản lý Khóa học</title>
+</head>
+<body>
+    <div th:fragment="content">
+        
+        <!-- Alerts -->
+        <div th:if="${successMessage}" class="alert-custom-success">
+            ✔ <span th:text="${successMessage}">Thành công!</span>
+        </div>
+        <div th:if="${errorMessage}" class="alert-custom-danger">
+            ✖ <span th:text="${errorMessage}">Lỗi!</span>
+        </div>
+
+        <!-- Courses Table Box -->
+        <div class="table-container-box">
+            <div class="box-header">
+                <h5>Courses Management</h5>
+                <a th:href="@{/courses/new}" class="btn-custom-save" style="text-decoration: none; font-size: 13px; padding: 4px 12px;">Add Course</a>
+            </div>
+            <div class="box-body" style="padding: 0;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Course ID</th>
+                            <th>Start Date</th>
+                            <th>Course Name</th>
+                            <th>Category</th>
+                            <th>Instructor</th>
+                            <th>Lessons</th>
+                            <th style="width: 180px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through courses -->
+                        <tr th:each="course : ${courses}">
+                            <td th:text="${course.id.courseCode}">CRS101</td>
+                            <td th:text="${#temporals.format(course.id.startDate, 'dd/MM/yyyy')}">15/10/2023</td>
+                            <td th:text="${course.courseName}">Java Web Development</td>
+                            <td th:text="${course.category}">Technology</td>
+                            <td th:text="${course.instructor}">Dr. Nguyen Van A</td>
+                            <td th:text="${course.lessons.size()}">3</td>
+                            <td class="action-links">
+                                <a th:href="@{/courses/{code}/{date}/lessons(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')})}">Lessons</a>
+                                <a th:href="@{/courses/delete/{code}/{date}(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')})}"
+                                   class="delete-btn-link"
+                                   onclick="return confirm('Bạn có chắc chắn muốn xóa khóa học này cùng toàn bộ bài học liên quan?')">Delete</a>
+                            </td>
+                        </tr>
+                        <!-- Empty State -->
+                        <tr th:if="${courses.isEmpty()}">
+                            <td colspan="7" style="text-align: center; padding: 20px; color: #777;">
+                                Chưa có khóa học nào được tạo.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

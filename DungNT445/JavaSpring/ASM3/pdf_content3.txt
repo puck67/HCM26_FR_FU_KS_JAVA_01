@@ -1,0 +1,118 @@
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+S p r i n g  F r a m e w o r k 
+Training Assignment  
+ 
+Document Code 25e-BM/HR/HDCV/FSOFT 
+Version 1.1 
+Effective Date 20/11/2020 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Hanoi, 11/2020 
+
+Training Assignments           Spring framework           Issue/Revision: 0/1 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 2/5 
+ 
+RECORD OF CHANGES 
+ 
+No Effective Date Change Description Reason Reviewer Approver 
+1  01/May/2019 Create a new assignment Create new DieuNT1 VinhNV 
+2  10/Jul/2019 Update: rename Update DieuNT1 VinhNV 
+      
+      
+      
+      
+      
+      
+      
+      
+ 
+  
+Training Assignments           Spring framework           Issue/Revision: 0/1 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 3/5 
+ 
+Contents 
+Unit 1: Spring Core ............................................................................................................................................. 4 
+Objectives: .................................................................................................................................................. 4 
+Problem Descriptions: ................................................................................................................................ 4 
+Technical Requirements: ............................................................................................................................ 5 
+ 
+ 
+ 
+  
+  
+Training Assignments           Spring framework           Issue/Revision: 0/1 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 4/5 
+ 
+ 
+CODE  : JSFW_M_A101 
+TYPE  : MEDIUM 
+LOC  : N/A 
+DURATION : 120 minutes 
+Unit 1: Spring Framework Core 
+Objectives: 
+After finishing the following exercises, trainees will: 
+1. Understand and practice with OOP, IO 
+2. Understand and practice with Spring core (IoC, DI) 
+Problem Descriptions: 
+We are beginning to build our Learning Management System (LMS). This task involves creating the 
+core Course entity and a service to save/load course data from a file, all managed by the Spring container.  
+Task 1: Create the Course Entity 
+Write a class named Course.java in the model package that implements Serializable and has: 
+1. Four attributes: String title, String instructorName, String description, int durationHours. 
+2. One constructor with all attributes as parameters. 
+3. One function: void displayInfo(). For example: The course "Spring Framework" will print: [Course: 
+Spring Framework] by John Doe (40 hours): Learn Spring Core, MVC, and Boot.  
+4. Override the toString() method as follows: 
+ 
+ 
+ 
+ 
+ 
+Task 2: Create the CourseService 
+Write a class named CourseService.java in the service package that has: 
+a. Function void saveCourses(List<Course> courses): This will save the list of courses passed in the 
+parameter to a file named courses.dat.  
+(Hint: Use ObjectOutputStream).  
+b. Function List<Course> getCourses(): This will read the courses.dat file and return its content as a 
+List<Course>.  
+(Hint: Use ObjectInputStream). 
+Task 3: Create the Test Class 
+Write a class named Test.java in the main package that has: 
+a. Attribute: CourseService courseService;  
+b. A main method, where you should:  
+• Create a list of Course objects (e.g., 2-3 courses).  
+• Call the saveCourses() method from courseService to save this list to the file.  
+@Override 
+public String toString() { 
+    return "Course [title=" + title + ", instructor=" + instructorName + ", duration=" + durationHours + "]";  
+} 
+ 
+Training Assignments           Spring framework           Issue/Revision: 0/1 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 5/5 
+ 
+• Call the getCourses() method from courseService to get the list of saved courses.  
+• Loop through the retrieved list and call the displayInfo() method for each course.  
+Note: You must configure Spring to create a bean for the CourseService class and inject that bean into the 
+courseService attribute of the Test.java class (using either XML configuration or Annotation -based 
+configuration). 
+Technical Requirements: 
+• JDK 1.8 + 
+• Maven 3 + 
+• Spring Framework Core 
+-- THE END -- 

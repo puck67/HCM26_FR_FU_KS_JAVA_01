@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head(${course.title})}"></head>
+<body>
+    <header th:replace="~{layout/fragments :: header('')}"></header>
+
+    <main class="main-container has-sidebar">
+        <section class="content-section">
+            <!-- Alert message -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span th:text="${successMessage}">Success!</span>
+            </div>
+
+            <!-- Course Details Card -->
+            <article class="card" style="margin-bottom: 2rem;">
+                <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                    <h1 style="font-size: 2rem; margin-bottom: 0.5rem;" th:text="${course.title}">Course Title</h1>
+                    <div class="course-meta">
+                        <span><i class="fa-solid fa-calendar-days"></i> <span th:text="${#temporals.format(course.createdAt, 'dd MMM yyyy')}">Date</span></span>
+                        <span><i class="fa-solid fa-tags"></i> <span th:text="${course.category}">Category</span></span>
+                    </div>
+                </div>
+                <div class="markdown-body" th:utext="${renderedContent}">
+                    Full course content.
+                </div>
+            </article>
+
+            <!-- Reviews Section -->
+            <section class="reviews-section" style="margin-bottom: 2rem;">
+                <h2 class="widget-title" style="font-size: 1.3rem; border: none; padding: 0; margin-bottom: 1rem;">
+                    <i class="fa-solid fa-comments"></i> Student Reviews (<span th:text="${approvedReviews.size()}">0</span>)
+                </h2>
+                
+                <div th:if="${approvedReviews.empty}" class="card" style="margin-bottom: 1.5rem;">
+                    <p class="text-secondary" style="text-align: center;">No approved reviews yet. Be the first to review!</p>
+                </div>
+
+                <div th:each="rev : ${approvedReviews}" class="card" style="margin-bottom: 1rem; background-color: var(--bg-tertiary);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <h4 th:text="${rev.authorName}" style="font-weight: 600;">Author Name</h4>
+                        <div class="review-stars">
+                            <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                               th:class="${star <= rev.rating} ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+                        </div>
+                    </div>
+                    <p class="text-secondary" th:text="${rev.content}">Review body.</p>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        Posted on <span th:text="${#temporals.format(rev.createdAt, 'dd MMM yyyy')}">Date</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Submit Review Form Card -->
+            <section id="review-form" class="card">
+                <h3 style="font-size: 1.2rem; margin-bottom: 1.25rem; font-weight: 600;">
+                    <i class="fa-solid fa-pen-to-square"></i> Write a Review
+                </h3>
+                <form th:action="@{/courses/{id}/reviews(id=${course.id})}" th:object="${review}" method="post">
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="rating-input">
+                            <input type="radio" id="star5" name="rating" value="5" th:field="*{rating}" />
+                            <label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star4" name="rating" value="4" th:field="*{rating}" />
+                            <label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star3" name="rating" value="3" th:field="*{rating}" />
+                            <label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star2" name="rating" value="2" th:field="*{rating}" />
+                            <label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star1" name="rating" value="1" th:field="*{rating}" />
+                            <label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
+                        </div>
+                        <div class="error-message" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}">Rating error</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="authorName">Your Name</label>
+                        <input type="text" id="authorName" th:field="*{authorName}" class="form-control" placeholder="Enter your name" required />
+                        <div class="error-message" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}">Name error</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="your.email@example.com" required />
+                        <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Review Content</label>
+                        <textarea id="content" th:field="*{content}" class="form-control" rows="4" placeholder="Share your experience with this course..." required></textarea>
+                        <div class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">Submit Review</button>
+                </form>
+            </section>
+        </section>
+
+        <!-- Sidebar -->
+        <aside th:replace="~{layout/fragments :: sidebar}"></aside>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

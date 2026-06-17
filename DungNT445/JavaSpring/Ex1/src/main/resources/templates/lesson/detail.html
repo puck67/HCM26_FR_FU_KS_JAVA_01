@@ -1,83 +1,199 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html(bannerTitle='Banner - Lesson Detail')}">
 <head>
-    <title>Lesson Detail</title>
+    <title>Chi tiết Bài học</title>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="summary-box">
-            <h4>Course Summary</h4>
-            Mã khóa học / Course ID: <span th:text="${course.courseCode}"></span><br>
-            Ngày khai giảng / Start Date: <span th:text="${course.startDate}"></span>
+    <div th:fragment="content">
+        
+        <!-- Success and Error Alerts -->
+        <div th:if="${successMessage}" class="alert-custom-success">
+            ✔ <span th:text="${successMessage}">Thành công!</span>
+        </div>
+        <div th:if="${errorMessage}" class="alert-custom-danger">
+            ✖ <span th:text="${errorMessage}">Lỗi!</span>
         </div>
 
-        <div style="border: 1px solid #ced4da; padding: 20px; border-radius: 4px; position: relative;">
-            <h3 style="color: #dc3545; position: absolute; right: 20px; top: 10px;">Chức năng 3.2: Chi tiết Bài học</h3>
-            <h4>Add/Edit Lesson Detail</h4>
-            <form th:action="@{/courses/{code}/{date}/lessons(code=${course.courseCode}, date=${course.startDate})}" th:object="${lesson}" method="post">
-                <input type="hidden" th:field="*{id}">
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Tên bài học / Lesson Name</label>
-                        <input type="text" class="form-control" th:field="*{lessonName}" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Thời lượng / Duration (mins)</label>
-                        <input type="number" class="form-control" th:field="*{duration}" required>
-                    </div>
+        <!-- 1. Course Summary Box -->
+        <div class="course-summary-box">
+            <div class="summary-header">
+                Course Summary
+            </div>
+            <div class="summary-body">
+                <div class="summary-item">
+                    <strong>Mã khóa học / Course ID:</strong> <span th:text="${course.id.courseCode}">CRS101</span>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Loại nội dung / Content Type</label>
-                        <select class="form-control" th:field="*{contentType}">
-                            <option value="Video">Video</option>
-                            <option value="Lý thuyết">Lý thuyết</option>
-                            <option value="Thực hành">Thực hành</option>
-                            <option value="Document">Document</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Trạng thái / Status</label>
-                        <select class="form-control" th:field="*{status}">
-                            <option value="Bản nháp">Bản nháp (Draft)</option>
-                            <option value="Đang mở">Đang mở (Active)</option>
-                            <option value="Đã khóa">Đã khóa (Inactive)</option>
-                        </select>
-                    </div>
+                <div class="summary-item">
+                    <strong>Ngày khai giảng / Start Date:</strong> <span th:text="${#temporals.format(course.id.startDate, 'dd/MM/yyyy')}">15/10/2023</span>
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Save Lesson</button>
-                <a th:href="@{/courses/{code}/{date}/lessons(code=${course.courseCode}, date=${course.startDate})}" class="btn btn-secondary">Cancel</a>
-            </form>
+            </div>
         </div>
 
-        <h3 style="margin-top: 30px;">List of Lessons for <span th:text="${course.courseCode}"></span></h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Lesson Name</th>
-                    <th>Duration</th>
-                    <th>Content Type</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="l : ${lessons}">
-                    <td th:text="${l.id}"></td>
-                    <td th:text="${l.lessonName}"></td>
-                    <td th:text="${l.duration}"></td>
-                    <td th:text="${l.contentType}"></td>
-                    <td th:text="${l.status}"></td>
-                    <td>
-                        <a th:href="@{/courses/{code}/{date}/lessons/{lessonId}/edit(code=${course.courseCode}, date=${course.startDate}, lessonId=${l.id})}" class="action-link">Edit</a> / 
-                        <a th:href="@{/courses/{code}/{date}/lessons/{lessonId}/delete(code=${course.courseCode}, date=${course.startDate}, lessonId=${l.id})}" class="action-link delete" onclick="return confirm('Do you want to delete this lesson?');">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <!-- 2. Add/Edit Lesson Detail Form -->
+        <div class="form-container-box">
+            <div class="box-header">
+                Add/Edit Lesson Detail
+            </div>
+            <div class="box-body">
+                <form th:action="@{/courses/{code}/{date}/lessons/save(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')})}" 
+                      th:object="${lesson}" 
+                      method="post">
+                    
+                    <!-- Hidden ID input for editing -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- Lesson Name -->
+                    <div class="form-group">
+                        <label for="lessonName">Tên bài học / Lesson Name</label>
+                        <input type="text" 
+                               id="lessonName"
+                               th:field="*{lessonName}" 
+                               class="form-control" 
+                               required>
+                        <div style="color: red; font-size: 12px; margin-top: 4px;" th:if="${#fields.hasErrors('lessonName')}" th:errors="*{lessonName}">Lỗi tên</div>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="form-group">
+                        <label for="duration">Thời lượng / Duration (min)</label>
+                        <input type="number" 
+                               id="duration"
+                               th:field="*{duration}" 
+                               class="form-control" 
+                               min="1"
+                               required>
+                        <div style="color: red; font-size: 12px; margin-top: 4px;" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}">Lỗi thời lượng</div>
+                    </div>
+
+                    <!-- Content Type -->
+                    <div class="form-group">
+                        <label for="contentType">Loại nội dung / Content Type</label>
+                        <select id="contentType" th:field="*{contentType}" class="form-select" required>
+                            <option value="" disabled selected>-- Chọn loại nội dung --</option>
+                            <option th:each="type : ${T(com.lms.enums.ContentType).values()}"
+                                    th:value="${type}"
+                                    th:text="${type.displayName}">Video</option>
+                        </select>
+                        <div style="color: red; font-size: 12px; margin-top: 4px;" th:if="${#fields.hasErrors('contentType')}" th:errors="*{contentType}">Lỗi loại nội dung</div>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-group">
+                        <label for="status">Trạng thái / Status</label>
+                        <select id="status" th:field="*{status}" class="form-select" required>
+                            <option value="" disabled selected>-- Chọn trạng thái --</option>
+                            <option th:each="st : ${T(com.lms.enums.LessonStatus).values()}"
+                                    th:value="${st}"
+                                    th:text="${st.displayName}">Active</option>
+                        </select>
+                        <div style="color: red; font-size: 12px; margin-top: 4px;" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Lỗi trạng thái</div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn-custom-save">Save Lesson</button>
+                        <a th:href="@{/courses/{code}/{date}/lessons(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')})}" 
+                           class="btn-custom-cancel">Cancel</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. List of Lessons Table -->
+        <div class="table-container-box">
+            <div class="box-header">
+                <h5>List of Lessons for <span th:text="${course.id.courseCode}">CRS101</span></h5>
+                <span class="right-text">Lesson Detail Detail Screen</span>
+            </div>
+            <div class="box-body" style="padding: 0;">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 60px;">ID</th>
+                            <th>Lesson Name</th>
+                            <th>Duration (min)</th>
+                            <th>Content Type</th>
+                            <th>Status</th>
+                            <th style="width: 150px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loop through lessons -->
+                        <tr th:each="les, iter : ${lessons}">
+                            <td th:text="${iter.count}">1</td>
+                            <td th:text="${les.lessonName}">Intro to Java</td>
+                            <td th:text="${les.duration}">60</td>
+                            <td th:text="${les.contentType != null ? les.contentType.displayName : ''}">Video</td>
+                            <td th:text="${les.status != null ? les.status.displayName : ''}">Active</td>
+                            <td class="action-links">
+                                <!-- Edit button -->
+                                <a th:href="@{/courses/{code}/{date}/lessons/edit/{id}(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')},id=${les.id})}">Edit</a>
+                                <!-- Delete button triggers custom modal -->
+                                <button type="button" 
+                                        class="delete-btn-link delete-btn" 
+                                        th:data-delete-url="@{/courses/{code}/{date}/lessons/delete/{id}(code=${course.id.courseCode},date=${#temporals.format(course.id.startDate, 'yyyy-MM-dd')},id=${les.id})}">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- Empty State -->
+                        <tr th:if="${lessons.isEmpty()}">
+                            <td colspan="6" style="text-align: center; padding: 20px; color: #777;">
+                                Chưa có bài học nào được tạo cho khóa học này.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. Custom Delete Confirmation Modal Overlay -->
+        <div class="modal-overlay" id="deleteConfirmModal" style="display: none;">
+            <div class="modal-simple-box">
+                <div class="modal-header">
+                    Confirm Delete
+                </div>
+                <div class="modal-body">
+                    Do you want to delete this lesson?
+                </div>
+                <div class="modal-footer">
+                    <a id="confirmDeleteLink" href="#" class="btn-modal-yes">Yes</a>
+                    <button type="button" id="cancelModalBtn" class="btn-modal-no">No</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS for Custom Modal -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                const modal = document.getElementById('deleteConfirmModal');
+                const confirmDeleteLink = document.getElementById('confirmDeleteLink');
+                const cancelBtn = document.getElementById('cancelModalBtn');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const deleteUrl = this.getAttribute('data-delete-url');
+                        confirmDeleteLink.setAttribute('href', deleteUrl);
+                        modal.style.display = 'flex';
+                    });
+                });
+
+                cancelBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+                
+                // Hide modal when clicking outside of the simple box
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+
     </div>
 </body>
 </html>
