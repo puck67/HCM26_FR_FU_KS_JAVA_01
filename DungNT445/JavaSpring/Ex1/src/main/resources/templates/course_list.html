@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::#course-list-content})}">
+<head>
+    <title>Quản lý Khóa học - LMS</title>
+</head>
+<body>
+    <div id="course-list-content">
+        <div class="page-card">
+            <div class="card-header">
+                <h2 class="card-title"><i class="fa-solid fa-graduation-cap"></i> Courses Management</h2>
+                <a th:href="@{/courses/new}" class="btn btn-primary"><i class="fa-solid fa-plus" style="margin-right: 0.5rem;"></i> Add new Course</a>
+            </div>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã khóa học</th>
+                            <th>Ngày khai giảng</th>
+                            <th>Tên khóa học</th>
+                            <th>Chuyên ngành</th>
+                            <th>Giảng viên</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${courses}">
+                            <td th:text="${c.course_code}" style="font-weight: 600;">CRS101</td>
+                            <td th:text="${#dates.format(c.start_date, 'dd/MM/yyyy')}">15/10/2023</td>
+                            <td th:text="${c.course_name}">Java Web Development</td>
+                            <td th:text="${c.category}">Technology</td>
+                            <td th:text="${c.instructor}">Dr. Nguyen Van A</td>
+                            <td class="action-links">
+                                <a th:href="@{/courses/{code}/{date}/lessons(code=${c.course_code}, date=${#dates.format(c.start_date, 'yyyy-MM-dd')})}" class="action-link">
+                                    <i class="fa-solid fa-list-check"></i> Lessons Details
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(courses)}">
+                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Chưa có khóa học nào được đăng ký.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

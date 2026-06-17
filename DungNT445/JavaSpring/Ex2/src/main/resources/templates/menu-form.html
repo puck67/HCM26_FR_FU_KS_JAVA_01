@@ -1,63 +1,348 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Menu Form')}"></head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(content=~{::section})}">
 <body>
-<div class="d-flex">
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+<section>
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h5 class="fw-bold mb-1" th:text="${menuRequest.id != null ? 'Edit Menu Item' : 'New Menu Item'}">Create Menu</h5>
+        <p class="text-muted small" th:text="${menuRequest.id != null ? 'Modify details of an existing menu item.' : 'Create a new navigation menu item in the database hierarchy.'}"></p>
+    </div>
 
-    <div class="flex-grow-1 p-4 bg-light w-100">
-        <h2 class="mb-4" th:text="${menu.id == null ? 'Create Menu' : 'Edit Menu'}">Edit Menu</h2>
+    <!-- Form Card -->
+    <div class="card border-0 shadow-sm max-width-md">
+        <div class="card-body p-4">
+            <form th:action="${menuRequest.id != null ? '/admin/menus/edit' : '/admin/menus/new'}" 
+                  th:object="${menuRequest}" 
+                  method="post" 
+                  class="needs-validation" 
+                  novalidate>
+                
+                <!-- Hidden ID field for updates -->
+                <input type="hidden" th:if="${menuRequest.id != null}" th:field="*{id}" />
 
-        <div class="card">
-            <div class="card-body">
-                <form th:action="@{/menus/save}" th:object="${menu}" method="post">
-                    <input type="hidden" th:field="*{id}">
-                    
-                    <div class="mb-3">
-                        <label class="form-label">Menu Name</label>
-                        <input type="text" class="form-control" th:field="*{name}" required>
+                <!-- Name Input -->
+                <div class="mb-3">
+                    <label for="name" class="form-label fw-semibold">Menu Name <span class="text-danger">*</span></label>
+                    <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="e.g. Student Management" required>
+                    <div class="invalid-feedback">Please enter a menu name.</div>
+                </div>
+
+                <!-- URL Input -->
+                <div class="mb-3">
+                    <label for="url" class="form-label fw-semibold">URL Path</label>
+                    <input type="text" id="url" th:field="*{url}" class="form-control" placeholder="e.g. /students (Leave blank for parent/header menus)">
+                    <div class="form-text">Menus with submenus usually have a blank URL path.</div>
+                </div>
+
+                <!-- Icon Input -->
+                <div class="mb-3">
+                    <label for="icon" class="form-label fw-semibold">Icon Class</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light" id="icon-preview"><i class="bi bi-tag-fill"></i></span>
+                        <input type="text" id="icon" th:field="*{icon}" class="form-control" placeholder="e.g. bi bi-person-fill">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#iconPickerModal">
+                            <i class="bi bi-grid-3x3-gap"></i> Browse Icons
+                        </button>
                     </div>
+                    <div class="form-text">Supports Bootstrap Icons class names. Click "Browse Icons" to search and pick from the library.</div>
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">URL</label>
-                        <input type="text" class="form-control" th:field="*{url}" placeholder="/dashboard">
+                <!-- Parent Menu Dropdown -->
+                <div class="mb-3">
+                    <label for="parentId" class="form-label fw-semibold">Parent Menu</label>
+                    <select id="parentId" th:field="*{parentId}" class="form-select">
+                        <option value="">-- No Parent (Root Level Menu) --</option>
+                        <option th:each="p : ${allMenus}" 
+                                th:if="${menuRequest.id == null || p.id != menuRequest.id}" 
+                                th:value="${p.id}" 
+                                th:text="${p.name}">
+                            Parent Menu Name
+                        </option>
+                    </select>
+                    <div class="form-text">Select which parent folder/header this submenu belongs to.</div>
+                </div>
+
+                <!-- Display Order Input -->
+                <div class="mb-3">
+                    <label for="displayOrder" class="form-label fw-semibold">Display Order <span class="text-danger">*</span></label>
+                    <input type="number" id="displayOrder" th:field="*{displayOrder}" class="form-control" min="0" placeholder="e.g. 1" required>
+                    <div class="form-text">Determines the sort order among peer menus (ascending).</div>
+                </div>
+
+                <!-- Status Input -->
+                <div class="mb-3">
+                    <label for="status" class="form-label fw-semibold">Status <span class="text-danger">*</span></label>
+                    <select id="status" th:field="*{status}" class="form-select" required>
+                        <option th:value="true">Active (Visible in sidebar)</option>
+                        <option th:value="false">Inactive (Hidden from sidebar)</option>
+                    </select>
+                </div>
+
+                <!-- Roles Input -->
+                <div class="mb-4">
+                    <label for="roles" class="form-label fw-semibold">Allowed Roles</label>
+                    <input type="text" id="roles" th:field="*{roles}" class="form-control" placeholder="e.g. ADMIN,TEACHER (Comma-separated)">
+                    <div class="form-text mb-2">Specify which user roles can see this menu. Leave empty for all logged-in users.</div>
+                    <div class="d-flex gap-1">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="appendRole('ADMIN')">+ Admin</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="appendRole('TEACHER')">+ Teacher</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="appendRole('STUDENT')">+ Student</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="clearRoles()">Clear</button>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label class="form-label">Icon (Bootstrap Icon Class)</label>
-                        <input type="text" class="form-control" th:field="*{icon}" placeholder="bi-house">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Parent Menu</label>
-                        <select class="form-select" th:field="*{parent.id}">
-                            <option value="">-- No Parent (Root Menu) --</option>
-                            <option th:each="p : ${allMenus}" 
-                                    th:if="${p.id != menu.id}" 
-                                    th:value="${p.id}" 
-                                    th:text="${p.name}"></option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Display Order</label>
-                        <input type="number" class="form-control" th:field="*{displayOrder}" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" th:field="*{status}" id="statusCheck">
-                            <label class="form-check-label" for="statusCheck">Active Status</label>
+                <!-- Submit / Cancel -->
+                <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                    <a th:href="@{/admin/menus}" class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle me-1"></i> Save Menu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>    <!-- Icon Picker Modal -->
+    <div class="modal fade" id="iconPickerModal" tabindex="-1" aria-labelledby="iconPickerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="iconPickerModalLabel">
+                        <i class="bi bi-grid-3x3-gap-fill text-primary me-2"></i> Browse Icon Library
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Search Input -->
+                    <div class="mb-4">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+                            <input type="text" id="iconSearchInput" class="form-control border-start-0 ps-0" placeholder="Search icons by name, category, or keyword..." oninput="filterIcons()">
                         </div>
                     </div>
+                    
+                    <!-- Icon Categories -->
+                    <div class="d-flex gap-2 mb-3 flex-wrap">
+                        <button type="button" class="btn btn-sm btn-secondary category-filter active" onclick="filterCategory('All')">All</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary category-filter" onclick="filterCategory('General')">General</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary category-filter" onclick="filterCategory('People')">People & Roles</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary category-filter" onclick="filterCategory('Education')">Education</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary category-filter" onclick="filterCategory('Data')">Files & Data</button>
+                    </div>
 
-                    <button type="submit" class="btn btn-primary">Save Menu</button>
-                    <a th:href="@{/menus}" class="btn btn-secondary">Cancel</a>
-                </form>
+                    <!-- Icons Grid -->
+                    <div class="row g-2" id="iconsGrid">
+                        <!-- Dynamic icons injected here -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom CSS for Icon Picker -->
+    <style>
+        .icon-item {
+            cursor: pointer;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            background-color: #fff;
+        }
+        .icon-item:hover {
+            background-color: #1e293b;
+            color: #fff;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .icon-item i {
+            font-size: 1.5rem;
+        }
+    </style>
+
+    <!-- JavaScript to aid form actions -->
+    <script>
+        // Role management helpers
+        function appendRole(roleName) {
+            const input = document.getElementById('roles');
+            let val = input.value.trim();
+            if (val === '') {
+                input.value = roleName;
+            } else {
+                const roles = val.split(',').map(r => r.trim());
+                if (!roles.includes(roleName)) {
+                    roles.push(roleName);
+                    input.value = roles.join(',');
+                }
+            }
+        }
+
+        function clearRoles() {
+            document.getElementById('roles').value = '';
+        }
+
+        // Icon Library definition
+        const iconsList = [
+            // General
+            { class: "bi bi-speedometer2", label: "Dashboard", category: "General" },
+            { class: "bi bi-house", label: "Home", category: "General" },
+            { class: "bi bi-gear", label: "Settings", category: "General" },
+            { class: "bi bi-wrench", label: "Tools", category: "General" },
+            { class: "bi bi-shield-lock", label: "Security", category: "General" },
+            { class: "bi bi-bell", label: "Notifications", category: "General" },
+            { class: "bi bi-search", label: "Search", category: "General" },
+            { class: "bi bi-list", label: "List", category: "General" },
+            { class: "bi bi-info-circle", label: "Info", category: "General" },
+            { class: "bi bi-question-circle", label: "Help", category: "General" },
+            { class: "bi bi-compass", label: "Compass", category: "General" },
+            { class: "bi bi-layers-half", label: "Layers", category: "General" },
+            
+            // People
+            { class: "bi bi-people", label: "Users Group", category: "People" },
+            { class: "bi bi-person", label: "User", category: "People" },
+            { class: "bi bi-person-fill", label: "User Solid", category: "People" },
+            { class: "bi bi-person-badge", label: "Badge / Role", category: "People" },
+            { class: "bi bi-person-workspace", label: "Teacher / Workspace", category: "People" },
+            { class: "bi bi-mortarboard", label: "Student / Education", category: "People" },
+            { class: "bi bi-person-check", label: "Approved User", category: "People" },
+            { class: "bi bi-person-x", label: "Blocked User", category: "People" },
+            { class: "bi bi-person-plus", label: "Add User", category: "People" },
+            { class: "bi bi-person-lines-fill", label: "Directory", category: "People" },
+            
+            // Education
+            { class: "bi bi-book", label: "Book", category: "Education" },
+            { class: "bi bi-journal-bookmark", label: "Journal", category: "Education" },
+            { class: "bi bi-laptop", label: "Course / Online", category: "Education" },
+            { class: "bi bi-globe", label: "Global / Web", category: "Education" },
+            { class: "bi bi-building", label: "Offline / Classroom", category: "Education" },
+            { class: "bi bi-calculator", label: "Math", category: "Education" },
+            { class: "bi bi-award", label: "Certificate", category: "Education" },
+            { class: "bi bi-calendar3", label: "Schedule", category: "Education" },
+            { class: "bi bi-briefcase", label: "Job / Practice", category: "Education" },
+            { class: "bi bi-graph-up-arrow", label: "Statistics", category: "Education" },
+            
+            // Data
+            { class: "bi bi-folder", label: "Folder", category: "Data" },
+            { class: "bi bi-folder-fill", label: "Folder Solid", category: "Data" },
+            { class: "bi bi-file-earmark-text", label: "Document", category: "Data" },
+            { class: "bi bi-database", label: "Database", category: "Data" },
+            { class: "bi bi-table", label: "Table", category: "Data" },
+            { class: "bi bi-link-45deg", label: "Link / URL", category: "Data" },
+            { class: "bi bi-cloud", label: "Cloud", category: "Data" },
+            { class: "bi bi-download", label: "Download", category: "Data" },
+            { class: "bi bi-upload", label: "Upload", category: "Data" }
+        ];
+
+        let selectedCategory = 'All';
+
+        function renderIcons() {
+            const grid = document.getElementById('iconsGrid');
+            const searchVal = document.getElementById('iconSearchInput').value.toLowerCase();
+            
+            grid.innerHTML = '';
+            
+            const filtered = iconsList.filter(icon => {
+                const matchesCategory = selectedCategory === 'All' || icon.category === selectedCategory;
+                const matchesSearch = icon.label.toLowerCase().includes(searchVal) || icon.class.toLowerCase().includes(searchVal);
+                return matchesCategory && matchesSearch;
+            });
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-4 text-muted">
+                        <i class="bi bi-emoji-expressionless fs-2 d-block mb-2"></i>
+                        No matching icons found. Try another search.
+                    </div>`;
+                return;
+            }
+            
+            filtered.forEach(icon => {
+                const col = document.createElement('div');
+                col.className = 'col-6 col-md-3 col-lg-2';
+                col.innerHTML = `
+                    <div class="icon-item p-3 text-center h-100 d-flex flex-column align-items-center justify-content-center" onclick="selectIcon('${icon.class}')">
+                        <i class="${icon.class} mb-2"></i>
+                        <div class="small text-truncate w-100" style="font-size: 0.75rem;">${icon.label}</div>
+                    </div>`;
+                grid.appendChild(col);
+            });
+        }
+
+        function filterIcons() {
+            renderIcons();
+        }
+
+        function filterCategory(category) {
+            selectedCategory = category;
+            
+            // Update active button state
+            document.querySelectorAll('.category-filter').forEach(btn => {
+                btn.classList.remove('active', 'btn-secondary');
+                btn.classList.add('btn-outline-secondary');
+            });
+            
+            // Find clicked button
+            const clickedBtn = event.currentTarget;
+            clickedBtn.classList.remove('btn-outline-secondary');
+            clickedBtn.classList.add('active', 'btn-secondary');
+            
+            renderIcons();
+        }
+
+        function selectIcon(iconClass) {
+            const input = document.getElementById('icon');
+            input.value = iconClass;
+            
+            // Update preview icon
+            const preview = document.getElementById('icon-preview');
+            preview.innerHTML = `<i class="${iconClass}"></i>`;
+            
+            // Close modal
+            const modalElement = document.getElementById('iconPickerModal');
+            const modalInstance = bootstrap.Modal.getInstance(modalElement);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        }
+
+        // Setup preview updater and load handler
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById('icon');
+            const preview = document.getElementById('icon-preview');
+            
+            const updatePreview = () => {
+                const val = input.value.trim();
+                if (val) {
+                    preview.innerHTML = `<i class="${val}"></i>`;
+                } else {
+                    preview.innerHTML = `<i class="bi bi-tag-fill"></i>`;
+                }
+            };
+            
+            input.addEventListener('input', updatePreview);
+            updatePreview();
+            
+            const myModal = document.getElementById('iconPickerModal');
+            myModal.addEventListener('show.bs.modal', function () {
+                renderIcons();
+            });
+        });
+
+        // Bootstrap form validation
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+</section>
 </body>
 </html>

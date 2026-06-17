@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<th:block th:replace="~{layout/layout :: html(${isEdit} ? 'Edit Role' : 'Add Role', ~{::#main-content})}">
+    <div id="main-content">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card card-custom">
+                    <div class="card-header bg-white py-3 border-0">
+                        <h4 class="mb-0 fw-bold text-dark">
+                            <i class="bi me-2 text-primary" th:classappend="${isEdit} ? 'bi-pencil-square' : 'bi-shield-plus'"></i>
+                            <span th:text="${isEdit} ? 'Edit Role' : 'Create New Role'"></span>
+                        </h4>
+                    </div>
+                    <div class="card-body px-4 pb-4">
+                        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <span th:text="${errorMessage}"></span>
+                        </div>
+
+                        <form th:action="${isEdit ? '/roles/edit/' + roleRequest.role_id : '/roles/add'}" 
+                              th:object="${roleRequest}" 
+                              method="post">
+                              
+                            <input type="hidden" th:if="${isEdit}" th:field="*{role_id}" />
+                              
+                            <div class="mb-4">
+                                <label for="role_name" class="form-label fw-semibold">Role Name</label>
+                                <select id="role_name" th:field="*{role_name}" class="form-select" th:errorclass="is-invalid">
+                                    <option th:each="enumVal : ${roleEnums}" th:value="${enumVal}" th:text="${enumVal}"></option>
+                                </select>
+                                <div class="invalid-feedback" th:errors="*{role_name}"></div>
+                            </div>
+
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="/roles" class="btn btn-outline-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <span th:text="${isEdit} ? 'Save Changes' : 'Create Role'"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+</body>
+</html>

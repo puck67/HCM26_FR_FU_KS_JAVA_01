@@ -1,82 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout/fragments :: head('Manage Reviews')}"></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Review Management - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { background-color: #212529; }
+        .navbar-brand, .nav-link { color: #ccc !important; font-size: 0.9rem; }
+        .navbar-brand { color: #fff !important; font-size: 1.2rem; }
+        .nav-link:hover { color: #fff !important; }
+        .review-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-left: 4px solid #0d6efd;
+            margin-bottom: 15px;
+        }
+        .review-card.approved { border-left-color: #198754; }
+        .review-title { font-weight: 600; font-size: 0.95rem; }
+        .review-author { font-size: 0.85rem; color: #495057; font-weight: 500; }
+        .rating-stars { color: #ffc107; font-size: 0.85rem; }
+        .review-content { font-size: 0.9rem; color: #6c757d; }
+    </style>
+</head>
 <body>
-    <header th:replace="~{layout/fragments :: header('manage_reviews')}"></header>
 
-    <main class="main-container">
-        <!-- Alert message -->
-        <div th:if="${successMessage}" class="alert alert-success">
-            <i class="fa-solid fa-circle-check"></i>
-            <span th:text="${successMessage}">Success!</span>
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">CourseShare</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link text-white" th:href="@{/instructor/reviews}">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
         </div>
+    </div>
+</nav>
 
-        <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem;">
-            <i class="fa-solid fa-comments"></i> Manage Reviews
-        </h2>
-
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Course</th>
-                            <th>Author</th>
-                            <th>Email</th>
-                            <th>Rating</th>
-                            <th>Content</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:if="${reviews.empty}">
-                            <td colspan="7" style="text-align: center;" class="text-secondary">No reviews found.</td>
-                        </tr>
-                        <tr th:each="rev : ${reviews}">
-                            <td>
-                                <a th:href="@{/courses/{id}(id=${rev.course.id})}" th:text="${rev.course.title}" target="_blank" style="font-weight: 500;">Course</a>
-                            </td>
-                            <td th:text="${rev.authorName}">Author</td>
-                            <td th:text="${rev.email}">Email</td>
-                            <td>
-                                <div class="review-stars">
-                                    <i th:each="star : ${#numbers.sequence(1, 5)}" 
-                                       th:class="${star <= rev.rating} ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
-                                </div>
-                            </td>
-                            <td th:text="${rev.content}">Content text</td>
-                            <td>
-                                <span class="status-badge" 
-                                      th:classappend="${rev.status == 1 ? 'status-draft' : 'status-published'}"
-                                      th:text="${rev.status == 1 ? 'Pending' : 'Approved'}">
-                                    Status
-                                </span>
-                            </td>
-                            <td>
-                                <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                    <!-- Approve button for Pending reviews -->
-                                    <form th:if="${rev.status == 1}" th:action="@{/instructor/reviews/approve/{id}(id=${rev.id})}" method="post" style="display: inline;">
-                                        <button type="submit" class="btn-outline" style="padding: 0.2rem 0.6rem; font-size: 0.8rem; border-color: var(--success-color); color: var(--success-color);">
-                                            <i class="fa-solid fa-check"></i> Approve
-                                        </button>
-                                    </form>
-
-                                    <!-- Delete button -->
-                                    <form th:action="@{/instructor/reviews/delete/{id}(id=${rev.id})}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this review?');">
-                                        <button type="submit" class="btn-outline" style="padding: 0.2rem 0.6rem; font-size: 0.8rem; border-color: var(--error-color); color: var(--error-color);">
-                                            <i class="fa-solid fa-trash"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+<div class="container" style="max-width: 900px;">
+    <h4 class="mb-3 text-secondary">Pending Reviews</h4>
+    <div id="pending-container" class="mb-5">
+        <div th:each="r : ${pendingReviews}" th:id="'review-box-' + ${r.id}" class="card review-card p-3">
+            <div class="review-title" th:text="'Course: ' + ${r.course.title}">Course: Introduction to HTML</div>
+            <div class="review-author" th:text="'Reviewer: ' + ${r.authorName}">Reviewer: John Doe</div>
+            <div class="rating-stars mb-1">
+                <span th:each="i : ${#numbers.sequence(1, r.rating)}">★</span><span th:each="i : ${#numbers.sequence(r.rating + 1, 5, 1)}" th:if="${r.rating < 5}">☆</span>
+            </div>
+            <p class="review-content mb-3" th:text="${r.content}">Great course, very clear explanations...</p>
+            <div>
+                <button th:onclick="'approveReview(' + ${r.id} + ')'" class="btn btn-success btn-sm me-1">Approve</button>
+                <button th:onclick="'deleteReview(' + ${r.id} + ')'" class="btn btn-danger btn-sm">Delete</button>
             </div>
         </div>
-    </main>
+        <p th:if="${#lists.isEmpty(pendingReviews)}" class="text-muted">No pending reviews.</p>
+    </div>
 
-    <footer th:replace="~{layout/fragments :: footer}"></footer>
+    <h4 class="mb-3 text-secondary border-top pt-4">Approved Reviews</h4>
+    <div id="approved-container">
+        <div th:each="r : ${approvedReviews}" th:id="'review-box-' + ${r.id}" class="card review-card approved p-3">
+            <div class="review-title" th:text="'Course: ' + ${r.course.title}">Course: Spring Boot 101</div>
+            <div class="review-author" th:text="'Reviewer: ' + ${r.authorName}">Reviewer: Mark Lee</div>
+            <div class="rating-stars mb-1">
+                <span th:each="i : ${#numbers.sequence(1, r.rating)}">★</span><span th:each="i : ${#numbers.sequence(r.rating + 1, 5, 1)}" th:if="${r.rating < 5}">☆</span>
+            </div>
+            <p class="review-content mb-3" th:text="${r.content}">Fantastic introduction to Spring Boot!</p>
+            <div>
+                <button th:onclick="'deleteReview(' + ${r.id} + ')'" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+        <p th:if="${#lists.isEmpty(approvedReviews)}" class="text-muted">No approved reviews.</p>
+    </div>
+</div>
+
+<script>
+    function approveReview(id) {
+        fetch(`/api/instructor/reviews/${id}/approve`, { method: 'POST' })
+            .then(res => {
+                if(res.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Error approving review");
+                }
+            });
+    }
+
+    function deleteReview(id) {
+        if(confirm("Bạn có chắc chắn muốn xóa đánh giá này?")) {
+            fetch(`/api/instructor/reviews/${id}`, { method: 'DELETE' })
+                .then(res => {
+                    if(res.ok) {
+                        document.getElementById(`review-box-${id}`).remove();
+                    } else {
+                        alert("Error deleting review");
+                    }
+                });
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

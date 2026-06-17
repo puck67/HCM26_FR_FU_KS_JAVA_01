@@ -1,49 +1,93 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Menu Management')}"></head>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html(content=~{::section})}">
 <body>
-<div class="d-flex">
-    <div th:replace="~{fragments/sidebar :: sidebar}"></div>
-
-    <div class="flex-grow-1 p-4 bg-light w-100">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Menu Management</h2>
-            <a th:href="@{/menus/new}" class="btn btn-success"><i class="bi bi-plus"></i> Add Menu</a>
+<section>
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h5 class="fw-bold mb-1">Menu Management Console</h5>
+            <p class="text-muted small mb-0">Create, edit, and reorganize dynamic sidebar navigation elements.</p>
         </div>
+        <a th:href="@{/admin/menus/new}" class="btn btn-primary">
+            <i class="bi bi-plus-lg me-1"></i> Add Menu Item
+        </a>
+    </div>
 
-        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
-
-        <div class="card">
-            <div class="card-body overflow-auto">
-                <table class="table table-striped table-hover">
-                    <thead>
+    <!-- Menu Table Card -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>URL</th>
+                            <th class="ps-4" style="width: 80px;">ID</th>
+                            <th>Menu Name</th>
+                            <th>URL Path</th>
                             <th>Icon</th>
-                            <th>Parent</th>
-                            <th>Order</th>
+                            <th>Parent Menu</th>
+                            <th>Display Order</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            <th>Roles</th>
+                            <th class="text-end pe-4" style="width: 200px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="m : ${menus}">
-                            <td th:text="${m.id}">1</td>
-                            <td th:text="${m.name}">Name</td>
-                            <td th:text="${m.url}">/url</td>
-                            <td><i th:class="${m.icon}"></i> <span th:text="${m.icon}" class="ms-1"></span></td>
-                            <td th:text="${m.parent != null ? m.parent.name : '-'}">Parent</td>
-                            <td th:text="${m.displayOrder}">1</td>
+                        <tr th:each="menu : ${menus}">
+                            <td class="ps-4 fw-semibold text-secondary" th:text="${menu.id}">1</td>
                             <td>
-                                <span th:if="${m.status}" class="badge bg-success">Active</span>
-                                <span th:unless="${m.status}" class="badge bg-danger">Inactive</span>
+                                <div class="d-flex align-items-center">
+                                    <div class="me-2 text-primary">
+                                        <i th:class="${menu.icon != null ? menu.icon : 'bi bi-link-45deg'}"></i>
+                                    </div>
+                                    <span class="fw-bold" th:text="${menu.name}">Menu Name</span>
+                                </div>
                             </td>
                             <td>
-                                <a th:href="@{/menus/edit/{id}(id=${m.id})}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
-                                <a th:href="@{/menus/delete/{id}(id=${m.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this menu?');"><i class="bi bi-trash"></i></a>
+                                <code th:if="${menu.url != null}" th:text="${menu.url}">/path</code>
+                                <span th:if="${menu.url == null}" class="text-muted small"><em>None (Header)</em></span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    <i th:class="${menu.icon != null ? menu.icon : 'bi-link-45deg'}"></i>
+                                    <span th:text="${menu.icon != null ? menu.icon : 'None'}">icon</span>
+                                </span>
+                            </td>
+                            <td>
+                                <span th:if="${menu.parent != null}" class="badge bg-info text-dark" th:text="${menu.parent.name}">Parent Name</span>
+                                <span th:if="${menu.parent == null}" class="badge bg-secondary">Root Menu</span>
+                            </td>
+                            <td class="text-center" th:text="${menu.displayOrder}">1</td>
+                            <td>
+                                <span th:if="${menu.status}" class="badge bg-success">Active</span>
+                                <span th:if="${not menu.status}" class="badge bg-danger">Inactive</span>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <span th:each="role : ${#strings.arraySplit(menu.roles != null ? menu.roles : '', ',')}" 
+                                          class="badge bg-light text-primary border" 
+                                          th:text="${role}">
+                                        ROLE
+                                    </span>
+                                    <span th:if="${menu.roles == null || #strings.isEmpty(menu.roles)}" class="badge bg-light text-muted border">
+                                        All Roles
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a th:href="@{/admin/menus/edit/{id}(id=${menu.id})}" class="btn btn-outline-warning btn-sm me-1">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a th:href="@{/admin/menus/delete/{id}(id=${menu.id})}" 
+                                   class="btn btn-outline-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this menu? Deleting a parent menu will automatically delete all submenus (Cascade Delete)!')">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(menus)}">
+                            <td colspan="9" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                                No menus registered in the database. Click "Add Menu Item" to start.
                             </td>
                         </tr>
                     </tbody>
@@ -51,7 +95,6 @@
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</section>
 </body>
 </html>
