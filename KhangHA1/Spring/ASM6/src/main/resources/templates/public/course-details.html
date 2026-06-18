@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.title} + ' - CourseShare'">Course Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">CourseShare</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="/instructor/login">Login</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5" style="max-width: 900px;">
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="fw-bold" th:text="${course.title}">Course Title Goes Here</h2>
+
+            <div class="mb-3" th:if="${course.category != null and !course.category.isEmpty()}">
+                <small class="text-secondary d-block mb-1">Categories:</small>
+                <span th:each="tag : ${#strings.arraySplit(course.category, ',')}"
+                      th:text="${#strings.trim(tag)}"
+                      class="badge bg-primary text-white me-1">
+                </span>
+            </div>
+
+            <p class="text-muted fs-5" th:text="${course.description}">A short description of the course goes here...</p>
+
+            <hr>
+
+            <h5 class="fw-bold text-secondary mb-3">Course Content</h5>
+            <div id="raw-markdown" style="display: none;" th:text="${course.content}"></div>
+            <div class="p-4 bg-white border rounded shadow-inner" id="rendered-content">
+                <!-- Markdown will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white fw-bold">Student Reviews</div>
+        <div class="card-body">
+            <p class="text-muted my-2 text-center"
+               th:if="${course.reviews == null or #lists.isEmpty(course.reviews.?[status == 2])}">
+                Chưa có đánh giá nào cho khóa học này.
+            </p>
+
+            <div th:each="rev : ${course.reviews}" th:if="${rev.status == 2}" class="border-bottom py-3 last-border-0">
+                <div class="d-flex justify-content-between align-items-center">
+                    <strong class="text-dark fs-6" th:text="${rev.authorName}">John Doe</strong>
+
+                    <div class="text-warning" th:if="${rev.rating != null and rev.rating > 0}">
+                        <span th:each="s : ${#numbers.sequence(1, rev.rating)}">&#9733;</span>
+                    </div>
+                </div>
+                <p class="mb-0 text-secondary mt-1" th:text="${rev.content}">Very helpful course, I learned a lot!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-primary text-white fw-bold">Add Your Review</div>
+        <div class="card-body">
+
+            <div th:if="${param.success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                Đánh giá của bạn đã được gửi thành công và đang chờ giảng viên phê duyệt!
+            </div>
+
+            <form th:action="@{'/course/' + ${course.id} + '/review'}" th:object="${newReview}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Your Name</label>
+                    <input type="text" th:field="*{authorName}" class="form-control" placeholder="Enter your name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Email</label>
+                    <input type="email" th:field="*{email}" class="form-control" placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Rating</label>
+                    <select th:field="*{rating}" class="form-select">
+                        <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5 Stars)</option>
+                        <option value="4">&#9733;&#9733;&#9733;&#9733; (4 Stars)</option>
+                        <option value="3">&#9733;&#9733;&#9733; (3 Stars)</option>
+                        <option value="2">&#9733;&#9733; (2 Stars)</option>
+                        <option value="1">&#9733; (1 Star)</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Review</label>
+                    <textarea th:field="*{content}" class="form-control" rows="4" placeholder="Write your review here..." required></textarea>
+                </div>
+
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary px-4 fw-bold">Submit Review</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .last-border-0:last-child {
+        border-bottom: none !important;
+    }
+    .shadow-inner {
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var rawMd = document.getElementById("raw-markdown").textContent;
+        document.getElementById("rendered-content").innerHTML = marked.parse(rawMd);
+    });
+</script>
+
+</body>
+</html>
