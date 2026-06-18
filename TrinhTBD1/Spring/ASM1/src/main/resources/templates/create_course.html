@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Course</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Create Course</h1>
+            <p class="subtitle">Enter course specifications below to publish to the LMS</p>
+
+            <form th:action="@{/courses/create}" th:object="${course}" method="post">
+                
+                <!-- Title Field -->
+                <div class="form-group">
+                    <label for="title">Course Title</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="title" th:field="*{title}" placeholder="e.g. Introduction to Java Spring" />
+                    </div>
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-msg"></div>
+                </div>
+
+                <!-- Instructor Name Field -->
+                <div class="form-group">
+                    <label for="instructorName">Instructor Name</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="instructorName" th:field="*{instructorName}" placeholder="e.g. John Doe" />
+                    </div>
+                    <div th:if="${#fields.hasErrors('instructorName')}" th:errors="*{instructorName}" class="error-msg"></div>
+                </div>
+
+                <!-- Instructor Email Field -->
+                <div class="form-group">
+                    <label for="instructorEmail">Instructor Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="instructorEmail" th:field="*{instructorEmail}" placeholder="e.g. instructor@lms.com" />
+                    </div>
+                    <div th:if="${#fields.hasErrors('instructorEmail')}" th:errors="*{instructorEmail}" class="error-msg"></div>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-group">
+                    <label for="description">Course Description</label>
+                    <div class="input-wrapper">
+                        <textarea id="description" th:field="*{description}" placeholder="e.g. A comprehensive guide to building REST APIs using Spring Boot..."></textarea>
+                    </div>
+                    <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-msg"></div>
+                </div>
+
+                <!-- Duration Hours Field -->
+                <div class="form-group">
+                    <label for="durationHours">Duration (Hours)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="durationHours" th:field="*{durationHours}" placeholder="e.g. 40" />
+                    </div>
+                    <div th:if="${#fields.hasErrors('durationHours')}" th:errors="*{durationHours}" class="error-msg"></div>
+                </div>
+
+                <!-- Actions -->
+                <button type="submit" class="btn">Create Course</button>
+                <a th:href="@{/courses/new}" class="btn btn-secondary">Reset Form</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

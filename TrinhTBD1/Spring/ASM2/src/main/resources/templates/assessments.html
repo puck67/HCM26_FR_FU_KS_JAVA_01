@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Assessment Materials Management</title>
+    <!-- Modern Typography from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Assessment Materials Portal</h1>
+        <p>Upload new material instructions and view available documents for download</p>
+    </header>
+
+    <!-- Error Alert -->
+    <div th:if="${errorMessage}" class="alert alert-error" id="errorAlert">
+        <span class="alert-icon">⚠️</span>
+        <div th:text="${errorMessage}">Error details go here.</div>
+    </div>
+
+    <!-- Success Alert -->
+    <div th:if="${successMessage}" class="alert alert-success" id="successAlert">
+        <span class="alert-icon">✓</span>
+        <div th:text="${successMessage}">Success message goes here.</div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Task 4: Upload Form Panel -->
+        <section class="panel">
+            <h2 class="panel-title">Upload New Assessment Material</h2>
+            <form th:action="@{/assessments/upload}" th:object="${assessmentMaterial}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Material Title</label>
+                    <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="e.g. Assignment Brief 1">
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.25rem; display: block;"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description & Instructions</label>
+                    <textarea id="description" th:field="*{description}" class="form-control" placeholder="Provide detailed guidelines and requirements..."></textarea>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.25rem; display: block;"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="file">Upload Document File (PDF, ZIP, DOCX, etc.)</label>
+                    <div class="file-upload-wrapper">
+                        <input type="file" id="file" name="file" class="file-upload-input">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Save & Upload Material</button>
+            </form>
+        </section>
+
+        <!-- Task 5: Materials List Panel -->
+        <section class="panel">
+            <h2 class="panel-title">Available Assessment Materials</h2>
+            
+            <div class="materials-list">
+                <!-- If the list of materials is empty -->
+                <div th:if="${#lists.isEmpty(materials)}" class="no-materials">
+                    No assessment materials have been uploaded yet.
+                </div>
+
+                <!-- Iterate over uploaded materials -->
+                <div th:each="material : ${materials}" class="material-card">
+                    <div class="material-info">
+                        <h3 class="material-title" th:text="${material.title}">Material Title</h3>
+                        <p class="material-desc" th:text="${material.description}">Material description goes here...</p>
+                        <div class="material-meta">
+                            <span>Attachment:</span>
+                            <code th:text="${material.fileName}">filename.pdf</code>
+                        </div>
+                    </div>
+                    
+                    <!-- Download Link -->
+                    <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}" class="btn btn-download">
+                        Download
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
+</html>

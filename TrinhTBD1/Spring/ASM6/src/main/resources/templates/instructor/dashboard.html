@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Instructor Dashboard')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('dashboard')}"></header>
+
+    <main class="main-container flex-grow-1">
+        <h2 class="mb-4 font-weight-bold text-dark">
+            <i class="fa-solid fa-gauge-high text-primary me-2"></i>Dashboard Overview
+        </h2>
+
+        
+        <div class="row g-4 mb-5">
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-number color-courses" th:text="${totalCourses}">0</div>
+                    <div class="stat-label">Total Courses</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-number color-published" th:text="${publishedCourses}">0</div>
+                    <div class="stat-label">Published Courses</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-number color-reviews" th:text="${pendingReviews}">0</div>
+                    <div class="stat-label">Pending Reviews</div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 col-sm-6">
+                <div class="stat-card">
+                    <div class="stat-number color-categories" th:text="${totalCategories}">0</div>
+                    <div class="stat-label">Total Categories</div>
+                </div>
+            </div>
+        </div>
+
+        
+        <h3 class="mb-3 font-weight-bold text-dark">Quick Actions</h3>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a th:href="@{/instructor/courses/new}" class="quick-action-btn shadow-sm">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Create New Course</span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a th:href="@{/instructor/courses}" class="quick-action-btn shadow-sm">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <span>Manage Courses</span>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a th:href="@{/instructor/reviews?status=1}" class="quick-action-btn shadow-sm">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                    <span>Pending Reviews</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+</html>
