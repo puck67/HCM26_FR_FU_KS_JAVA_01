@@ -1,0 +1,3 @@
+Test assessment document for LMS - Spring Boot File Upload Assignment
+This is a sample PDF/document for testing the upload functionality.
+Course: Spring Framework - Lesson 10

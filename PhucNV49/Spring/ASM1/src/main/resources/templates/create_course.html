@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Course</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f8; margin: 0; padding: 40px;">
+
+    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 32px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+
+        <h1 style="margin-top: 0; color: #2c3e50;">New Course</h1>
+
+        <form th:action="@{/courses/create}" th:object="${course}" method="post">
+
+            <div style="margin-bottom: 18px;">
+                <label for="title" style="display: block; margin-bottom: 6px; font-weight: bold; color: #34495e;">Title</label>
+                <input type="text" id="title" th:field="*{title}"
+                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                      style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label for="instructorName" style="display: block; margin-bottom: 6px; font-weight: bold; color: #34495e;">Instructor Name</label>
+                <input type="text" id="instructorName" th:field="*{instructorName}"
+                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <span th:if="${#fields.hasErrors('instructorName')}" th:errors="*{instructorName}"
+                      style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label for="instructorEmail" style="display: block; margin-bottom: 6px; font-weight: bold; color: #34495e;">Instructor Email</label>
+                <input type="text" id="instructorEmail" th:field="*{instructorEmail}"
+                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <span th:if="${#fields.hasErrors('instructorEmail')}" th:errors="*{instructorEmail}"
+                      style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 18px;">
+                <label for="description" style="display: block; margin-bottom: 6px; font-weight: bold; color: #34495e;">Description</label>
+                <textarea id="description" th:field="*{description}" rows="4"
+                          style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+                <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                      style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label for="durationHours" style="display: block; margin-bottom: 6px; font-weight: bold; color: #34495e;">Duration (hours)</label>
+                <input type="number" id="durationHours" th:field="*{durationHours}"
+                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <span th:if="${#fields.hasErrors('durationHours')}" th:errors="*{durationHours}"
+                      style="color: #e74c3c; font-size: 0.85em; display: block; margin-top: 4px;"></span>
+            </div>
+
+            <button type="submit"
+                    style="background-color: #3498db; color: #ffffff; border: none; padding: 12px 24px; font-size: 1em; border-radius: 4px; cursor: pointer;">
+                Create Course
+            </button>
+
+        </form>
+    </div>
+
+</body>
+</html>

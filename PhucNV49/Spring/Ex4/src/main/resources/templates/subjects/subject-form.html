@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::#subjectFormContent})}">
+<body>
+    <div id="subjectFormContent">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-white" th:text="${subject.subjectId == null ? 'Add New Subject' : 'Edit Subject'}">Add Subject</h2>
+                <p class="text-secondary" th:text="${subject.subjectId == null ? 'Register a new subject in the curriculum.' : 'Update the metadata for an existing subject.'}">Form subtitle</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-lg-6">
+                <div class="glass-card">
+                    <!-- Global error message -->
+                    <div th:if="${error}" class="glass-alert-danger" th:text="${error}"></div>
+
+                    <form th:action="@{/subjects/save}" th:object="${subject}" method="post">
+                        <!-- Hidden ID field for edit mode -->
+                        <input type="hidden" th:field="*{subjectId}" />
+
+                        <!-- Subject Code -->
+                        <div class="mb-3">
+                            <label for="subjectCode" class="form-label text-secondary font-weight-bold">Subject Code</label>
+                            <input type="text" id="subjectCode" th:field="*{subjectCode}" class="form-control form-control-glass" placeholder="e.g. JAVA01" th:readonly="${subject.subjectId != null}" required>
+                            <div th:if="${#fields.hasErrors('subjectCode')}" th:errors="*{subjectCode}" class="text-danger small mt-1">Subject code error</div>
+                        </div>
+
+                        <!-- Subject Name -->
+                        <div class="mb-3">
+                            <label for="subjectName" class="form-label text-secondary font-weight-bold">Subject Name</label>
+                            <input type="text" id="subjectName" th:field="*{subjectName}" class="form-control form-control-glass" placeholder="e.g. Java Programming" required>
+                            <div th:if="${#fields.hasErrors('subjectName')}" th:errors="*{subjectName}" class="text-danger small mt-1">Subject name error</div>
+                        </div>
+
+                        <!-- Duration -->
+                        <div class="mb-4">
+                            <label for="duration" class="form-label text-secondary font-weight-bold">Duration (Hours)</label>
+                            <input type="number" id="duration" th:field="*{duration}" class="form-control form-control-glass" placeholder="e.g. 40" min="1" required>
+                            <div th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger small mt-1">Duration error</div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex gap-3">
+                            <button type="submit" class="btn btn-glass">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Save Subject
+                            </button>
+                            <a href="/subjects" class="btn btn-outline-secondary d-flex align-items-center">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
