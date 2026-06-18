@@ -14,7 +14,6 @@ public class JsfwSA102Application {
 
     @Bean
     public MultipartConfigElement multipartConfigElement() {
-        // location = "", maxFileSize = 10MB, maxRequestSize = 10MB, fileSizeThreshold = 0
         return new MultipartConfigElement("", 10 * 1024 * 1024L, 10 * 1024 * 1024L, 0);
     }
 }
