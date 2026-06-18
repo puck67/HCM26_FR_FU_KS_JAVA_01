@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: main-layout(~{::div})}">
+<body>
+<div>
+  <h2 class="mb-4">Dashboard Overview</h2>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card bg-primary text-white h-100 shadow-sm">
+        <div class="card-body">
+          <h5>Total Subjects</h5>
+          <h2 th:text="${stats.totalSubjects}">0</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-success text-white h-100 shadow-sm">
+        <div class="card-body">
+          <h5>Total Materials</h5>
+          <h2 th:text="${stats.totalMaterials}">0</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-warning text-dark h-100 shadow-sm">
+        <div class="card-body">
+          <h5>Total Storage Used</h5>
+          <h2 th:text="${stats.totalStorageUsed}">0 Bytes</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
