@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head(${isEdit} ? 'Edit Course' : 'Create Course')}">
+    <title>Course Form - Course Sharing System</title>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        
+        <!-- Page Header -->
+        <div class="mb-4 pb-3 border-bottom">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/instructor/courses}">Courses</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" th:text="${isEdit} ? 'Edit Course' : 'Create Course'">Create</li>
+                </ol>
+            </nav>
+            <h1 class="fw-bold text-dark mb-0">
+                <i class="fa-solid fa-pen-to-square text-primary me-2"></i>
+                <span th:text="${isEdit} ? 'Edit Course: ' + ${course.title} : 'Create New Course'">Course Form</span>
+            </h1>
+        </div>
+
+        <!-- Course Form Card -->
+        <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                
+                <form th:action="@{/instructor/courses/save}" th:object="${course}" method="post">
+                    
+                    <!-- Hidden fields for Edit -->
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{createdAt}" th:if="${course.id != null}">
+
+                    <!-- Title -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-semibold text-dark">Course Title <span class="text-danger">*</span></label>
+                        <input type="text" id="title" class="form-control" th:field="*{title}" placeholder="e.g. Spring Boot Developer Boot Camp" required>
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Category Tags -->
+                        <div class="col-md-6 mb-3">
+                            <label for="category" class="form-label fw-semibold text-dark">Category Tags</label>
+                            <input type="text" id="category" class="form-control" th:field="*{category}" placeholder="e.g. Java, Backend, Spring Boot (comma-separated)">
+                            <div class="form-text text-muted">Enter categories separated by commas.</div>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Category error</div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6 mb-3">
+                            <label for="status" class="form-label fw-semibold text-dark">Status <span class="text-danger">*</span></label>
+                            <select id="status" class="form-select" th:field="*{status}" required>
+                                <option th:value="1">Draft (hidden from public)</option>
+                                <option th:value="2">Published (visible on homepage)</option>
+                                <option th:value="3">Archived (read-only historical)</option>
+                            </select>
+                            <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status error</div>
+                        </div>
+                    </div>
+
+                    <!-- Short Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-semibold text-dark">Short Summary / Description <span class="text-danger">*</span></label>
+                        <textarea id="description" class="form-control" rows="3" th:field="*{description}" placeholder="Write a short summary introducing the course (maximum 1000 characters)..." required></textarea>
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description error</div>
+                    </div>
+
+                    <!-- Full Markdown Content -->
+                    <div class="mb-4">
+                        <label for="content" class="form-label fw-semibold text-dark">Full Content (supports Markdown) <span class="text-danger">*</span></label>
+                        <textarea id="content" class="form-control" rows="12" th:field="*{content}" placeholder="# Chapter 1: Course Overview&#10;&#10;Use headings, bullet points, and code blocks to structure your details course lectures..." required style="font-family: monospace;"></textarea>
+                        <div class="form-text text-muted">You can write standard Markdown structure. Code snippets can be formatted with three backticks.</div>
+                        <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content error</div>
+                    </div>
+
+                    <!-- Form Controls -->
+                    <div class="d-flex gap-2 pt-3 border-top">
+                        <button type="submit" class="btn btn-primary px-4 py-2">
+                            <i class="fa-solid fa-floppy-disk me-2"></i>Save Course
+                        </button>
+                        <a th:href="@{/instructor/courses}" class="btn btn-outline-secondary px-4 py-2">
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>
