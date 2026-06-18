@@ -1,0 +1,23 @@
+<div th:fragment="content">
+    <div th:replace="~{fragments/crud-tool :: toolbar('Subject Management','/subjects/add','Add Subject')}"></div>
+
+    <table border="1">
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Duration</th>
+            <th>Action</th>
+        </tr>
+
+        <tr th:each="s : ${items}">
+            <td th:text="${s.subjectCode}"></td>
+            <td th:text="${s.subjectName}"></td>
+            <td th:text="${s.duration}"></td>
+            <td>
+                <a th:href="@{/subjects/{id}(id=${s.id})}">Materials</a>
+                |
+                <a th:href="@{/subjects/delete/{id}(id=${s.id})}" onclick="return confirm('Delete?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Learning Management System</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/courses" class="active">Courses</a>
+                <a href="/students">Students</a>
+                <a href="/enrollments">Enrollments</a>
+            </nav>
+        </header>
+        <main>
+            <div class="page-header">
+                <h2>Courses</h2>
+                <a href="/courses/new" class="btn btn-primary">Add New Course</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Credits</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${courses}">
+                            <td th:text="${course.id}">1</td>
+                            <td th:text="${course.code}">CS101</td>
+                            <td th:text="${course.name}">Introduction to Computer Science</td>
+                            <td th:text="${course.description}">Basic concepts</td>
+                            <td th:text="${course.credits}">3</td>
+                            <td>
+                                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-small btn-edit">Edit</a>
+                                <a th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Learning Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

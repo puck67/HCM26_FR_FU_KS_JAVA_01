@@ -1,0 +1,31 @@
+<th:block th:fragment="toolbar(title, createUrl, createText)">
+
+
+    <div class="crud-toolbar">
+
+
+        <h2 th:text="${title}">
+            Management
+        </h2>
+
+
+
+        <a th:href="${createUrl}">
+
+            <button type="button">
+
+            <span th:text="${createText}">
+                Create
+            </span>
+
+            </button>
+
+
+        </a>
+
+
+    </div>
+
+
+
+</th:block>
