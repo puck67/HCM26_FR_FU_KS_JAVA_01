@@ -32,14 +32,12 @@ public class AssessmentController {
         this.storageService = storageService;
     }
 
-    // Task 3 - Endpoint 1: GET /assessments — show main upload page with list
     @GetMapping
     public String listAssessments(Model model) {
         model.addAttribute("materials", materials);
         return "assessments";
     }
 
-    // Task 3 - Endpoint 2: POST /assessments/upload — handle file upload
     @PostMapping("/upload")
     public String uploadAssessment(
             @RequestParam("title") String title,
@@ -68,7 +66,6 @@ public class AssessmentController {
         return "redirect:/assessments";
     }
 
-    // Task 3 - Endpoint 3: GET /assessments/download/{filename} — serve file for download
     @GetMapping("/download/{filename:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
         try {
