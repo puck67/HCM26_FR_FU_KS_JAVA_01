@@ -1,0 +1,2 @@
+This is a test document containing assessment material guidelines.
+Created for testing file upload/download functionality in Spring Boot ASM2.
