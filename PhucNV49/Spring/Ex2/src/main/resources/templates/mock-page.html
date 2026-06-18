@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="text-white fw-bold" th:text="${pageTitle}">Mock Page Title</h2>
+        <p class="text-secondary mb-0">
+            Dynamically loaded route: <code class="text-info font-monospace" th:text="${pageUri}">/route</code>
+        </p>
+    </div>
+
+    <!-- Mock Content Panel -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card glass-panel border-secondary p-5 text-center">
+                <div class="mb-4">
+                    <div class="d-inline-flex p-4 rounded-circle bg-info bg-opacity-10 border border-info border-opacity-25 mb-3">
+                        <i class="bi bi-rocket-takeoff-fill text-info display-4"></i>
+                    </div>
+                    <h3 class="text-white fw-bold mb-2">Workspace Dynamic Route Activated</h3>
+                    <p class="text-secondary col-lg-6 mx-auto">
+                        You have successfully navigated to <strong th:text="${pageTitle}">Feature</strong>. 
+                        This view is bound dynamically by the database-driven sidebar.
+                    </p>
+                </div>
+                
+                <hr class="border-secondary col-lg-8 mx-auto mb-4">
+                
+                <!-- Mock Database Table simulation -->
+                <div class="col-lg-8 mx-auto text-start">
+                    <h5 class="text-info font-mono small text-uppercase mb-3"><i class="bi bi-activity me-1"></i> Simulated Records</h5>
+                    
+                    <div class="card bg-dark bg-opacity-40 border border-secondary border-opacity-50 overflow-hidden mb-4">
+                        <table class="table table-dark table-striped align-middle mb-0 small">
+                            <thead>
+                                <tr class="font-mono text-secondary">
+                                    <th class="ps-3">Ref ID</th>
+                                    <th>Status</th>
+                                    <th>Active Module</th>
+                                    <th class="pe-3">Last Modified</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-3 font-mono text-info">#LMS-8429-01</td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Operational</span></td>
+                                    <td>Academic Core Services</td>
+                                    <td class="pe-3 text-secondary">2026-06-17 09:12</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3 font-mono text-info">#LMS-3920-04</td>
+                                    <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25">Operational</span></td>
+                                    <td>Hierarchical Relations Controller</td>
+                                    <td class="pe-3 text-secondary">2026-06-17 08:35</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3 font-mono text-info">#LMS-0198-11</td>
+                                    <td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 text-dark">Syncing</span></td>
+                                    <td>Thymeleaf Engine Context</td>
+                                    <td class="pe-3 text-secondary">2026-06-17 09:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="text-secondary small">Viewing simulated sandbox environment</span>
+                        <a href="/menus" class="btn btn-sm btn-info text-dark fw-bold">
+                            <i class="bi bi-gear-fill me-1"></i>
+                            Configure Menus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

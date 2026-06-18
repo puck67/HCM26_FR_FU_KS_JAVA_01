@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${title} + ' | LMS'">LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav th:fragment="navbar" class="navbar">
+    <div class="container nav-inner">
+        <a th:href="@{/}" class="brand">📚 LMS</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/categories}">Categories</a></li>
+            <li><a th:href="@{/reviews}">Reviews</a></li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/instructor/dashboard}">Dashboard</a>
+            </li>
+            <li sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" style="display:inline">
+                    <button type="submit" class="btn-link">Logout</button>
+                </form>
+            </li>
+            <li sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn btn-sm">Instructor Login</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<footer th:fragment="footer" class="footer">
+    <div class="container">
+        <p>&copy; 2025 LMS Course Sharing System — FPT Software</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Back Button & Page Header -->
+    <div class="mb-4">
+        <a href="/users" class="btn btn-outline-secondary btn-sm mb-3 d-inline-flex align-items-center gap-1 border-secondary">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to List</span>
+        </a>
+        <h2 class="text-white fw-bold" th:text="${userForm.userId == null ? 'Create New User' : 'Edit User'}">Create User</h2>
+        <p class="text-secondary mb-0">Fill in the fields to configure the user profile and roles.</p>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="row">
+        <div class="col-lg-8 col-md-10 col-12">
+            <div class="card glass-panel border-secondary p-4">
+                <form th:action="@{/users/save}" th:object="${userForm}" method="POST">
+                    <!-- Hidden ID -->
+                    <input type="hidden" th:field="*{userId}" />
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label for="username" class="form-label text-secondary font-mono small">Username <span class="text-danger">*</span></label>
+                        <input type="text" th:field="*{username}" id="username" class="form-control bg-dark text-white border-secondary" 
+                               placeholder="e.g. jdoe" required th:readonly="${userForm.userId != null}" />
+                        <div class="form-text text-muted" th:if="${userForm.userId == null}">Username must be unique and between 4 and 20 characters.</div>
+                        <div class="form-text text-muted" th:if="${userForm.userId != null}">Username cannot be modified.</div>
+                        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Password (New User Only) -->
+                    <div class="mb-3" th:if="${userForm.userId == null}">
+                        <label for="password" class="form-label text-secondary font-mono small">Password <span class="text-danger">*</span></label>
+                        <input type="password" th:field="*{password}" id="password" class="form-control bg-dark text-white border-secondary" 
+                               placeholder="Minimum 6 characters" required />
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Full Name -->
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label text-secondary font-mono small">Full Name <span class="text-danger">*</span></label>
+                        <input type="text" th:field="*{fullName}" id="fullName" class="form-control bg-dark text-white border-secondary" 
+                               placeholder="e.g. John Doe" required />
+                        <div th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Status Toggle -->
+                    <div class="mb-3">
+                        <div class="form-check form-switch p-3 bg-dark bg-opacity-20 border border-secondary border-opacity-50 rounded w-100 d-flex align-items-center justify-content-between">
+                            <label class="form-check-label text-secondary font-mono small ps-2" for="status">Active Account Status</label>
+                            <input class="form-check-input me-2" type="checkbox" th:field="*{status}" id="status" 
+                                   th:disabled="${userForm.username == 'superadmin'}" />
+                        </div>
+                        <div class="form-text text-muted" th:if="${userForm.username == 'superadmin'}">The system Super Admin account status cannot be deactivated.</div>
+                    </div>
+
+                    <!-- Roles Selection -->
+                    <div class="mb-4">
+                        <label class="form-label text-secondary font-mono small d-block mb-2">Assign Access Roles <span class="text-danger">*</span></label>
+                        <div class="p-3 bg-dark bg-opacity-20 border border-secondary border-opacity-50 rounded d-flex flex-wrap gap-4">
+                            <div class="form-check" th:each="role : ${allRoles}">
+                                <input class="form-check-input" type="checkbox" th:field="*{roleIds}" th:value="${role.roleId}" th:id="'role-' + ${role.roleId}" 
+                                       th:disabled="${userForm.username == 'superadmin' && role.roleName == 'SUPER_ADMIN'}" />
+                                <label class="form-check-label text-white" th:for="'role-' + ${role.roleId}">
+                                    <span th:class="${role.roleName == 'SUPER_ADMIN' ? 'badge bg-danger' : (role.roleName == 'ADMIN' ? 'badge bg-warning text-dark' : 'badge bg-success')}"
+                                          th:text="${role.roleName}">
+                                        ROLE_NAME
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-text text-muted" th:if="${userForm.username == 'superadmin'}">The system Super Admin role cannot be removed from the superadmin user.</div>
+                        <div th:if="${#fields.hasErrors('roleIds')}" th:errors="*{roleIds}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Actions Footer -->
+                    <hr class="border-secondary mb-4">
+                    <div class="d-flex align-items-center justify-content-end gap-3">
+                        <a href="/users" class="btn btn-outline-secondary border-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-info text-dark fw-bold px-4">Save User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!-- Reusable Sidebar Fragment -->
+<div th:fragment="sidebar" class="sidebar-wrapper d-flex flex-column flex-shrink-0 text-white">
+    <!-- Sidebar Header / Brand -->
+    <div class="sidebar-header d-flex align-items-center justify-content-between p-3 border-bottom border-secondary">
+        <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+            <i class="bi bi-cpu-fill fs-3 me-2 text-info"></i>
+            <span class="fs-4 fw-bold tracking-wide">LMS Menu</span>
+        </a>
+    </div>
+
+    <!-- Active Role Banner -->
+    <div class="px-3 py-2 bg-dark-subtle border-bottom border-secondary text-center">
+        <span class="text-secondary small font-monospace">Current Role:</span>
+        <span th:class="${currentRole == 'ADMIN' ? 'badge bg-danger ms-1' : (currentRole == 'TEACHER' ? 'badge bg-warning text-dark ms-1' : 'badge bg-success ms-1')}" 
+              th:text="${currentRole}">
+            ADMIN
+        </span>
+    </div>
+
+    <!-- Navigation Tree (Root) -->
+    <div class="sidebar-nav-container overflow-y-auto flex-grow-1 py-3 px-2">
+        <th:block th:if="${sidebarMenus != null && !sidebarMenus.isEmpty()}">
+            <th:block th:replace="~{:: menuFragment(menus=${sidebarMenus}, depth=1)}"></th:block>
+        </th:block>
+        <div th:if="${sidebarMenus == null || sidebarMenus.isEmpty()}" class="text-center py-4 text-muted">
+            <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
+            <span class="small">No menus available for this role</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-3 border-top border-secondary mt-auto bg-dark">
+        <a href="/menus" class="btn btn-outline-info w-100 d-flex align-items-center justify-content-center gap-2">
+            <i class="bi bi-gear-wide-connected"></i>
+            <span>Manage Menus</span>
+        </a>
+    </div>
+</div>
+
+<!-- Recursive Menu Fragment -->
+<th:block th:fragment="menuFragment(menus, depth)">
+    <ul th:class="${depth == 1 ? 'nav nav-pills flex-column mb-auto gap-1' : 'list-unstyled ps-3 mt-1 submenu-list border-start border-secondary'}">
+        <li th:each="m : ${menus}" class="nav-item">
+            <!-- Leaf Menu (No Children) -->
+            <a th:if="${m.children == null || m.children.isEmpty()}" 
+               th:href="@{${m.url != null && !m.url.isEmpty() ? m.url : '#'}}" 
+               class="nav-link text-white d-flex align-items-center justify-content-between py-2 px-3 rounded sidebar-item-link"
+               th:data-url="${m.url}">
+                <div class="d-flex align-items-center gap-2">
+                    <i th:class="${m.icon != null && !m.icon.isEmpty() ? m.icon : 'bi bi-dash'}" class="menu-icon text-info"></i>
+                    <span class="menu-text" th:text="${m.name}">Menu Name</span>
+                </div>
+            </a>
+
+            <!-- Collapsible Menu (Has Children) -->
+            <th:block th:if="${m.children != null && !m.children.isEmpty()}">
+                <a th:href="'#collapse-' + ${m.id}" 
+                   class="nav-link text-white d-flex align-items-center justify-content-between py-2 px-3 rounded sidebar-item-link collapsed" 
+                   data-bs-toggle="collapse" 
+                   role="button" 
+                   aria-expanded="false" 
+                   th:aria-controls="'collapse-' + ${m.id}">
+                    <div class="d-flex align-items-center gap-2">
+                        <i th:class="${m.icon != null && !m.icon.isEmpty() ? m.icon : 'bi bi-folder'}" class="menu-icon text-info"></i>
+                        <span class="menu-text" th:text="${m.name}">Menu Name</span>
+                    </div>
+                    <i class="bi bi-chevron-down arrow-icon fs-7 text-muted"></i>
+                </a>
+                
+                <!-- Recursive collapsible submenu container -->
+                <div th:id="'collapse-' + ${m.id}" class="collapse">
+                    <th:block th:replace="~{:: menuFragment(menus=${m.children}, depth=${depth + 1})}"></th:block>
+                </div>
+            </th:block>
+        </li>
+    </ul>
+</th:block>

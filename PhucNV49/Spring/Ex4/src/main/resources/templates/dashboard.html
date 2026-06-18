@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::#dashboardContent})}">
+<body>
+    <div id="dashboardContent">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-white mb-2 font-weight-bold">Welcome Back, Trainer!</h2>
+                <p class="text-secondary">Here is a quick overview of your training material repository.</p>
+            </div>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="row g-4 mb-5">
+            <!-- Subjects Card -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex align-items-center justify-content-between relative" style="border-left: 4px solid var(--accent-secondary);">
+                    <div>
+                        <span class="text-secondary text-uppercase font-weight-bold" style="font-size: 0.8rem; letter-spacing: 0.05em;">Total Subjects</span>
+                        <h1 class="text-white mt-2 mb-0" th:text="${totalSubjects}">15</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(59, 130, 246, 0.1); color: var(--accent-secondary); font-size: 2rem;">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials Card -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex align-items-center justify-content-between" style="border-left: 4px solid var(--accent-success);">
+                    <div>
+                        <span class="text-secondary text-uppercase font-weight-bold" style="font-size: 0.8rem; letter-spacing: 0.05em;">Total Materials</span>
+                        <h1 class="text-white mt-2 mb-0" th:text="${totalMaterials}">120</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-success); font-size: 2rem;">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage Used Card -->
+            <div class="col-md-4">
+                <div class="glass-card h-100 d-flex align-items-center justify-content-between" style="border-left: 4px solid var(--accent-warning);">
+                    <div>
+                        <span class="text-secondary text-uppercase font-weight-bold" style="font-size: 0.8rem; letter-spacing: 0.05em;">Total Storage Used</span>
+                        <h1 class="text-white mt-2 mb-0" th:text="${totalStorage}">2.3 GB</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(245, 158, 11, 0.1); color: var(--accent-warning); font-size: 2rem;">
+                        <i class="fa-solid fa-hard-drive"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="glass-card h-100">
+                    <h4 class="text-white mb-3"><i class="fa-solid fa-circle-nodes me-2 text-indigo"></i> Manage Courses</h4>
+                    <p class="text-secondary">Configure training subjects, duration, subject codes, and manage curriculum metadata.</p>
+                    <a href="/subjects" class="btn btn-glass mt-3">
+                        Go to Subject Management <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="glass-card h-100">
+                    <h4 class="text-white mb-3"><i class="fa-solid fa-cloud-arrow-up me-2 text-indigo"></i> Materials Workspace</h4>
+                    <p class="text-secondary">Upload lecture slides, assignments, reference papers, and project source code. Support multiple file upload.</p>
+                    <a href="/materials" class="btn btn-glass mt-3">
+                        Go to Material Workspace <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

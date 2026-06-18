@@ -1,0 +1,43 @@
+CREATE TABLE IF NOT EXISTS tbl_instructor (
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(200),
+    email VARCHAR(200)
+);
+
+CREATE TABLE IF NOT EXISTS tbl_lookup (
+    id BIGSERIAL PRIMARY KEY,
+    type VARCHAR(100) NOT NULL,
+    code VARCHAR(50) NOT NULL,
+    label VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS tbl_course (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(500) NOT NULL,
+    description TEXT NOT NULL,
+    content TEXT NOT NULL,
+    status INTEGER NOT NULL DEFAULT 1,
+    category VARCHAR(500),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    instructor_id BIGINT REFERENCES tbl_instructor(id)
+);
+
+CREATE TABLE IF NOT EXISTS tbl_review (
+    id BIGSERIAL PRIMARY KEY,
+    course_id BIGINT NOT NULL REFERENCES tbl_course(id) ON DELETE CASCADE,
+    author_name VARCHAR(200) NOT NULL,
+    email VARCHAR(200) NOT NULL,
+    rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    content TEXT NOT NULL,
+    status INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS tbl_category (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(200) NOT NULL UNIQUE,
+    frequency INTEGER NOT NULL DEFAULT 0
+);
