@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="header(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - CourseShare'">CourseShare</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom Premium CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom" th:href="@{/}">
+                <i class="fa-solid fa-graduation-cap me-2"></i>CourseShare
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" th:href="@{/}" th:classappend="${activePage == 'home' ? 'active' : ''}">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" th:href="@{/reviews/recent}" th:classappend="${activePage == 'reviews' ? 'active' : ''}">Nhận xét gần đây</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <!-- Nếu CHƯA ĐĂNG NHẬP -->
+                    <div sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}" class="btn btn-outline-primary me-2 border-0 fw-semibold">
+                            <i class="fa-solid fa-right-to-bracket me-1"></i>Đăng nhập Giảng viên
+                        </a>
+                    </div>
+                    <!-- Nếu ĐÃ ĐĂNG NHẬP (Instructor) -->
+                    <div sec:authorize="isAuthenticated()" class="dropdown">
+                        <button class="btn btn-primary-custom dropdown-toggle" type="button" id="instructorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user-tie me-2"></i>Giảng viên
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg p-2" aria-labelledby="instructorDropdown" style="border-radius: 12px;">
+                            <li>
+                                <a class="dropdown-item py-2 fw-medium rounded" th:href="@{/instructor/courses}">
+                                    <i class="fa-solid fa-book-open me-2 text-primary"></i>Quản lý Khóa học
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 fw-medium rounded" th:href="@{/instructor/reviews}">
+                                    <i class="fa-solid fa-star-half-stroke me-2 text-warning"></i>Quản lý Đánh giá
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form th:action="@{/logout}" method="post" class="m-0">
+                                    <button type="submit" class="dropdown-item py-2 fw-medium rounded text-danger bg-transparent border-0 w-100 text-start">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer th:fragment="footer" class="bg-white border-top py-4 mt-5">
+        <div class="container text-center">
+            <p class="text-secondary mb-1 fw-semibold">&copy; 2026 CourseShare.</p>
+            <p class="text-muted small">Hệ thống chia sẻ khóa học trực tuyến dành cho Giảng viên & Học sinh.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <div th:fragment="scripts">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+
+</body>
+</html>
