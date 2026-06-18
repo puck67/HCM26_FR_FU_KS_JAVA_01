@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollments - LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Learning Management System</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/courses">Courses</a>
+                <a href="/students">Students</a>
+                <a href="/enrollments" class="active">Enrollments</a>
+            </nav>
+        </header>
+        <main>
+            <div class="page-header">
+                <h2>Enrollments</h2>
+                <a href="/enrollments/new" class="btn btn-primary">Add New Enrollment</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Enrollment Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="enrollment : ${enrollments}">
+                            <td th:text="${enrollment.id}">1</td>
+                            <td th:text="${enrollment.student?.name}">John Doe</td>
+                            <td th:text="${enrollment.course?.name}">CS101</td>
+                            <td th:text="${enrollment.enrollmentDate}">2024-01-01</td>
+                            <td th:text="${enrollment.status}">Active</td>
+                            <td>
+                                <a th:href="@{/enrollments/edit/{id}(id=${enrollment.id})}" class="btn btn-small btn-edit">Edit</a>
+                                <a th:href="@{/enrollments/delete/{id}(id=${enrollment.id})}" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Learning Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

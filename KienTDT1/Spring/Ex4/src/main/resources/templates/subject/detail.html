@@ -1,0 +1,47 @@
+<div th:fragment="content">
+    <h2 th:text="${subject.subjectName} + ' (' + ${subject.subjectCode} + ')'">Subject</h2>
+
+    <h3>Materials</h3>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>File Name</th>
+                <th>Description</th>
+                <th>Size</th>
+                <th>Upload Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="m : ${materials}">
+                <td th:text="${m.id}"></td>
+                <td th:text="${m.fileName}"></td>
+                <td th:text="${m.description}"></td>
+                <td th:text="${m.fileSize}"></td>
+                <td th:text="${m.uploadDate}"></td>
+                <td>
+                    <a th:href="@{/materials/download/{id}(id=${m.id})}">Download</a>
+                    |
+                    <a th:href="@{/materials/delete/{id}(id=${m.id})}" onclick="return confirm('Do you want to delete this material?');">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Upload Material</h3>
+    <form th:action="@{/materials/upload}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="subject.id" th:value="${subject.id}" />
+        <div>
+            <label>Description</label>
+            <input type="text" name="description" required />
+        </div>
+        <div>
+            <label>File</label>
+            <input type="file" name="file" accept=".pdf,.docx,.pptx,.zip,.txt" required />
+        </div>
+        <div>
+            <button type="submit">Upload Material</button>
+        </div>
+    </form>
+</div>
