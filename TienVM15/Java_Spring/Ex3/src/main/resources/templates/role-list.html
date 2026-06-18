@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" th:replace="~{layout :: html}">
+<head>
+    <title>Role Management - Security System</title>
+</head>
+<body>
+    <div th:fragment="body">
+        
+        <div class="card">
+            <div class="card-title">
+                <span>Role Management System</span>
+                <a th:href="@{/roles/create}" class="btn btn-primary" style="padding: 8px 16px;">
+                    <i class="bi bi-key-fill"></i> Add New Role
+                </a>
+            </div>
+
+            <div class="card-body" style="padding: 0;">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 120px;">Role ID</th>
+                                <th>Role Name</th>
+                                <th style="width: 200px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="r : ${allRoles}">
+                                <td th:text="${r.id}">1</td>
+                                <td>
+                                    <strong th:text="${r.name}" style="color: #0f172a;">SUPER_ADMIN</strong>
+                                </td>
+                                <td>
+                                    <!-- Edit -->
+                                    <a th:href="@{/roles/edit/{id}(id=${r.id})}" class="action-link action-edit">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    
+                                    <!-- Delete (except critical system roles) -->
+                                    <span th:if="${r.name == 'SUPER_ADMIN' || r.name == 'ADMIN' || r.name == 'TEACHER'}" 
+                                          style="color: var(--text-muted); font-size: 13px;">
+                                        <i class="bi bi-trash-fill" style="opacity: 0.5;"></i> System
+                                    </span>
+                                    <a th:unless="${r.name == 'SUPER_ADMIN' || r.name == 'ADMIN' || r.name == 'TEACHER'}" 
+                                       th:href="@{/roles/delete/{id}(id=${r.id})}" 
+                                       class="action-link action-delete"
+                                       onclick="return confirm('Are you sure you want to delete this role?');">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

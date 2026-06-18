@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Courses Management - LMS Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="form-container">
+            <div class="form-header">
+                <h3>Courses Management</h3>
+            </div>
+
+            <div class="course-list" style="padding: 20px;">
+                <div th:if="${#lists.isEmpty(courses)}" class="empty-state">
+                    <p>No courses found. <a th:href="@{/courses/new}">Add a new Course</a>.</p>
+                </div>
+
+                <table th:if="${!#lists.isEmpty(courses)}" class="lessons-table">
+                    <thead>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Start Date</th>
+                            <th>Course Name</th>
+                            <th>Category</th>
+                            <th>Instructor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="c : ${courses}">
+                            <td th:text="${c.id.courseCode}">CRS101</td>
+                            <td th:text="${#temporals.format(c.id.startDate, 'dd/MM/yyyy')}">15/10/2023</td>
+                            <td th:text="${c.courseName}">Java Web Development</td>
+                            <td th:text="${c.category}">Technology</td>
+                            <td th:text="${c.instructor}">Dr. Nguyen Van A</td>
+                            <td class="actions">
+                                <a th:href="@{/courses/{code}/lessons(code=${c.id.courseCode}, startDate=${c.id.startDate})}"
+                                   class="link-edit">Lessons</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="page-label">Courses Management Screen</div>
+    </div>
+</body>
+</html>

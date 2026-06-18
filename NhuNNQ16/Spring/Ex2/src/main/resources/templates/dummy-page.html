@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::main}, ${pageTitle})}">
+<body>
+    <main class="animated-fade">
+        
+        <!-- Reusable Generic Toolbar (Matches Image 6) -->
+        <div th:replace="~{fragments/crud-toolbar :: toolbar(
+            ${pageTitle}, 
+            @{/__${entityName}__/create}, 
+            @{/__${entityName}__/export}, 
+            @{/__${entityName}__/import}, 
+            ${createButtonText}
+        )}"></div>
+
+        <!-- Placeholder Body Card -->
+        <div class="p-5 glass-panel mt-4 text-center">
+            <div class="mb-4">
+                <i class="bi bi-window-sidebar" style="font-size: 4.5rem; color: var(--primary);"></i>
+            </div>
+            
+            <h2 class="fw-bold mb-3 text-dark" th:text="${pageTitle}">Module Page</h2>
+            
+            <p class="text-muted mx-auto mb-4" style="max-width: 600px;">
+                This page is rendered dynamically using a generic Thymeleaf page template. The title, buttons, and API paths are dynamically populated by the controller depending on which menu option was selected.
+            </p>
+            
+            <div class="d-inline-flex align-items-center gap-2 px-4 py-2 bg-light border rounded-pill">
+                <span class="badge bg-secondary rounded-pill px-2 py-1" th:text="${entityName}">module</span>
+                <small class="text-muted">Route: </small>
+                <code class="text-primary" th:text="'/' + ${entityName}">/route</code>
+            </div>
+
+            <!-- Demo alerts to make the page feel functional -->
+            <div class="row mt-5 text-start justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="p-4 rounded-3 bg-light border">
+                        <h5 class="fw-bold mb-3 d-flex align-items-center gap-2 text-warning">
+                            <i class="bi bi-info-circle"></i> Developer Sandbox Info
+                        </h5>
+                        <p class="small text-muted mb-0">
+                            In a real-world implementation, this route would load database results specific to the <strong><span th:text="${pageTitle}">Module</span></strong> table entity. Currently, the menu item works perfectly because the routing correctly resolved this view from the DB-defined URL parameter.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

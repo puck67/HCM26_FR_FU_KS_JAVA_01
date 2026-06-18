@@ -1,0 +1,80 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card-header-flex">
+        <h2 class="card-title">Chi tiết Học viên (Student Details)</h2>
+        <a th:href="@{/students}" class="btn btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Quay lại danh sách
+        </a>
+    </div>
+
+    <div class="detail-grid">
+        <!-- Student Information Card -->
+        <div class="card">
+            <h3 class="card-title" style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Hồ sơ học viên</h3>
+            <ul class="info-list">
+                <li class="info-item">
+                    <span class="info-label">Mã học viên (ID):</span>
+                    <span class="info-value" th:text="${student.id}">123</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Họ và tên:</span>
+                    <span class="info-value" th:text="${student.name}">John Doe</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Tuổi:</span>
+                    <span class="info-value" th:text="${student.age}">21 tuổi</span>
+                </li>
+                <li class="info-item">
+                    <span class="info-label">Số lớp tham gia:</span>
+                    <span class="info-value" th:text="${#lists.size(enrolledCourses)}">2</span>
+                </li>
+            </ul>
+
+            <div style="margin-top: 25px; display: flex; gap: 8px;">
+                <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-primary" style="flex: 1; justify-content: center; background-color: var(--accent-purple);">Chỉnh sửa</a>
+                <a th:href="@{/enrollments/enroll}" class="btn btn-success" style="flex: 1; justify-content: center;">Đăng ký học</a>
+            </div>
+        </div>
+
+        <!-- Enrolled Courses Card -->
+        <div class="card">
+            <h3 class="card-title" style="font-size: 18px; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Các khóa học đã đăng ký</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã KH (ID)</th>
+                            <th>Tên khóa học</th>
+                            <th>Tín chỉ</th>
+                            <th style="text-align: right;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${enrolledCourses}">
+                            <td th:text="${course.id}">1</td>
+                            <td>
+                                <a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${course.title}" style="color: var(--accent-purple); text-decoration: none; font-weight: 600;">Lập trình Java</a>
+                            </td>
+                            <td th:text="${course.credit}">3</td>
+                            <td>
+                                <div class="btn-group" style="justify-content: flex-end;">
+                                    <a th:href="@{/courses/details/{id}(id=${course.id})}" class="btn btn-sm btn-secondary">Chi tiết</a>
+                                    <form th:action="@{/enrollments/unenroll}" method="post" style="display: inline;" 
+                                          onsubmit="return confirm('Bạn có chắc chắn muốn hủy đăng ký lớp này cho học viên?');">
+                                        <input type="hidden" name="studentId" th:value="${student.id}">
+                                        <input type="hidden" name="courseId" th:value="${course.id}">
+                                        <input type="hidden" name="redirectUri" th:value="'/students/details/' + ${student.id}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Hủy học</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(enrolledCourses)}">
+                            <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 30px;">Học viên này chưa đăng ký khóa học nào.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

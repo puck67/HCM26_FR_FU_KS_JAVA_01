@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Materials - LMS Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #1e1b4b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-primary: #6366f1;
+            --accent-secondary: #a855f7;
+            --btn-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --btn-hover-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+            --error-color: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.1);
+            --error-border: rgba(248, 113, 113, 0.2);
+            --success-color: #34d399;
+            --success-bg: rgba(52, 211, 153, 0.1);
+            --success-border: rgba(52, 211, 153, 0.2);
+            --focus-ring: rgba(99, 102, 241, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 50px 20px;
+            overflow-x: hidden;
+        }
+
+        .ambient-glow-1 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0) 70%);
+            bottom: -100px;
+            right: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .logo-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 64px;
+            height: 64px;
+            background: var(--btn-gradient);
+            border-radius: 18px;
+            font-size: 26px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffffff, #e0e7ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 17px;
+            color: var(--text-secondary);
+        }
+
+        /* Message Alerts */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .alert-error {
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: var(--error-color);
+        }
+
+        .alert-success {
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: var(--success-color);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dashboard Grid Layout */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-card h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 12px;
+        }
+
+        .section-card h2 i {
+            color: var(--accent-primary);
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+            background: rgba(17, 24, 39, 0.8);
+        }
+
+        /* File Upload Input Wrapper */
+        .file-upload-zone {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            background: rgba(17, 24, 39, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .file-upload-zone:hover {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .file-upload-zone i {
+            font-size: 36px;
+            color: var(--accent-primary);
+            margin-bottom: 12px;
+        }
+
+        .file-upload-zone span.primary-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .file-upload-zone span.secondary-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .file-upload-zone input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Upload button */
+        .submit-btn {
+            background: var(--btn-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: var(--btn-hover-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        /* Uploaded materials list */
+        .materials-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 550px;
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        /* Custom scrollbar */
+        .materials-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .materials-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+        .materials-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .materials-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .material-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .material-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateX(4px);
+        }
+
+        .file-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Color code file icon based on file extension mockup */
+        .icon-pdf {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.15);
+        }
+        .icon-generic {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        .material-details {
+            flex-grow: 1;
+            min-width: 0; /* allows text truncation */
+        }
+
+        .material-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .material-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .material-filename {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--accent-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .download-btn:hover {
+            background: var(--btn-gradient);
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            transform: scale(1.05);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-icon">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h1>Assessment Materials</h1>
+            <p>Upload and manage learning assets and guides for course assessments</p>
+        </div>
+
+        <!-- Success & Error Alerts -->
+        <div th:if="${errorMessage}" class="alert alert-error">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <span th:text="${errorMessage}">Error Message</span>
+        </div>
+        <div th:if="${successMessage}" class="alert alert-success">
+            <i class="fa-solid fa-circle-check"></i>
+            <span th:text="${successMessage}">Success Message</span>
+        </div>
+
+        <!-- Dashboard Content Grid -->
+        <div class="dashboard-grid">
+            
+            <!-- Upload Form -->
+            <div class="section-card">
+                <h2><i class="fa-solid fa-cloud-arrow-up"></i> Upload Material</h2>
+                <form action="#" th:action="@{/assessments/upload}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Material Title</label>
+                        <input type="text" id="title" name="title" placeholder="e.g., Assignment Brief - Week 3" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" placeholder="Briefly describe what this file is for..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upload File</label>
+                        <div class="file-upload-zone" id="drop-zone">
+                            <i class="fa-solid fa-file-arrow-up"></i>
+                            <span class="primary-text" id="file-name-label">Choose a file or drag & drop</span>
+                            <span class="secondary-text">PDF, DOCX, ZIP or generic data files</span>
+                            <input type="file" name="file" id="file-input" required onchange="displayFileName()" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                        <span>Upload Assessment</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Uploaded Materials List -->
+            <div class="section-card">
+                <h2><i class="fa-solid fa-list-check"></i> Uploaded Materials</h2>
+                <div class="materials-list">
+                    
+                    <!-- Display empty state if list is empty -->
+                    <div th:if="${#lists.isEmpty(assessments)}" class="empty-state">
+                        <i class="fa-solid fa-box-open"></i>
+                        <p>No materials uploaded yet. Use the form on the left to add materials.</p>
+                    </div>
+
+                    <!-- Material Cards loop -->
+                    <div th:each="material : ${assessments}" class="material-card">
+                        <!-- File Icon dynamically styled -->
+                        <div class="file-icon" th:classappend="${#strings.endsWith(#strings.toLowerCase(material.fileName), '.pdf')} ? 'icon-pdf' : 'icon-generic'">
+                            <i class="fa-solid" th:classappend="${#strings.endsWith(#strings.toLowerCase(material.fileName), '.pdf')} ? 'fa-file-pdf' : 'fa-file-lines'"></i>
+                        </div>
+                        
+                        <div class="material-details">
+                            <div class="material-title" th:text="${material.title}">Material Title</div>
+                            <div class="material-desc" th:text="${material.description}">Material description goes here...</div>
+                            <div class="material-filename">
+                                <i class="fa-solid fa-paperclip"></i>
+                                <span th:text="${material.fileName}">filename.pdf</span>
+                            </div>
+                        </div>
+
+                        <!-- Download Link -->
+                        <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}" class="download-btn" title="Download Resource">
+                            <i class="fa-solid fa-download"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript to update file input label -->
+    <script>
+        function displayFileName() {
+            const fileInput = document.getElementById('file-input');
+            const fileLabel = document.getElementById('file-name-label');
+            if (fileInput.files.length > 0) {
+                fileLabel.textContent = fileInput.files[0].name;
+                fileLabel.style.color = '#34d399'; // subtle green highlighting when selected
+            } else {
+                fileLabel.textContent = 'Choose a file or drag & drop';
+                fileLabel.style.color = '';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout(~{::title}, ~{::#lesson-detail-content})}">
+<head>
+    <title>Chi tiết Bài học - LMS</title>
+</head>
+<body>
+    <div id="lesson-detail-content">
+        <!-- Course Summary Section -->
+        <div class="page-card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+            <h2 class="card-title" style="margin-bottom: 0.75rem;"><i class="fa-solid fa-graduation-cap"></i> Course Summary</h2>
+            <div class="summary-box">
+                <div class="summary-item">
+                    <span class="summary-label">Mã khóa học / Course ID</span>
+                    <span class="summary-val" th:text="${course.course_code}">CRS101</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Ngày khai giảng / Start Date</span>
+                    <span class="summary-val" th:text="${#dates.format(course.start_date, 'dd/MM/yyyy')}">15/10/2023</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Tên khóa học / Course Name</span>
+                    <span class="summary-val" th:text="${course.course_name}">Java Web Development</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Chuyên ngành / Category</span>
+                    <span class="summary-val" th:text="${course.category}">Technology</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit Lesson Form Card -->
+        <div class="page-card">
+            <div class="card-header">
+                <h2 class="card-title" th:text="${lesson.id != null} ? 'Sửa bài học (Edit Lesson)' : 'Thêm chi tiết bài học (Add/Edit Lesson Detail)'">Add/Edit Lesson Detail</h2>
+            </div>
+            
+            <form th:action="@{/courses/{code}/{date}/lessons/save(code=${course.course_code}, date=${#dates.format(course.start_date, 'yyyy-MM-dd')})}" th:object="${lesson}" method="post">
+                <!-- Hidden input for edit mode -->
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="form-grid">
+                    <!-- Lesson Name -->
+                    <div class="form-group">
+                        <label for="lesson_name">Tên bài học / Lesson Name</label>
+                        <input type="text" id="lesson_name" th:field="*{lesson_name}" placeholder="e.g. Intro to Java" required>
+                    </div>
+
+                    <!-- Duration -->
+                    <div class="form-group">
+                        <label for="duration">Thời lượng / Duration (mins)</label>
+                        <input type="number" id="duration" th:field="*{duration}" placeholder="e.g. 60" min="1" required>
+                    </div>
+
+                    <!-- Content Type -->
+                    <div class="form-group">
+                        <label for="content_type">Loại nội dung / Content Type</label>
+                        <select id="content_type" th:field="*{content_type}" required>
+                            <option value="VIDEO">Video</option>
+                            <option value="THEORY">Lý thuyết</option>
+                            <option value="PRACTICE">Thực hành</option>
+                        </select>
+                    </div>
+
+                    <!-- Status -->
+                    <div class="form-group">
+                        <label for="status">Trạng thái / Status</label>
+                        <select id="status" th:field="*{status}" required>
+                            <option value="DRAFT">Bản nháp</option>
+                            <option value="UNLOCKED">Đang mở</option>
+                            <option value="LOCKED">Đã khóa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary" th:text="${lesson.id != null} ? 'Update Lesson' : 'Save Lesson'">Save Lesson</button>
+                    <a th:href="@{/courses/{code}/{date}/lessons(code=${course.course_code}, date=${#dates.format(course.start_date, 'yyyy-MM-dd')})}" class="btn btn-secondary" th:if="${lesson.id != null}">Cancel Edit</a>
+                    <a th:href="@{/courses}" class="btn btn-secondary" th:if="${lesson.id == null}">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Lessons List Card -->
+        <div class="page-card">
+            <div class="card-header">
+                <h2 class="card-title">List of Lessons for <span th:text="${course.course_code}">CRS101</span></h2>
+            </div>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Lesson Name</th>
+                            <th>Duration (mins)</th>
+                            <th>Content Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="l, stat : ${lessons}">
+                            <td th:text="${stat.index + 1}">1</td>
+                            <td th:text="${l.lesson_name}" style="font-weight: 500;">Intro to Java</td>
+                            <td th:text="${l.duration}">60</td>
+                            <td>
+                                <span th:if="${l.content_type.name() == 'VIDEO'}" class="badge badge-video">Video</span>
+                                <span th:if="${l.content_type.name() == 'THEORY'}" class="badge badge-theory">Lý thuyết</span>
+                                <span th:if="${l.content_type.name() == 'PRACTICE'}" class="badge badge-practice">Thực hành</span>
+                            </td>
+                            <td>
+                                <span th:if="${l.status.name() == 'DRAFT'}" class="badge badge-draft">Bản nháp</span>
+                                <span th:if="${l.status.name() == 'UNLOCKED'}" class="badge badge-unlocked">Đang mở</span>
+                                <span th:if="${l.status.name() == 'LOCKED'}" class="badge badge-locked">Đã khóa</span>
+                            </td>
+                            <td class="action-links">
+                                <a th:href="@{/courses/{code}/{date}/lessons/edit/{id}(code=${course.course_code}, date=${#dates.format(course.start_date, 'yyyy-MM-dd')}, id=${l.id})}" class="action-link"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                                <a href="#" th:data-delete-url="@{/courses/{code}/{date}/lessons/delete/{id}(code=${course.course_code}, date=${#dates.format(course.start_date, 'yyyy-MM-dd')}, id=${l.id})}" class="action-link delete" onclick="confirmDelete(this)"><i class="fa-solid fa-trash-can"></i> Delete</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(lessons)}">
+                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">Chưa có bài học nào được đăng ký cho khóa học này.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Custom Delete Confirmation Modal -->
+        <div id="deleteModal" class="modal-overlay">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <span class="modal-header-icon"><i class="fa-solid fa-circle-question"></i></span>
+                    <span class="modal-header-title">Confirm Delete</span>
+                </div>
+                <div class="modal-body">
+                    Do you want to delete this lesson?
+                </div>
+                <div class="modal-footer">
+                    <a id="btnConfirmDelete" href="#" class="btn btn-danger">Yes</a>
+                    <button class="btn btn-secondary" onclick="closeModal()">No</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Javascript to handle modal dialog -->
+        <script>
+            function confirmDelete(element) {
+                var deleteUrl = element.getAttribute('data-delete-url');
+                document.getElementById('btnConfirmDelete').setAttribute('href', deleteUrl);
+                document.getElementById('deleteModal').classList.add('show');
+            }
+
+            function closeModal() {
+                document.getElementById('deleteModal').classList.remove('show');
+            }
+        </script>
+    </div>
+</body>
+</html>

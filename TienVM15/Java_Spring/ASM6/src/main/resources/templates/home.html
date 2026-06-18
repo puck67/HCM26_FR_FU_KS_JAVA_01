@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main th:with="activePage='home'">
+        <div class="grid-layout">
+            <!-- Left Side: Courses -->
+            <div>
+                <div class="card" style="margin-bottom: 2rem; border-color: rgba(99, 102, 241, 0.2);">
+                    <h2 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">Recent Published Courses</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem;">Browse and expand your skillset with peer-reviewed modules.</p>
+                </div>
+
+                <div th:each="course : ${coursePage.content}" class="card course-item">
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="course-title" th:text="${course.title}">Course Title</a>
+                    <div class="course-meta">
+                        <span><i class="fa-regular fa-user" style="margin-right: 0.25rem;"></i> Instructor</span>
+                        <span>
+                            <i class="fa-regular fa-tag" style="margin-right: 0.25rem;"></i>
+                            <span th:each="tag : ${#strings.arraySplit(course.category, ',')}" 
+                                  th:text="${tag.trim()}" class="badge badge-tag">Tag</span>
+                        </span>
+                    </div>
+                    <p class="course-desc" th:text="${course.description}">Short description of the course.</p>
+                    <a th:href="@{/courses/{id}(id=${course.id})}" class="btn-action-primary">
+                        View Course Details
+                        <i class="fa-solid fa-arrow-right-long"></i>
+                    </a>
+                </div>
+
+                <!-- Empty State -->
+                <div th:if="${coursePage.isEmpty()}" class="card" style="text-align: center; padding: 4rem 0;">
+                    <i class="fa-regular fa-circle-xmark" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
+                    <p style="color: var(--text-muted);">No courses published yet.</p>
+                </div>
+
+                <!-- Pagination -->
+                <div th:if="${coursePage.totalPages > 1}" class="pagination">
+                    <a th:href="@{/(page=${coursePage.number - 1})}" th:if="${coursePage.hasPrevious()}" class="page-item">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                    <a th:each="i : ${#numbers.sequence(0, coursePage.totalPages - 1)}" 
+                       th:href="@{/(page=${i})}" th:text="${i + 1}"
+                       class="page-item" th:classappend="${i == coursePage.number} ? 'active'">1</a>
+                    <a th:href="@{/(page=${coursePage.number + 1})}" th:if="${coursePage.hasNext()}" class="page-item">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Sidebar: Categories & Recent Reviews -->
+            <aside>
+                <!-- Category Cloud Card -->
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fa-solid fa-tags"></i>
+                        Categories
+                    </h3>
+                    <div class="tag-cloud">
+                        <a th:each="category : ${categories}" 
+                           th:href="@{/categories/{name}(name=${category.name})}"
+                           class="tag-cloud-item">
+                            <span th:text="${category.name}">Tag</span>
+                            <span th:text="${'(' + category.frequency + ')'}" style="font-size: 0.75rem; color: #818cf8; margin-left: 0.25rem;">(1)</span>
+                        </a>
+                    </div>
+                    <div th:if="${#lists.isEmpty(categories)}" style="font-size: 0.85rem; color: var(--text-muted);">
+                        No categories found.
+                    </div>
+                </div>
+
+                <!-- Recent Reviews Card -->
+                <div class="card">
+                    <h3 class="card-title">
+                        <i class="fa-regular fa-comments"></i>
+                        Recent Reviews
+                    </h3>
+                    <div th:each="review : ${recentReviews}" class="review-item">
+                        <div class="review-header">
+                            <span class="review-author" th:text="${review.authorName}">Author</span>
+                            <span class="review-stars">
+                                <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                                   class="fa-star" th:classappend="${star <= review.rating} ? 'fa-solid' : 'fa-regular'"></i>
+                            </span>
+                        </div>
+                        <p class="review-content" th:text="${#strings.abbreviate(review.content, 80)}">Review content snippet.</p>
+                        <a th:href="@{/courses/{id}(id=${review.course.id})}" style="font-size: 0.75rem; color: #818cf8; text-decoration: none; display: inline-block; margin-top: 0.25rem;" 
+                           th:text="${'On: ' + review.course.title}">On Course Title</a>
+                    </div>
+                    <div th:if="${#lists.isEmpty(recentReviews)}" style="font-size: 0.85rem; color: var(--text-muted); text-align: center; padding: 1rem 0;">
+                        No approved reviews yet.
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

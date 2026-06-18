@@ -1,0 +1,42 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <div class="card" style="text-align: left;">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 20px;">
+            <h3 style="font-size: 1.1rem; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Quản lý Khóa học (Courses Management)</h3>
+            <a th:href="@{/courses/create}" class="btn btn-primary" style="background-color: var(--accent-blue); color: #ffffff; border: none; border-radius: 6px; padding: 8px 16px; font-weight: 600; text-decoration: none; font-size: 13px; cursor: pointer; transition: background-color 0.2s;">+ Thêm Khóa học</a>
+        </div>
+        
+        <div class="table-responsive">
+            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Mã khóa học</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Ngày khai giảng</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Tên khóa học</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Chuyên ngành</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Giảng viên</th>
+                        <th style="padding: 12px 15px; color: var(--text-muted); font-weight: 600; font-size: 13px;">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${courses}" style="border-bottom: 1px solid rgba(255, 255, 255, 0.04);">
+                        <td style="padding: 14px 15px; font-size: 14px; color: #ffffff; font-weight: 500;" th:text="${c.id.courseCode}">CRS101</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${#temporals.format(c.id.startDate, 'dd/MM/yyyy')}">15/10/2023</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${c.courseName}">Java Web</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${c.category}">Technology</td>
+                        <td style="padding: 14px 15px; font-size: 14px;" th:text="${c.instructor}">Dr. A</td>
+                        <td style="padding: 14px 15px; font-size: 14px;">
+                            <!-- Lesson Detail Link -->
+                            <a th:href="@{/lesson/detail(courseCode=${c.id.courseCode}, startDate=${c.id.startDate})}" 
+                               style="color: var(--accent-blue); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+                                Lesson Detail
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(courses)}">
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px; font-size: 14px;">Chưa có khóa học nào được đăng ký.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

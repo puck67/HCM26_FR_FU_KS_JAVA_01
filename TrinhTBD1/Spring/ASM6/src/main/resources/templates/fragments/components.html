@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<nav th:fragment="pagination(page, url)"
+     th:if="${page != null && page.totalPages > 1}"
+     aria-label="Page navigation"
+     class="d-flex justify-content-center mt-4">
+    <ul class="pagination">
+
+        
+        <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
+            <a class="page-link"
+               th:href="@{__${url}__(page=0)}"
+               aria-label="First">&laquo;&laquo;</a>
+        </li>
+
+        
+        <li class="page-item" th:classappend="${page.first ? 'disabled' : ''}">
+            <a class="page-link"
+               th:href="@{__${url}__(page=${page.number - 1})}"
+               aria-label="Previous">&lsaquo;</a>
+        </li>
+
+        
+        <li class="page-item"
+            th:each="i : ${#numbers.sequence(
+                            (page.number > 2 ? page.number - 2 : 0),
+                            (page.number + 2 < page.totalPages - 1 ? page.number + 2 : page.totalPages - 1))}"
+            th:classappend="${i == page.number ? 'active' : ''}">
+            <a class="page-link"
+               th:href="@{__${url}__(page=${i})}"
+               th:text="${i + 1}">1</a>
+        </li>
+
+        
+        <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
+            <a class="page-link"
+               th:href="@{__${url}__(page=${page.number + 1})}"
+               aria-label="Next">&rsaquo;</a>
+        </li>
+
+        
+        <li class="page-item" th:classappend="${page.last ? 'disabled' : ''}">
+            <a class="page-link"
+               th:href="@{__${url}__(page=${page.totalPages - 1})}"
+               aria-label="Last">&raquo;&raquo;</a>
+        </li>
+
+    </ul>
+</nav>
+
+
+
+<div th:fragment="alert-panel">
+
+    <div th:if="${param.created}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i><strong>Tạo mới thành công!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.updated}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i><strong>Cập nhật thành công!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.deleted}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-trash me-2"></i><strong>Xóa thành công!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.published}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i><strong>Đã phát hành thành công!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.unpublished}" class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-minus me-2"></i><strong>Đã chuyển về Draft!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.archived}" class="alert alert-secondary alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-box-archive me-2"></i><strong>Đã lưu trữ thành công!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.approved}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-thumbs-up me-2"></i><strong>Đã duyệt đánh giá!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${param.reviewSubmitted}" class="alert alert-info alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-paper-plane me-2"></i>
+        <strong>Cảm ơn bạn!</strong> Đánh giá của bạn đang chờ duyệt.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+</div>
+
+
+
+<span th:fragment="star-rating(rating)" class="stars-display">
+    <i th:each="i : ${#numbers.sequence(1, 5)}"
+       th:class="${i <= rating ? 'fa-solid fa-star' : 'fa-regular fa-star'}"
+       th:style="${i <= rating ? 'color:#fbbf24' : 'color:#e2e8f0'}"></i>
+</span>
+
+
+
+<span th:fragment="status-badge(status, type)"
+      class="badge badge-custom"
+      th:with="
+        isCourse=${type == 'course'},
+        isReview=${type == 'review'},
+        label=${isCourse ?
+                    (status == 1 ? 'Draft' : (status == 2 ? 'Published' : 'Archived')) :
+                    (status == 1 ? 'Pending' : 'Approved')},
+        cssClass=${isCourse ?
+                    (status == 1 ? 'badge-draft' : (status == 2 ? 'badge-published' : 'badge-archived')) :
+                    (status == 1 ? 'bg-warning text-dark' : 'bg-success text-white')}"
+      th:classappend="${cssClass}"
+      th:text="${label}">
+    Status
+</span>
+
+
+
+<div th:fragment="empty-state(message)"
+     class="alert alert-light border py-5 text-center text-muted">
+    <i class="fa-solid fa-inbox fa-2x mb-3 d-block text-secondary"></i>
+    <p class="mb-0" th:text="${message}">No records found.</p>
+</div>
+
+
+
+<div th:fragment="category-cloud(categories, selected)" class="category-cloud">
+    <div th:if="${categories == null || categories.isEmpty()}" class="text-muted py-3">
+        Chưa có danh mục nào.
+    </div>
+    <a th:each="cat : ${categories}"
+       th:href="@{/categories(name=${cat.name})}"
+       th:classappend="${'category-item cat-size-' + (cat.frequency > 5 ? 5 : cat.frequency)}
+                       + ${selected == cat.name ? ' fw-bold text-decoration-underline' : ''}"
+       th:text="${cat.name}">Category</a>
+</div>
+
+</body>
+</html>

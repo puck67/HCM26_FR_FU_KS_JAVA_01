@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="sidebar" class="sidebar d-flex flex-column flex-shrink-0 p-3 text-white" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <i class="bi bi-list me-2 fs-4"></i>
+        <span class="fs-4">Menu Admin</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <!-- Loop over root menus -->
+        <th:block th:each="menu : ${sidebarMenus}">
+            <!-- Parent Menu without children -->
+            <li th:if="${#lists.isEmpty(menu.children)}" class="nav-item">
+                <a th:href="@{${menu.url != null ? menu.url : '#'}}" class="nav-link text-white" aria-current="page">
+                    <i th:class="${menu.icon + ' me-2'}"></i>
+                    <span th:text="${menu.name}">Menu Name</span>
+                </a>
+            </li>
+
+            <!-- Parent Menu with children -->
+            <li th:unless="${#lists.isEmpty(menu.children)}" class="nav-item">
+                <a th:href="'#collapse' + ${menu.id}" class="nav-link text-white dropdown-toggle" data-bs-toggle="collapse" aria-expanded="false">
+                    <i th:class="${menu.icon + ' me-2'}"></i>
+                    <span th:text="${menu.name}">Menu Name</span>
+                </a>
+                <div class="collapse" th:id="'collapse' + ${menu.id}">
+                    <ul class="nav flex-column ms-3 mt-1">
+                        <li th:each="child : ${menu.children}" class="nav-item">
+                            <a th:href="@{${child.url != null ? child.url : '#'}}" class="nav-link text-white">
+                                <i th:class="${child.icon + ' me-2'}"></i>
+                                <span th:text="${child.name}">Child Menu</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </th:block>
+    </ul>
+    <hr>
+    <div class="dropdown">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none">
+            <strong>Admin User</strong>
+        </a>
+    </div>
+</div>
+</body>
+</html>

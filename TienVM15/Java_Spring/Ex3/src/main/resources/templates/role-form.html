@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>Role Form - Security System</title>
+</head>
+<body>
+    <div th:fragment="body">
+
+        <!-- Error banner -->
+        <div th:if="${errorMessage}" class="alert-box alert-danger">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 20px;"></i>
+            <span th:text="${errorMessage}">Error message</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header" th:text="${role.id != null} ? 'Edit Role Details' : 'Create New System Role'">
+                Create New System Role
+            </div>
+            
+            <div class="card-body">
+                <form th:action="@{/roles/save}" method="post" th:object="${role}">
+                    <!-- Hidden ID -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-grid">
+                        <!-- Role Name -->
+                        <div class="form-group full-width">
+                            <label for="name">Role Name (Tên vai trò)</label>
+                            <input type="text" id="name" th:field="*{name}" required placeholder="e.g. STUDENT, ASSISTANT (Upper Case recommended)"
+                                   th:readonly="${role.name == 'SUPER_ADMIN' || role.name == 'ADMIN' || role.name == 'TEACHER'}">
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary" style="width: auto;">
+                            <i class="bi bi-save"></i> Save Role
+                        </button>
+                        <a th:href="@{/roles}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

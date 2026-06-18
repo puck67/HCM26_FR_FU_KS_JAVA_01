@@ -1,0 +1,13 @@
+# Maven build output
+target/
+
+# Eclipse / VS Code Java compiler build output
+bin/
+db/
+# Local VS Code settings (optional, but recommended to ignore if they contain personal preferences)
+.vscode/
+
+# Temporary and OS-specific files
+*.log
+.DS_Store
+Thumbs.db

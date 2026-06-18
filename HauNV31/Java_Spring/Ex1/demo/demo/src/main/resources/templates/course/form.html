@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Add Course - LMS Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span class="alert-icon">✅</span>
+            <span th:text="${successMessage}">Add a new Course successfully!</span>
+        </div>
+
+        <!-- Lesson Detail Link -->
+        <div th:if="${savedCourse != null}">
+            <div class="lesson-detail-link">
+                <a th:href="@{/courses/{code}/lessons(code=${savedCourse.id.courseCode}, startDate=${savedCourse.id.startDate})}"
+                   class="btn-link">
+                    Lesson Detail
+                </a>
+                <span class="link-vi">Thêm chi tiết bài học</span>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="form-header">
+                <h3>Create New Course</h3>
+            </div>
+
+            <form th:action="@{/courses/save}" th:object="${course}" method="post" class="course-form">
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="courseCode">Mã khóa học / Course ID</label>
+                        <input type="text" id="courseCode" name="courseCode" th:value="*{id?.courseCode}"
+                               placeholder="CRS101" required class="form-control">
+                    </div>
+                    <div class="form-group half">
+                        <label for="startDate">Ngày khai giảng / Start Date</label>
+                        <input type="date" id="startDate" name="startDate" th:value="*{id?.startDate}"
+                               required class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="courseName">Tên khóa học / Course Name</label>
+                    <input type="text" id="courseName" name="courseName" th:value="*{courseName}"
+                           placeholder="Java Web Development" required class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Danh mục / Category</label>
+                    <select id="category" name="category" required class="form-control">
+                        <option value="" disabled selected>-- Chọn danh mục --</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                        <option value="Design">Design</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Language">Language</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="instructor">Giảng viên / Instructor</label>
+                    <input type="text" id="instructor" name="instructor" th:value="*{instructor}"
+                           placeholder="Dr. Nguyen Van A" required class="form-control">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                    <a th:href="@{/}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="page-label">Add a new Course (Course Detail Screen)</div>
+    </div>
+</body>
+</html>

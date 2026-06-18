@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="LMS Management System - Learning Management System based on Spring Framework"/>
+    <title>LMS Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+    <!-- Banner -->
+    <div th:replace="~{fragments/layout :: banner}"></div>
+
+    <div class="main-container">
+        <!-- Menu Left -->
+        <div th:replace="~{fragments/layout :: menuLeft('')}"></div>
+
+        <!-- Body Content -->
+        <main class="body-content">
+            <div class="welcome-section">
+                <h1 class="welcome-title">WELCOME TO LMS MANAGEMENT SYSTEM - BASED ON SPRING FRAMEWORK</h1>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+</body>
+</html>

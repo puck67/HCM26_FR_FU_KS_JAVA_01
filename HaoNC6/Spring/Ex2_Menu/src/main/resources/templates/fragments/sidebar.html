@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+
+<!--
+    Dynamic Sidebar Fragment
+    Renders menu items from database using th:each.
+    Supports up to 3 levels of nested menus (Bonus).
+    NO hard-coded menu items!
+-->
+<div class="sidebar" id="sidebar" th:fragment="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Menu System</span>
+        </div>
+    </div>
+
+    <ul class="sidebar-menu">
+        <!-- ========================================= -->
+        <!-- Level 1: Root menus from database         -->
+        <!-- Uses th:each to dynamically render menus  -->
+        <!-- ========================================= -->
+        <li th:each="menu : ${sidebarMenus}" class="menu-item"
+            th:classappend="${menu.hasChildren()} ? 'has-submenu' : ''">
+
+            <!-- === Root menu WITH children (collapsible) === -->
+            <th:block th:if="${menu.hasChildren()}">
+                <a class="menu-link collapsed"
+                   data-bs-toggle="collapse"
+                   th:attr="data-bs-target='#submenu-' + ${menu.id}"
+                   aria-expanded="false"
+                   href="#">
+                    <i th:class="${menu.icon}" class="menu-icon"></i>
+                    <span th:text="${menu.name}">Menu Name</span>
+                    <i class="fas fa-chevron-down submenu-arrow"></i>
+                </a>
+
+                <ul class="submenu-collapse collapse"
+                    th:id="'submenu-' + ${menu.id}">
+
+                    <!-- ========================================= -->
+                    <!-- Level 2: Child menus                       -->
+                    <!-- ========================================= -->
+                    <li th:each="child : ${menu.children}"
+                        th:if="${child.status}"
+                        class="menu-item"
+                        th:classappend="${child.hasChildren()} ? 'has-submenu' : ''">
+
+                        <!-- === Level 2 menu WITH children (3rd level - Bonus) === -->
+                        <th:block th:if="${child.hasChildren()}">
+                            <a class="menu-link collapsed"
+                               data-bs-toggle="collapse"
+                               th:attr="data-bs-target='#submenu-' + ${child.id}"
+                               aria-expanded="false"
+                               href="#">
+                                <i th:class="${child.icon}" class="menu-icon"></i>
+                                <span th:text="${child.name}">Sub Menu</span>
+                                <i class="fas fa-chevron-down submenu-arrow"></i>
+                            </a>
+
+                            <ul class="submenu-collapse collapse level-3"
+                                th:id="'submenu-' + ${child.id}">
+
+                                <!-- ========================================= -->
+                                <!-- Level 3: Grandchild menus (Bonus)         -->
+                                <!-- ========================================= -->
+                                <li th:each="grandchild : ${child.children}"
+                                    th:if="${grandchild.status}"
+                                    class="menu-item">
+                                    <a th:href="${grandchild.url}" class="menu-link">
+                                        <i th:class="${grandchild.icon}" class="menu-icon"></i>
+                                        <span th:text="${grandchild.name}">Level 3 Menu</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </th:block>
+
+                        <!-- === Level 2 menu WITHOUT children (leaf) === -->
+                        <th:block th:unless="${child.hasChildren()}">
+                            <a th:href="${child.url}" class="menu-link">
+                                <i th:class="${child.icon}" class="menu-icon"></i>
+                                <span th:text="${child.name}">Sub Menu</span>
+                            </a>
+                        </th:block>
+
+                    </li>
+                </ul>
+            </th:block>
+
+            <!-- === Root menu WITHOUT children (direct link) === -->
+            <th:block th:unless="${menu.hasChildren()}">
+                <a th:href="${menu.url}" class="menu-link">
+                    <i th:class="${menu.icon}" class="menu-icon"></i>
+                    <span th:text="${menu.name}">Menu Name</span>
+                </a>
+            </th:block>
+
+        </li>
+    </ul>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+        <a href="/menus" class="menu-link">
+            <i class="fas fa-cog menu-icon"></i>
+            <span>Manage Menus</span>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

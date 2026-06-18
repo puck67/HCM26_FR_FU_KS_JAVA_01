@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment Materials - Upload</title>
+</head>
+<body>
+    <h1>Upload Assessment Material</h1>
+
+    <!-- Success message -->
+    <div th:if="${message}" style="color: green;">
+        <p th:text="${message}"></p>
+    </div>
+
+    <!-- Error message (Task 6) -->
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+
+    <!-- Upload Form (Task 4) -->
+    <form method="post" enctype="multipart/form-data" th:action="@{/assessments/upload}">
+        <div>
+            <label for="title">Title:</label><br/>
+            <input type="text" name="title" id="title" required/>
+        </div>
+        <div>
+            <label for="description">Description:</label><br/>
+            <textarea name="description" id="description" rows="4" cols="50"></textarea>
+        </div>
+        <div>
+            <label for="file">File:</label><br/>
+            <input type="file" name="file" id="file" required/>
+        </div>
+        <div>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+
+    <hr/>
+
+    <!-- Uploaded Materials List (Task 5) -->
+    <h2>Uploaded Materials</h2>
+    <div th:if="${#lists.isEmpty(materials)}">
+        <p>No materials uploaded yet.</p>
+    </div>
+    <table th:if="${!#lists.isEmpty(materials)}" border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="material : ${materials}">
+                <td th:text="${material.id}"></td>
+                <td th:text="${material.title}"></td>
+                <td th:text="${material.description}"></td>
+                <td>
+                    <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}"
+                       th:text="${material.fileName}">Download</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle != null ? pageTitle + ' | Menu System' : 'Menu Management System'}">Dashboard</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+        <div class="container-fluid">
+            <button class="btn btn-link sidebar-toggle text-white me-3" id="sidebarToggle">
+                <i class="fas fa-bars fa-lg"></i>
+            </button>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-cogs me-2"></i>Training System
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#"
+                       id="userDropdown" role="button" data-bs-toggle="dropdown">
+                        <div class="avatar-circle me-2">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span>Admin</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="d-flex" id="wrapper">
+        <!-- Dynamic Sidebar -->
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <div class="content-wrapper p-4">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active"><i class="fas fa-home"></i> Dashboard</li>
+                    </ol>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header mb-4">
+                    <h1 class="page-title">
+                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                    </h1>
+                    <p class="page-subtitle text-muted">Welcome to the Training Management System</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="row g-4 mb-5">
+                    <!-- Total Menus -->
+                    <div class="col-md-4">
+                        <div class="stat-card stat-card-primary">
+                            <div class="stat-card-body">
+                                <div class="stat-icon">
+                                    <i class="fas fa-th-list"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 class="stat-number" th:text="${totalMenus}">0</h3>
+                                    <p class="stat-label">Total Menus</p>
+                                </div>
+                            </div>
+                            <div class="stat-card-footer">
+                                <i class="fas fa-info-circle me-1"></i>
+                                All menu items in the system
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parent Menus -->
+                    <div class="col-md-4">
+                        <div class="stat-card stat-card-success">
+                            <div class="stat-card-body">
+                                <div class="stat-icon">
+                                    <i class="fas fa-folder"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 class="stat-number" th:text="${totalParentMenus}">0</h3>
+                                    <p class="stat-label">Parent Menus</p>
+                                </div>
+                            </div>
+                            <div class="stat-card-footer">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Top-level menu categories
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub Menus -->
+                    <div class="col-md-4">
+                        <div class="stat-card stat-card-warning">
+                            <div class="stat-card-body">
+                                <div class="stat-icon">
+                                    <i class="fas fa-sitemap"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 class="stat-number" th:text="${totalSubMenus}">0</h3>
+                                    <p class="stat-label">Sub Menus</p>
+                                </div>
+                            </div>
+                            <div class="stat-card-footer">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Child menu items
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card action-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-plus-circle me-2 text-primary"></i>Quick Actions</h5>
+                                <div class="d-grid gap-2">
+                                    <a href="/menus/add" class="btn btn-outline-primary">
+                                        <i class="fas fa-plus me-2"></i>Add New Menu
+                                    </a>
+                                    <a href="/menus" class="btn btn-outline-secondary">
+                                        <i class="fas fa-list me-2"></i>Manage All Menus
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card action-card">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-chart-pie me-2 text-success"></i>Menu Distribution</h5>
+                                <div class="distribution-bar">
+                                    <div class="distribution-segment parent-segment"
+                                         th:style="'width: ' + ${totalMenus > 0 ? (totalParentMenus * 100 / totalMenus) : 50} + '%'">
+                                        <span th:text="${totalParentMenus}">0</span> Parent
+                                    </div>
+                                    <div class="distribution-segment sub-segment"
+                                         th:style="'width: ' + ${totalMenus > 0 ? (totalSubMenus * 100 / totalMenus) : 50} + '%'">
+                                        <span th:text="${totalSubMenus}">0</span> Sub
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between mt-2 small text-muted">
+                                    <span><i class="fas fa-circle text-primary me-1"></i>Parent Menus</span>
+                                    <span><i class="fas fa-circle text-warning me-1"></i>Sub Menus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('wrapper').classList.toggle('sidebar-collapsed');
+        });
+
+        // Active menu highlight
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const menuLinks = document.querySelectorAll('.sidebar-menu a');
+            menuLinks.forEach(function(link) {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && currentPath === href) {
+                    link.classList.add('active');
+                    const parentCollapse = link.closest('.submenu-collapse');
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
+                        const parentToggle = document.querySelector('[data-bs-target="#' + parentCollapse.id + '"]');
+                        if (parentToggle) {
+                            parentToggle.classList.remove('collapsed');
+                            parentToggle.setAttribute('aria-expanded', 'true');
+                        }
+                    }
+                }
+            });
+
+            // Animate stat numbers
+            document.querySelectorAll('.stat-number').forEach(function(el) {
+                const target = parseInt(el.textContent);
+                let current = 0;
+                const increment = Math.max(1, Math.floor(target / 30));
+                const timer = setInterval(function() {
+                    current += increment;
+                    if (current >= target) {
+                        el.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = current;
+                    }
+                }, 30);
+            });
+        });
+    </script>
+</body>
+</html>

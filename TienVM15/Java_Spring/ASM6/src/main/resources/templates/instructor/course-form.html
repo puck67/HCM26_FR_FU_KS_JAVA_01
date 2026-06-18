@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- Back button -->
+            <a th:href="@{/instructor/courses}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.3s ease;">
+                <i class="fa-solid fa-arrow-left"></i> Back to Inventory
+            </a>
+
+            <!-- Form Card -->
+            <div class="card">
+                <h2 class="card-title" th:text="${course.id == null ? 'Create New Course' : 'Edit Course'}">Course Form</h2>
+                
+                <form th:action="@{/instructor/courses/save}" method="post" th:object="${course}">
+                    <!-- Hidden field for id -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-group">
+                        <label for="title">Course Title</label>
+                        <input type="text" id="title" th:field="*{title}" class="form-control" placeholder="Enter course title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Short Description</label>
+                        <textarea id="description" th:field="*{description}" class="form-control" placeholder="Write a short summary..." required style="height: 80px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Course Content (Supports Markdown)</label>
+                        <textarea id="content" th:field="*{content}" class="form-control" placeholder="# Heading&#10;&#10;Write detailed curriculum with *markdown* formatting..." required style="height: 250px; font-family: monospace;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Categories (Comma-separated)</label>
+                        <input type="text" id="category" th:field="*{category}" class="form-control" placeholder="e.g. Spring, Java, Backend">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Initial Status</label>
+                        <select id="status" th:field="*{status}" class="form-control" style="background-color: #111827; cursor: pointer;">
+                            <option value="1">Draft</option>
+                            <option value="2">Published</option>
+                            <option value="3">Archived</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                        <button type="submit" class="btn-action-primary" style="flex: 1; justify-content: center;">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            Save Course
+                        </button>
+                        <a th:href="@{/instructor/courses}" class="btn-action-primary" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-glass); box-shadow: none; flex: 1; justify-content: center;">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: main-layout(~{::div})}">
+<body>
+<div class="container-fluid" style="max-width: 600px;">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/subjects">Subjects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Subject</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark py-3">
+            <h5 class="card-title mb-0">📝 Edit Subject ID: <span th:text="${subject.subject_id}"></span></h5>
+        </div>
+        <div class="card-body p-4">
+            <form th:action="@{/subjects/edit/{id}(id=${subject.subject_id})}" th:object="${subjectRequest}" method="post">
+
+                <div class="mb-3">
+                    <label for="subject_code" class="form-label fw-bold">Subject Code <span class="text-danger">*</span></label>
+                    <input type="text" id="subject_code" name="subject_code"
+                           th:value="${subjectRequest.subject_code != null ? subjectRequest.subject_code : subject.subject_code}"
+                           class="form-control" th:classappend="${#fields.hasErrors('subject_code')} ? 'is-invalid'">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('subject_code')}" th:errors="*{subject_code}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="subject_name" class="form-label fw-bold">Subject Name <span class="text-danger">*</span></label>
+                    <input type="text" id="subject_name" name="subject_name"
+                           th:value="${subjectRequest.subject_name != null ? subjectRequest.subject_name : subject.subject_name}"
+                           class="form-control" th:classappend="${#fields.hasErrors('subject_name')} ? 'is-invalid'">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('subject_name')}" th:errors="*{subject_name}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="duration" class="form-label fw-bold">Duration (Hours) <span class="text-danger">*</span></label>
+                    <input type="number" id="duration" name="duration"
+                           th:value="${subjectRequest.duration != null ? subjectRequest.duration : subject.duration}"
+                           class="form-control" th:classappend="${#fields.hasErrors('duration')} ? 'is-invalid'">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-end">
+                    <a href="/subjects" class="btn btn-outline-secondary px-4">Cancel</a>
+                    <button type="submit" class="btn btn-warning px-4 text-dark">Update Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

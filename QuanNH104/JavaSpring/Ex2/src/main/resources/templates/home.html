@@ -1,0 +1,144 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="body">
+    <!-- Welcome Header -->
+    <div class="welcome-container">
+        <h2 class="welcome-title">Hệ thống Quản lý Đăng ký Học phần</h2>
+        <p class="welcome-subtitle">Chào mừng bạn đến với trang quản trị LMS. Dễ dàng theo dõi học viên, khóa học và điều hành đăng ký lớp học.</p>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+        <!-- Card 1: Students -->
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Tổng số học viên</h3>
+                <div class="stat-value" th:text="${totalStudents}">0</div>
+            </div>
+            <div class="stat-icon-wrapper blue">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 2: Courses -->
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Khóa học hiện có</h3>
+                <div class="stat-value" th:text="${totalCourses}">0</div>
+            </div>
+            <div class="stat-icon-wrapper purple">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.2 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM2 6c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2s-2-.9-2-2V8c0-1.1.9-2 2-2zm20 2c0-1.1-.9-2-2-2s-2 .9-2 2v12c0 1.1.9 2 2 2s2-.9 2-2V8z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 3: Enrollments -->
+        <div class="stat-card">
+            <div class="stat-info">
+                <h3>Lượt đăng ký lớp</h3>
+                <div class="stat-value" th:text="${totalEnrollments}">0</div>
+            </div>
+            <div class="stat-icon-wrapper emerald">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2zm0-4H7V7h10v2zm0 8H7v-2h10v2z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Menu Stats Section -->
+    <h3 style="font-size: 13px; font-weight: 700; margin: 30px 0 15px 0; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Thống kê Sidebar Menu (Database)</h3>
+    <div class="stats-grid" style="margin-bottom: 30px;">
+        <!-- Card 1: Total Menus -->
+        <div class="stat-card" style="border-left: 4px solid var(--accent-blue);">
+            <div class="stat-info">
+                <h3>Total Menus</h3>
+                <div class="stat-value" th:text="${totalMenus}">0</div>
+            </div>
+            <div class="stat-icon-wrapper blue">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 2: Total Parent Menus -->
+        <div class="stat-card" style="border-left: 4px solid var(--accent-purple);">
+            <div class="stat-info">
+                <h3>Total Parent Menus</h3>
+                <div class="stat-value" th:text="${totalParentMenus}">0</div>
+            </div>
+            <div class="stat-icon-wrapper purple">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M19 15v3H5v-3H3v3c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-3h-2zM12 2L5.5 11H10v4h4v-4h4.5L12 2z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Card 3: Total Sub Menus -->
+        <div class="stat-card" style="border-left: 4px solid var(--accent-emerald);">
+            <div class="stat-info">
+                <h3>Total Sub Menus</h3>
+                <div class="stat-value" th:text="${totalSubMenus}">0</div>
+            </div>
+            <div class="stat-icon-wrapper emerald">
+                <svg class="stat-icon" viewBox="0 0 24 24">
+                    <path d="M19 9h-6V3H5v18h14V9zM12 17H7v-2h5v2zm3-4H7v-2h8v2zm0-4H7V7h8v2z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <h3 class="card-title" style="font-size: 18px; margin-bottom: 15px;">Thao tác nhanh (Quick Actions)</h3>
+        <div class="btn-group">
+            <a th:href="@{/students/create}" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                Thêm học viên mới
+            </a>
+            <a th:href="@{/courses/create}" class="btn btn-secondary" style="background-color: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3); color: var(--accent-purple);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                Thêm khóa học mới
+            </a>
+            <a th:href="@{/enrollments/enroll}" class="btn btn-success">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Đăng ký học phần
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Students List -->
+    <div class="card">
+        <h3 class="card-title">Học viên mới thêm gần đây</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên học viên</th>
+                        <th>Tuổi</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${recentStudents}">
+                        <td th:text="${student.id}">1</td>
+                        <td>
+                            <a th:href="@{/students/details/{id}(id=${student.id})}" th:text="${student.name}" style="color: var(--accent-blue); text-decoration: none; font-weight: 600;">John Doe</a>
+                        </td>
+                        <td th:text="${student.age}">20</td>
+                        <td>
+                            <a th:href="@{/students/details/{id}(id=${student.id})}" class="btn btn-sm btn-secondary">Xem chi tiết</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(recentStudents)}">
+                        <td colspan="4" style="text-align: center; color: var(--text-muted);">Không có học viên nào.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

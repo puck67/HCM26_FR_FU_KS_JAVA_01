@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS – Assessment Materials</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset & Variables ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-alt: #22263a;
+            --border: #2e3348;
+            --text: #e4e6f0;
+            --text-muted: #8b8fa7;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --success-bg: rgba(34,197,94,.12);
+            --error: #ef4444;
+            --error-bg: rgba(239,68,68,.12);
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,.35);
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container { max-width: 820px; width: 100%; }
+
+        /* ── Header ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+        .page-header p { color: var(--text-muted); font-size: .95rem; }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow);
+        }
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-title .icon { font-size: 1.25rem; }
+
+        /* ── Flash Messages ── */
+        .alert {
+            padding: 14px 18px;
+            border-radius: var(--radius);
+            font-size: .9rem;
+            font-weight: 500;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown .35s ease;
+        }
+        .alert-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid rgba(34,197,94,.25);
+        }
+        .alert-error {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid rgba(239,68,68,.25);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Form ── */
+        .form-group { margin-bottom: 18px; }
+        .form-group label {
+            display: block;
+            font-size: .85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+        .form-group input[type="text"],
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: .92rem;
+            transition: border-color .2s, box-shadow .2s;
+            outline: none;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99,102,241,.2);
+        }
+        .form-group textarea { min-height: 90px; resize: vertical; }
+
+        /* File input */
+        .file-input-wrapper {
+            position: relative;
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s, background .2s;
+        }
+        .file-input-wrapper:hover {
+            border-color: var(--accent);
+            background: rgba(99,102,241,.04);
+        }
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .file-input-wrapper .file-label {
+            color: var(--text-muted);
+            font-size: .9rem;
+        }
+        .file-input-wrapper .file-label span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Submit button */
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: #fff;
+            font-family: inherit;
+            font-size: .95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .2s;
+            margin-top: 4px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99,102,241,.35);
+        }
+        .btn-submit:active { transform: translateY(0); }
+
+        /* ── Materials Table ── */
+        .material-table { width: 100%; border-collapse: collapse; }
+        .material-table th,
+        .material-table td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: .9rem;
+        }
+        .material-table th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: .8rem;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        .material-table tbody tr {
+            transition: background .15s;
+        }
+        .material-table tbody tr:hover {
+            background: rgba(99,102,241,.06);
+        }
+        .material-table tbody tr:last-child td { border-bottom: none; }
+
+        .badge-id {
+            background: var(--surface-alt);
+            color: var(--text-muted);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: .8rem;
+            font-weight: 600;
+        }
+
+        .download-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color .15s;
+        }
+        .download-link:hover { color: var(--accent-hover); }
+
+        .empty-state {
+            text-align: center;
+            padding: 36px 20px;
+            color: var(--text-muted);
+        }
+        .empty-state .icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .empty-state p { font-size: .92rem; }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .card { padding: 20px 18px; }
+            .material-table th,
+            .material-table td { padding: 10px 8px; font-size: .82rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="page-header">
+            <h1>📚 Assessment Materials</h1>
+            <p>Upload and manage assessment materials for your courses</p>
+        </div>
+
+        <!-- Flash Messages (Task 6) -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span>✅</span>
+            <span th:text="${successMessage}">Success</span>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-error">
+            <span>❌</span>
+            <span th:text="${errorMessage}">Error</span>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- Task 4: Upload Form                                           -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📤</span> Upload New Material</div>
+
+            <form method="post"
+                  enctype="multipart/form-data"
+                  th:action="@{/assessments/upload}">
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title"
+                           placeholder="e.g. Assignment 1 – Java Collections" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"
+                              placeholder="Briefly describe this assessment material..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>File</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="file" name="file" required>
+                        <div class="file-label">
+                            <span>Click to choose a file</span> or drag and drop
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>⬆</span> Upload Material
+                </button>
+            </form>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- Task 5: List of Uploaded Materials                            -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📋</span> Uploaded Materials</div>
+
+            <!-- Empty state when no materials exist -->
+            <div th:if="${#lists.isEmpty(materials)}" class="empty-state">
+                <div class="icon">📭</div>
+                <p>No assessment materials uploaded yet.<br>Use the form above to get started.</p>
+            </div>
+
+            <!-- Table of materials -->
+            <table th:if="${!#lists.isEmpty(materials)}" class="material-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="material : ${materials}">
+                        <td><span class="badge-id" th:text="${material.id}">#</span></td>
+                        <td th:text="${material.title}">Title</td>
+                        <td th:text="${material.description}">Description</td>
+                        <td>
+                            <a class="download-link"
+                               th:href="@{/assessments/download/{fn}(fn=${material.fileName})}">
+                                ⬇ Download
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Show selected filename in the file input -->
+    <script>
+        document.getElementById('file').addEventListener('change', function () {
+            const label = this.closest('.file-input-wrapper').querySelector('.file-label');
+            if (this.files.length > 0) {
+                label.innerHTML = '<span>' + this.files[0].name + '</span> selected';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${course.id == null} ? 'Create New Course - CourseShare' : 'Edit Course - CourseShare'">Create New Course</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom Style -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/instructor/dashboard">CourseShare</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/instructor/dashboard">Dashboard</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/instructor/courses">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="/instructor/reviews">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post" class="form-inline d-inline">
+                        <button class="btn btn-link nav-link p-0 border-0 align-baseline" type="submit">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4 mb-5" style="max-width: 800px;">
+    
+    <div class="card shadow-sm border-0" style="border-radius: 12px; border: 1px solid #e2e8f0 !important;">
+        <div class="card-body p-5">
+            <h3 class="font-weight-bold mb-4" style="color: #0f172a;" th:text="${course.id == null} ? 'Create New Course' : 'Edit Course'">Create New Course</h3>
+            
+            <form th:action="@{/instructor/course/save}" th:object="${course}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                
+                <div class="form-group">
+                    <label class="font-weight-bold" style="color: #475569;">Course Title</label>
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter course title" required style="height: 48px; border-radius: 8px;">
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label class="font-weight-bold" style="color: #475569;">Short Description</label>
+                    <textarea class="form-control" th:field="*{description}" rows="3" placeholder="Write a brief summary..." required style="border-radius: 8px;"></textarea>
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label class="font-weight-bold" style="color: #475569;">Course Content (Markdown)</label>
+                    <textarea class="form-control" th:field="*{content}" rows="10" placeholder="# Markdown content here..." required style="border-radius: 8px; font-family: monospace;"></textarea>
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label class="font-weight-bold" style="color: #475569;">Categories (comma-separated)</label>
+                    <input type="text" class="form-control" th:field="*{category}" placeholder="e.g., Java, Web, Spring" style="height: 48px; border-radius: 8px;">
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label class="font-weight-bold" style="color: #475569;">Status</label>
+                    <select class="form-control" th:field="*{status}" id="statusSelect" style="height: 48px; border-radius: 8px;">
+                        <option value="1">Draft</option>
+                        <option value="2">Published</option>
+                        <option value="3">Archived</option>
+                    </select>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-5">
+                    <div>
+                        <a href="/instructor/courses" class="btn btn-outline-secondary font-weight-bold px-4" style="height: 48px; border-radius: 8px; line-height: 32px;">Cancel</a>
+                        <button type="submit" onclick="document.getElementById('statusSelect').value = '1';" class="btn btn-secondary font-weight-bold px-4 ml-2" style="height: 48px; border-radius: 8px;">Save Draft</button>
+                    </div>
+                    <button type="submit" onclick="document.getElementById('statusSelect').value = '2';" class="btn btn-success font-weight-bold px-4" style="height: 48px; border-radius: 8px; background-color: #16a34a; border-color: #16a34a;">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(${role.id == null} ? 'Add Role' : 'Edit Role', ~{::content})}">
+<body>
+    <div th:fragment="content">
+        
+        <div class="mb-4">
+            <a th:href="@{/roles}" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i> Back to Role List
+            </a>
+        </div>
+        
+        <div class="row">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="premium-card">
+                    <h5 class="fw-bold mb-4" th:text="${role.id == null} ? 'Create Security Role' : 'Edit Security Role'">Create Security Role</h5>
+                    
+                    <form th:action="${role.id == null} ? @{/roles/new} : @{/roles/edit/{id}(id=${role.id})}" th:object="${role}" method="post">
+                        <!-- Hidden ID field for Edit -->
+                        <input type="hidden" th:field="*{id}" th:if="${role.id != null}">
+                        
+                        <!-- Role Name -->
+                        <div class="mb-4">
+                            <label for="roleName" class="form-label text-muted small fw-semibold">Role Name</label>
+                            <input type="text" id="roleName" th:field="*{roleName}" class="form-control" 
+                                   placeholder="e.g. STUDENT" required autofocus>
+                            <div class="text-danger small mt-1" th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}">Role Name Error</div>
+                            
+                            <div class="p-3 border rounded bg-light small mt-3 text-muted">
+                                <i class="bi bi-info-circle me-1"></i> 
+                                Role name will automatically be capitalized and trimmed (e.g. <code>student</code> becomes <code>STUDENT</code>). 
+                                Standard Spring Security mapping prefixes role tags with <code>ROLE_</code> in the security engine.
+                            </div>
+                        </div>
+                        
+                        <!-- Action buttons -->
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-premium btn-sm">
+                                <i class="bi bi-check-circle me-1"></i> Save Role
+                            </button>
+                            <a th:href="@{/roles}" class="btn btn-outline-secondary btn-sm">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

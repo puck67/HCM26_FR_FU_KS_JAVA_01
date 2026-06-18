@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, title)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Dynamic Menu System'">Dynamic Menu System</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom Style -->
+    <link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Dynamic Hierarchical Sidebar -->
+    <div class="sidebar d-flex flex-column justify-content-between">
+        <div>
+            <div class="brand">
+                <i class="bi bi-cpu-fill"></i>
+                <span>Menu Manager</span>
+            </div>
+            
+            <ul class="nav flex-column">
+                <!-- Level 1 Menu Loop -->
+                <li th:each="menu : ${sidebarMenus}" 
+                    th:if="${@menuService.isMenuVisible(menu, session.currentRole)}" 
+                    class="nav-item">
+                    
+                    <!-- Top-level menu with NO submenus -->
+                    <a th:if="${#lists.isEmpty(menu.children)}" 
+                       th:href="${menu.url != null ? menu.url : '#'}" 
+                       class="nav-link"
+                       th:classappend="${requestURI == menu.url ? 'active' : ''}">
+                        <i th:class="${menu.icon != null ? menu.icon : 'bi bi-app'}"></i>
+                        <span th:text="${menu.name}">Menu Name</span>
+                    </a>
+                    
+                    <!-- Top-level menu WITH submenus (Collapsible) -->
+                    <div th:if="${not #lists.isEmpty(menu.children)}">
+                        <a class="nav-link collapsed" 
+                           data-bs-toggle="collapse" 
+                           th:href="'#menu-' + ${menu.id}" 
+                           role="button" 
+                           aria-expanded="false" 
+                           th:aria-controls="'menu-' + ${menu.id}">
+                            <i th:class="${menu.icon != null ? menu.icon : 'bi bi-folder-fill'}"></i>
+                            <span th:text="${menu.name}">Menu Name</span>
+                            <i class="bi bi-chevron-down ms-auto transition-icon"></i>
+                        </a>
+                        
+                        <div class="collapse" th:id="'menu-' + ${menu.id}">
+                            <ul class="nav flex-column ms-3 mt-1">
+                                <!-- Level 2 Menu Loop -->
+                                <li th:each="child : ${menu.children}" 
+                                    th:if="${@menuService.isMenuVisible(child, session.currentRole)}" 
+                                    class="nav-item">
+                                    
+                                    <!-- Level 2 menu with NO submenus -->
+                                    <a th:if="${#lists.isEmpty(child.children)}" 
+                                       th:href="${child.url != null ? child.url : '#'}" 
+                                       class="nav-link"
+                                       th:classappend="${requestURI == child.url ? 'active' : ''}">
+                                        <i th:class="${child.icon != null ? child.icon : 'bi bi-file-earmark'}"></i>
+                                        <span th:text="${child.name}">Submenu Name</span>
+                                    </a>
+                                    
+                                    <!-- Level 2 menu WITH submenus (Level 3!) -->
+                                    <div th:if="${not #lists.isEmpty(child.children)}">
+                                        <a class="nav-link collapsed sub-collapse-btn" 
+                                           data-bs-toggle="collapse" 
+                                           th:href="'#submenu-' + ${child.id}" 
+                                           role="button" 
+                                           aria-expanded="false">
+                                            <i th:class="${child.icon != null ? child.icon : 'bi bi-folder'}"></i>
+                                            <span th:text="${child.name}">Submenu Name</span>
+                                            <i class="bi bi-chevron-down ms-auto transition-icon"></i>
+                                        </a>
+                                        
+                                        <div class="collapse" th:id="'submenu-' + ${child.id}">
+                                            <ul class="nav flex-column ms-3 mt-1 border-start border-secondary border-opacity-25 ps-2">
+                                                <!-- Level 3 Menu Loop -->
+                                                <li th:each="subchild : ${child.children}" 
+                                                    th:if="${@menuService.isMenuVisible(subchild, session.currentRole)}" 
+                                                    class="nav-item">
+                                                    <a th:href="${subchild.url != null ? subchild.url : '#'}" 
+                                                       class="nav-link"
+                                                       th:classappend="${requestURI == subchild.url ? 'active' : ''}">
+                                                        <i th:class="${subchild.icon != null ? subchild.icon : 'bi bi-link-45deg'}"></i>
+                                                        <span th:text="${subchild.name}">Level 3 Name</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Menu Management Direct Link -->
+        <div class="border-top pt-3 mt-3">
+            <a th:href="@{/menus}" class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-sliders"></i> Edit System Menus
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Top Navbar with Role Selection -->
+        <div class="topbar d-flex justify-content-between align-items-center animated-fade">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-grid-fill text-primary"></i>
+                <span class="text-muted">Dynamic Navigation System</span>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <!-- Current Active Role Display -->
+                <div class="text-end d-none d-md-block">
+                    <small class="text-muted d-block">Active Role</small>
+                    <span class="badge role-badge" th:text="${session.currentRole}">ADMIN</span>
+                </div>
+                
+                <!-- Dynamic Role Selector Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-primary dropdown-toggle d-flex align-items-center gap-2" type="button" id="roleDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Switch Role
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="roleDropdown">
+                        <li><a class="dropdown-item text-dark" th:href="@{/change-role(role='ADMIN')}"><i class="bi bi-shield-lock me-2 text-primary"></i>Admin</a></li>
+                        <li><a class="dropdown-item text-dark" th:href="@{/change-role(role='TEACHER')}"><i class="bi bi-pencil me-2 text-primary"></i>Teacher</a></li>
+                        <li><a class="dropdown-item text-dark" th:href="@{/change-role(role='STUDENT')}"><i class="bi bi-book me-2 text-primary"></i>Student</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success and Error Alert Panels -->
+        <div th:if="${successMessage}" class="alert alert-success d-flex align-items-center gap-2 animated-fade mb-4" role="alert">
+            <i class="bi bi-check-circle-fill"></i>
+            <div th:text="${successMessage}">Success message.</div>
+        </div>
+        <div th:if="${errorMessage}" class="alert alert-danger d-flex align-items-center gap-2 animated-fade mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            <div th:text="${errorMessage}">Error message.</div>
+        </div>
+
+        <!-- Content Injection Slot -->
+        <div th:replace="${content}"></div>
+    </div>
+
+    <!-- Bootstrap 5.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

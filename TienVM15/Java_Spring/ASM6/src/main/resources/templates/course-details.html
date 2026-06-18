@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main>
+        <div style="max-width: 800px; margin: 0 auto;">
+            <!-- Back to home -->
+            <a th:href="@{/}" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; transition: color 0.3s ease;">
+                <i class="fa-solid fa-arrow-left"></i> Back to Courses
+            </a>
+
+            <!-- Success/Error alert banners -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span th:text="${successMessage}">Success message</span>
+            </div>
+            <div th:if="${errorMessage}" class="alert alert-error">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span th:text="${errorMessage}">Error message</span>
+            </div>
+
+            <!-- Course Header Card -->
+            <div class="card">
+                <h1 style="font-size: 2rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;" th:text="${course.title}">Course Title</h1>
+                <div class="course-meta">
+                    <span><i class="fa-regular fa-user" style="margin-right: 0.25rem;"></i> Instructor</span>
+                    <span>
+                        <i class="fa-regular fa-tag" style="margin-right: 0.25rem;"></i>
+                        <span th:each="tag : ${#strings.arraySplit(course.category, ',')}" 
+                              th:text="${tag.trim()}" class="badge badge-tag">Tag</span>
+                    </span>
+                </div>
+                <p style="font-size: 1.05rem; line-height: 1.6; color: #ffffff; margin-top: 1rem; padding: 1rem 0; border-top: 1px solid var(--border-glass);" 
+                   th:text="${course.description}">Short description.</p>
+            </div>
+
+            <!-- Course Content Card (Markdown rendered) -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fa-solid fa-book-open"></i>
+                    Course Content
+                </h2>
+                <!-- Unescaped HTML rendering for markdown -->
+                <div class="markdown-body" th:utext="${htmlContent}">
+                    Course content gets injected here...
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fa-regular fa-star"></i>
+                    Student Reviews
+                </h2>
+                
+                <div th:each="review : ${reviews}" class="review-item">
+                    <div class="review-header">
+                        <span class="review-author" th:text="${review.authorName}">Student Name</span>
+                        <span class="review-stars">
+                            <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                               class="fa-star" th:classappend="${star <= review.rating} ? 'fa-solid' : 'fa-regular'"></i>
+                        </span>
+                    </div>
+                    <p class="review-content" th:text="${review.content}">Review content body.</p>
+                </div>
+
+                <div th:if="${#lists.isEmpty(reviews)}" style="color: var(--text-muted); text-align: center; padding: 2rem 0;">
+                    <i class="fa-regular fa-comments" style="font-size: 2rem; display: block; margin-bottom: 0.5rem; opacity: 0.5;"></i>
+                    <p>No reviews approved yet. Be the first to add a review!</p>
+                </div>
+            </div>
+
+            <!-- Submit Review Card -->
+            <div class="card">
+                <h2 class="card-title">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    Add Your Review
+                </h2>
+                <form th:action="@{/courses/{id}/review(id=${course.id})}" method="post" th:object="${newReview}">
+                    <div class="form-group">
+                        <label for="authorName">Your Name</label>
+                        <input type="text" id="authorName" th:field="*{authorName}" class="form-control" placeholder="e.g. John Smith" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="e.g. john@fpt.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <div class="stars-selector">
+                            <input type="radio" id="star5" name="rating" value="5" th:field="*{rating}" required><label for="star5" title="5 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star4" name="rating" value="4" th:field="*{rating}"><label for="star4" title="4 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star3" name="rating" value="3" th:field="*{rating}"><label for="star3" title="3 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star2" name="rating" value="2" th:field="*{rating}"><label for="star2" title="2 stars"><i class="fa-solid fa-star"></i></label>
+                            <input type="radio" id="star1" name="rating" value="1" th:field="*{rating}"><label for="star1" title="1 star"><i class="fa-solid fa-star"></i></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Review</label>
+                        <textarea id="content" th:field="*{content}" class="form-control" placeholder="Write your course feedback here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-action-primary" style="width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-paper-plane" style="margin-right: 0.5rem;"></i>
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

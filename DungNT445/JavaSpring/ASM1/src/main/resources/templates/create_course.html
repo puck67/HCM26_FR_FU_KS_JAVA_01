@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Course - LMS Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0b0f19 0%, #111827 50%, #1e1b4b 100%);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --accent-primary: #6366f1;
+            --accent-secondary: #a855f7;
+            --btn-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --btn-hover-gradient: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
+            --error-color: #f87171;
+            --error-bg: rgba(248, 113, 113, 0.1);
+            --error-border: rgba(248, 113, 113, 0.2);
+            --focus-ring: rgba(99, 102, 241, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient glowing backgrounds */
+        .ambient-glow-1 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(99, 102, 241, 0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ambient-glow-2 {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0) 70%);
+            bottom: -150px;
+            right: -100px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 650px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            background: var(--btn-gradient);
+            border-radius: 16px;
+            font-size: 24px;
+            color: #ffffff;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        label i {
+            color: var(--accent-primary);
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        textarea {
+            padding-left: 16px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+            background: rgba(17, 24, 39, 0.8);
+        }
+
+        input:focus + i {
+            color: var(--accent-primary);
+        }
+
+        /* Error Styles */
+        .error-message {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--error-color);
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-error {
+            border-color: rgba(248, 113, 113, 0.4) !important;
+        }
+
+        .input-error:focus {
+            box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.15) !important;
+        }
+
+        .submit-btn {
+            grid-column: span 2;
+            margin-top: 10px;
+            background: var(--btn-gradient);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+        }
+
+        .submit-btn:hover {
+            background: var(--btn-hover-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group, .form-group.full-width, .submit-btn {
+                grid-column: span 1;
+            }
+            .card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1>Create Course</h1>
+                <p>Register a new learning experience in the LMS portal</p>
+            </div>
+
+            <form action="#" th:action="@{/courses/create}" th:object="${course}" method="post">
+                <div class="form-grid">
+                    
+                    <!-- Course Title -->
+                    <div class="form-group full-width">
+                        <label for="title"><i class="fa-solid fa-book"></i> Course Title</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="title" th:field="*{title}" placeholder="e.g., Advanced Java Spring Boot" th:classappend="${#fields.hasErrors('title')} ? 'input-error'" />
+                            <i class="fa-solid fa-heading"></i>
+                        </div>
+                        <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i> Error
+                        </div>
+                    </div>
+
+                    <!-- Instructor Name -->
+                    <div class="form-group">
+                        <label for="instructorName"><i class="fa-solid fa-user-tie"></i> Instructor Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="instructorName" th:field="*{instructorName}" placeholder="e.g., Dr. John Doe" th:classappend="${#fields.hasErrors('instructorName')} ? 'input-error'" />
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div th:if="${#fields.hasErrors('instructorName')}" th:errors="*{instructorName}" class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i> Error
+                        </div>
+                    </div>
+
+                    <!-- Instructor Email -->
+                    <div class="form-group">
+                        <label for="instructorEmail"><i class="fa-solid fa-envelope"></i> Instructor Email</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="instructorEmail" th:field="*{instructorEmail}" placeholder="instructor@example.com" th:classappend="${#fields.hasErrors('instructorEmail')} ? 'input-error'" />
+                            <i class="fa-solid fa-at"></i>
+                        </div>
+                        <div th:if="${#fields.hasErrors('instructorEmail')}" th:errors="*{instructorEmail}" class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i> Error
+                        </div>
+                    </div>
+
+                    <!-- Duration Hours -->
+                    <div class="form-group full-width">
+                        <label for="durationHours"><i class="fa-solid fa-clock"></i> Duration (Hours)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="durationHours" th:field="*{durationHours}" placeholder="e.g., 40" min="1" th:classappend="${#fields.hasErrors('durationHours')} ? 'input-error'" />
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div th:if="${#fields.hasErrors('durationHours')}" th:errors="*{durationHours}" class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i> Error
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group full-width">
+                        <label for="description"><i class="fa-solid fa-align-left"></i> Description</label>
+                        <textarea id="description" th:field="*{description}" placeholder="Provide a brief overview of the course (10 - 200 characters)..." th:classappend="${#fields.hasErrors('description')} ? 'input-error'"></textarea>
+                        <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message">
+                            <i class="fa-solid fa-circle-exclamation"></i> Error
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">
+                        <span>Create Course</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

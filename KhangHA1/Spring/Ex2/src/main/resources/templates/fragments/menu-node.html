@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <th:block th:fragment="node(menu)">
+
+        <li>
+
+            <a th:href="${menu.url != null ? menu.url : '#'}" th:text="${menu.name}">
+            </a>
+
+            <ul th:if="${!#lists.isEmpty(menu.children)}">
+
+                <th:block th:each="child : ${menu.children}" th:replace="~{fragments/menu-node :: node(${child})}">
+                </th:block>
+
+            </ul>
+
+        </li>
+
+    </th:block>
+
+</body>
+
+</html>

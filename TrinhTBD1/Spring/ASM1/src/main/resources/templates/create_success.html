@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creation Success</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <div class="card" style="text-align: center;">
+            <div class="success-icon">✓</div>
+            <h2>Course Created Successfully!</h2>
+            <p class="subtitle" style="margin-top: 1rem; margin-bottom: 2rem;">Thank you for adding a new course to the LMS.</p>
+            
+            <div class="success-actions">
+                <a th:href="@{/courses/new}" class="btn" style="width: 100%;">Create Another</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

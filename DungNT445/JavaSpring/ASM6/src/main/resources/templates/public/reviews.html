@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments :: head('Recent Reviews')}"></head>
+<body>
+    <header th:replace="~{layout/fragments :: header('reviews')}"></header>
+
+    <main class="main-container has-sidebar">
+        <!-- Reviews List -->
+        <section class="content-section">
+            <h2 class="widget-title" style="font-size: 1.5rem; margin-bottom: 1.5rem; border:none; padding: 0;">
+                <i class="fa-solid fa-comments"></i> Most Recent Approved Reviews
+            </h2>
+
+            <div th:if="${recentReviewsList.empty}" class="card">
+                <p class="text-secondary" style="text-align: center;">No reviews available yet.</p>
+            </div>
+
+            <div th:each="rev : ${recentReviewsList}" class="card" style="margin-bottom: 1rem; background-color: var(--bg-secondary);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <div>
+                        <span style="font-weight: 600;" th:text="${rev.authorName}">Author Name</span>
+                        <span class="text-secondary"> on </span>
+                        <a th:href="@{/courses/{id}(id=${rev.course.id})}" th:text="${rev.course.title}" style="font-weight: 500;">Course Title</a>
+                    </div>
+                    <div class="review-stars">
+                        <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                           th:class="${star <= rev.rating} ? 'fa-solid fa-star' : 'fa-regular fa-star'"></i>
+                    </div>
+                </div>
+                <p class="text-secondary" th:text="${rev.content}">Review content.</p>
+                <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Posted on <span th:text="${#temporals.format(rev.createdAt, 'dd MMM yyyy')}">Date</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar -->
+        <aside th:replace="~{layout/fragments :: sidebar}"></aside>
+    </main>
+
+    <footer th:replace="~{layout/fragments :: footer}"></footer>
+</body>
+</html>

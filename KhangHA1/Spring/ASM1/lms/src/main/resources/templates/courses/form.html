@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Form</title>
+</head>
+<body>
+    <h2>Course Form</h2>
+    <form action="#" th:action="@{/courses/save}" th:object="${course}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div>
+            <label for="title">Course Title:</label>
+            <input type="text" id="title" th:field="*{title}" />
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red;"></div>
+        </div>
+
+        <div>
+            <label for="instructorName">Instructor Name:</label>
+            <input type="text" id="instructorName" th:field="*{instructorName}" />
+            <div th:if="${#fields.hasErrors('instructorName')}" th:errors="*{instructorName}" style="color: red;"></div>
+        </div>
+
+        <div>
+            <label for="instructorEmail">Instructor Email:</label>
+            <input type="email" id="instructorEmail" th:field="*{instructorEmail}" />
+            <div th:if="${#fields.hasErrors('instructorEmail')}" th:errors="*{instructorEmail}" style="color: red;"></div>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}"></textarea>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red;"></div>
+        </div>
+
+        <div>
+            <label for="durationHours">Duration (Hours):</label>
+            <input type="number" id="durationHours" th:field="*{durationHours}" />
+            <div th:if="${#fields.hasErrors('durationHours')}" th:errors="*{durationHours}" style="color: red;"></div>
+        </div>
+
+        <button type="submit">Save Course</button>
+    </form>
+    <br/>
+    <a th:href="@{/courses}">Back to Course List</a>
+</body>
+</html>

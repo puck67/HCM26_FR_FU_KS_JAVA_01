@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${course.title})}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('home')}"></header>
+
+    <main class="main-container flex-grow-1">
+
+        
+        <div class="mb-4">
+            <a th:href="@{/}" class="text-decoration-none text-muted small">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Courses
+            </a>
+        </div>
+
+        
+        <div class="mb-4">
+            <h1 class="fw-bold text-dark mb-2" th:text="${course.title}">Course Title</h1>
+
+            
+            <div th:if="${course.category != null and !course.category.isEmpty()}"
+                 class="d-flex flex-wrap gap-1 mb-3">
+                <a th:each="cat : ${#strings.arraySplit(course.category, ',')}"
+                   th:href="@{/categories(name=${#strings.trim(cat)})}"
+                   class="badge badge-custom badge-cat"
+                   th:text="${#strings.trim(cat)}">Cat</a>
+            </div>
+
+            <p class="lead text-muted" th:text="${course.description}">Description</p>
+        </div>
+
+        
+        <div class="card border-0 shadow-sm mb-5" style="border-radius: var(--radius);">
+            <div class="card-header bg-dark text-white py-3 border-0">
+                <h4 class="h6 mb-0 fw-bold">
+                    <i class="fa-solid fa-book-open me-2 text-primary"></i>Course Content
+                </h4>
+            </div>
+            <div class="card-body p-0">
+                
+                <div id="markdown-raw" style="display:none;" th:text="${course.content}"></div>
+                
+                <div id="markdown-rendered" class="markdown-body p-4"></div>
+            </div>
+        </div>
+
+        
+        <div class="mb-5" id="reviews-section">
+            <h4 class="fw-bold mb-4">
+                <i class="fa-solid fa-comments text-primary me-2"></i>Student Reviews
+            </h4>
+
+            <div th:if="${reviews.isEmpty()}">
+                <div th:replace="~{fragments/components :: empty-state(message='No approved reviews for this course yet. Be the first!')}"></div>
+            </div>
+
+            <div th:each="review : ${reviews}"
+                 class="card border-0 shadow-sm mb-3"
+                 style="border-left: 4px solid var(--primary-color); border-radius: var(--radius);">
+                <div class="card-body py-3 px-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <span class="fw-bold text-dark" th:text="${review.authorName}">Author</span>
+                        
+                        <span th:replace="~{fragments/components :: star-rating(rating=${review.rating})}"></span>
+                    </div>
+                    <div class="text-muted mb-2" style="font-size:.8rem;">
+                        <i class="fa-solid fa-calendar-days me-1"></i>
+                        <span th:text="${#temporals.format(review.createdDate, 'dd-MM-yyyy HH:mm')}">Date</span>
+                    </div>
+                    <p class="mb-0 text-secondary" th:text="${review.content}">Content</p>
+                </div>
+            </div>
+        </div>
+
+        
+        
+        <div class="card border-0 shadow" id="review-form-section"
+             style="border-radius: var(--radius); overflow: hidden;">
+            <div class="card-header bg-dark text-white py-3 border-0">
+                <h4 class="h6 mb-0 fw-bold">
+                    <i class="fa-solid fa-pen-to-square me-2 text-primary"></i>Add Your Review
+                </h4>
+            </div>
+            <div class="card-body bg-white p-4">
+
+                
+                <div th:if="${param.reviewSubmitted}"
+                     class="alert alert-success d-flex align-items-center mb-4"
+                     role="alert"
+                     id="success-alert">
+                    <i class="fa-solid fa-circle-check fa-lg me-3 text-success"></i>
+                    <div>
+                        <strong>Thank you!</strong> Your review has been submitted and is
+                        <em>pending approval</em> by the instructor.
+                    </div>
+                </div>
+
+                <form th:action="@{/course/{courseId}/review(courseId=${course.id})}"
+                      th:object="${newReview}"
+                      method="post"
+                      novalidate
+                      id="reviewForm">
+
+                    <div class="row g-3">
+                        
+                        <div class="col-md-6">
+                            <label for="authorName" class="form-label fw-semibold">
+                                Your Name <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="authorName"
+                                   th:field="*{authorName}"
+                                   th:classappend="${#fields.hasErrors('authorName')} ? 'is-invalid'"
+                                   placeholder="Enter your name">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('authorName')}"
+                                 th:errors="*{authorName}"></div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label fw-semibold">
+                                Email <span class="text-danger">*</span>
+                            </label>
+                            <input type="email"
+                                   class="form-control"
+                                   id="email"
+                                   th:field="*{email}"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'"
+                                   placeholder="Enter your email">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('email')}"
+                                 th:errors="*{email}"></div>
+                        </div>
+
+                        
+                        <div class="col-md-4">
+                            <label for="rating" class="form-label fw-semibold">
+                                Rating <span class="text-danger">*</span>
+                            </label>
+                            <select class="form-select"
+                                    id="rating"
+                                    th:field="*{rating}"
+                                    th:classappend="${#fields.hasErrors('rating')} ? 'is-invalid'">
+                                <option value="">-- Select rating --</option>
+                                <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5 Stars — Excellent)</option>
+                                <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4 Stars — Good)</option>
+                                <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3 Stars — Average)</option>
+                                <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734; (2 Stars — Poor)</option>
+                                <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1 Star — Terrible)</option>
+                            </select>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('rating')}"
+                                 th:errors="*{rating}"></div>
+                        </div>
+
+                        
+                        <div class="col-12">
+                            <label for="content" class="form-label fw-semibold">
+                                Review <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control"
+                                      id="content"
+                                      rows="4"
+                                      th:field="*{content}"
+                                      th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
+                                      placeholder="Write your review here..."></textarea>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('content')}"
+                                 th:errors="*{content}"></div>
+                        </div>
+
+                        
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary-custom px-5 py-2 fw-semibold">
+                                <i class="fa-solid fa-paper-plane me-1"></i> Submit Review
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+    <script>
+        // ── Render Markdown ───────────────────────────────────────
+        document.addEventListener("DOMContentLoaded", function () {
+            const raw      = document.getElementById("markdown-raw");
+            const rendered = document.getElementById("markdown-rendered");
+            if (raw && rendered && typeof marked !== 'undefined') {
+                rendered.innerHTML = marked.parse(raw.textContent || '');
+            }
+        });
+
+        // ── Auto-scroll UX ────────────────────────────────────────
+        // Sau khi submit thành công: scroll đến alert thành công
+        // Sau khi submit có lỗi:     scroll đến trường bị lỗi đầu tiên
+        // Giúp user không bị "nhảy lên đầu trang" mà không biết chuyện gì xảy ra
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+
+            if (params.has('reviewSubmitted')) {
+                // Thành công → scroll mượt đến thông báo thành công
+                const alert = document.getElementById('success-alert');
+                if (alert) {
+                    alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            // Có lỗi validation → scroll đến input bị lỗi đầu tiên
+            const firstInvalid = document.querySelector('.is-invalid');
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstInvalid.focus();
+            }
+        });
+    </script>
+</body>
+</html>

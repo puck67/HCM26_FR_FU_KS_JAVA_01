@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>User Form - Security System</title>
+</head>
+<body>
+    <div th:fragment="body">
+
+        <!-- Error banner -->
+        <div th:if="${errorMessage}" class="alert-box alert-danger">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 20px;"></i>
+            <span th:text="${errorMessage}">Error message</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header" th:text="${user.id != null} ? 'Edit User Details' : 'Create New User Account'">
+                Create New User Account
+            </div>
+            
+            <div class="card-body">
+                <form th:action="@{/users/save}" method="post" th:object="${user}">
+                    <!-- Hidden ID -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-grid">
+                        <!-- Username -->
+                        <div class="form-group">
+                            <label for="username">Username (Tên đăng nhập)</label>
+                            <input type="text" id="username" th:field="*{username}" required placeholder="e.g. jdoe" 
+                                   th:readonly="${user.id != null}">
+                            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="password">Password (Mật khẩu)</label>
+                            <input type="password" id="password" th:field="*{password}" 
+                                   th:required="${user.id == null}" 
+                                   th:placeholder="${user.id != null} ? 'Leave blank to keep current password' : 'Enter account password'">
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="form-group">
+                            <label for="fullName">Full Name (Họ và Tên)</label>
+                            <input type="text" id="fullName" th:field="*{fullName}" required placeholder="e.g. John Doe">
+                            <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="form-group">
+                            <label for="status">Account Status (Trạng thái)</label>
+                            <select id="status" th:field="*{status}" th:disabled="${user.username == 'superadmin'}">
+                                <option value="ACTIVE">ACTIVE (Hoạt động)</option>
+                                <option value="INACTIVE">INACTIVE (Khóa)</option>
+                            </select>
+                            <!-- Hidden input to send status if disabled -->
+                            <input type="hidden" name="status" value="ACTIVE" th:if="${user.username == 'superadmin'}">
+                        </div>
+
+                        <!-- Roles (Checkboxes) -->
+                        <div class="form-group full-width">
+                            <label style="margin-bottom: 8px;">Assign System Roles (Chọn vai trò)</label>
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                <div th:each="role : ${allRoles}" class="checkbox-group">
+                                    <!-- Pre-check assigned roles -->
+                                    <input type="checkbox" name="roleIds" th:value="${role.id}" 
+                                           th:id="'role_' + ${role.id}"
+                                           th:checked="${user.roles != null && user.roles.contains(role)}"
+                                           th:disabled="${user.username == 'superadmin' && role.name == 'SUPER_ADMIN'}">
+                                    <label th:for="'role_' + ${role.id}" th:text="${role.name}" style="font-weight: 500; cursor: pointer;">ROLE</label>
+                                    
+                                    <!-- Hidden input to force keep superadmin role for safety -->
+                                    <input type="hidden" name="roleIds" th:value="${role.id}" th:if="${user.username == 'superadmin' && role.name == 'SUPER_ADMIN'}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary" style="width: auto;">
+                            <i class="bi bi-save"></i> Save Account
+                        </button>
+                        <a th:href="@{/users}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<div th:fragment="sidebar">
+    <div class="brand">
+        <i class="bi bi-grid-1x2-fill"></i> Training System
+    </div>
+
+    <form th:if="${!#lists.isEmpty(roles)}" th:action="@{/switch-role}" method="post" class="mb-3">
+        <label class="form-label text-secondary small">Current Role</label>
+        <select name="role" class="form-select form-select-sm" onchange="this.form.submit()">
+            <option th:each="r : ${roles}"
+                    th:value="${r.name}"
+                    th:text="${r.name}"
+                    th:selected="${r.name == currentRole}">
+            </option>
+        </select>
+    </form>
+
+    <ul class="sidebar-menu">
+        <li th:each="menu : ${sidebarMenus}"
+            th:replace="~{fragments/sidebar :: menuItem(${menu})}">
+        </li>
+    </ul>
+</div>
+
+<li th:fragment="menuItem(item)" th:if="${item != null}">
+
+    <a th:if="${!#strings.isEmpty(item.url)}"
+       th:href="@{${item.url}}"
+       th:classappend="${currentUri == item.url} ? 'active'">
+
+        <i th:if="${item.icon != null}"
+           th:class="'bi ' + ${item.icon}">
+        </i>
+
+        <span th:text="${item.name}"></span>
+
+    </a>
+
+    <div th:if="${#strings.isEmpty(item.url)}"
+         class="menu-group-title">
+
+        <i th:if="${item.icon != null}"
+           th:class="'bi ' + ${item.icon}">
+        </i>
+
+        <span th:text="${item.name}"></span>
+
+    </div>
+
+    <ul class="sidebar-submenu"
+        th:if="${item.children != null and !#lists.isEmpty(item.children)}">
+
+        <li th:each="child : ${item.children}"
+            th:if="${child != null}"
+            th:replace="~{fragments/sidebar :: menuItem(${child})}">
+        </li>
+
+    </ul>
+
+</li>

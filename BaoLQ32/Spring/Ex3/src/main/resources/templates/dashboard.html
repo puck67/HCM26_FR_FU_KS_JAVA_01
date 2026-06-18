@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:replace="~{layout :: layout('Dashboard', ~{::content})}">
+<body>
+    <div th:fragment="content">
+        
+        <!-- Welcome Jumbotron -->
+        <div class="premium-card bg-primary text-white border-0 p-4 mb-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%) !important;">
+            <div class="position-relative z-1">
+                <span class="badge bg-white bg-opacity-20 text-white mb-2 font-monospace px-3 py-1 text-uppercase" style="font-size: 0.75rem;">Authentication Verified</span>
+                <h2 class="fw-bold mb-1">
+                    Welcome back, <span th:text="${currentUser != null ? currentUser.fullName : 'Guest'}">Administrator</span>!
+                </h2>
+                <p class="text-white text-opacity-75 mb-0" style="max-width: 600px;">
+                    You are logged in as <strong th:text="${currentUser != null ? currentUser.username : 'guest'}">superadmin</strong>. 
+                    Your account holds authority level: 
+                    <span class="badge bg-white bg-opacity-20 text-white" th:each="role : ${currentUser != null ? currentUser.roles : null}" th:text="${role.roleName}">ROLE</span>.
+                </p>
+            </div>
+            <!-- Decorative circle -->
+            <div class="position-absolute" style="width: 300px; height: 300px; background: rgba(255, 255, 255, 0.05); border-radius: 50%; right: -50px; top: -50px;"></div>
+        </div>
+        
+        <!-- Metrics Cards Block -->
+        <div class="row g-4 mb-4" sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+            <!-- Total Users Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="premium-card h-100 p-3 d-flex align-items-center gap-3">
+                    <div class="rounded-circle bg-primary bg-opacity-10 text-primary d-flex align-items-center justify-content-center" style="width: 54px; height: 54px; flex-shrink: 0;">
+                        <i class="bi bi-people-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted small">Total Accounts</div>
+                        <h3 class="fw-bold mb-0" th:text="${totalUsers}">4</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Users Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="premium-card h-100 p-3 d-flex align-items-center gap-3">
+                    <div class="rounded-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center" style="width: 54px; height: 54px; flex-shrink: 0;">
+                        <i class="bi bi-person-check-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted small">Active Accounts</div>
+                        <h3 class="fw-bold mb-0" th:text="${activeUsers}">3</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Inactive Users Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="premium-card h-100 p-3 d-flex align-items-center gap-3">
+                    <div class="rounded-circle bg-danger bg-opacity-10 text-danger d-flex align-items-center justify-content-center" style="width: 54px; height: 54px; flex-shrink: 0;">
+                        <i class="bi bi-person-x-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted small">Locked Accounts</div>
+                        <h3 class="fw-bold mb-0" th:text="${inactiveUsers}">1</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Total Roles Card -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="premium-card h-100 p-3 d-flex align-items-center gap-3">
+                    <div class="rounded-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center" style="width: 54px; height: 54px; flex-shrink: 0;">
+                        <i class="bi bi-shield-lock-fill fs-3"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted small">Roles Defined</div>
+                        <h3 class="fw-bold mb-0" th:text="${totalRoles}">3</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Role Specific Features Guide -->
+        <div class="row g-4">
+            <div class="col-12 col-lg-8">
+                <div class="premium-card">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-shield-shaded text-primary me-2"></i>Authorized System Access</h5>
+                    <p class="text-muted">Below is a breakdown of your current account clearance details:</p>
+                    
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                            <div>
+                                <h6 class="fw-semibold mb-0">System Logins</h6>
+                                <small class="text-muted">Ability to sign in and view the user home panel.</small>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-1"><i class="bi bi-check-circle-fill me-1"></i>Granted</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3" sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                            <div>
+                                <h6 class="fw-semibold mb-0">User Account Management</h6>
+                                <small class="text-muted">Create, edit, delete user profiles and reset passwords.</small>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-1"><i class="bi bi-check-circle-fill me-1"></i>Granted</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3" sec:authorize="!hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                            <div>
+                                <h6 class="fw-semibold mb-0">User Account Management</h6>
+                                <small class="text-muted">Create, edit, delete user profiles and reset passwords.</small>
+                            </div>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-1"><i class="bi bi-x-circle-fill me-1"></i>Restricted</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3" sec:authorize="hasRole('SUPER_ADMIN')">
+                            <div>
+                                <h6 class="fw-semibold mb-0">Role Management</h6>
+                                <small class="text-muted">Add system roles, delete roles, or change permission sets.</small>
+                            </div>
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-1"><i class="bi bi-check-circle-fill me-1"></i>Granted</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex justify-content-between align-items-center px-0 py-3" sec:authorize="!hasRole('SUPER_ADMIN')">
+                            <div>
+                                <h6 class="fw-semibold mb-0">Role Management</h6>
+                                <small class="text-muted">Add system roles, delete roles, or change permission sets.</small>
+                            </div>
+                            <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-1"><i class="bi bi-x-circle-fill me-1"></i>Restricted</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-lg-4">
+                <div class="premium-card bg-light h-100">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-lightning-charge text-warning me-2"></i>Quick Actions</h5>
+                    <div class="d-flex flex-column gap-2 mt-3">
+                        <a th:href="@{/users}" class="btn btn-outline-primary text-start p-3 d-flex align-items-center justify-content-between" sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                            <span><i class="bi bi-people me-2"></i>Manage User Accounts</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <a th:href="@{/roles}" class="btn btn-outline-primary text-start p-3 d-flex align-items-center justify-content-between" sec:authorize="hasRole('SUPER_ADMIN')">
+                            <span><i class="bi bi-person-lock me-2"></i>Manage Security Roles</span>
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <div class="p-3 border rounded bg-white text-muted small mt-2">
+                            <i class="bi bi-question-circle me-1"></i> Need to switch roles? Log out from the sidebar and use the default seeded test accounts.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students - LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Learning Management System</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/courses">Courses</a>
+                <a href="/students" class="active">Students</a>
+                <a href="/enrollments">Enrollments</a>
+            </nav>
+        </header>
+        <main>
+            <div class="page-header">
+                <h2>Students</h2>
+                <a href="/students/new" class="btn btn-primary">Add New Student</a>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Enrollment Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="student : ${students}">
+                            <td th:text="${student.id}">1</td>
+                            <td th:text="${student.studentId}">STU001</td>
+                            <td th:text="${student.name}">John Doe</td>
+                            <td th:text="${student.email}">john@example.com</td>
+                            <td th:text="${student.enrollmentDate}">2024-01-01</td>
+                            <td>
+                                <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-small btn-edit">Edit</a>
+                                <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Learning Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

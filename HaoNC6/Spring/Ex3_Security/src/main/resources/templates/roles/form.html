@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: html_head(${isEdit} ? 'Edit Role' : 'Add Role')}"></head>
+<body>
+
+<!-- Sidebar -->
+<div th:replace="~{fragments :: app_sidebar('roles')}"></div>
+
+<!-- Main Area -->
+<div class="main-content">
+    
+    <!-- Top Header -->
+    <div th:replace="~{fragments :: app_header}"></div>
+    
+    <!-- Body Content -->
+    <div class="container-fluid py-4 animated-content">
+        
+        <!-- Page Header -->
+        <div class="mb-4">
+            <h2 class="fw-bold mb-1" th:text="${isEdit} ? 'Edit Role' : 'Create New Role'">Create Role</h2>
+            <p class="text-secondary small mb-0" th:text="${isEdit} ? 'Update fields and save details below.' : 'Provide the name for the new system role below.'">Role Form</p>
+        </div>
+
+        <!-- Form Card -->
+        <div class="glass-card" style="max-width: 600px;">
+            
+            <!-- Error message alert -->
+            <div th:if="${errorMessage}" class="alert alert-danger border-0 rounded-3 py-2 px-3 mb-4" style="background-color: rgba(239, 68, 68, 0.15); color: #ef4444; font-size: 0.85rem;">
+                <i class="fa-solid fa-circle-exclamation me-1"></i>
+                <span th:text="${errorMessage}">Error Message</span>
+            </div>
+            
+            <form th:action="@{/roles/save}" th:object="${role}" method="post">
+                <!-- Hidden inputs -->
+                <input type="hidden" th:field="*{roleId}">
+
+                <!-- Role Name -->
+                <div class="mb-4">
+                    <label for="roleName" class="form-label small fw-semibold text-secondary">Role Name</label>
+                    <input type="text" id="roleName" th:field="*{roleName}" class="form-control form-control-custom" placeholder="e.g. VISITOR (automatically capitalized)" required autofocus>
+                    <div class="form-text text-muted small mt-1">Please use uppercase words. Avoid spaces (e.g. MANAGER, RESEARCHER).</div>
+                </div>
+
+                <!-- Submit / Cancel -->
+                <div class="d-flex align-items-center gap-2 pt-2">
+                    <a th:href="@{/roles}" class="btn btn-secondary-custom">Cancel</a>
+                    <button type="submit" class="btn btn-primary-custom">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save Role
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

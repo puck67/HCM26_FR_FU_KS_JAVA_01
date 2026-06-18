@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout(~{::main})}">
+<body>
+    <main th:with="activePage='reviews'">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="card" style="margin-bottom: 2rem; border-color: rgba(99, 102, 241, 0.2);">
+                <h2 style="font-size: 1.5rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;">Most Recent Approved Reviews</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">See what students are saying about the courses.</p>
+            </div>
+
+            <div class="card">
+                <div th:each="review : ${reviews}" class="review-item" style="border-left-width: 4px; padding: 1rem 0 1rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.03); margin-bottom: 1.5rem;">
+                    <div class="review-header">
+                        <span class="review-author" style="font-size: 1.05rem;" th:text="${review.authorName}">Student Name</span>
+                        <span class="review-stars">
+                            <i th:each="star : ${#numbers.sequence(1, 5)}" 
+                               class="fa-star" th:classappend="${star <= review.rating} ? 'fa-solid' : 'fa-regular'"></i>
+                        </span>
+                    </div>
+                    <p class="review-content" style="font-size: 0.95rem; margin: 0.5rem 0;" th:text="${review.content}">Review content text body.</p>
+                    <a th:href="@{/courses/{id}(id=${review.course.id})}" style="font-size: 0.8rem; color: #818cf8; text-decoration: none;" 
+                       th:text="${'On: ' + review.course.title}">On Course Title</a>
+                </div>
+
+                <div th:if="${#lists.isEmpty(reviews)}" class="no-data">
+                    <i class="fa-regular fa-comments"></i>
+                    <p>No reviews have been published yet.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>Subject Form - Material Management</title>
+</head>
+<body>
+    <div th:fragment="body">
+
+        <!-- Error banner -->
+        <div th:if="${errorMessage}" class="alert-box alert-danger">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size: 20px;"></i>
+            <span th:text="${errorMessage}">Error Message!</span>
+        </div>
+
+        <div class="card">
+            <div class="card-header" th:text="${subject.id != null} ? 'Edit Subject Details' : 'Create New Subject'">
+                Create New Subject
+            </div>
+            
+            <div class="card-body">
+                <form th:action="@{/subjects/save}" method="post" th:object="${subject}">
+                    <!-- Hidden ID -->
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="form-grid">
+                        <!-- Code -->
+                        <div class="form-group">
+                            <label for="code">Subject Code (Mã môn học)</label>
+                            <input type="text" id="code" th:field="*{code}" required placeholder="e.g. JAVA01"
+                                   th:readonly="${subject.id != null}">
+                            <span th:if="${#fields.hasErrors('code')}" th:errors="*{code}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Name -->
+                        <div class="form-group">
+                            <label for="name">Subject Name (Tên môn học)</label>
+                            <input type="text" id="name" th:field="*{name}" required placeholder="e.g. Java Programming">
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+
+                        <!-- Duration -->
+                        <div class="form-group full-width">
+                            <label for="duration">Duration (Thời lượng tính theo giờ)</label>
+                            <input type="number" id="duration" th:field="*{duration}" required min="1" placeholder="e.g. 40">
+                            <span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" style="color: var(--danger-text); font-size: 12px;">Error</span>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" class="btn btn-primary" style="width: auto;">
+                            <i class="bi bi-save"></i> Save Subject
+                        </button>
+                        <a th:href="@{/subjects}" class="btn btn-secondary">
+                            <i class="bi bi-x-circle"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

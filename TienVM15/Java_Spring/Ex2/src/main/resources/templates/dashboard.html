@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: html}">
+<head>
+    <title>Dashboard - Menu Management</title>
+</head>
+<body>
+    <div th:fragment="body">
+        
+        <!-- Welcome banner -->
+        <div class="welcome-container" style="margin-bottom: 35px;">
+            <h2 class="welcome-title">WELCOME TO DYNAMIC MENU MANAGEMENT SYSTEM</h2>
+            <p class="welcome-subtitle">A highly extensible system for designing, updating, and filtering system menus dynamically from the database.</p>
+            <div th:if="${currentRole == 'Admin'}" style="margin-top: 15px;">
+                <a th:href="@{/menus}" class="btn btn-primary">
+                    <i class="bi bi-gear-wide-connected"></i>
+                    Configure System Menus
+                </a>
+            </div>
+        </div>
+
+        <!-- Dashboard Statistics Cards Grid -->
+        <div class="stats-grid">
+            <!-- Total Menus -->
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-list-nested"></i>
+                </div>
+                <div class="stats-info">
+                    <span class="stats-label">Total Menus</span>
+                    <span class="stats-value" th:text="${totalMenus}">0</span>
+                </div>
+            </div>
+
+            <!-- Total Parent Menus -->
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-folder2-open"></i>
+                </div>
+                <div class="stats-info">
+                    <span class="stats-label">Parent Menus</span>
+                    <span class="stats-value" th:text="${parentMenus}">0</span>
+                </div>
+            </div>
+
+            <!-- Total Sub Menus -->
+            <div class="stats-card">
+                <div class="stats-icon">
+                    <i class="bi bi-arrow-return-right"></i>
+                </div>
+                <div class="stats-info">
+                    <span class="stats-label">Sub Menus</span>
+                    <span class="stats-value" th:text="${subMenus}">0</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

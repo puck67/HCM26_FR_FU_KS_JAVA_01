@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{layout :: header}"></head>
+<body>
+
+<div th:replace="~{layout :: navbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{layout :: sidebar}"></div>
+        
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
+            <h2>Dashboard</h2>
+            <div class="jumbotron">
+                <h1 class="display-4">Welcome, <span sec:authentication="name">User</span>!</h1>
+                <p class="lead">You have successfully logged in.</p>
+                <hr class="my-4">
+                <p>Your roles are: <span sec:authentication="principal.authorities"></span></p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>New Course | LMS</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            padding: 40px 16px;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 18px rgba(0,0,0,.1);
+            padding: 40px 48px;
+            width: 100%;
+            max-width: 600px;
+            align-self: flex-start;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #1a3c6e;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-size: .9rem;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 5px;
+            font-size: .9rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: .95rem;
+            transition: border-color .2s;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #1a3c6e;
+            box-shadow: 0 0 0 3px rgba(26,60,110,.12);
+        }
+
+        input.error-field, textarea.error-field {
+            border-color: #dc2626;
+        }
+
+        .error-msg {
+            color: #dc2626;
+            font-size: .82rem;
+            margin-top: 4px;
+        }
+
+        textarea { resize: vertical; min-height: 90px; }
+
+        .hint {
+            font-size: .78rem;
+            color: #9ca3af;
+            margin-top: 3px;
+        }
+
+        .btn-submit {
+            background: #1a3c6e;
+            color: #fff;
+            border: none;
+            padding: 11px 32px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            transition: background .2s;
+        }
+
+        .btn-submit:hover { background: #153263; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Create New Course</h1>
+    <p class="subtitle">Fill in the details below to add a course to the LMS.</p>
+
+    <!--
+        th:action  → POST to /courses/create
+        th:object  → binds the form to the "course" model attribute (Course.java)
+    -->
+    <form action="#" th:action="@{/courses/create}" th:object="${course}" method="post">
+
+        <!-- Title  -->
+        <div class="form-group">
+            <label for="title">Course Title <span style="color:#dc2626">*</span></label>
+            <input type="text"
+                   id="title"
+                   th:field="*{title}"
+                   th:classappend="${#fields.hasErrors('title')} ? 'error-field'"
+                   placeholder="e.g. Introduction to Spring Boot"/>
+            <div th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"
+                 class="error-msg"></div>
+            <p class="hint">Minimum 5 characters.</p>
+        </div>
+
+        <!-- Instructor Name  -->
+        <div class="form-group">
+            <label for="instructorName">Instructor Name <span style="color:#dc2626">*</span></label>
+            <input type="text"
+                   id="instructorName"
+                   th:field="*{instructorName}"
+                   th:classappend="${#fields.hasErrors('instructorName')} ? 'error-field'"
+                   placeholder="e.g. Nguyen Van A"/>
+            <div th:if="${#fields.hasErrors('instructorName')}"
+                 th:errors="*{instructorName}"
+                 class="error-msg"></div>
+            <p class="hint">Minimum 2 characters.</p>
+        </div>
+
+        <!-- Instructor Email -->
+        <div class="form-group">
+            <label for="instructorEmail">Instructor Email <span style="color:#dc2626">*</span></label>
+            <input type="email"
+                   id="instructorEmail"
+                   th:field="*{instructorEmail}"
+                   th:classappend="${#fields.hasErrors('instructorEmail')} ? 'error-field'"
+                   placeholder="e.g. instructor@fpt.edu.vn"/>
+            <div th:if="${#fields.hasErrors('instructorEmail')}"
+                 th:errors="*{instructorEmail}"
+                 class="error-msg"></div>
+        </div>
+
+        <!--  Description  -->
+        <div class="form-group">
+            <label for="description">Description <span style="color:#dc2626">*</span></label>
+            <textarea id="description"
+                      th:field="*{description}"
+                      th:classappend="${#fields.hasErrors('description')} ? 'error-field'"
+                      placeholder="Briefly describe what this course covers..."></textarea>
+            <div th:if="${#fields.hasErrors('description')}"
+                 th:errors="*{description}"
+                 class="error-msg"></div>
+            <p class="hint">Between 10 and 200 characters.</p>
+        </div>
+
+        <!-- Duration (Hours)  -->
+        <div class="form-group">
+            <label for="durationHours">Duration (hours) <span style="color:#dc2626">*</span></label>
+            <input type="number"
+                   id="durationHours"
+                   th:field="*{durationHours}"
+                   th:classappend="${#fields.hasErrors('durationHours')} ? 'error-field'"
+                   min="1"
+                   placeholder="e.g. 20"/>
+            <div th:if="${#fields.hasErrors('durationHours')}"
+                 th:errors="*{durationHours}"
+                 class="error-msg"></div>
+            <p class="hint">Must be at least 1 hour.</p>
+        </div>
+
+        <button type="submit" class="btn-submit">Create Course</button>
+
+    </form>
+</div>
+
+<script>
+    // This script allows testing the success redirection locally (by double-clicking the HTML file)
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        if (form && window.location.protocol === "file:") {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                // Statically redirect to create_success.html
+                window.location.href = "create_success.html";
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

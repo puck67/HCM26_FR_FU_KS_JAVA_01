@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title != null ? title + ' - CourseShare' : 'CourseShare'}">CourseShare</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+    
+    <header th:fragment="header(activeTab)">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+            <div class="container-fluid max-width-container" style="max-width: 1200px; margin: 0 auto;">
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fa-solid fa-graduation-cap me-2 text-primary"></i>CourseShare
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    
+                    <ul class="navbar-nav ms-auto" th:if="${currentUri != null && currentUri.startsWith('/instructor')}">
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'dashboard' ? 'active' : ''}" th:href="@{/instructor/dashboard}">
+                                <i class="fa-solid fa-chart-line me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'courses' ? 'active' : ''}" th:href="@{/instructor/courses}">
+                                <i class="fa-solid fa-book me-1"></i>Manage Courses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'reviews' ? 'active' : ''}" th:href="@{/instructor/reviews}">
+                                <i class="fa-solid fa-comments me-1"></i>Reviews
+                            </a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="nav-link btn btn-danger text-white px-3" th:href="@{/logout}">
+                                <i class="fa-solid fa-right-from-bracket me-1"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    
+                    <ul class="navbar-nav ms-auto" th:unless="${currentUri != null && currentUri.startsWith('/instructor')}">
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'home' ? 'active' : ''}" th:href="@{/}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'categories' ? 'active' : ''}" th:href="@{/categories}">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:classappend="${activeTab == 'reviews' ? 'active' : ''}" th:href="@{/reviews/recent}">Recent Reviews</a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            
+                            <a class="nav-link btn btn-primary text-white px-3" 
+                               th:href="${session.instructor != null ? '/instructor/dashboard' : '/login'}"
+                               th:text="${session.instructor != null ? 'Dashboard' : 'Login'}">
+                                Login
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <footer th:fragment="footer" class="py-4 mt-auto bg-dark text-white-50 text-center">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 CourseShare LMS. All rights reserved.</p>
+            <small>Designed for Instructors and Students. Single-Instructor Edition.</small>
+        </div>
+    </footer>
+
+    
+    <div th:fragment="scripts">
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </div>
+
+</body>
+</html>
