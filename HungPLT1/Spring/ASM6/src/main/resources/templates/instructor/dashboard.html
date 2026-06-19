@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructor Dashboard - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">CourseShare</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link active" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/reviews}">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h4 class="mb-4 fw-bold">Dashboard Overview</h4>
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="stat-number text-primary" th:text="${totalCourses}">0</div>
+                <div class="stat-label">Total Courses</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="stat-number text-success" th:text="${publishedCourses}">0</div>
+                <div class="stat-label">Published Courses</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="stat-number text-warning" th:text="${pendingReviews}">0</div>
+                <div class="stat-label">Pending Reviews</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card stat-card">
+                <div class="stat-number text-info" th:text="${totalCategories}">0</div>
+                <div class="stat-label">Total Categories</div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="mb-4 fw-bold">Quick Actions</h4>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <a th:href="@{/instructor/courses/new}" class="btn btn-primary action-btn w-100 text-decoration-none text-white d-flex align-items-center justify-content-center">
+                Create New Course
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/instructor/courses}" class="btn btn-secondary action-btn w-100 text-decoration-none text-white d-flex align-items-center justify-content-center" style="background-color: #475569; border: none;">
+                Manage Courses
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a th:href="@{/instructor/reviews}" class="btn btn-success action-btn w-100 text-decoration-none text-white d-flex align-items-center justify-content-center" style="background-color: #0d9488; border: none;">
+                Pending Reviews
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
