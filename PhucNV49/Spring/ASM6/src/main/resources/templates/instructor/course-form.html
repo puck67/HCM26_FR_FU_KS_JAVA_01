@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${editMode} ? 'Edit Course' : 'Create Course')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="instructor-layout">
+  <nav class="instructor-sidebar">
+    <div class="sidebar-brand">Instructor Panel</div>
+    <ul>
+      <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+      <li><a th:href="@{/instructor/courses}">Manage Courses</a></li>
+      <li><a th:href="@{/instructor/courses/new}" class="active">Create Course</a></li>
+      <li><a th:href="@{/instructor/reviews}">Manage Reviews</a></li>
+      <li><a th:href="@{/}">View Site</a></li>
+    </ul>
+  </nav>
+
+  <main class="instructor-main">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+      <a th:href="@{/instructor/courses}" style="color:var(--text-muted)">&larr;</a>
+      <h1 style="margin-bottom:0" th:text="${editMode} ? 'Edit Course' : 'Create New Course'">Form</h1>
+    </div>
+
+    <div class="card">
+      <form th:action="@{/instructor/courses/save}" th:object="${course}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="form-group">
+          <label>Title *</label>
+          <input type="text" th:field="*{title}" class="form-control"
+                 placeholder="Course title" required/>
+          <div class="form-error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Description * <span style="font-size:.8rem;color:var(--text-muted)">(short summary)</span></label>
+          <textarea th:field="*{description}" class="form-control" rows="3"
+                    placeholder="Brief description shown on course cards" required></textarea>
+          <div class="form-error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <div class="form-group">
+          <label>Content * <span style="font-size:.8rem;color:var(--text-muted)">(Markdown supported)</span></label>
+          <textarea th:field="*{content}" class="form-control" rows="14"
+                    placeholder="## Introduction&#10;&#10;Write course content here using **Markdown** syntax..." required
+                    id="contentEditor"></textarea>
+          <div class="form-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="form-group">
+            <label>Status</label>
+            <select th:field="*{status}" class="form-control">
+              <option value="1">Draft</option>
+              <option value="2">Published</option>
+              <option value="3">Archived</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Categories <span style="font-size:.8rem;color:var(--text-muted)">(comma-separated)</span></label>
+            <input type="text" th:field="*{category}" class="form-control"
+                   placeholder="e.g. Spring, Java, Backend"/>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;margin-top:.5rem">
+          <button type="submit" class="btn btn-primary">
+            <span th:text="${editMode} ? 'Update Course' : 'Create Course'">Save</span>
+          </button>
+          <a th:href="@{/instructor/courses}" class="btn btn-outline">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

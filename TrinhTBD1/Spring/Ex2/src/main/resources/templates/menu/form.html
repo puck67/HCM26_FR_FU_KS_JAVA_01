@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/main :: head(${menu.id == null} ? 'Add Menu' : 'Edit Menu')}"></head>
+<body>
+
+    <div class="app-container">
+        <div th:replace="~{layout/main :: sidebar}"></div>
+
+        <div class="main-wrapper">
+            <div th:replace="~{layout/main :: topbar(${menu.id == null} ? 'Create Menu' : 'Modify Menu')}"></div>
+
+            <main class="content-body">
+                
+                <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                    <div class="card-header">
+                        <h3 class="card-title" th:text="${menu.id == null} ? 'Create New Menu' : 'Edit Menu: ' + ${menu.name}">Menu Details</h3>
+                        <a href="/menus" class="btn-secondary-custom">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
+
+                    <form th:action="@{/menus/save}" th:object="${menu}" method="post">
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="name" class="form-label">Menu Name <span class="text-danger">*</span></label>
+                                <input type="text" id="name" th:field="*{name}" class="form-control-custom" placeholder="e.g. Student Management" required>
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label for="displayOrder" class="form-label">Display Order <span class="text-danger">*</span></label>
+                                <input type="number" id="displayOrder" th:field="*{displayOrder}" class="form-control-custom" min="0" required>
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}">Display order error</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="url" class="form-label">URL (relative path starting with '/')</label>
+                                <input type="text" id="url" th:field="*{url}" class="form-control-custom" placeholder="e.g. /students (Leave blank for parents)">
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('url')}" th:errors="*{url}">URL error</span>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label for="icon" class="form-label">Bootstrap Icon Name</label>
+                                <input type="text" id="icon" th:field="*{icon}" class="form-control-custom" placeholder="e.g. bi-person-badge">
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('icon')}" th:errors="*{icon}">Icon error</span>
+                                <small class="text-muted mt-1 d-block" style="font-size: 0.8rem;">
+                                    Find icons here: <a href="https://icons.getbootstrap.com/" target="_blank" class="text-info">Bootstrap Icons</a>
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="parent" class="form-label">Parent Menu</label>
+                                <select id="parent" th:field="*{parent.id}" class="form-control-custom">
+                                    <option value="">-- No Parent (Root Level Menu) --</option>
+                                    <option th:each="p : ${parents}" th:value="${p.id}" th:text="${p.name}">Parent Name</option>
+                                </select>
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('parent')}" th:errors="*{parent}">Parent error</span>
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                <select id="status" th:field="*{status}" class="form-control-custom">
+                                    <option th:value="true">Active (Visible in Sidebar)</option>
+                                    <option th:value="false">Inactive (Hidden from Sidebar)</option>
+                                </select>
+                                <span class="text-danger-custom" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status error</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Allowed Roles (Leave all unchecked to allow public access)</label>
+                            <div class="role-checkboxes">
+                                <div class="role-checkbox-item">
+                                    <input type="checkbox" name="selectedRoles" value="ADMIN" id="roleAdmin" class="checkbox-custom"
+                                           th:checked="${menu.roles != null && menu.roles.contains('ADMIN')}">
+                                    <label for="roleAdmin"><i class="bi bi-shield-lock-fill text-primary"></i> Administrator</label>
+                                </div>
+                                <div class="role-checkbox-item">
+                                    <input type="checkbox" name="selectedRoles" value="TEACHER" id="roleTeacher" class="checkbox-custom"
+                                           th:checked="${menu.roles != null && menu.roles.contains('TEACHER')}">
+                                    <label for="roleTeacher"><i class="bi bi-person-workspace text-warning"></i> Teacher / Instructor</label>
+                                </div>
+                                <div class="role-checkbox-item">
+                                    <input type="checkbox" name="selectedRoles" value="STUDENT" id="roleStudent" class="checkbox-custom"
+                                           th:checked="${menu.roles != null && menu.roles.contains('STUDENT')}">
+                                    <label for="roleStudent"><i class="bi bi-person-fill text-success"></i> Student</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-premium">
+                                <i class="bi bi-save2"></i> Save Menu
+                            </button>
+                            <a href="/menus" class="btn-secondary-custom">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div th:fragment="sidebar" class="d-flex flex-column p-3 text-white bg-dark" style="width: 250px; min-height: 100vh;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Menu</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a th:href="@{/dashboard}" class="nav-link text-white" aria-current="page">
+                Dashboard
+            </a>
+        </li>
+        
+        <th:block sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+            <li class="nav-item mt-3">
+                <span class="text-muted ms-3 small text-uppercase fw-bold">Security Management</span>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/users}" class="nav-link text-white ps-4">
+                    User Management
+                </a>
+            </li>
+        </th:block>
+        
+        <th:block sec:authorize="hasRole('SUPER_ADMIN')">
+            <li class="nav-item">
+                <a th:href="@{/roles}" class="nav-link text-white ps-4">
+                    Role Management
+                </a>
+            </li>
+        </th:block>
+    </ul>
+</div>
+</body>
+</html>

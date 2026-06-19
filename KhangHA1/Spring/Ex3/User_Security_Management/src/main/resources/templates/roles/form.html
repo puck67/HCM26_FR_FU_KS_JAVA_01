@@ -16,7 +16,7 @@
 
             <div class="card col-md-6 mx-auto shadow-sm">
                 <div class="card-body">
-                    <form th:action="${role.roleId == null ? '/roles/add' : '/roles/edit/' + role.roleId}" 
+                    <form th:action="@{/roles/save}" 
                           th:object="${role}" method="post">
                         
                         <input type="hidden" th:field="*{roleId}">

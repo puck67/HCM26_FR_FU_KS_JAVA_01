@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="layout(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User & Security Management System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-glow: rgba(14, 165, 233, 0.15);
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Sidebar Glass Styling */
+        .sidebar-container {
+            width: var(--sidebar-width);
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            border-right: 1px solid var(--border-color);
+        }
+
+        /* Main Content wrapper */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header / Top Navbar */
+        .top-navbar {
+            height: 70px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        /* Nav links interactions */
+        .sidebar-item-link {
+            transition: all 0.25s ease;
+            font-weight: 500;
+        }
+
+        .sidebar-item-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(3px);
+            color: #38bdf8 !important;
+        }
+
+        .sidebar-item-link.active {
+            background: linear-gradient(90deg, rgba(14, 165, 233, 0.2) 0%, rgba(56, 189, 248, 0.05) 100%);
+            border-left: 3px solid #0ea5e9;
+            color: #38bdf8 !important;
+            font-weight: 600;
+        }
+
+        /* Submenus structure */
+        .submenu-list {
+            padding-left: 1rem;
+            margin-left: 0.75rem;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Card glowing hover effect */
+        .glow-card {
+            transition: all 0.3s ease;
+        }
+        .glow-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.3) !important;
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.15);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .tracking-wide {
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR CONTAINER -->
+    <div class="sidebar-container">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    </div>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        <!-- TOP NAVBAR -->
+        <header class="top-navbar d-flex align-items-center px-4 justify-content-between">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 text-white fw-bold tracking-wide">
+                    <i class="bi bi-shield-fill-check text-info me-2"></i>
+                    Security Center
+                </h5>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <!-- User Profile info (Bonus 2) -->
+                <div class="d-flex align-items-center px-3 py-1.5 bg-dark bg-opacity-40 border border-secondary border-opacity-25 rounded gap-2">
+                    <i class="bi bi-person-circle text-info fs-5"></i>
+                    <div class="text-start d-flex align-items-center">
+                        <span class="text-white fw-semibold small" sec:authentication="name">superadmin</span>
+                        <!-- Roles loop -->
+                        <span class="badge bg-info bg-opacity-20 text-info border border-info border-opacity-20 ms-2 font-mono small" style="font-size: 0.725rem;">
+                            <th:block th:each="authority, iterStat : ${#authentication.getAuthorities()}">
+                                <span th:text="${#strings.replace(authority.getAuthority(), 'ROLE_', '')}">SUPER_ADMIN</span>
+                                <span th:if="${!iterStat.last}">, </span>
+                            </th:block>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Secure Logout Form -->
+                <form th:action="@{/logout}" method="POST" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1 border-danger border-opacity-20">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </header>
+
+        <!-- CONTENT CONTAINER -->
+        <main class="flex-grow-1 p-4">
+            <div th:replace="${content}">
+                <!-- Rendered page content goes here -->
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer py-3 px-4 border-top border-secondary text-center mt-auto text-muted small bg-dark bg-opacity-20">
+            <p class="mb-0">&copy; 2026 User & Security Management System. Protected Environment.</p>
+        </footer>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Active Link Highlighter -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const currentPath = window.location.pathname;
+            const links = document.querySelectorAll(".sidebar-item-link");
+            links.forEach(link => {
+                const url = link.getAttribute("href");
+                if (url && (url === currentPath || (currentPath.startsWith(url) && url !== '/dashboard'))) {
+                    link.classList.add("active");
+                    link.classList.remove("text-white");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

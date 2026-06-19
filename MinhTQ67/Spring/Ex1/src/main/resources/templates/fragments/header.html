@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div th:fragment="header" class="banner">
+        <div style="flex: 1; font-size: 1.2rem; font-weight: 600; color: var(--text-muted);" layout:fragment="banner-center"></div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="position: relative;">
+                <input type="text" class="search-bar" placeholder="Search...">
+                <i class="fa-solid fa-search" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+            </div>
+            <div class="user-profile">
+                <i class="fa-solid fa-user-circle"></i>
+                <span sec:authentication="name">Admin</span>
+            </div>
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="btn-logout">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

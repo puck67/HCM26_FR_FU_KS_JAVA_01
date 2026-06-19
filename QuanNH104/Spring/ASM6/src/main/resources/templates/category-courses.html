@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: header('Danh mục: ' + ${selectedCategory})}"></head>
+<body>
+
+    <!-- Navbar -->
+    <div th:replace="~{layout :: navbar}"></div>
+
+    <div class="container my-5">
+        <div class="row g-4">
+            
+            <!-- Left Column: Courses list -->
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center mb-4">
+                    <h2 class="m-0 fs-3 text-dark">
+                        <i class="fa-solid fa-folder-open text-primary me-2"></i>Các khóa học thuộc danh mục: <span class="text-primary" th:text="${selectedCategory}">HTML</span>
+                    </h2>
+                </div>
+                
+                <!-- Courses Grid -->
+                <div class="row g-3">
+                    <div class="col-12" th:each="course : ${courses}">
+                        <div class="card card-custom p-4">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h3 class="fs-4 mb-2">
+                                        <a th:href="@{/courses/{id}(id=${course.id})}" class="text-decoration-none text-dark hover-primary" th:text="${course.title}">Tiêu đề khóa học</a>
+                                    </h3>
+                                    <div class="mb-3">
+                                        <a th:each="cat : ${#strings.arraySplit(course.category != null ? course.category : '', ',')}"
+                                           th:href="@{/categories/{name}(name=${#strings.trim(cat)})}"
+                                           class="tag-category"
+                                           th:classappend="${#strings.equalsIgnoreCase(#strings.trim(cat), selectedCategory)} ? 'bg-primary text-white' : ''"
+                                           th:text="${#strings.trim(cat)}">HTML</a>
+                                    </div>
+                                    <p class="text-secondary mb-3" th:text="${course.description}">Mô tả khóa học...</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center mt-2 pt-3 border-top">
+                                <span class="text-muted small">
+                                    <i class="fa-regular fa-clock me-1"></i>[[${#temporals.format(course.createdAt, 'dd/MM/yyyy')}]]
+                                </span>
+                                <a th:href="@{/courses/{id}(id=${course.id})}" class="btn btn-primary-custom btn-sm">
+                                    Chi tiết <i class="fa-solid fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div class="col-12" th:if="${#lists.isEmpty(courses)}">
+                        <div class="card card-custom p-5 text-center">
+                            <i class="fa-regular fa-folder-open text-muted fs-1 mb-3"></i>
+                            <h4 class="text-secondary">Không tìm thấy khóa học nào trong danh mục này</h4>
+                            <p class="text-muted">Vui lòng chọn danh mục khác hoặc quay lại trang chủ.</p>
+                            <div class="mt-3">
+                                <a th:href="@{/}" class="btn btn-primary-custom"><i class="fa-solid fa-house me-1"></i>Trang chủ</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="mt-4" th:if="${totalPages > 1}">
+                    <ul class="pagination pagination-custom justify-content-center">
+                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                            <a class="page-link" th:href="@{/categories/{name}(name=${selectedCategory}, page=${currentPage - 1})}"><i class="fa-solid fa-angle-left"></i></a>
+                        </li>
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i} ? 'active'">
+                            <a class="page-link" th:href="@{/categories/{name}(name=${selectedCategory}, page=${i})}" th:text="${i + 1}">1</a>
+                        </li>
+                        <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                            <a class="page-link" th:href="@{/categories/{name}(name=${selectedCategory}, page=${currentPage + 1})}"><i class="fa-solid fa-angle-right"></i></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Right Column: Sidebar (Category Cloud) -->
+            <div class="col-lg-4">
+                <div class="category-cloud-container">
+                    <h3 class="category-cloud-title">
+                        <i class="fa-solid fa-tags text-primary me-2"></i>Đám mây danh mục
+                    </h3>
+                    <div class="category-cloud">
+                        <a th:each="cat : ${categories}"
+                           th:href="@{/categories/{name}(name=${cat.name})}"
+                           th:classappend="${#strings.equalsIgnoreCase(cat.name, selectedCategory)} ? 'bg-primary-subtle border border-primary text-primary px-2 py-1 rounded' : ''"
+                           th:style="'font-size: calc(0.8rem + ' + ${cat.frequency * 0.1} + 'rem);'"
+                           th:text="${cat.name} + ' (' + ${cat.frequency} + ')'"
+                           class="fw-semibold text-secondary">HTML</a>
+                        <span th:if="${#lists.isEmpty(categories)}" class="text-muted small">Không có danh mục nào.</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="~{layout :: footer}"></div>
+
+    <!-- Scripts -->
+    <div th:replace="~{layout :: scripts}"></div>
+
+</body>
+</html>

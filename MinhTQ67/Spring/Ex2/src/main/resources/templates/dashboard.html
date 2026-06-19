@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="page-header">
+            <h2>Dashboard Overview</h2>
+        </div>
+        
+        <div class="row mb-5">
+            <div class="col-md-4 mb-4">
+                <div class="gradient-card bg-gradient-primary">
+                    <i class="bi bi-grid-1x2-fill card-icon-bg"></i>
+                    <h5 class="card-title">Total Menus</h5>
+                    <p class="display-4" th:text="${totalMenus}">0</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="gradient-card bg-gradient-success">
+                    <i class="bi bi-folder-fill card-icon-bg"></i>
+                    <h5 class="card-title">Parent Menus</h5>
+                    <p class="display-4" th:text="${totalParentMenus}">0</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="gradient-card bg-gradient-info">
+                    <i class="bi bi-file-earmark-text-fill card-icon-bg"></i>
+                    <h5 class="card-title">Sub Menus</h5>
+                    <p class="display-4" th:text="${totalSubMenus}">0</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-info shadow-sm d-flex align-items-center">
+                    <i class="bi bi-info-circle-fill fs-3 me-3"></i>
+                    <div>
+                        <h5 class="alert-heading mb-1 fw-bold">Welcome to Dynamic LMS!</h5>
+                        <p class="mb-0">Current Role: <span class="badge bg-primary fs-6 ms-1" th:text="${currentRole}"></span></p>
+                        <p class="mb-0 mt-1 opacity-75">Change your role on the left sidebar to see dynamic menu filtering in action.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

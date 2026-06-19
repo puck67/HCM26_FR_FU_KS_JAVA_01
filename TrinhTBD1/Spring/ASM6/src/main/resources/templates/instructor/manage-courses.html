@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Courses')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('courses')}"></header>
+
+    <main class="main-container flex-grow-1">
+
+        
+        <div th:replace="~{fragments/components :: alert-panel}"></div>
+
+        <div th:replace="~{fragments/crud-toolbar :: toolbar(
+            'Manage Courses',
+            '/instructor/courses/new',
+            null,
+            null,
+            'Create New Course',
+            'fa-solid fa-book-open'
+        )}"></div>
+
+        <div class="card border-0 shadow-sm" style="border-radius:var(--radius);overflow:hidden;">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="py-3 ps-4" style="width:35%;">Title</th>
+                            <th class="py-3" style="width:15%;">Status</th>
+                            <th class="py-3" style="width:25%;">Categories</th>
+                            <th class="py-3 pe-4" style="width:25%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${coursePage.isEmpty()}">
+                            <td colspan="4" class="py-5">
+                                <div th:replace="~{fragments/components :: empty-state(message='No courses found. Add one to get started!')}"></div>
+                            </td>
+                        </tr>
+                        <tr th:each="course : ${coursePage.content}">
+                            <td class="ps-4">
+                                <h6 class="mb-0 fw-bold" th:text="${course.title}">Title</h6>
+                                <small class="text-muted d-block" style="max-width:280px;"
+                                       th:text="${course.description}">Desc</small>
+                            </td>
+                            <td>
+                                
+                                <span th:replace="~{fragments/components :: status-badge(status=${course.status}, type='course')}"></span>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <span th:each="cat : ${#strings.arraySplit(course.category, ',')}"
+                                          class="badge bg-light text-secondary border"
+                                          th:text="${#strings.trim(cat)}">Cat</span>
+                                </div>
+                            </td>
+                            <td class="pe-4">
+                                <div class="d-flex gap-1 flex-wrap">
+                                    <a th:href="@{/instructor/courses/edit/{id}(id=${course.id})}"
+                                       class="btn btn-sm btn-outline-primary" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a th:href="@{/instructor/courses/delete/{id}(id=${course.id})}"
+                                       class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete this course and all its reviews?')"
+                                       title="Delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                    <a th:if="${course.status != 2}"
+                                       th:href="@{/instructor/courses/publish/{id}(id=${course.id})}"
+                                       class="btn btn-sm btn-success" title="Publish">
+                                        <i class="fa-solid fa-circle-check"></i> Publish
+                                    </a>
+                                    <a th:if="${course.status == 2}"
+                                       th:href="@{/instructor/courses/unpublish/{id}(id=${course.id})}"
+                                       class="btn btn-sm btn-warning" title="Unpublish">
+                                        <i class="fa-solid fa-circle-minus"></i> Unpublish
+                                    </a>
+                                    <a th:if="${course.status != 3}"
+                                       th:href="@{/instructor/courses/archive/{id}(id=${course.id})}"
+                                       class="btn btn-sm btn-secondary" title="Archive">
+                                        <i class="fa-solid fa-box-archive"></i> Archive
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+        <nav th:replace="~{fragments/components :: pagination(page=${coursePage}, url='/instructor/courses')}"></nav>
+
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

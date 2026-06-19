@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::#searchResultsContent})}">
+<body>
+    <div id="searchResultsContent">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-white">Search Results</h2>
+                <p class="text-secondary">Showing files matching: "<span class="text-white font-weight-bold" th:text="${query}">query</span>"</p>
+            </div>
+            <a href="/materials" class="btn btn-sm btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Workspace
+            </a>
+        </div>
+
+        <!-- Materials Table -->
+        <div class="glass-card">
+            <div class="table-responsive">
+                <table class="table glass-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 8%;">ID</th>
+                            <th style="width: 20%;">Subject</th>
+                            <th style="width: 25%;">File Name</th>
+                            <th style="width: 20%;">Description</th>
+                            <th style="width: 12%;">Category</th>
+                            <th style="width: 8%;">Size</th>
+                            <th style="width: 7%; text-align: right;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="material : ${materials}">
+                            <td th:text="${material.materialId}">1</td>
+                            <td>
+                                <div class="d-flex flex-column">
+                                    <span class="badge bg-dark text-indigo border border-indigo align-self-start mb-1" th:text="${material.subject.subjectCode}">JAVA01</span>
+                                    <span class="text-secondary small text-truncate" style="max-width: 150px;" th:text="${material.subject.subjectName}" th:title="${material.subject.subjectName}">Java Programming</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <i th:class="${material.getIconClass()}" style="font-size: 1.25rem;"></i>
+                                    <span class="text-white font-weight-medium text-truncate" style="max-width: 180px;" th:text="${material.fileName}" th:title="${material.fileName}">Lecture1.pdf</span>
+                                </div>
+                            </td>
+                            <td class="text-secondary small" th:text="${material.description}">Introduction to Java syntax</td>
+                            <td>
+                                <span class="badge-glass-category" th:text="${material.category}">Lecture</span>
+                            </td>
+                            <td class="text-secondary small" th:text="${material.getFormattedSize()}">1.2 MB</td>
+                            <td style="text-align: right;">
+                                <div class="d-flex justify-content-end gap-2">
+                                    <a th:href="@{/materials/download/{id}(id=${material.materialId})}" class="btn btn-sm btn-outline-success" title="Download">
+                                        <i class="fa-solid fa-download"></i>
+                                    </a>
+                                    <a th:href="@{/materials/delete/{id}(id=${material.materialId}, subjectId=${material.subject.subjectId})}" 
+                                       class="btn btn-sm btn-glass-danger" 
+                                       onclick="return confirm('Do you want to delete this material?');" 
+                                       title="Delete">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(materials)}">
+                            <td colspan="7" class="text-center text-secondary py-5">
+                                <i class="fa-solid fa-magnifying-glass-minus d-block mb-3" style="font-size: 2.5rem; color: rgba(255,255,255,0.15);"></i>
+                                No materials matched your query. Try searching for something else.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
