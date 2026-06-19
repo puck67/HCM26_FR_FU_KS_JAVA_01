@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container home-layout">
+        <main>
+            <h2>Recent Published Courses</h2>
+            <br>
+            <div th:each="course : ${coursePage.content}" class="card">
+                <h3 class="card-title" th:text="${course.title}">Course Title</h3>
+                <div class="card-subtitle" th:text="${course.description}">Description</div>
+                <div style="margin-bottom: 1rem;">
+                    <span style="color:var(--secondary-color);font-size:0.85rem;">Categories: </span>
+                    <span th:if="${course.category != null}">
+                        <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="badge badge-primary" th:text="${#strings.trim(cat)}" style="margin-right: 4px;">Cat</span>
+                    </span>
+                </div>
+                <a th:href="@{/course/{id}(id=${course.id})}" class="btn btn-primary">View Details</a>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination" th:if="${coursePage.totalPages > 1}">
+                <li th:classappend="${coursePage.first} ? 'disabled'">
+                    <a th:if="${!coursePage.first}" th:href="@{/(page=${coursePage.number})}">&laquo;</a>
+                    <span th:if="${coursePage.first}">&laquo;</span>
+                </li>
+                
+                <li th:each="i : ${#numbers.sequence(1, coursePage.totalPages)}" th:classappend="${i == coursePage.number + 1} ? 'active'">
+                    <a th:if="${i != coursePage.number + 1}" th:href="@{/(page=${i})}" th:text="${i}"></a>
+                    <span th:if="${i == coursePage.number + 1}" th:text="${i}"></span>
+                </li>
+
+                <li th:classappend="${coursePage.last} ? 'disabled'">
+                    <a th:if="${!coursePage.last}" th:href="@{/(page=${coursePage.number + 2})}">&raquo;</a>
+                    <span th:if="${coursePage.last}">&raquo;</span>
+                </li>
+            </ul>
+        </main>
+        
+        <aside>
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">Categories</div>
+                <div class="sidebar-section-body category-cloud">
+                    <a th:each="cat : ${categories}" th:href="@{/category/{name}(name=${cat.name})}" th:text="${cat.name}" th:style="'font-size: ' + (1 + (cat.frequency * 0.1)) + 'rem; color: var(--primary-color); font-weight: 500; margin-right: 8px;'"></a>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">Most Recent Reviews</div>
+                <div class="sidebar-section-body">
+                    <div th:each="review : ${recentReviews}" class="review-item">
+                        <div class="review-header">
+                            <span class="review-author" th:text="${review.authorName}">Name</span>
+                        </div>
+                        <div class="review-rating">
+                            <span th:each="i : ${#numbers.sequence(1, 5)}" th:text="${i <= review.rating ? '★' : '☆'}"></span>
+                        </div>
+                        <div class="review-content" th:text="${#strings.abbreviate(review.content, 60)}">Content...</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

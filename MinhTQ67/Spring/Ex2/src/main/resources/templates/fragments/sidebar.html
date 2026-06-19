@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Recursive Menu Fragment -->
+<div th:fragment="recursiveMenu(menus)" th:remove="tag">
+    <li th:each="menu : ${menus}" th:if="${menu.status}" class="nav-item" th:classappend="${menu.children != null && !menu.children.isEmpty()} ? 'has-submenu' : ''">
+        
+        <a class="nav-link" th:href="@{${menu.url != null && !menu.url.isEmpty() ? menu.url : '#'}}">
+            <i th:if="${menu.icon != null && !menu.icon.isEmpty()}" th:class="${menu.icon} + ' me-2'"></i>
+            <span th:text="${menu.name}">Menu Name</span>
+            <i th:if="${menu.children != null && !menu.children.isEmpty()}" class="bi bi-chevron-right caret-icon"></i>
+        </a>
+        
+        <!-- Recursive call if children exist -->
+        <ul th:if="${menu.children != null && !menu.children.isEmpty()}" class="submenu flex-column">
+            <div th:replace="~{fragments/sidebar :: recursiveMenu(${menu.children})}"></div>
+        </ul>
+        
+    </li>
+</div>
+
+</html>

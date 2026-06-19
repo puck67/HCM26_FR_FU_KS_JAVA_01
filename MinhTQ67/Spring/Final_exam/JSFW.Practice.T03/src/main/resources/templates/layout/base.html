@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+    <title>Hotel Booking System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-hover: #4338CA;
+            --bg-color: #F9FAFB;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border-color: #E5E7EB;
+            --surface: #FFFFFF;
+            --success: #10B981;
+            --danger: #EF4444;
+        }
+        body { font-family: 'Inter', sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main); }
+        .banner { background-color: var(--primary); color: white; padding: 20px 30px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: space-between; }
+        .banner h2 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .container { display: flex; min-height: calc(100vh - 140px); max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 20px; }
+        
+        .sidebar { width: 280px; flex-shrink: 0; background-color: var(--surface); border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); padding: 32px 24px; border: 1px solid var(--border-color); }
+        .sidebar h4 { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 24px; padding-left: 16px; }
+        .sidebar ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar ul li a { display: block; padding: 14px 20px; text-decoration: none; color: var(--text-muted); font-weight: 500; font-size: 15px; border-radius: 12px; transition: all 0.2s; border-left: 4px solid transparent; }
+        .sidebar ul li a:hover { color: var(--primary); background-color: #EEF2FF; border-left-color: var(--primary); transform: translateX(4px); }
+
+        .content { flex-grow: 1; background-color: var(--surface); padding: 40px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid var(--border-color); }
+        .footer { background-color: var(--surface); color: var(--text-muted); padding: 20px; text-align: center; border-top: 1px solid var(--border-color); font-size: 14px; margin-top: auto; }
+        
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); }
+        th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: #F9FAFB; font-weight: 600; color: var(--text-muted); font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #F9FAFB; }
+
+        .form-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .form-group label { font-weight: 500; margin-bottom: 8px; color: var(--text-main); font-size: 14px; }
+        .form-group input, .form-group select { padding: 10px 12px; width: 100%; max-width: 400px; border: 1px solid var(--border-color); border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 15px; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); }
+        .form-group input[readonly] { background-color: #F3F4F6; cursor: not-allowed; }
+        .error { color: var(--danger); font-size: 13px; margin-top: 6px; }
+
+        .alert { padding: 16px; margin-bottom: 24px; border-radius: 8px; font-size: 15px; display: flex; align-items: center; }
+        .alert-success { background-color: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+        .alert-error { background-color: #FEF2F2; color: #991B1B; border: 1px solid #FECACA; }
+
+        .btn { padding: 10px 20px; background-color: var(--primary); color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: background-color 0.2s, transform 0.1s; }
+        .btn:hover { background-color: var(--primary-hover); }
+        .btn:active { transform: translateY(1px); }
+
+        .pagination { margin-top: 24px; display: flex; gap: 8px; align-items: center; }
+        .pagination a { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: all 0.2s; background-color: var(--surface); }
+        .pagination a:hover { background-color: #F3F4F6; border-color: #D1D5DB; }
+        .pagination span.current { padding: 8px 12px; background-color: var(--primary); color: white; border-radius: 6px; font-weight: 600; border: 1px solid var(--primary); }
+
+        .search-form { display: flex; gap: 12px; margin-bottom: 24px; align-items: flex-end; }
+        .search-form input { padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 6px; font-family: 'Inter', sans-serif; width: 250px; outline: none; transition: border-color 0.2s; }
+        .search-form input:focus { border-color: var(--primary); }
+
+        .action-links form { display: inline; }
+        .action-links button { background: none; border: none; color: var(--primary); font-weight: 500; cursor: pointer; padding: 0 4px; font-size: 14px; font-family: 'Inter', sans-serif; transition: color 0.2s; }
+        .action-links button:hover { color: var(--primary-hover); text-decoration: underline; }
+        .action-links a { color: var(--primary); font-weight: 500; text-decoration: none; margin: 0 4px; font-size: 14px; transition: color 0.2s; }
+        .action-links a:hover { color: var(--primary-hover); text-decoration: underline; }
+        .action-links span { color: var(--border-color); }
+        
+        /* Specific tweaks for form-group label layout to look better */
+        form { max-width: 600px; }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="banner">
+        <h2>Hotel Booking System</h2>
+    </div>
+    
+    <div class="container">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <div class="content">
+            <div th:replace="${content}"></div>
+        </div>
+    </div>
+    <div class="footer">
+        FSA
+    </div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Students Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h2 class="page-title">Student Management</h2>
+        
+        <!-- Generic toolbar fragment -->
+        <div th:replace="~{fragments/toolbar :: toolbar(
+            addUrl='/students/new', 
+            addModalId='addStudentModal',
+            importUrl='/students/import', 
+            exportUrl='/students/export',
+            templateUrl='/students/template',
+            addText='Add Student'
+        )}"></div>
+
+        <div class="card-container">
+            <div class="table-responsive">
+                <table class="modern-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="s : ${students}">
+                        <td th:text="${s.studentCode}"></td>
+                        <td th:text="${s.fullName}"></td>
+                        <td th:text="${s.email}"></td>
+                        <td>
+                            <button type="button" class="btn btn-sm" title="Edit" th:attr="onclick=|openEditStudentModal('${s.studentCode}', '${#strings.escapeJavaScript(s.fullName)}', '${#strings.escapeJavaScript(s.email)}')|" style="color: var(--warning); border: none; background: none; font-size: 1.1rem; cursor: pointer; margin-right: 12px;"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-sm" title="Delete Student" th:attr="onclick=|confirmDelete('/students/delete/${s.studentCode}', '${#strings.escapeJavaScript(s.fullName)}')|" style="color: var(--danger); border: none; background: none; font-size: 1.1rem; cursor: pointer; padding: 4px;"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(students)}">
+                        <td colspan="4" class="empty-data">No students found</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div th:replace="~{fragments/pagination :: pagination(page=${page}, url='/students')}"></div>
+        </div>
+
+        <!-- Add Student Modal -->
+        <div id="addStudentModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Student</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('addStudentModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form th:action="@{/students/new}" method="post">
+                    <div class="form-group">
+                        <label class="form-label">Student ID:</label>
+                        <input type="text" name="studentCode" required class="form-input" placeholder="e.g. S12345">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Full Name:</label>
+                        <input type="text" name="fullName" required class="form-input" placeholder="e.g. Jane Doe">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Email:</label>
+                        <input type="email" name="email" required class="form-input" placeholder="e.g. jane@example.com">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('addStudentModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Student</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Edit Student Modal -->
+        <div id="editStudentModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Student</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('editStudentModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form id="editStudentForm" method="post">
+                    <div class="form-group">
+                        <label class="form-label">Student ID:</label>
+                        <input type="text" id="editStudentCodeDisplay" disabled class="form-input" style="background-color: var(--bg-main); opacity: 0.7;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Full Name:</label>
+                        <input type="text" name="fullName" id="editFullName" required class="form-input">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Email:</label>
+                        <input type="email" name="email" id="editEmail" required class="form-input">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('editStudentModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            function openEditStudentModal(code, name, email) {
+                document.getElementById('editStudentForm').action = '/students/edit/' + code;
+                document.getElementById('editStudentCodeDisplay').value = code;
+                document.getElementById('editFullName').value = name;
+                document.getElementById('editEmail').value = email;
+                openModal('editStudentModal');
+            }
+        </script>
+    </div>
+</body>
+</html>

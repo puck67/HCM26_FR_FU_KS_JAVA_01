@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::div.page-content})}">
+<body>
+    <div class="page-content">
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+        <div th:if="${#fields.hasErrors('bookingForm.*')}" class="alert alert-error">
+            <ul style="margin:0; padding-left: 20px;">
+                <li th:each="err : ${#fields.errors('bookingForm.*')}" th:text="${err}"></li>
+            </ul>
+        </div>
+
+        <form th:action="@{/book}" th:object="${bookingForm}" method="post">
+            <input type="hidden" th:field="*{id}" />
+
+            <div class="form-group">
+                <label>Customer name *</label>
+                <input type="text" th:field="*{customerName}" th:readonly="${bookingForm.id != null}" />
+                <span class="error" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Phone *</label>
+                <input type="text" th:field="*{phone}" th:readonly="${bookingForm.id != null}" />
+                <span class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Check in date *</label>
+                <input type="date" th:field="*{checkInDate}" id="checkInDate" />
+                <span class="error" th:if="${#fields.hasErrors('checkInDate')}" th:errors="*{checkInDate}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Check out date *</label>
+                <input type="date" th:field="*{checkOutDate}" id="checkOutDate" />
+                <span class="error" th:if="${#fields.hasErrors('checkOutDate')}" th:errors="*{checkOutDate}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Room *</label>
+                <select th:field="*{roomId}" id="roomId">
+                    <option value="">- Select a room -</option>
+                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.number + ' (' + room.type + ')'}"></option>
+                </select>
+                <span class="error" th:if="${#fields.hasErrors('roomId')}" th:errors="*{roomId}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Total price</label>
+                <!-- We do NOT use th:field here so it doesn't submit a value that fails Double conversion -->
+                <input type="text" id="totalPrice" readonly th:value="*{totalPrice}" />
+                <span id="priceError" class="error"></span>
+            </div>
+
+            <div class="form-group">
+                <label style="visibility: hidden;">Submit</label>
+                <button type="submit" class="btn">Submit Booking</button>
+            </div>
+        </form>
+
+        <script>
+            $(document).ready(function() {
+                function calculatePrice() {
+                    var roomId = $('#roomId').val();
+                    var checkInDate = $('#checkInDate').val();
+                    var checkOutDate = $('#checkOutDate').val();
+
+                    if (roomId && checkInDate && checkOutDate) {
+                        $.ajax({
+                            url: '/api/calculate-price',
+                            type: 'GET',
+                            data: {
+                                roomId: roomId,
+                                checkInDate: checkInDate,
+                                checkOutDate: checkOutDate
+                            },
+                            success: function(response) {
+                                if (response.error) {
+                                    $('#priceError').text(response.error);
+                                    $('#totalPrice').val('');
+                                } else {
+                                    $('#priceError').text('');
+                                    $('#totalPrice').val(response.totalPrice);
+                                    // Add a visual dollar sign next to it if needed, or just keep the raw number
+                                }
+                            }
+                        });
+                    }
+                }
+
+                $('#roomId, #checkInDate, #checkOutDate').change(calculatePrice);
+                $('#roomId, #checkInDate, #checkOutDate').blur(calculatePrice);
+            });
+        </script>
+    </div>
+</body>
+</html>

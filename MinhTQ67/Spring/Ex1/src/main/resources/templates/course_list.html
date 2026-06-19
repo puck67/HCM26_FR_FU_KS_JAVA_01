@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Courses Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h2 class="page-title">Course Management</h2>
+        
+        <!-- Generic toolbar fragment -->
+        <div th:replace="~{fragments/toolbar :: toolbar(
+            addUrl='/courses/new', 
+            addModalId='addCourseModal',
+            importUrl='/courses/import', 
+            exportUrl='/courses/export',
+            templateUrl='/courses/template',
+            addText='Add Course'
+        )}"></div>
+
+        <div class="card-container">
+            <div class="table-responsive">
+                <table class="modern-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Course Name</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${courses}">
+                        <td th:text="${c.id.courseCode}"></td>
+                        <td th:text="${c.courseName}"></td>
+                        <td th:text="${c.category}"></td>
+                        <td>
+                            <a th:href="@{'/courses/' + ${c.id.courseCode} + '/lessons'(startDate=${c.id.startDate})}" title="View Details" style="color: var(--primary); text-decoration: none; font-size: 1.1rem; margin-right: 12px;"><i class="fa-solid fa-eye"></i></a>
+                            <button type="button" class="btn btn-sm" title="Edit" th:attr="onclick=|openEditCourseModal('${c.id.courseCode}', '${c.id.startDate}', '${#strings.escapeJavaScript(c.courseName)}', '${#strings.escapeJavaScript(c.category)}', '${#strings.escapeJavaScript(c.instructor)}')|" style="color: var(--warning); border: none; background: none; font-size: 1.1rem; cursor: pointer; margin-right: 12px;"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-sm" title="Delete Course" th:attr="onclick=|confirmDelete('/courses/delete/${c.id.courseCode}?startDate=${c.id.startDate}', '${#strings.escapeJavaScript(c.courseName)}')|" style="color: var(--danger); border: none; background: none; font-size: 1.1rem; cursor: pointer; padding: 4px;"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(courses)}">
+                        <td colspan="4" class="empty-data">No courses found</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <div th:replace="~{fragments/pagination :: pagination(page=${page}, url='/courses')}"></div>
+        </div>
+
+        <!-- Add Course Modal -->
+        <div id="addCourseModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Course</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('addCourseModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form th:action="@{/courses/new}" method="post">
+                    <div class="form-group">
+                        <label class="form-label">Course Code:</label>
+                        <input type="text" name="id.courseCode" required class="form-input" placeholder="e.g. CS101">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date:</label>
+                        <input type="date" name="id.startDate" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Course Name:</label>
+                        <input type="text" name="courseName" required class="form-input" placeholder="e.g. Introduction to Computer Science">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category:</label>
+                        <select name="category" required class="form-input">
+                            <option value="Online">Online</option>
+                            <option value="Offline">Offline</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Instructor:</label>
+                        <select name="instructor" required class="form-input">
+                            <option value="" disabled selected>-- Select Instructor --</option>
+                            <option th:each="t : ${teachers}" th:value="${t.username}" th:text="${t.username}"></option>
+                        </select>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('addCourseModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Course</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Edit Course Modal -->
+        <div id="editCourseModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Course</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('editCourseModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form id="editCourseForm" method="post">
+                    <input type="hidden" name="startDate" id="editStartDateHidden">
+                    <div class="form-group">
+                        <label class="form-label">Course ID:</label>
+                        <input type="text" id="editCourseCodeDisplay" disabled class="form-input" style="background-color: var(--bg-main); opacity: 0.7;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Start Date:</label>
+                        <input type="text" id="editStartDateDisplay" disabled class="form-input" style="background-color: var(--bg-main); opacity: 0.7;">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Course Name:</label>
+                        <input type="text" name="courseName" id="editCourseName" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category:</label>
+                        <input type="text" name="category" id="editCategory" required class="form-input">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Instructor:</label>
+                        <select name="instructor" id="editInstructor" required class="form-input">
+                            <option th:each="t : ${teachers}" th:value="${t.username}" th:text="${t.username}"></option>
+                        </select>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('editCourseModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            function openEditCourseModal(code, startDate, name, category, instructor) {
+                document.getElementById('editCourseForm').action = '/courses/edit/' + code;
+                document.getElementById('editStartDateHidden').value = startDate;
+                document.getElementById('editCourseCodeDisplay').value = code;
+                document.getElementById('editStartDateDisplay').value = startDate;
+                document.getElementById('editCourseName').value = name;
+                document.getElementById('editCategory').value = category;
+                document.getElementById('editInstructor').value = instructor;
+                openModal('editCourseModal');
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Materials</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <main class="flex-grow-1 p-4">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Material Management</h2>
+            </div>
+            
+            <!-- Global Messages -->
+            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+            <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+            <!-- Subject Selection & Search -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <form th:action="@{/materials}" method="get" class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label">Select Subject</label>
+                            <select name="subjectId" class="form-select" onchange="this.form.submit()">
+                                <option value="">-- Select Subject --</option>
+                                <option th:each="subj : ${subjects}" 
+                                        th:value="${subj.subjectId}" 
+                                        th:text="${subj.subjectCode + ' - ' + subj.subjectName}"
+                                        th:selected="${currentSubject != null && currentSubject.subjectId == subj.subjectId}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">Search Materials</label>
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control" placeholder="Search by name, desc..." th:value="${keyword}">
+                                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div th:if="${currentSubject != null}">
+                <!-- Upload Form -->
+                <div class="card mb-4 shadow-sm border-primary">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Upload Material for <span th:text="${currentSubject.subjectName}"></span></h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/materials/upload}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="subjectId" th:value="${currentSubject.subjectId}">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select name="categoryId" class="form-select" required>
+                                        <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description</label>
+                                    <input type="text" name="description" class="form-control" placeholder="Material description..." required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Select Files (Hold Ctrl/Cmd for multiple files)</label>
+                                <input class="form-control" type="file" name="files" multiple required accept=".pdf,.docx,.pptx,.zip,.txt">
+                                <div class="form-text">Max size: 10MB per file. Allowed: PDF, DOCX, PPTX, ZIP, TXT.</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-upload"></i> Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Material List -->
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Materials</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Type</th>
+                                <th>File Name</th>
+                                <th>Subject</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Size</th>
+                                <th>Upload Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="mat : ${materials}">
+                                <td>
+                                    <!-- Dynamic Icons based on extension -->
+                                    <th:block th:with="ext=${mat.fileName.substring(mat.fileName.lastIndexOf('.')+1).toLowerCase()}">
+                                        <i th:if="${ext == 'pdf'}" class="bi bi-file-earmark-pdf text-danger fs-4"></i>
+                                        <i th:if="${ext == 'docx' || ext == 'doc'}" class="bi bi-file-earmark-word text-primary fs-4"></i>
+                                        <i th:if="${ext == 'pptx' || ext == 'ppt'}" class="bi bi-file-earmark-ppt text-warning fs-4"></i>
+                                        <i th:if="${ext == 'zip'}" class="bi bi-file-earmark-zip text-secondary fs-4"></i>
+                                        <i th:if="${ext == 'txt'}" class="bi bi-file-earmark-text text-info fs-4"></i>
+                                        <i th:unless="${ext == 'pdf' || ext == 'docx' || ext == 'doc' || ext == 'pptx' || ext == 'ppt' || ext == 'zip' || ext == 'txt'}" class="bi bi-file-earmark fs-4"></i>
+                                    </th:block>
+                                </td>
+                                <td th:text="${mat.fileName}"></td>
+                                <td th:text="${mat.subject.subjectName}"></td>
+                                <td><span class="badge bg-secondary" th:text="${mat.category}"></span></td>
+                                <td th:text="${mat.description}"></td>
+                                <!-- Size in KB -->
+                                <td th:text="${mat.fileSize / 1024 + ' KB'}"></td>
+                                <td th:text="${#temporals.format(mat.uploadDate, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td>
+                                    <a th:href="@{/materials/download/{id}(id=${mat.materialId})}" class="btn btn-sm btn-success"><i class="bi bi-download"></i></a>
+                                    <a th:href="@{/materials/delete/{id}(id=${mat.materialId})}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this file permanently?')"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                            <tr th:if="${materials == null || materials.isEmpty()}">
+                                <td colspan="8" class="text-center">No materials found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

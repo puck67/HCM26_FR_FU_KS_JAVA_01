@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Generic Pagination Fragment -->
+    <!-- Usage: <div th:replace="~{fragments/pagination :: pagination(page=${page}, url='/courses')}"></div> -->
+    <div th:fragment="pagination(page, url)" class="pagination-container" style="display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid var(--border-color); margin-top: 20px;">
+        
+        <!-- Left Side: Info & Page Size Selector -->
+        <div class="pagination-info" style="color: var(--text-muted); font-size: 0.9rem; display: flex; align-items: center; gap: 15px;">
+            <span>Showing page <span th:text="${page.number + 1}" style="font-weight: 700; color: var(--text-main);"></span> of <span th:text="${page.totalPages}" style="font-weight: 700; color: var(--text-main);"></span></span>
+            
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <label style="font-size: 0.85rem;">Display:</label>
+                <select onchange="window.location.href=this.value" style="padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main); cursor: pointer; outline: none;">
+                    <option th:value="@{${url}(size=5, page=0)}" th:selected="${page.size == 5}">5 items</option>
+                    <option th:value="@{${url}(size=10, page=0)}" th:selected="${page.size == 10}">10 items</option>
+                    <option th:value="@{${url}(size=20, page=0)}" th:selected="${page.size == 20}">20 items</option>
+                    <option th:value="@{${url}(size=50, page=0)}" th:selected="${page.size == 50}">50 items</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Right Side: Page Controls -->
+        <div class="pagination-controls" style="display: flex; gap: 8px;" th:if="${page.totalPages > 1}">
+            <!-- Previous Button -->
+            <a th:class="${page.first ? 'btn btn-sm btn-secondary disabled' : 'btn btn-sm btn-secondary'}" 
+               th:href="${page.first} ? '#' : @{${url}(page=${page.number - 1}, size=${page.size})}"
+               th:style="${page.first ? 'opacity: 0.5; pointer-events: none;' : ''}">
+                <i class="fa-solid fa-chevron-left"></i> Prev
+            </a>
+            
+            <!-- Page Numbers -->
+            <a th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}" 
+               th:if="${i >= page.number - 2 and i <= page.number + 2}"
+               th:class="${page.number == i ? 'btn btn-sm btn-primary' : 'btn btn-sm btn-secondary'}"
+               th:href="@{${url}(page=${i}, size=${page.size})}"
+               th:text="${i + 1}"
+               style="min-width: 36px; padding: 8px;">
+            </a>
+            
+            <!-- Next Button -->
+            <a th:class="${page.last ? 'btn btn-sm btn-secondary disabled' : 'btn btn-sm btn-secondary'}" 
+               th:href="${page.last} ? '#' : @{${url}(page=${page.number + 1}, size=${page.size})}"
+               th:style="${page.last ? 'opacity: 0.5; pointer-events: none;' : ''}">
+                Next <i class="fa-solid fa-chevron-right"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
