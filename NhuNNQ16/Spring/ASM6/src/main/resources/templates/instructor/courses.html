@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Manage Courses')}">
+    <title>Manage Courses - Course Sharing System</title>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-1">
+                        <li class="breadcrumb-item"><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Courses</li>
+                    </ol>
+                </nav>
+                <h1 class="fw-bold text-dark mb-0">
+                    <i class="fa-solid fa-book text-primary me-2"></i>Course Management
+                </h1>
+            </div>
+            <div>
+                <a th:href="@{/instructor/courses/new}" class="btn btn-primary">
+                    <i class="fa-solid fa-plus me-1"></i>Create New Course
+                </a>
+            </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <span th:text="${successMessage}">Success message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Course Table -->
+        <div class="card shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive" th:if="${courses != null and !courses.isEmpty()}">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="ps-4">Title</th>
+                                <th>Category Tags</th>
+                                <th>Status</th>
+                                <th>Created Date</th>
+                                <th class="text-end pe-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="course : ${courses}">
+                                <!-- Title -->
+                                <td class="ps-4">
+                                    <div class="fw-semibold text-dark" th:text="${course.title}">Course Title</div>
+                                    <div class="text-muted small" th:text="${#strings.length(course.description) > 80 ? #strings.substring(course.description, 0, 80) + '...' : course.description}">
+                                        Description snippet...
+                                    </div>
+                                </td>
+                                <!-- Categories -->
+                                <td>
+                                    <div th:if="${course.category != null and !course.category.isEmpty()}">
+                                        <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" 
+                                              class="badge bg-light text-primary border border-primary-subtle rounded-pill me-1" 
+                                              th:text="${#strings.trim(cat)}">
+                                            Category
+                                        </span>
+                                    </div>
+                                    <div th:if="${course.category == null or course.category.isEmpty()}" class="text-muted small">
+                                        No categories
+                                    </div>
+                                </td>
+                                <!-- Status -->
+                                <td>
+                                    <span class="badge px-2.5 py-1.5 rounded-pill" 
+                                          th:classappend="'badge-status-' + ${course.status}"
+                                          th:text="${lookupService.getValue('COURSE_STATUS', course.status.toString())}">
+                                        Status
+                                    </span>
+                                </td>
+                                <!-- Created Date -->
+                                <td th:text="${#temporals.format(course.createdAt, 'dd/MM/yyyy HH:mm')}">Date</td>
+                                <!-- Actions -->
+                                <td class="text-end pe-4">
+                                    <div class="btn-group" role="group">
+                                        
+                                        <!-- Edit -->
+                                        <a th:href="@{/instructor/courses/edit/{id}(id=${course.id})}" class="btn btn-sm btn-outline-primary" title="Edit Course">
+                                            <i class="fa-solid fa-pen"></i> Edit
+                                        </a>
+
+                                        <!-- Status Change Dropdown -->
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDropStatus" type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                Status
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="btnGroupDropStatus">
+                                                <!-- If not already Draft -->
+                                                <li th:if="${course.status != 1}">
+                                                    <a class="dropdown-item" th:href="@{/instructor/courses/status/{id}(id=${course.id}, status=1)}">
+                                                        <i class="fa-solid fa-pen-nib me-2 text-warning"></i>Move to Draft
+                                                    </a>
+                                                </li>
+                                                <!-- If not already Published -->
+                                                <li th:if="${course.status != 2}">
+                                                    <a class="dropdown-item" th:href="@{/instructor/courses/status/{id}(id=${course.id}, status=2)}">
+                                                        <i class="fa-solid fa-globe me-2 text-success"></i>Publish Course
+                                                    </a>
+                                                </li>
+                                                <!-- If not already Archived -->
+                                                <li th:if="${course.status != 3}">
+                                                    <a class="dropdown-item" th:href="@{/instructor/courses/status/{id}(id=${course.id}, status=3)}">
+                                                        <i class="fa-solid fa-box-archive me-2 text-secondary"></i>Archive Course
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- Delete -->
+                                        <a th:href="@{/instructor/courses/delete/{id}(id=${course.id})}" 
+                                           class="btn btn-sm btn-outline-danger" 
+                                           title="Delete Course" 
+                                           onclick="return confirm('WARNING: Deleting this course will permanently delete all its student reviews. Proceed?')">
+                                            <i class="fa-solid fa-trash"></i> Delete
+                                        </a>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${courses == null or courses.isEmpty()}" class="text-center py-5 text-muted">
+                    <i class="fa-solid fa-book-open fa-3x mb-3 text-black-50"></i>
+                    <h5>No courses created yet</h5>
+                    <p class="mb-3">Start by creating your first course!</p>
+                    <a th:href="@{/instructor/courses/new}" class="btn btn-primary btn-sm">
+                        Create Course
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

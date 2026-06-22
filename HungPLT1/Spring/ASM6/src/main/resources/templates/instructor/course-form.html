@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create/Edit Course - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">CourseShare</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card mx-auto p-4" style="max-width: 800px;">
+        <div class="card-body">
+            <h4 class="mb-4 fw-bold" th:text="${course.id == null ? 'Create New Course' : 'Edit Course'}">Create New Course</h4>
+
+            <form th:action="@{/instructor/courses/save}" th:object="${course}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="mb-3">
+                    <label for="title" class="form-label text-muted fw-bold">Course Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Enter course title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label text-muted fw-bold">Short Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3" placeholder="Write a brief summary..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label text-muted fw-bold">Course Content (Markdown)</label>
+                    <textarea class="form-control" id="content" th:field="*{content}" rows="5" placeholder="# Markdown content here..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label text-muted fw-bold">Categories (comma-separated)</label>
+                    <input type="text" class="form-control" id="category" th:field="*{category}" placeholder="e.g., Java, Web, Spring">
+                </div>
+
+                <div class="mb-4">
+                    <label for="status" class="form-label text-muted fw-bold">Status</label>
+                    <select class="form-select" id="status" th:field="*{status}">
+                        <option value="1">Draft</option>
+                        <option value="2">Published</option>
+                    </select>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <button type="submit" class="btn btn-secondary w-50 py-2 fw-bold" onclick="document.getElementById('status').value='1';">Save Draft</button>
+                    <button type="submit" class="btn btn-success w-50 py-2 fw-bold" onclick="document.getElementById('status').value='2';">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${categoryName})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container page-layout" style="padding-top:2rem">
+  <main class="page-content">
+    <a th:href="@{/categories}" style="color:var(--text-muted);font-size:.9rem">&larr; All Categories</a>
+    <h1 style="font-size:1.6rem;margin:1rem 0" th:text="'Courses in: ' + ${categoryName}">Category</h1>
+
+    <div th:if="${#lists.isEmpty(courses)}" class="alert alert-info">No courses in this category.</div>
+
+    <div class="card-grid">
+      <div th:each="course : ${courses}" class="card course-card">
+        <div class="category-tags" th:if="${course.category != null}">
+          <span th:each="cat : ${course.category.split(',')}"
+                class="tag" th:text="${cat.trim()}"></span>
+        </div>
+        <h3><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}">Title</a></h3>
+        <p class="desc" th:text="${course.description}">Description</p>
+        <div class="meta" th:text="${#temporals.format(course.createdAt,'MMM dd, yyyy')}">Date</div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="card">
+      <h3>All Categories</h3>
+      <div class="category-cloud">
+        <a th:each="cat : ${categories}"
+           th:href="@{/categories/{name}(name=${cat.name})}"
+           th:text="${cat.name}"
+           class="cloud-tag"></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

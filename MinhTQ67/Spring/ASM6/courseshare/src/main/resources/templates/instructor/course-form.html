@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${course.id != null ? 'Edit Course' : 'Create New Course'})}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <h2 th:text="${course.id != null ? 'Edit Course' : 'Create New Course'}" style="margin-bottom: 1.5rem;">Create New Course</h2>
+
+            <form th:action="@{/instructor/course/save}" th:object="${course}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{createdAt}" />
+                
+                <div class="form-group">
+                    <label class="form-label">Course Title</label>
+                    <input type="text" class="form-control" th:field="*{title}" required placeholder="Enter course title">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Short Description</label>
+                    <textarea class="form-control" th:field="*{description}" required placeholder="Write a brief summary..." style="min-height: 80px;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Course Content (Markdown)</label>
+                    <textarea class="form-control" th:field="*{content}" required placeholder="# Markdown content here..." style="min-height: 300px; font-family: monospace;"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Categories (comma-separated)</label>
+                    <input type="text" class="form-control" th:field="*{category}" placeholder="e.g., Java, Web, Spring">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select class="form-control" th:field="*{status}">
+                        <option value="1">Draft</option>
+                        <option value="2">Published</option>
+                        <option value="3">Archived</option>
+                    </select>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                    <a href="/instructor/courses" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Materials Portal</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.3);
+            --success: #10b981;
+            --error: #ef4444;
+            --input-bg: rgba(15, 23, 42, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Notifications */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .alert-error {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+        /* Layout Grid */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .layout-grid {
+                grid-template-columns: 4.5fr 7.5fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-control {
+            width: 100%;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Custom File Upload Styling */
+        .file-upload-wrapper {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            border: 2px dashed rgba(99, 102, 241, 0.4);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(99, 102, 241, 0.03);
+            overflow: hidden;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: var(--primary);
+            background-color: rgba(99, 102, 241, 0.08);
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+            color: var(--primary);
+        }
+
+        .file-upload-wrapper:hover .file-upload-icon {
+            transform: translateY(-5px);
+        }
+
+        .file-upload-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .file-name-display {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--primary);
+            word-break: break-all;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.85rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Materials Table & List */
+        .materials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .material-item {
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 576px) {
+            .material-item {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .material-item:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            background: rgba(15, 23, 42, 0.6);
+            transform: translateX(4px);
+        }
+
+        .material-info {
+            flex-grow: 1;
+        }
+
+        .material-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .material-id {
+            background-color: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .material-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .material-description {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .material-filename {
+            font-size: 0.8rem;
+            color: var(--primary);
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .material-download {
+            flex-shrink: 0;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>LMS Assessment Materials</h1>
+        <p>Manage and distribute your academic assessment assets securely</p>
+    </header>
+
+    <!-- Success and Error Alerts -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <span th:text="${successMessage}">File uploaded successfully!</span>
+    </div>
+    
+    <div th:if="${errorMessage}" class="alert alert-error">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+        </svg>
+        <span th:text="${errorMessage}">An error occurred.</span>
+    </div>
+
+    <div class="layout-grid">
+        <!-- Task 4: File Upload Form Card -->
+        <div class="card">
+            <h2 class="card-title">Upload Material</h2>
+            <form th:action="@{/assessments/upload}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title" class="form-label">Material Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="e.g. Midterm Assignment Brief" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control" placeholder="Enter file details, usage instructions, or context..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">File Resource</label>
+                    <div class="file-upload-wrapper" id="uploadWrapper">
+                        <span class="file-upload-icon">📤</span>
+                        <span class="file-upload-text" id="uploadText">Click or Drag & Drop file here to upload</span>
+                        <span class="file-name-display" id="fileNameDisplay" style="display: none;"></span>
+                        <input type="file" id="file" name="file" required onchange="handleFileSelected(this)">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">
+                    <span>Upload Resource</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Task 5: Materials List Card -->
+        <div class="card">
+            <h2 class="card-title">Uploaded Materials</h2>
+            
+            <div th:if="${#lists.isEmpty(materials)}" class="empty-state">
+                <div class="empty-state-icon">📂</div>
+                <p>No assessment materials have been uploaded yet.</p>
+                <p style="font-size: 0.85rem; margin-top: 0.5rem; color: rgba(255,255,255,0.3)">Use the form to upload documents.</p>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(materials)}" class="materials-grid">
+                <div th:each="material : ${materials}" class="material-item">
+                    <div class="material-info">
+                        <div class="material-meta">
+                            <span class="material-id" th:text="'ID: ' + ${material.id}">ID: 1</span>
+                        </div>
+                        <div class="material-title" th:text="${material.title}">Sample Assignment</div>
+                        <div class="material-description" th:text="${material.description}">This is a sample description for the assessment file.</div>
+                        <div class="material-filename">
+                            <span>📎</span>
+                            <span th:text="${material.fileName}">filename.pdf</span>
+                        </div>
+                    </div>
+                    <div class="material-download">
+                        <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}" class="btn-download">
+                            <span>📥</span> Download
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleFileSelected(input) {
+        const file = input.files[0];
+        const wrapper = document.getElementById('uploadWrapper');
+        const text = document.getElementById('uploadText');
+        const display = document.getElementById('fileNameDisplay');
+        const icon = wrapper.querySelector('.file-upload-icon');
+
+        if (file) {
+            text.style.display = 'none';
+            display.textContent = file.name;
+            display.style.display = 'block';
+            icon.textContent = '📄';
+            wrapper.style.borderColor = 'var(--success)';
+            wrapper.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
+        } else {
+            text.style.display = 'block';
+            display.style.display = 'none';
+            icon.textContent = '📤';
+            wrapper.style.borderColor = 'rgba(99, 102, 241, 0.4)';
+            wrapper.style.backgroundColor = 'rgba(99, 102, 241, 0.03)';
+        }
+    }
+</script>
+</body>
+</html>

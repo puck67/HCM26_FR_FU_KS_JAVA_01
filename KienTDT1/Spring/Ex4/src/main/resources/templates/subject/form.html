@@ -1,0 +1,26 @@
+<div th:fragment="content">
+    <h2>Subject Form</h2>
+    
+    <form th:action="@{/subjects/add}" th:object="${item}" method="post" style="max-width: 400px; display: flex; flex-direction: column; gap: 10px;">
+        <input type="hidden" th:field="*{id}" />
+        
+        <div>
+            <label style="display: inline-block; width: 100px;">Code</label>
+            <input type="text" th:field="*{subjectCode}" required style="padding: 4px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+        
+        <div>
+            <label style="display: inline-block; width: 100px;">Name</label>
+            <input type="text" th:field="*{subjectName}" required style="padding: 4px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+        
+        <div>
+            <label style="display: inline-block; width: 100px;">Duration</label>
+            <input type="number" th:field="*{duration}" required style="padding: 4px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+        
+        <div>
+            <button type="submit" style="padding: 6px 15px; border-radius: 4px; background: #0066cc; color: white; border: none; cursor: pointer; margin-left: 100px;">Save</button>
+        </div>
+    </form>
+</div>

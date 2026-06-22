@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="toolbar(title, createUrl, exportUrl, importUrl, createLabel)">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="card-title" th:text="${title}">Title</h3>
+        <div class="d-flex gap-2">
+            <a th:href="${createUrl}" class="btn-premium">
+                <i class="bi bi-plus-lg"></i> <span th:text="${createLabel}">Create</span>
+            </a>
+        </div>
+    </div>
+</th:block>
+</html>

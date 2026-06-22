@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - LMS Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css(v='2.0')}">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f4f7f6 0%, #eef2f3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .login-card {
+            background: #ffffff;
+            width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+        .login-card h2 {
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-weight: 700;
+        }
+        .login-card p {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+        .login-icon {
+            font-size: 3rem;
+            color: #3182ce;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #3182ce;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
+        }
+        .alert-error {
+            background-color: #fed7d7;
+            color: #c53030;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: left;
+            border: 1px solid #feb2b2;
+        }
+        .alert-info {
+            background-color: #eebf; /* Light blue */
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            text-align: left;
+            border: 1px solid #bee3f8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <i class="fa-solid fa-graduation-cap login-icon"></i>
+        <h2>Welcome Back</h2>
+        <p>Please log in to your account</p>
+
+        <div th:if="${param.error}" class="alert-error">
+            <i class="fa-solid fa-circle-exclamation" style="margin-right: 5px;"></i> Invalid username or password.
+        </div>
+        
+        <div th:if="${param.logout}" class="alert-info">
+            <i class="fa-solid fa-circle-check" style="margin-right: 5px;"></i> You have been logged out.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required autofocus>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+
+        <div style="margin-top: 30px; padding: 15px; background-color: #f7fafc; border-radius: 8px; border: 1px solid #e2e8f0; text-align: left;">
+            <p style="margin-top: 0; margin-bottom: 10px; font-weight: 600; color: #4a5568; font-size: 0.9rem;">
+                <i class="fa-solid fa-lightbulb" style="color: #ecc94b; margin-right: 5px;"></i> Demo Accounts:
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: #718096;">
+                <div><span style="display: inline-block; width: 70px; font-weight: 600; color: #3182ce;">ADMIN:</span> <code>admin</code> / <code>admin123</code></div>
+                <div><span style="display: inline-block; width: 70px; font-weight: 600; color: #38a169;">TEACHER:</span> <code>teacher</code> / <code>teacher123</code></div>
+                <div><span style="display: inline-block; width: 70px; font-weight: 600; color: #dd6b20;">STUDENT:</span> <code>student</code> / <code>student123</code></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

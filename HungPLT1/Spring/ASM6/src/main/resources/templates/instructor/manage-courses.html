@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Courses - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .bg-published {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        .bg-draft {
+            background-color: #f1f5f9;
+            color: #475569;
+        }
+        .bg-archived {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        .btn-action {
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">CourseShare</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/reviews}">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card p-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold m-0">Manage Courses</h4>
+                <a th:href="@{/instructor/courses/new}" class="btn btn-primary btn-sm">+ Create New Course</a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Categories</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="course : ${courses}" th:id="'course-row-' + ${course.id}">
+                            <td class="fw-semibold" th:text="${course.title}">Introduction to HTML</td>
+                            <td>
+                                <span th:if="${course.status == 2}" class="status-badge bg-published">Published</span>
+                                <span th:if="${course.status == 1}" class="status-badge bg-draft">Draft</span>
+                                <span th:if="${course.status == 3}" class="status-badge bg-archived">Archived</span>
+                            </td>
+                            <td>
+                                <span th:text="${course.category}" class="text-secondary small">HTML, Web</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{'/instructor/courses/edit/' + ${course.id}}" class="btn btn-outline-primary btn-action">Edit</a>
+                                <button class="btn btn-outline-danger btn-action" th:onclick="'deleteCourse(' + ${course.id} + ')'">Delete</button>
+
+                                <button th:if="${course.status == 2}" class="btn btn-outline-warning btn-action text-dark" th:onclick="'changeStatus(' + ${course.id} + ', 1)'">Unpublish</button>
+                                <button th:if="${course.status == 1}" class="btn btn-outline-success btn-action" th:onclick="'changeStatus(' + ${course.id} + ', 2)'">Publish</button>
+
+                                <button th:if="${course.status != 3}" class="btn btn-outline-secondary btn-action" th:onclick="'changeStatus(' + ${course.id} + ', 3)'">Archive</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <nav th:if="${totalPages > 1}" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${currentPage == 0 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/instructor/courses(page=${currentPage - 1})}">&laquo;</a>
+                    </li>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${currentPage == i ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/instructor/courses(page=${i})}" th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${currentPage == totalPages - 1 ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/instructor/courses(page=${currentPage + 1})}">&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeStatus(id, newStatus) {
+        fetch(`/api/instructor/courses/${id}/status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: newStatus })
+        }).then(res => {
+            if (res.ok) {
+                window.location.reload();
+            } else {
+                alert("Lỗi khi cập nhật trạng thái");
+            }
+        });
+    }
+
+    function deleteCourse(id) {
+        if (confirm("Bạn có chắc chắn muốn xóa khóa học này?")) {
+            fetch(`/api/instructor/courses/${id}`, {
+                method: 'DELETE'
+            }).then(res => {
+                if (res.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Lỗi khi xóa khóa học");
+                }
+            });
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

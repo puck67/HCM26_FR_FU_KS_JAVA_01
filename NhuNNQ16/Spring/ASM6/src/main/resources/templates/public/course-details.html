@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head(${course.title})}">
+    <title>Course Details - Course Sharing System</title>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row">
+            
+            <!-- Course Details & Reviews -->
+            <div class="col-lg-8 mb-4">
+                
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Course Details</li>
+                    </ol>
+                </nav>
+
+                <!-- Success Alert -->
+                <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i>
+                    <span th:text="${successMessage}">Success!</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- Course Content Card -->
+                <div class="card mb-4">
+                    <div class="card-body p-4 p-md-5">
+                        
+                        <!-- Title & Meta -->
+                        <h1 class="fw-bold text-dark mb-3" th:text="${course.title}">Course Title</h1>
+                        
+                        <div class="d-flex flex-wrap align-items-center gap-3 mb-4 pb-3 border-bottom text-muted small">
+                            <div>
+                                <i class="fa-regular fa-calendar-days me-1"></i>
+                                Published on <span th:text="${#temporals.format(course.createdAt, 'dd MMMM yyyy')}">Date</span>
+                            </div>
+                            <div th:if="${course.category != null and !course.category.isEmpty()}">
+                                <i class="fa-solid fa-tags me-1"></i>
+                                <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" 
+                                      class="badge bg-primary-subtle text-primary rounded-pill me-1" 
+                                      th:text="${#strings.trim(cat)}">
+                                    Category
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Short Description -->
+                        <div class="bg-light p-4 rounded mb-4 border-start border-primary border-4">
+                            <h5 class="fw-semibold text-dark mb-2">Course Summary</h5>
+                            <p class="text-muted mb-0" th:text="${course.description}">Summary text...</p>
+                        </div>
+
+                        <!-- Markdown Content -->
+                        <div class="markdown-body">
+                            <div class="markdown-content" th:text="${course.content}">
+                                Full Markdown Course Content...
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Approved Reviews Section -->
+                <div class="card mb-4" id="reviews-section">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-primary fw-semibold">
+                            <i class="fa-solid fa-comments me-2"></i>Reviews 
+                            <span class="badge bg-primary text-white ms-2" th:text="${reviews.size()}">0</span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${reviews != null and !reviews.isEmpty()}">
+                            <div th:each="rev, iter : ${reviews}" class="pb-3 mb-3" th:classappend="${!iter.last} ? 'border-bottom' : ''">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <div>
+                                        <h6 class="mb-0 fw-semibold text-dark" th:text="${rev.authorName}">Student Name</h6>
+                                        <small class="text-muted" th:text="${#temporals.format(rev.createdAt, 'dd/MM/yyyy HH:mm')}">Date</small>
+                                    </div>
+                                    <span class="star-rating">
+                                        <i th:each="star : ${#numbers.sequence(1, rev.rating)}" class="fa-solid fa-star"></i><i th:each="star : ${rev.rating < 5 ? #numbers.sequence(rev.rating + 1, 5) : {}}" class="fa-regular fa-star"></i>
+                                    </span>
+                                </div>
+                                <p class="text-muted mb-0" th:text="${rev.content}">Review text...</p>
+                            </div>
+                        </div>
+                        <div th:if="${reviews == null or reviews.isEmpty()}" class="text-center py-4 text-muted">
+                            <i class="fa-regular fa-comment-dots fa-3x mb-3 text-black-50 d-block"></i>
+                            <h5>No reviews yet</h5>
+                            <p class="mb-0">Be the first to share your learning experience!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Write a Review Form Card -->
+                <div class="card" id="review-form">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="mb-0 text-primary fw-semibold">
+                            <i class="fa-solid fa-pen-to-square me-2"></i>Write a Review
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form th:action="@{/course/{id}/review(id=${course.id})}" th:object="${newReview}" method="post">
+                            
+                            <div class="row">
+                                <!-- Name -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="authorName" class="form-label fw-medium">Your Name <span class="text-danger">*</span></label>
+                                    <input type="text" id="authorName" class="form-control" th:field="*{authorName}" placeholder="John Doe" required>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}"></div>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label fw-medium">Email Address <span class="text-danger">*</span></label>
+                                    <input type="email" id="email" class="form-control" th:field="*{email}" placeholder="john@example.com" required>
+                                    <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                                </div>
+                            </div>
+
+                            <!-- Rating -->
+                            <div class="mb-3">
+                                <label class="form-label fw-medium d-block">Your Rating <span class="text-danger">*</span></label>
+                                <div class="rating-input">
+                                    <input type="radio" id="star5" name="rating" value="5" th:field="*{rating}" required/>
+                                    <label for="star5" class="fa-solid fa-star" title="5 Stars"></label>
+                                    
+                                    <input type="radio" id="star4" name="rating" value="4" th:field="*{rating}"/>
+                                    <label for="star4" class="fa-solid fa-star" title="4 Stars"></label>
+                                    
+                                    <input type="radio" id="star3" name="rating" value="3" th:field="*{rating}"/>
+                                    <label for="star3" class="fa-solid fa-star" title="3 Stars"></label>
+                                    
+                                    <input type="radio" id="star2" name="rating" value="2" th:field="*{rating}"/>
+                                    <label for="star2" class="fa-solid fa-star" title="2 Stars"></label>
+                                    
+                                    <input type="radio" id="star1" name="rating" value="1" th:field="*{rating}"/>
+                                    <label for="star1" class="fa-solid fa-star" title="1 Star"></label>
+                                </div>
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
+                            </div>
+
+                            <!-- Content -->
+                            <div class="mb-4">
+                                <label for="content" class="form-label fw-medium">Review Comments <span class="text-danger">*</span></label>
+                                <textarea id="content" class="form-control" rows="4" th:field="*{content}" placeholder="Write your honest comments about this course..." required></textarea>
+                                <div class="invalid-feedback d-block" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fa-solid fa-paper-plane me-2"></i>Submit Review
+                            </button>
+                            <span class="text-muted small ms-2"><i class="fa-solid fa-circle-info me-1"></i>Reviews require approval before appearing publicly.</span>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div th:replace="~{fragments/layout :: sidebar}"></div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Dynamic LMS</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom Modern Styles -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+            <div class="position-sticky pt-4">
+                <h4 class="text-white text-center mb-4 fw-bold">LMS System</h4>
+                
+                <!-- Mock Role Switcher (For Bonus) -->
+                <div class="px-4 mb-4">
+                    <form th:action="@{/switch-role}" method="post">
+                        <select name="role" class="form-select form-select-sm" onchange="this.form.submit()" style="background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                            <option value="Admin" th:selected="${currentRole == 'Admin'}" style="color: black;">Admin</option>
+                            <option value="Teacher" th:selected="${currentRole == 'Teacher'}" style="color: black;">Teacher</option>
+                            <option value="Student" th:selected="${currentRole == 'Student'}" style="color: black;">Student</option>
+                        </select>
+                    </form>
+                </div>
+                
+                <!-- Dynamic Menu -->
+                <ul class="nav flex-column">
+                    <!-- Include recursive fragment -->
+                    <div th:replace="~{fragments/sidebar :: recursiveMenu(${sidebarMenus})}"></div>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 content-area">
+            <div layout:fragment="content">
+                <!-- Content will be injected here -->
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Simple script to toggle submenus
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuItems = document.querySelectorAll('.has-submenu > a');
+        
+        // Check current URL and add active class
+        var currentUrl = window.location.pathname;
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+            if (link.getAttribute('href') === currentUrl) {
+                link.classList.add('active');
+                
+                // If the active link itself is a submenu parent, open it
+                if (link.parentElement.classList.contains('has-submenu')) {
+                    link.parentElement.classList.add('open');
+                }
+                
+                // Open parent if inside submenu
+                var parentUl = link.closest('.submenu');
+                if (parentUl) {
+                    parentUl.parentElement.classList.add('open');
+                }
+            }
+        });
+
+        menuItems.forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                // Prevent navigation only if href is # OR if they clicked the caret icon
+                if(this.getAttribute('href') === '#' || e.target.classList.contains('caret-icon') || e.target.closest('.caret-icon')) {
+                    e.preventDefault();
+                    var parentLi = this.parentElement;
+                    parentLi.classList.toggle('open');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

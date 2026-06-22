@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title>Lesson Detail</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="page-header">
+            <h2><i class="bi bi-journal-bookmark-fill text-primary me-2"></i> Lesson Details</h2>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="alert alert-info shadow-sm">
+                    <h5 class="alert-heading fw-bold"><i class="bi bi-info-circle me-2"></i>Course Summary</h5>
+                    <div class="d-flex gap-4 mt-2">
+                        <div><strong>Course ID:</strong> <span class="badge bg-secondary" th:text="${course.id.courseCode}"></span></div>
+                        <div><strong>Start Date:</strong> <span th:text="${course.id.startDate}"></span></div>
+                        <div><strong>Course Name:</strong> <span th:text="${course.courseName}"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container border-top-primary border-3">
+            <h4 class="mb-4 text-primary fw-bold">Add/Edit Lesson</h4>
+            <form th:action="@{'/courses/' + ${course.id.courseCode} + '/lessons'(startDate=${course.id.startDate})}" th:object="${lesson}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <div class="row mb-3">
+                    <div class="col-md-6 form-group">
+                        <label>Lesson Name</label>
+                        <input type="text" th:field="*{lessonName}" class="form-control" placeholder="Introduction to the subject" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Duration (mins)</label>
+                        <input type="number" th:field="*{duration}" class="form-control" placeholder="60" required>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label>Content Type</label>
+                        <select th:field="*{contentType}" class="form-select">
+                            <option value="Video">Video</option>
+                            <option value="Document">Document</option>
+                            <option value="Quiz">Quiz</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Status</label>
+                        <select th:field="*{status}" class="form-select">
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 border-top pt-4">
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href=window.location.pathname + '?startDate=' + new URLSearchParams(window.location.search).get('startDate')">Reset</button>
+                    <button type="submit" class="btn btn-primary">Save Lesson</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="mt-5">
+            <h4 class="mb-3 fw-bold">Lesson List</h4>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="10%">ID</th>
+                            <th width="35%">Lesson Name</th>
+                            <th width="15%">Duration</th>
+                            <th width="15%">Content Type</th>
+                            <th width="10%">Status</th>
+                            <th width="15%" class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="l : ${lessons}">
+                            <td th:text="${l.id}"></td>
+                            <td class="fw-medium text-primary" th:text="${l.lessonName}"></td>
+                            <td><span th:text="${l.duration}"></span> mins</td>
+                            <td>
+                                <i class="bi bi-play-circle text-danger me-1" th:if="${l.contentType == 'Video'}"></i>
+                                <i class="bi bi-file-earmark-text text-primary me-1" th:if="${l.contentType == 'Document'}"></i>
+                                <i class="bi bi-ui-checks text-success me-1" th:if="${l.contentType == 'Quiz'}"></i>
+                                <span th:text="${l.contentType}"></span>
+                            </td>
+                            <td>
+                                <span th:class="${l.status == 'Active'} ? 'badge badge-active' : 'badge badge-inactive'" th:text="${l.status}"></span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{'/courses/' + ${course.id.courseCode} + '/lessons/edit/' + ${l.id}(startDate=${course.id.startDate})}" class="action-link" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                <a href="#" th:onclick="'confirmDelete(\'' + ${course.id.courseCode} + '\', \'' + ${course.id.startDate} + '\', ' + ${l.id} + '); return false;'" class="action-link delete" title="Delete"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(lessons)}">
+                            <td colspan="6" class="text-center py-4 text-muted">No lessons found. Add one above!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <th:block layout:fragment="script">
+        <script>
+            function confirmDelete(courseCode, startDate, id) {
+                if (confirm('Are you sure you want to delete this lesson?')) {
+                    window.location.href = '/courses/' + courseCode + '/lessons/delete/' + id + '?startDate=' + startDate;
+                }
+            }
+        </script>
+    </th:block>
+</body>
+</html>

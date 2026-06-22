@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment Materials</title>
+</head>
+<body>
+
+    <h2>Upload Assessment Material</h2>
+
+    <!-- Display success/error message after redirect -->
+    <div th:if="${message}" style="color: blue;">
+        <p th:text="${message}"></p>
+    </div>
+
+    <form method="post" th:action="@{/assessments/upload}" enctype="multipart/form-data">
+
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required="required" />
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required="required"></textarea>
+        </div>
+
+        <div>
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required="required" />
+        </div>
+
+        <button type="submit">Upload</button>
+
+    </form>
+
+    <hr/>
+
+    <h2>Uploaded Materials</h2>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>File</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="material : ${materials}">
+                <td th:text="${material.title}"></td>
+                <td th:text="${material.description}"></td>
+                <td>
+                    <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}"
+                       th:text="${material.fileName}">
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(materials)}">
+                <td colspan="3">No materials uploaded yet.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
