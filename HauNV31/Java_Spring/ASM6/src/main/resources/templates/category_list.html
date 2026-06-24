@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Courses in ' + ${categoryName}">Category List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li th:if="${session.instructor == null}">
+                    <a th:href="@{/instructor/login}" class="btn-primary">Instructor Login</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/dashboard}">Dashboard</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="margin-bottom: 2rem;">
+            <a th:href="@{/}" style="color: var(--accent-color); font-weight: 500;">← Back to Home</a>
+        </div>
+        <h1 style="margin-bottom: 2rem;">Category: <span th:text="${categoryName}" style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Category</span></h1>
+
+        <div th:if="${#lists.isEmpty(courses)}" class="card">
+            <p>No courses found for this category.</p>
+        </div>
+
+        <div th:each="course : ${courses}" class="card">
+            <div class="card-title">
+                <a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}">Course Title</a>
+            </div>
+            <div class="card-meta">
+                <span>Status: <span class="badge badge-published">Published</span></span>
+                <span th:if="${course.category != null}">
+                    Categories:
+                    <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="tag" th:text="${#strings.trim(cat)}">Tag</span>
+                </span>
+            </div>
+            <p th:text="${course.description}">Short summary...</p>
+            <div style="margin-top: 1rem;">
+                <a th:href="@{/courses/{id}(id=${course.id})}" class="btn-secondary">View Details</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Reviews</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing <span style="font-size: 0.8rem; opacity: 0.7; padding-left: 0.5rem; border-left: 1px solid var(--border-color);">Instructor Panel</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li><a th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li><a th:href="@{/instructor/reviews}" style="color: #a855f7; font-weight: bold;">Manage Reviews</a></li>
+                <li><a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 style="margin-bottom: 2rem;">Manage Reviews</h1>
+
+        <h2 style="margin-bottom: 1rem;">Pending Reviews</h2>
+        <div class="table-container" style="margin-bottom: 3rem;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Author Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Rating</th>
+                        <th>Content</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="rev : ${reviews}" th:if="${rev.status == 1}">
+                        <td th:text="${rev.authorName}">Author</td>
+                        <td th:text="${rev.email}">Email</td>
+                        <td th:text="${rev.course.title}">Course Title</td>
+                        <td>
+                            <span class="stars">
+                                <span th:each="star : ${#numbers.sequence(1, rev.rating)}">★</span>
+                            </span>
+                        </td>
+                        <td th:text="${rev.content}">Content</td>
+                        <td>
+                            <div class="btn-group">
+                                <form th:action="@{/instructor/reviews/approve/{id}(id=${rev.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.9rem; background: var(--success-color);">Approve</button>
+                                </form>
+                                <form th:action="@{/instructor/reviews/delete/{id}(id=${rev.id})}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                    <button type="submit" class="btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(reviews) or !#lists.contains(reviews.![status], 1)}">
+                        <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 2rem;">No pending reviews.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 style="margin-bottom: 1rem;">Approved Reviews</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Author Name</th>
+                        <th>Email</th>
+                        <th>Course</th>
+                        <th>Rating</th>
+                        <th>Content</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="rev : ${reviews}" th:if="${rev.status == 2}">
+                        <td th:text="${rev.authorName}">Author</td>
+                        <td th:text="${rev.email}">Email</td>
+                        <td th:text="${rev.course.title}">Course Title</td>
+                        <td>
+                            <span class="stars">
+                                <span th:each="star : ${#numbers.sequence(1, rev.rating)}">★</span>
+                            </span>
+                        </td>
+                        <td th:text="${rev.content}">Content</td>
+                        <td>
+                            <div class="btn-group">
+                                <form th:action="@{/instructor/reviews/delete/{id}(id=${rev.id})}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                    <button type="submit" class="btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(reviews) or !#lists.contains(reviews.![status], 2)}">
+                        <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 2rem;">No approved reviews.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,190 @@
+--- Page 1 ---
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+S p r i n g  F r a m ew o r k 
+Training Assignments  
+ 
+Document Code 25e-BM/HR/HDCV/FSOFT 
+Version 1.1 
+Effective Date 20/11/2012 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Hanoi, 06/2019 
+
+--- Page 2 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 2/11 
+RECORD OF CHANGES 
+ 
+No Effective Date Change Description Reason Reviewer Approver 
+1  01/Oct/2018 Add the new labs Create new DieuNT1 VinhNV 
+2  01/Jun/2019 Update template Fsoft template DieuNT1 VinhNV 
+      
+      
+      
+      
+      
+      
+      
+      
+ 
+  
+--- Page 3 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 3/11 
+Contents 
+Objectives ................................ ................................ ................................ ................................ ....... 4 
+Business needs ................................ ................................ ................................ ...............................  4 
+Working Environments ................................ ................................ ................................ .................... 4 
+Product Architecture ................................ ................................ ................................ ........................ 5 
+Technologies ................................ ................................ ................................ ................................ ... 5 
+Database Relationship ................................ ................................ ................................ .................... 5 
+Assignment Descriptions ................................ ................................ ................................ ................. 6 
+ 
+ 
+ 
+  
+  
+--- Page 4 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 4/11 
+ 
+CODE:    JSFW.L.A102 (LMS) 
+TYPE:   LONG 
+LOC:   N/A 
+DURATION:   360 MINUTES 
+ 
+Objectives  
+After finishing the following exercises, trainees will: 
+• Understand Spring Core (IoC, DI) 
+• Practice with JDBC Templates to connect database in spring 
+• Use JPA for object-relational mapping 
+• Practice with the Spring MVC framework architecture 
+• Know how to write a Web application with Spring  MVC Framework and Spring Data JPA 
+Business needs 
+Create a Web application based on HTML, CSS, JavaScript, Ajax, Thymeleaf, Spring framework.  
+The Course Sharing System that we are going to develop is a single-instructor system (for this assignment).  
+1. The Instructor of the system will be able to perform the following actions: 
+• Login and logout  
+• Create, update and delete Courses  
+• Publish, unpublish and archive Courses  
+• Approve and delete Reviews 
+2. All other users are Students (guests) who can perform the following actions: 
+• Read Course details and published content  
+• Create Reviews (with a 1-5 star rating) 
+3. Additional Requirements for this system include: 
+The homepage of the system should display a list of the most recent, published Courses.  
+• If a page contains more than 10 Courses, they should be displayed in pages.  
+• The system should display a Course together with its approved Reviews.  
+• The system should be able to list Courses with a specified Category.   
+• The system should show a cloud of Categories indicating their use frequencies.  
+• The system should show a list of most recent Reviews. 
+Working Environments 
+✓ JDK 1.8 + 
+✓ Maven 3+ 
+✓ Eclipse IDE or STS,  
+✓ MySQL DB Server/MySQL,  
+
+--- Page 5 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 5/11 
+✓ Apache TomCat 7 or later,  
+✓ Internet connection, 
+Delivery: Source code, deployment and testing, reviewing evidences packaged in a compress archive. 
+Product Architecture 
+Web applications are by nature distributed applications, meaning that they are programs that run on more than 
+one computer and communicate through a network or server. Specifically, web applications are accessed with 
+a web browser and are popular because of the ease of using the browser as a user client. 
+ 
+ 
+The product is implemented using MVC Pattern base on Spring Web MVC.  
+Technologies 
+The product implements one or more technology: 
+• HTML & CSS 
+• JavaScript & Ajax 
+• Thymeleaf 
+• Spring Framework: IoC, Bean, SpEL, JdbcTemplate, Spring Data JPA, Interceptor, Validation, Spring 
+Sercutity. 
+Database Relationship 
+Based on the analysis of the requirements, we decide  to use the following database tables to store the 
+persistent data for our blog application: 
+• tbl_instructor stores the instructor information, including username and password for login.  
+• tbl_course stores the course information. It mainly consists of:  
+o title: required, title of the course.  
+o description: required, a short summary of the course.  
+o content: required, full details of the course (uses Markdown).  
+o status: required, status of the course (e.g., 1=DRAFT, 2=PUBLISHED, 3=ARCHIVED).  
+o category: optional, a list of comma-separated words categorizing the course. 
+• tbl_review stores the course review information. Each review is associated with a course:  
+
+--- Page 6 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 6/11 
+o author_name: required, the student's name.  
+o email: required, the student's email.  
+o rating: required, a score from 1 to 5.  
+o content: required, the review content in plain text.  
+o status: required, status of the review (e.g., 1=PENDING, 2=APPROVED).  
+• tbl_category stores course category frequency information (for the category cloud).  
+o name: required, the unique category name.  
+o frequency: required, the number of courses associated with this category.  
+o tbl_lookup stores generic lookup information (e.g., mapping status '1' to 'Draft').  
+Assignment Descriptions 
+1. Create the pages as below: 
+HOME PAGE (PUBLIC) 
+ 
+COURSE DETAILS PAGE (PUBLIC) 
+ 
+
+--- Page 7 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 7/11 
+ 
+ 
+CATEGORY LIST PAGE (PUBLIC) 
+
+--- Page 8 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 8/11 
+ 
+MOST RECENT REVIEWS PAGE (PUBLIC) 
+ 
+LOGIN PAGE (INSTRUCTOR ONLY) 
+
+--- Page 9 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 9/11 
+ 
+INSTRUCTOR DASHBOARD (PRIVATE) 
+ 
+CREATE/EDIT COURSE PAGE (INSTRUCTOR) 
+
+--- Page 10 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 10/11 
+ 
+MANAGE COURSES PAGE (INSTRUCTOR) 
+ 
+PENDING/APPROVED REVIEWS PAGE (INSTRUCTOR) 
+
+--- Page 11 ---
+Training Assignments Spring Framework                     Issue/Revision: x/y 
+25e-BM/HR/HDCV/FSOFT v1.1                         Internal use 11/11 
+ 
+--  THE END -- 
+

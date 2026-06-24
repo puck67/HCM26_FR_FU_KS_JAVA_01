@@ -1,0 +1,13 @@
+package com.lms.repository;
+
+import com.lms.model.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByStatusOrderByIdDesc(Integer status);
+    List<Review> findByCourseIdAndStatusOrderByIdDesc(Long courseId, Integer status);
+    List<Review> findTop5ByStatusOrderByIdDesc(Integer status);
+}
