@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.title} + ' - Course Details'">Course Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        #markdown-content h1, #markdown-content h2, #markdown-content h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        #markdown-content ul, #markdown-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        #markdown-content p {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li th:if="${session.instructor == null}">
+                    <a th:href="@{/instructor/login}" class="btn-primary">Instructor Login</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/dashboard}">Dashboard</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="card" style="margin-bottom: 2rem;">
+            <h1 th:text="${course.title}" style="margin-bottom: 0.5rem;">Course Title</h1>
+            <div class="card-meta">
+                <span th:if="${course.category != null}">
+                    Categories:
+                    <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="tag" th:text="${#strings.trim(cat)}">Tag</span>
+                </span>
+            </div>
+            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 1.5rem;" th:text="${course.description}"></p>
+            <div id="markdown-content" th:data-markdown="${course.content}"></div>
+        </div>
+
+        <div class="grid-layout">
+            <div>
+                <h2>Approved Reviews</h2>
+                <div class="review-list">
+                    <div th:if="${#lists.isEmpty(reviews)}">
+                        <p>No reviews yet for this course. Be the first to review!</p>
+                    </div>
+                    <div th:each="rev : ${reviews}" class="review-card">
+                        <div class="review-header">
+                            <span th:text="${rev.authorName}">Student Name</span>
+                            <span class="stars">
+                                <span th:each="star : ${#numbers.sequence(1, rev.rating)}">★</span>
+                            </span>
+                        </div>
+                        <p th:text="${rev.content}"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Write a Review</h2>
+                <div th:if="${param.success}" class="alert alert-success">
+                    Thank you! Your review has been submitted and is pending approval.
+                </div>
+
+                <form th:action="@{/courses/{id}/review(id=${course.id})}" th:object="${review}" method="post" class="card">
+                    <div class="form-group">
+                        <label for="authorName">Your Name</label>
+                        <input type="text" id="authorName" th:field="*{authorName}" class="form-control">
+                        <div th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}" class="text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control">
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <select id="rating" th:field="*{rating}" class="form-control">
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}" class="text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Review Content</label>
+                        <textarea id="content" th:field="*{content}" rows="4" class="form-control"></textarea>
+                        <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger"></div>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">Submit Review</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('markdown-content').innerHTML = marked.parse(document.getElementById('markdown-content').getAttribute('data-markdown'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assessment Materials</title>
+</head>
+<body>
+
+<h2>Upload Assessment Material</h2>
+
+<p th:text="${message}"
+   style="color:green">
+</p>
+
+<form th:action="@{/assessments/upload}"
+      method="post"
+      enctype="multipart/form-data">
+
+    <div>
+        Title:
+        <input type="text"
+               name="title"
+               required>
+    </div>
+
+    <br>
+
+    <div>
+        Description:
+        <textarea name="description"
+                  required></textarea>
+    </div>
+
+    <br>
+
+    <div>
+        File:
+        <input type="file"
+               name="file"
+               required>
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Upload
+    </button>
+
+</form>
+
+<hr>
+
+<h2>Uploaded Materials</h2>
+
+<table border="1">
+
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Download</th>
+    </tr>
+
+    <tr th:each="material : ${materials}">
+
+        <td th:text="${material.title}">
+        </td>
+
+        <td th:text="${material.description}">
+        </td>
+
+        <td>
+            <a th:href=
+                       "@{/assessments/download/{fn}
+               (fn=${material.fileName})}">
+                Download
+            </a>
+        </td>
+
+    </tr>
+
+</table>
+
+</body>
+</html>

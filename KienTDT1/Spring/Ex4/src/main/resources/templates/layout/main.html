@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Training Management</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial;
+            margin: 0;
+            height: 100vh;
+            flex-direction: column;
+        }
+        header {
+            background: #0066cc;
+            color: white;
+            padding: 10px 20px;
+        }
+        .main-area {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            width: 220px;
+            background: #222;
+            color: white;
+            height: 100%;
+        }
+        .sidebar a {
+            color: white;
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+        }
+        footer {
+            background: #f2f2f2;
+            padding: 10px 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Training Material Management System</h1>
+</header>
+
+<div class="main-area">
+    <div class="sidebar">
+        <h3>Training System</h3>
+        <a href="/">Dashboard</a>
+        <h4>Training Management</h4>
+        <a href="/subjects">Subject Management</a>
+        <a href="/materials">Material Management</a>
+    </div>
+
+    <div class="content">
+        <!-- If controller provided dashboard attributes, render dashboard here -->
+        <div th:if="${totalSubjects != null}">
+            <h2>Dashboard</h2>
+            <div style="display:flex; gap:20px;">
+                <div style="padding:10px; border:1px solid #ccc; width:200px; text-align:center;">
+                    <h3 th:text="${totalSubjects}">0</h3>
+                    <div>Total Subjects</div>
+                </div>
+                <div style="padding:10px; border:1px solid #ccc; width:200px; text-align:center;">
+                    <h3 th:text="${totalMaterials}">0</h3>
+                    <div>Total Materials</div>
+                </div>
+                <div style="padding:10px; border:1px solid #ccc; width:200px; text-align:center;">
+                    <h3 th:text="${#numbers.formatDecimal(totalSize/1024.0/1024.0, 1, 2)} + ' MB'">0 MB</h3>
+                    <div>Total Storage Used</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Otherwise replace with the dynamic view's content fragment -->
+        <div th:unless="${totalSubjects != null}">
+            <div th:replace="~{__${view}__ :: content}"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2026</span> Training Center
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Courses</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing <span style="font-size: 0.8rem; opacity: 0.7; padding-left: 0.5rem; border-left: 1px solid var(--border-color);">Instructor Panel</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li><a th:href="@{/instructor/courses}" style="color: #a855f7; font-weight: bold;">Manage Courses</a></li>
+                <li><a th:href="@{/instructor/reviews}">Manage Reviews</a></li>
+                <li><a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Manage Courses</h1>
+            <a th:href="@{/instructor/courses/new}" class="btn-primary">➕ Create New Course</a>
+        </div>
+
+        <div class="table-container">
+            <div th:if="${#lists.isEmpty(courses)}" class="card" style="text-align: center; padding: 3rem;">
+                <p>No courses created yet. Click "Create New Course" to get started.</p>
+            </div>
+            <table th:if="${!#lists.isEmpty(courses)}">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Categories</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="course : ${courses}">
+                        <td th:text="${course.title}">Course Title</td>
+                        <td>
+                            <span th:if="${course.category != null}">
+                                <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="tag" th:text="${#strings.trim(cat)}" style="margin-right: 0.25rem;">Tag</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span th:if="${course.status == 1}" class="badge badge-draft">Draft</span>
+                            <span th:if="${course.status == 2}" class="badge badge-published">Published</span>
+                            <span th:if="${course.status == 3}" class="badge badge-archived">Archived</span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a th:href="@{/instructor/courses/edit/{id}(id=${course.id})}" class="btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Edit</a>
+                                
+                                <form th:if="${course.status != 2}" th:action="@{/instructor/courses/publish/{id}(id=${course.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn-primary" style="padding: 0.25rem 0.75rem; font-size: 0.9rem; background: var(--success-color);">Publish</button>
+                                </form>
+                                <form th:if="${course.status == 2}" th:action="@{/instructor/courses/unpublish/{id}(id=${course.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.9rem; background-color: var(--warning-color); color: black;">Unpublish</button>
+                                </form>
+                                <form th:if="${course.status != 3}" th:action="@{/instructor/courses/archive/{id}(id=${course.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn-secondary" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Archive</button>
+                                </form>
+                                
+                                <form th:action="@{/instructor/courses/delete/{id}(id=${course.id})}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this course?');">
+                                    <button type="submit" class="btn-danger" style="padding: 0.25rem 0.75rem; font-size: 0.9rem;">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

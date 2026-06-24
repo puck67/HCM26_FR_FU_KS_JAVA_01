@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="hero">
+  <div class="container">
+    <h1>Course Sharing System</h1>
+    <p>Discover quality courses shared by our instructor community.</p>
+  </div>
+</div>
+
+<div class="container page-layout">
+  <main class="page-content">
+    <h2 style="margin-bottom:1.25rem;font-size:1.2rem;color:var(--text-muted)">Latest Courses</h2>
+
+    <div th:if="${#lists.isEmpty(courses)}" class="alert alert-info">No published courses yet.</div>
+
+    <div class="card-grid">
+      <div th:each="course : ${courses}" class="card course-card">
+        <div class="category-tags" th:if="${course.category != null and !course.category.isBlank()}">
+          <span th:each="cat : ${course.category.split(',')}"
+                class="tag" th:text="${cat.trim()}"></span>
+        </div>
+        <h3><a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}">Title</a></h3>
+        <p class="desc" th:text="${course.description}">Description</p>
+        <div class="meta" th:text="${#temporals.format(course.createdAt,'MMM dd, yyyy')}">Date</div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" th:if="${totalPages > 1}">
+      <a th:if="${currentPage > 0}" th:href="@{/(page=${currentPage - 1})}">&laquo;</a>
+      <th:block th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+        <a th:href="@{/(page=${i})}"
+           th:text="${i + 1}"
+           th:classappend="${i == currentPage} ? ' active' : ''"></a>
+      </th:block>
+      <a th:if="${currentPage < totalPages - 1}" th:href="@{/(page=${currentPage + 1})}">&raquo;</a>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="card">
+      <h3>Categories</h3>
+      <div class="category-cloud">
+        <a th:each="cat : ${categories}"
+           th:href="@{/categories/{name}(name=${cat.name})}"
+           th:text="${cat.name}"
+           th:classappend="${cat.frequency >= 3} ? ' size-4' : (${cat.frequency == 2} ? ' size-3' : (${cat.frequency == 1} ? ' size-2' : ' size-1'))"
+           class="cloud-tag"></a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Recent Reviews</h3>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <div th:each="review : ${recentReviews}" class="review-card">
+          <div class="author" th:text="${review.authorName}">Author</div>
+          <div class="stars" th:text="${'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}"></div>
+          <div style="font-size:.85rem;color:var(--text-muted);margin-top:.2rem"
+               th:text="${#strings.abbreviate(review.content, 80)}">Content</div>
+        </div>
+        <div th:if="${#lists.isEmpty(recentReviews)}" style="color:var(--text-muted);font-size:.88rem">No reviews yet.</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

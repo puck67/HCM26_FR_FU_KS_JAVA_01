@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Instructor Login')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+    <header th:replace="~{fragments/layout :: header('login')}"></header>
+
+    <main class="main-container flex-grow-1 d-flex align-items-center justify-content-center" style="min-height: 70vh;">
+        <div class="card border-0 shadow" style="width: 100%; max-width: 420px; border-radius: var(--radius); overflow: hidden;">
+            <div class="card-header bg-dark text-white text-center py-4 border-0">
+                <i class="fa-solid fa-user-shield fa-3x text-primary mb-2"></i>
+                <h3 class="h4 mb-0 font-weight-bold">Instructor Login</h3>
+            </div>
+            
+            <div class="card-body bg-white p-4">
+                
+                
+                <div th:if="${param.error == 'unauthorized'}" class="alert alert-warning mb-3 py-2 text-center" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-triangle-exclamation me-1"></i> Authentication required.
+                </div>
+
+                
+                <div th:if="${param.logout}" class="alert alert-success mb-3 py-2 text-center" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-circle-check me-1"></i> Logged out successfully.
+                </div>
+
+                
+                <div th:if="${error}" class="alert alert-danger mb-3 py-2 text-center" style="font-size: 0.9rem;">
+                    <i class="fa-solid fa-circle-xmark me-1"></i> <span th:text="${error}">Error</span>
+                </div>
+
+                <form th:action="@{/login}" method="post" novalidate>
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-user text-muted"></i></span>
+                            <input type="text" class="form-control" id="username" name="username" 
+                                   th:value="${username}" required placeholder="Enter username">
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   required placeholder="Enter password">
+                        </div>
+                    </div>
+
+                    
+                    <button type="submit" class="btn btn-primary-custom w-100 py-2 mt-2 font-weight-semibold">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i> Login
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+</body>
+</html>

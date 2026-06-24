@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Category: ' + ${selectedCategory})}">
+    <title>Category - Course Sharing System</title>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row">
+            
+            <!-- Courses List -->
+            <div class="col-lg-8 mb-4">
+                
+                <!-- Page Title -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Category</li>
+                    </ol>
+                </nav>
+                <div class="mb-4">
+                    <h2 class="text-dark fw-bold mb-1">
+                        <i class="fa-solid fa-tag text-primary me-2"></i>Category: <span th:text="${selectedCategory}">Category</span>
+                    </h2>
+                    <p class="text-muted mb-0">Showing published courses containing this tag.</p>
+                </div>
+
+                <!-- Course Cards Loop -->
+                <div th:if="${coursePage != null and !coursePage.isEmpty()}">
+                    <div th:each="course : ${coursePage.content}" class="card mb-4">
+                        <div class="card-body p-4">
+                            <!-- Title -->
+                            <h3 class="card-title h4 mb-2">
+                                <a th:href="@{/course/{id}(id=${course.id})}" class="text-dark text-decoration-none" th:text="${course.title}">
+                                    Course Title
+                                </a>
+                            </h3>
+
+                            <!-- Categories -->
+                            <div class="mb-3" th:if="${course.category != null and !course.category.isEmpty()}">
+                                <a th:each="cat : ${#strings.arraySplit(course.category, ',')}" 
+                                   th:href="@{/category/{name}(name=${#strings.trim(cat)})}"
+                                   class="badge bg-primary-subtle text-primary rounded-pill me-1 px-2.5 py-1.5 text-decoration-none" 
+                                   th:classappend="${#strings.equalsIgnoreCase(#strings.trim(cat), selectedCategory)} ? 'bg-primary text-white' : ''"
+                                   th:text="${#strings.trim(cat)}" style="font-size: 0.75rem;">
+                                    Category
+                                </a>
+                            </div>
+
+                            <!-- Description -->
+                            <p class="card-text text-muted mb-4" th:text="${course.description}">
+                                Short course description...
+                            </p>
+
+                            <!-- Card Footer Action -->
+                            <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                                <div class="text-muted small">
+                                    <i class="fa-regular fa-calendar-days me-1"></i>
+                                    Published on <span th:text="${#temporals.format(course.createdAt, 'dd MMMM yyyy')}">Date</span>
+                                </div>
+                                <a th:href="@{/course/{id}(id=${course.id})}" class="btn btn-outline-primary btn-sm px-4">
+                                    View Details <i class="fa-solid fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav th:if="${coursePage.totalPages > 1}" aria-label="Course pagination" class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            
+                            <!-- Previous Page -->
+                            <li class="page-item" th:classappend="${coursePage.first} ? 'disabled'">
+                                <a class="page-link" th:href="@{/category/{name}(name=${selectedCategory}, page=${currentPage - 1})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo; Prev</span>
+                                </a>
+                            </li>
+
+                            <!-- Page Numbers -->
+                            <li class="page-item" 
+                                th:each="i : ${#numbers.sequence(0, coursePage.totalPages - 1)}" 
+                                th:classappend="${currentPage == i} ? 'active'">
+                                <a class="page-link" th:href="@{/category/{name}(name=${selectedCategory}, page=${i})}" th:text="${i + 1}">1</a>
+                            </li>
+
+                            <!-- Next Page -->
+                            <li class="page-item" th:classappend="${coursePage.last} ? 'disabled'">
+                                <a class="page-link" th:href="@{/category/{name}(name=${selectedCategory}, page=${currentPage + 1})}" aria-label="Next">
+                                    <span aria-hidden="true">Next &raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+
+                <!-- No Courses Found -->
+                <div th:if="${coursePage == null or coursePage.isEmpty()}" class="card py-5 text-center">
+                    <div class="card-body">
+                        <i class="fa-solid fa-folder-open fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No courses found in this category</h4>
+                        <p class="text-muted mb-0"><a th:href="@{/}" class="text-primary">Return to Homepage</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div th:replace="~{fragments/layout :: sidebar}"></div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

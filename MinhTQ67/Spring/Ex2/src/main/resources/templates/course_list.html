@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title>Course Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="page-header">
+            <h2><i class="bi bi-mortarboard text-primary me-2"></i> Course Management</h2>
+            <a th:href="@{/courses/new}" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i> Add New Course</a>
+        </div>
+
+        <div class="table-container mt-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="15%">Course Code</th>
+                        <th width="25%">Course Name</th>
+                        <th width="20%">Category</th>
+                        <th width="20%">Instructor</th>
+                        <th width="15%">Start Date</th>
+                        <th width="5%" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="course : ${courses}">
+                        <td><span class="badge bg-light text-dark border border-secondary border-opacity-25" th:text="${course.id.courseCode}"></span></td>
+                        <td class="fw-medium text-primary" th:text="${course.courseName}"></td>
+                        <td class="text-muted" th:text="${course.category}"></td>
+                        <td th:text="${course.instructor}"></td>
+                        <td th:text="${#temporals.format(course.id.startDate, 'dd/MM/yyyy')}"></td>
+                        <td class="text-end">
+                            <a th:href="@{/lessons/{courseCode}/{startDate}(courseCode=${course.id.courseCode}, startDate=${course.id.startDate})}" class="action-link" title="Manage Lessons"><i class="bi bi-journal-text fs-5"></i></a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(courses)}">
+                        <td colspan="6" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                            No courses found. Create your first course!
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

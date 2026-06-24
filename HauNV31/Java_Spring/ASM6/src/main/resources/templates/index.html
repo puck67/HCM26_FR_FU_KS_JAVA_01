@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - Course Sharing System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Home</a></li>
+                <li th:if="${session.instructor == null}">
+                    <a th:href="@{/instructor/login}" class="btn-primary">Instructor Login</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/dashboard}">Dashboard</a>
+                </li>
+                <li th:if="${session.instructor != null}">
+                    <a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="hero">
+            <h1>Expand Your Horizons</h1>
+            <p>Explore high-quality, instructor-led courses on modern software engineering technologies.</p>
+        </div>
+
+        <div class="grid-layout">
+            <div>
+                <h2>Recent Courses</h2>
+                <div th:if="${#lists.isEmpty(courses)}" class="card">
+                    <p>No courses published yet.</p>
+                </div>
+                <div th:each="course : ${courses}" class="card">
+                    <div class="card-title">
+                        <a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}">Course Title</a>
+                    </div>
+                    <div class="card-meta">
+                        <span>Status: <span class="badge badge-published">Published</span></span>
+                        <span th:if="${course.category != null}">
+                            Categories:
+                            <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="tag" th:text="${#strings.trim(cat)}">Tag</span>
+                        </span>
+                    </div>
+                    <p th:text="${course.description}">Short summary...</p>
+                    <div style="margin-top: 1rem;">
+                        <a th:href="@{/courses/{id}(id=${course.id})}" class="btn-secondary">View Details</a>
+                    </div>
+                </div>
+
+                <div class="pagination" th:if="${totalPages > 1}">
+                    <div class="page-item" th:each="pageNumber : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a th:href="@{/(page=${pageNumber})}" 
+                           th:text="${pageNumber + 1}" 
+                           class="page-link"
+                           th:classappend="${pageNumber == currentPage} ? 'active' : ''">1</a>
+                    </div>
+                </div>
+            </div>
+
+            <aside>
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <div class="tag-cloud">
+                        <div th:if="${#lists.isEmpty(categories)}">
+                            <p>No categories found.</p>
+                        </div>
+                        <a th:each="cat : ${categories}" th:href="@{/courses/category/{name}(name=${cat.name})}" class="tag-cloud-item">
+                            <span th:text="${cat.name}">Java</span>
+                            <span th:text="${cat.frequency}">5</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Recent Reviews</h3>
+                    <div th:if="${#lists.isEmpty(recentReviews)}">
+                        <p>No reviews yet.</p>
+                    </div>
+                    <div th:each="rev : ${recentReviews}" class="recent-review-item">
+                        <div style="display: flex; justify-content: space-between;">
+                            <strong th:text="${rev.authorName}">Author</strong>
+                            <span class="stars">
+                                <span th:each="star : ${#numbers.sequence(1, rev.rating)}">★</span>
+                            </span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">
+                            on <a th:href="@{/courses/{id}(id=${rev.course.id})}" th:text="${rev.course.title}" style="text-decoration: underline;">Course</a>
+                        </div>
+                        <p th:text="${rev.content}">Content...</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+</html>

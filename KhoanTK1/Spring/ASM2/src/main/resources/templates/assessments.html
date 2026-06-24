@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS Assessment Materials</title>
+    <!-- Link to our simplified static stylesheet -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div class="container">
+        
+        <header>
+            <h1>LMS Assessment Manager</h1>
+            <p>Upload and download learning materials for courses</p>
+        </header>
+
+        <!-- Task 6: Error and Success Notification Messages -->
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">
+            Upload successful!
+        </div>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">
+            An error occurred.
+        </div>
+
+        <!-- Task 4: File Upload Form -->
+        <h2>Upload New Material</h2>
+        <form th:action="@{/assessments/upload}" method="post" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" placeholder="Enter description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="file">Choose File:</label>
+                <!-- Task 4.4: File input field -->
+                <input type="file" id="file" name="file" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Upload Material</button>
+        </form>
+
+        <!-- Task 5: Uploaded Materials List Table -->
+        <h2>Uploaded Materials List</h2>
+
+        <!-- If no materials uploaded yet -->
+        <div th:if="${#lists.isEmpty(materials)}" class="empty-state">
+            No assessment materials uploaded yet.
+        </div>
+
+        <!-- Materials Table (Task 5.2 & 5.3) -->
+        <table th:unless="${#lists.isEmpty(materials)}" class="materials-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>File Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterate through the list of assessment materials -->
+                <tr th:each="material : ${materials}">
+                    <td th:text="${material.id}">1</td>
+                    <td th:text="${material.title}">Sample Title</td>
+                    <td th:text="${material.description}">Sample Description</td>
+                    <td th:text="${material.fileName}">sample.pdf</td>
+                    <td>
+                        <!-- Task 5.3: Download link using filename mapping -->
+                        <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}" 
+                           class="btn-download">Download</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

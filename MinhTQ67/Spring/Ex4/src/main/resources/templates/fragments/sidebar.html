@@ -1,0 +1,26 @@
+<div th:fragment="sidebar" class="d-flex flex-column p-3 text-white bg-dark" style="width: 280px; min-height: 100vh;">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">Menu</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a th:href="@{/}" class="nav-link text-white" aria-current="page">
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-item mt-3">
+            <span class="text-muted ms-3 small text-uppercase fw-bold">Training Management</span>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/subjects}" class="nav-link text-white ps-4">
+                Subject Management
+            </a>
+        </li>
+        <li class="nav-item">
+            <a th:href="@{/materials}" class="nav-link text-white ps-4">
+                Material Management
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="content">
+    <div>
+        <h2>Material Management</h2>
+
+        <form th:action="@{/materials/upload}" method="post" enctype="multipart/form-data">
+            <input th:if="${subject != null}" type="hidden" name="subject.id" th:value="${subject.id}" />
+            
+            <div th:if="${subject == null}" style="margin-bottom: 10px;">
+                <label>Subject: </label>
+                <select name="subject.id" required style="padding: 4px; border-radius: 4px; border: 1px solid #ccc;">
+                    <option value="">-- Select Subject --</option>
+                    <option th:each="s : ${subjects}" th:value="${s.id}" th:text="${s.subjectName} + ' (' + ${s.subjectCode} + ')'"></option>
+                </select>
+            </div>
+
+            <input type="text" name="description" placeholder="Description" required style="padding: 4px; border-radius: 4px; border: 1px solid #ccc;" />
+            <input type="file" name="file" required />
+            <button type="submit" style="padding: 4px 10px; border-radius: 4px; background: #0066cc; color: white; border: none; cursor: pointer;">Upload</button>
+        </form>
+
+        <table border="1" style="width:100%; margin-top:20px; border-collapse:collapse;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>File Name</th>
+                    <th>Description</th>
+                    <th>Size (bytes)</th>
+                    <th>Upload Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="m : ${items}">
+                    <td th:text="${m.id}"></td>
+                    <td th:text="${m.fileName}"></td>
+                    <td th:text="${m.description}"></td>
+                    <td th:text="${m.fileSize}"></td>
+                    <td th:text="${m.uploadDate}"></td>
+                    <td>
+                        <a th:href="@{/materials/download/{id}(id=${m.id})}">Download</a>
+                        |
+                        <a th:href="@{/materials/delete/{id}(id=${m.id})}" onclick="return confirm('Delete?')">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create/Edit Course - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #212529;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #ccc !important;
+            font-size: 0.9rem;
+        }
+
+        .navbar-brand {
+            color: #fff !important;
+            font-size: 1.2rem;
+        }
+
+        .nav-link:hover {
+            color: #fff !important;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .form-control,
+        .form-select {
+            border-color: #ced4da;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">CourseShare</a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" th:href="@{/instructor/courses}">Manage
+                            Courses</a></li>
+                    <li class="nav-item">
+                        <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-link nav-link"
+                                style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-card mx-auto" style="max-width: 800px;">
+            <h4 class="mb-4" th:text="${course.id == null ? 'Create New Course' : 'Edit Course'}">Create New Course</h4>
+
+            <form th:action="@{/instructor/courses/save}" th:object="${course}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="mb-3">
+                    <label for="title" class="form-label">Course Title</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}"
+                        placeholder="Enter course title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Short Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3"
+                        placeholder="Write a brief summary..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">Course Content (Markdown)</label>
+                    <textarea class="form-control" id="content" th:field="*{content}" rows="5"
+                        placeholder="# Markdown content here..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Categories (comma-separated)</label>
+                    <input type="text" class="form-control" id="category" th:field="*{category}"
+                        placeholder="e.g., Java, Web, Spring">
+                </div>
+
+                <div class="mb-4">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-select" id="status" th:field="*{status}">
+                        <option value="1">Draft</option>
+                        <option value="2">Published</option>
+                    </select>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-secondary w-50"
+                        onclick="document.getElementById('status').value='1';"
+                        style="background-color: #6c757d; border-color: #6c757d;">Save Draft</button>
+                    <button type="submit" class="btn btn-success w-50"
+                        onclick="document.getElementById('status').value='2';"
+                        style="background-color: #198754; border-color: #198754;">Publish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

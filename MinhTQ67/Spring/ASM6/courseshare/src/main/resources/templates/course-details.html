@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${course.title})}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container" style="max-width: 800px;">
+        <h1 th:text="${course.title}">Course Title</h1>
+        
+        <div style="margin: 1rem 0;">
+            <span style="color:var(--secondary-color);font-size:0.9rem;">Categories: </span>
+            <span th:if="${course.category != null}">
+                <span th:each="cat : ${#strings.arraySplit(course.category, ',')}" class="badge badge-success" th:text="${#strings.trim(cat)}" style="margin-right: 4px;">Cat</span>
+            </span>
+        </div>
+        
+        <p class="card-subtitle" th:text="${course.description}" style="font-size:1.1rem; margin-bottom: 2rem;">Description</p>
+
+        <div class="card markdown-content" th:utext="${htmlContent}">
+            Course Content...
+        </div>
+
+        <h3 style="margin-top: 3rem; margin-bottom: 1.5rem;">Student Reviews</h3>
+        
+        <div th:if="${#lists.isEmpty(reviews)}">
+            <p style="color:var(--secondary-color);">No reviews yet. Be the first to review!</p>
+        </div>
+        
+        <div th:each="review : ${reviews}" class="review-item">
+            <div class="review-header">
+                <span class="review-author" th:text="${review.authorName}">Name</span>
+            </div>
+            <div class="review-rating">
+                <span th:each="i : ${#numbers.sequence(1, 5)}" th:text="${i <= review.rating ? '★' : '☆'}"></span>
+            </div>
+            <div class="review-content" th:text="${review.content}" style="margin-top:0.5rem; color:var(--text-color);">Content</div>
+        </div>
+
+        <div class="card" style="margin-top: 3rem;">
+            <h3 style="margin-bottom: 1.5rem;">Add Your Review</h3>
+            
+            <div th:if="${message}" class="badge badge-success" style="display:block; padding:1rem; margin-bottom:1rem;" th:text="${message}"></div>
+
+            <form th:action="@{/course/{id}/review(id=${course.id})}" th:object="${newReview}" method="post">
+                <div class="form-group">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" class="form-control" th:field="*{authorName}" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" th:field="*{email}" required placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Rating</label>
+                    <select class="form-control" th:field="*{rating}">
+                        <option value="5">★★★★★ (5/5)</option>
+                        <option value="4">★★★★☆ (4/5)</option>
+                        <option value="3">★★★☆☆ (3/5)</option>
+                        <option value="2">★★☆☆☆ (2/5)</option>
+                        <option value="1">★☆☆☆☆ (1/5)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Review</label>
+                    <textarea class="form-control" th:field="*{content}" required placeholder="Write your review here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

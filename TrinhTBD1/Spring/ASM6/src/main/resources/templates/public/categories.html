@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Categories')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('categories')}"></header>
+
+    <main class="main-container flex-grow-1">
+
+        
+        <div class="card border-0 shadow-sm mb-5" style="border-radius:var(--radius);overflow:hidden;">
+            <div class="card-header bg-dark text-white py-3">
+                <h3 class="h5 mb-0 fw-bold"><i class="fa-solid fa-cloud me-2 text-primary"></i>Category Cloud</h3>
+            </div>
+            <div class="card-body p-4 text-center">
+                <div th:replace="~{fragments/components :: category-cloud(categories=${categories}, selected=${selectedCategory})}"></div>
+            </div>
+        </div>
+
+        
+        <div th:if="${selectedCategory == null}">
+            <div th:replace="~{fragments/components :: empty-state(message='Select a category above to view courses.')}"></div>
+        </div>
+
+        <div th:if="${selectedCategory != null}">
+            <h3 class="mb-4 fw-bold text-dark">
+                <i class="fa-solid fa-tags me-2 text-primary"></i>Courses in:
+                <span class="text-primary" th:text="${selectedCategory}">HTML</span>
+            </h3>
+
+            <div th:if="${coursePage.isEmpty()}">
+                <div th:replace="~{fragments/components :: empty-state(message='No published courses in this category.')}"></div>
+            </div>
+
+            <div th:each="course : ${coursePage.content}" class="custom-card">
+                <h4 class="card-title" th:text="${course.title}">Title</h4>
+                <p class="text-muted mb-3" th:text="${course.description}">Desc</p>
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <div class="d-flex flex-wrap gap-1">
+                        <a th:each="cat : ${#strings.arraySplit(course.category, ',')}"
+                           th:href="@{/categories(name=${#strings.trim(cat)})}"
+                           class="badge badge-custom badge-cat"
+                           th:classappend="${#strings.trim(cat) == selectedCategory ? 'bg-primary text-white' : ''}"
+                           th:text="${#strings.trim(cat)}">Cat</a>
+                    </div>
+                    <a th:href="@{/course/{id}(id=${course.id})}" class="btn btn-primary-custom btn-sm">
+                        View Course <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            
+            <nav th:if="${coursePage.totalPages > 1}" aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${coursePage.first ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/categories(name=${selectedCategory}, page=0)}">&laquo;&laquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${coursePage.first ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/categories(name=${selectedCategory}, page=${coursePage.number - 1})}">&lsaquo;</a>
+                    </li>
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(
+                                        (coursePage.number > 2 ? coursePage.number - 2 : 0),
+                                        (coursePage.number + 2 < coursePage.totalPages - 1 ? coursePage.number + 2 : coursePage.totalPages - 1))}"
+                        th:classappend="${i == coursePage.number ? 'active' : ''}">
+                        <a class="page-link" th:href="@{/categories(name=${selectedCategory}, page=${i})}" th:text="${i + 1}">1</a>
+                    </li>
+                    <li class="page-item" th:classappend="${coursePage.last ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/categories(name=${selectedCategory}, page=${coursePage.number + 1})}">&rsaquo;</a>
+                    </li>
+                    <li class="page-item" th:classappend="${coursePage.last ? 'disabled' : ''}">
+                        <a class="page-link" th:href="@{/categories(name=${selectedCategory}, page=${coursePage.totalPages - 1})}">&raquo;&raquo;</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

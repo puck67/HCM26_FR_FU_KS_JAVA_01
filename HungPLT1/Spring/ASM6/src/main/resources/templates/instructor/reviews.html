@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Review Management - CourseShare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <style>
+        .review-card {
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .review-card.approved {
+            border-left-color: var(--success-color);
+        }
+        .review-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+        .review-author {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .review-content {
+            font-size: 0.95rem;
+            color: #334155;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">CourseShare</a>
+        <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li class="nav-item"><a class="nav-link active" th:href="@{/instructor/reviews}">Reviews</a></li>
+                <li class="nav-item">
+                    <form th:action="@{/instructor/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none; border: none; padding: 8px;">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="max-width: 900px;">
+    <h4 class="mb-4 fw-bold text-dark">Pending Reviews</h4>
+    <div id="pending-container" class="mb-5">
+        <div th:each="r : ${pendingReviews}" th:id="'review-box-' + ${r.id}" class="card review-card p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <div class="review-title mb-1" th:text="'Course: ' + ${r.course.title}">Course: Introduction to HTML</div>
+                    <div class="review-author" th:text="'Reviewer: ' + ${r.authorName} + ' (' + ${r.email} + ')'">Reviewer: John Doe</div>
+                </div>
+                <div class="rating-stars">
+                    <span th:each="i : ${#numbers.sequence(1, r.rating)}">★</span><span th:each="i : ${#numbers.sequence(r.rating + 1, 5, 1)}" th:if="${r.rating < 5}">☆</span>
+                </div>
+            </div>
+            <p class="review-content mb-3" th:text="${r.content}">Great course, very clear explanations...</p>
+            <div class="d-flex gap-2">
+                <button th:onclick="'approveReview(' + ${r.id} + ')'" class="btn btn-success btn-sm">Approve</button>
+                <button th:onclick="'deleteReview(' + ${r.id} + ')'" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+        <p th:if="${#lists.isEmpty(pendingReviews)}" class="text-muted text-center py-4 bg-white border rounded">No pending reviews.</p>
+    </div>
+
+    <h4 class="mb-4 fw-bold text-dark border-top pt-4">Approved Reviews</h4>
+    <div id="approved-container">
+        <div th:each="r : ${approvedReviews}" th:id="'review-box-' + ${r.id}" class="card review-card approved p-4">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                    <div class="review-title mb-1" th:text="'Course: ' + ${r.course.title}">Course: Spring Boot 101</div>
+                    <div class="review-author" th:text="'Reviewer: ' + ${r.authorName} + ' (' + ${r.email} + ')'">Reviewer: Mark Lee</div>
+                </div>
+                <div class="rating-stars">
+                    <span th:each="i : ${#numbers.sequence(1, r.rating)}">★</span><span th:each="i : ${#numbers.sequence(r.rating + 1, 5, 1)}" th:if="${r.rating < 5}">☆</span>
+                </div>
+            </div>
+            <p class="review-content mb-3" th:text="${r.content}">Fantastic introduction to Spring Boot!</p>
+            <div>
+                <button th:onclick="'deleteReview(' + ${r.id} + ')'" class="btn btn-danger btn-sm">Delete</button>
+            </div>
+        </div>
+        <p th:if="${#lists.isEmpty(approvedReviews)}" class="text-muted text-center py-4 bg-white border rounded">No approved reviews.</p>
+    </div>
+</div>
+
+<script>
+    function approveReview(id) {
+        fetch(`/api/instructor/reviews/${id}/approve`, { method: 'POST' })
+            .then(res => {
+                if(res.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Error approving review");
+                }
+            });
+    }
+
+    function deleteReview(id) {
+        if(confirm("Bạn có chắc chắn muốn xóa đánh giá này?")) {
+            fetch(`/api/instructor/reviews/${id}`, { method: 'DELETE' })
+                .then(res => {
+                    if(res.ok) {
+                        document.getElementById(`review-box-${id}`).remove();
+                    } else {
+                        alert("Error deleting review");
+                    }
+                });
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Dashboard</title>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Overview Cards -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-bottom: 40px;">
+            <div class="card-container" style="display: flex; align-items: center; gap: 24px; padding: 24px 32px;">
+                <div style="background: var(--primary-light); width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary);">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 5px;">Total Students</h3>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;" th:text="${totalStudents}">0</div>
+                </div>
+            </div>
+            <div class="card-container" style="display: flex; align-items: center; gap: 24px; padding: 24px 32px;">
+                <div style="background: #E6FFFA; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--success);">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 5px;">Active Courses</h3>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;" th:text="${totalCourses}">0</div>
+                </div>
+            </div>
+            <div class="card-container" style="display: flex; align-items: center; gap: 24px; padding: 24px 32px;">
+                <div style="background: #FFF5F5; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--danger);">
+                    <i class="fa-solid fa-chalkboard-teacher"></i>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-muted); font-size: 1rem; font-weight: 600; margin-bottom: 5px;">Instructors & Admins</h3>
+                    <div style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px;" th:text="${totalUsers}">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Statistics Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 40px;">
+            <!-- Chart Widget -->
+            <div class="card-container" style="padding: 24px;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+                    Courses by Category
+                </h3>
+                <div style="position: relative; height: 300px; display: flex; justify-content: center;">
+                    <canvas id="courseCategoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Students Widget -->
+            <div class="card-container" style="padding: 24px; overflow: hidden; display: flex; flex-direction: column;">
+                <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <span>Recently Added Students</span>
+                    <a href="/students" style="font-size: 0.9rem; color: var(--primary); font-weight: 600; text-decoration: none;">View All <i class="fa-solid fa-arrow-right"></i></a>
+                </h3>
+                <div class="table-responsive" style="flex: 1;">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Full Name</th>
+                                <th>Email Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="s : ${recentStudents}">
+                                <td style="font-weight: 600; color: var(--text-main);" th:text="${s.studentCode}"></td>
+                                <td th:text="${s.fullName}"></td>
+                                <td th:text="${s.email}" style="color: var(--text-muted);"></td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(recentStudents)}">
+                                <td colspan="3" style="text-align: center; padding: 20px; color: var(--text-muted);">No students found.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Banner -->
+        <div class="card-container" style="min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, var(--primary), #868CFF); color: white; border-radius: 30px; box-shadow: 0 20px 50px rgba(67, 24, 255, 0.25); border: none; position: relative; overflow: hidden;">
+            
+            <!-- Decorative circles -->
+            <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(20px);"></div>
+            <div style="position: absolute; bottom: -80px; right: 10%; width: 250px; height: 250px; background: rgba(255,255,255,0.1); border-radius: 50%; filter: blur(30px);"></div>
+            
+            <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;">
+                <h1 style="font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 15px; letter-spacing: -1px; text-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    Welcome back to the LMS
+                </h1>
+                <p style="font-size: 1.1rem; font-weight: 500; opacity: 0.95; max-width: 650px; line-height: 1.6; margin-bottom: 25px;">
+                    Modern learning management system built on Spring Boot.
+                </p>
+                <div style="display: flex; gap: 20px;">
+                    <a href="/courses" class="btn" style="background: white; color: var(--primary); padding: 12px 30px; font-size: 1.05rem; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+                        Browse Courses <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart.js Initialization -->
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                /*<![CDATA[*/
+                var categoryData = /*[[${courseCategoryData}]]*/ {};
+                /*]]>*/
+
+                // Fallback dummy data if completely empty
+                if (!categoryData || Object.keys(categoryData).length === 0) {
+                    categoryData = {
+                        "Programming": 15,
+                        "Web Design": 8,
+                        "Data Science": 12,
+                        "Database": 5
+                    };
+                }
+
+                var labels = Object.keys(categoryData);
+                var dataValues = Object.values(categoryData);
+                
+                var ctx = document.getElementById('courseCategoryChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: dataValues,
+                            backgroundColor: [
+                                '#4318FF', // primary
+                                '#05CD99', // success
+                                '#FFCE20', // warning
+                                '#EE5D50', // danger
+                                '#868CFF',
+                                '#FF8F6B'
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        family: "'Inter', sans-serif",
+                                        size: 13
+                                    },
+                                    usePointStyle: true,
+                                    padding: 20
+                                }
+                            }
+                        },
+                        cutout: '70%'
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

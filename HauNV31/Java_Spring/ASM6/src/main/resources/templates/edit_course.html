@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing <span style="font-size: 0.8rem; opacity: 0.7; padding-left: 0.5rem; border-left: 1px solid var(--border-color);">Instructor Panel</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+                <li><a th:href="@{/instructor/courses}" style="color: #a855f7; font-weight: bold;">Manage Courses</a></li>
+                <li><a th:href="@{/instructor/reviews}">Manage Reviews</a></li>
+                <li><a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container" style="max-width: 800px;">
+        <div style="margin-bottom: 2rem;">
+            <a th:href="@{/instructor/courses}" style="color: var(--accent-color); font-weight: 500;">← Back to Course Management</a>
+        </div>
+        
+        <h1 style="margin-bottom: 2rem;">Edit Course</h1>
+
+        <form th:action="@{/instructor/courses/edit/{id}(id=${course.id})}" th:object="${course}" method="post" class="card">
+            <div class="form-group">
+                <label for="title">Course Title</label>
+                <input type="text" id="title" th:field="*{title}" class="form-control">
+                <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Short Description</label>
+                <input type="text" id="description" th:field="*{description}" class="form-control">
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Categories (Comma-separated, e.g., Java, Spring, Database)</label>
+                <input type="text" id="category" th:field="*{category}" class="form-control">
+                <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status" th:field="*{status}" class="form-control">
+                    <option value="1">Draft</option>
+                    <option value="2">Published</option>
+                    <option value="3">Archived</option>
+                </select>
+                <div th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="content">Course Content (Markdown Supported)</label>
+                <textarea id="content" th:field="*{content}" rows="10" class="form-control"></textarea>
+                <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger"></div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn-primary" style="flex: 1; padding: 0.75rem;">Save Changes</button>
+                <a th:href="@{/instructor/courses}" class="btn-secondary" style="flex: 1; text-align: center; padding: 0.75rem;">Cancel</a>
+            </div>
+        </form>
+    </main>
+</body>
+</html>

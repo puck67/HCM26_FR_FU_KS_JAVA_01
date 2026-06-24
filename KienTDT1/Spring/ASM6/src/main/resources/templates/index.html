@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS - Learning Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Learning Management System</h1>
+            <nav>
+                <a href="/courses">Courses</a>
+                <a href="/students">Students</a>
+                <a href="/enrollments">Enrollments</a>
+            </nav>
+        </header>
+        <main>
+            <div class="hero">
+                <h2>Welcome to LMS</h2>
+                <p>Manage courses, students, and enrollments efficiently</p>
+                <div class="cta-buttons">
+                    <a href="/courses" class="btn btn-primary">View Courses</a>
+                    <a href="/students" class="btn btn-secondary">View Students</a>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Learning Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructor Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header>
+        <div class="nav-bar">
+            <a th:href="@{/}" class="logo">
+                <span>📚</span> Course Sharing <span style="font-size: 0.8rem; opacity: 0.7; padding-left: 0.5rem; border-left: 1px solid var(--border-color);">Instructor Panel</span>
+            </a>
+            <ul class="nav-links">
+                <li><a th:href="@{/instructor/dashboard}" style="color: #a855f7; font-weight: bold;">Dashboard</a></li>
+                <li><a th:href="@{/instructor/courses}">Manage Courses</a></li>
+                <li><a th:href="@{/instructor/reviews}">Manage Reviews</a></li>
+                <li><a th:href="@{/instructor/logout}" class="btn-secondary">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 style="margin-bottom: 2rem;">Welcome, Instructor!</h1>
+
+        <div class="dashboard-stats">
+            <div class="stat-box">
+                <h3>Total Courses</h3>
+                <div class="stat-val" th:text="${coursesCount}">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Total Reviews</h3>
+                <div class="stat-val" th:text="${reviewsCount}">0</div>
+            </div>
+            <div class="stat-box">
+                <h3>Pending Reviews</h3>
+                <div class="stat-val" th:text="${pendingReviewsCount}">0</div>
+            </div>
+        </div>
+
+        <h2 style="margin-bottom: 1.5rem;">Quick Actions</h2>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a th:href="@{/instructor/courses/new}" class="card" style="flex: 1; min-width: 250px; text-align: center; padding: 2rem;">
+                <span style="font-size: 2.5rem;">➕</span>
+                <h3 style="margin-top: 1rem;">Create a New Course</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Draft, edit and publish new content</p>
+            </a>
+            <a th:href="@{/instructor/courses}" class="card" style="flex: 1; min-width: 250px; text-align: center; padding: 2rem;">
+                <span style="font-size: 2.5rem;">🛠</span>
+                <h3 style="margin-top: 1rem;">Manage Existing Courses</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Publish, unpublish or archive courses</p>
+            </a>
+            <a th:href="@{/instructor/reviews}" class="card" style="flex: 1; min-width: 250px; text-align: center; padding: 2rem;">
+                <span style="font-size: 2.5rem;">💬</span>
+                <h3 style="margin-top: 1rem;">Manage Reviews</h3>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Approve student feedback and delete spam</p>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

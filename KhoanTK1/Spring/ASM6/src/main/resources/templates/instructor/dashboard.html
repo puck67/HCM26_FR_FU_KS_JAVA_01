@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/layout :: head('Instructor Dashboard')}">
+    <title>Dashboard - Course Sharing System</title>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <div th:replace="~{fragments/layout :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        
+        <!-- Welcome Banner -->
+        <div class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom">
+            <div>
+                <h1 class="fw-bold text-dark mb-1">
+                    <i class="fa-solid fa-chart-line text-primary me-2"></i>Instructor Dashboard
+                </h1>
+                <p class="text-muted mb-0">Welcome back, instructor. Monitor course performance and review submissions.</p>
+            </div>
+            <div>
+                <a th:href="@{/instructor/courses/new}" class="btn btn-primary">
+                    <i class="fa-solid fa-plus me-1"></i>Create New Course
+                </a>
+            </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i>
+            <span th:text="${successMessage}">Success message</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Stats Section -->
+        <h3 class="fw-semibold mb-3 text-secondary">System Statistics</h3>
+        <div class="row mb-5">
+            <!-- Courses Stat -->
+            <div class="col-md-3 mb-3">
+                <div class="card stat-card shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted small text-uppercase fw-bold mb-1">Total Courses</h6>
+                                <h2 class="mb-0 fw-bold" th:text="${totalCourses}">0</h2>
+                            </div>
+                            <div class="bg-primary-subtle text-primary p-3 rounded-circle">
+                                <i class="fa-solid fa-book fa-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Draft Stat -->
+            <div class="col-md-3 mb-3">
+                <div class="card stat-card stat-draft shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted small text-uppercase fw-bold mb-1">Drafts</h6>
+                                <h2 class="mb-0 fw-bold" th:text="${draftCourses}">0</h2>
+                            </div>
+                            <div class="bg-warning-subtle text-warning p-3 rounded-circle">
+                                <i class="fa-solid fa-pen-nib fa-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Published Stat -->
+            <div class="col-md-3 mb-3">
+                <div class="card stat-card stat-published shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted small text-uppercase fw-bold mb-1">Published</h6>
+                                <h2 class="mb-0 fw-bold" th:text="${publishedCourses}">0</h2>
+                            </div>
+                            <div class="bg-success-subtle text-success p-3 rounded-circle">
+                                <i class="fa-solid fa-globe fa-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Reviews Stat -->
+            <div class="col-md-3 mb-3">
+                <div class="card stat-card stat-draft shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="text-muted small text-uppercase fw-bold mb-1">Pending Reviews</h6>
+                                <h2 class="mb-0 fw-bold" th:text="${pendingReviewsCount}">0</h2>
+                            </div>
+                            <div class="bg-warning-subtle text-warning p-3 rounded-circle">
+                                <i class="fa-solid fa-comments fa-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Moderation Quick Panel -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 text-primary fw-semibold">
+                            <i class="fa-solid fa-shield-halved me-2"></i>Pending Reviews Moderation
+                        </h4>
+                        <a th:href="@{/instructor/reviews}" class="btn btn-outline-primary btn-sm">
+                            Manage All Reviews
+                        </a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div th:if="${pendingReviews != null and !pendingReviews.isEmpty()}" class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">Student</th>
+                                        <th>Course</th>
+                                        <th>Rating</th>
+                                        <th>Comments</th>
+                                        <th>Submitted</th>
+                                        <th class="text-end pe-4">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="rev : ${pendingReviews}">
+                                        <td class="ps-4">
+                                            <div class="fw-semibold text-dark" th:text="${rev.authorName}">Student</div>
+                                            <div class="text-muted small" th:text="${rev.email}">email@domain.com</div>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/course/{id}(id=${rev.course.id})}" target="_blank" class="text-decoration-none fw-medium" th:text="${rev.course.title}">Course Title</a>
+                                        </td>
+                                        <td>
+                                            <span class="star-rating small">
+                                                <i th:each="star : ${#numbers.sequence(1, rev.rating)}" class="fa-solid fa-star"></i><i th:each="star : ${rev.rating < 5 ? #numbers.sequence(rev.rating + 1, 5) : {}}" class="fa-regular fa-star"></i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span th:text="${rev.content}" class="text-muted small">Review comments...</span>
+                                        </td>
+                                        <td th:text="${#temporals.format(rev.createdAt, 'dd/MM/yyyy HH:mm')}">Date</td>
+                                        <td class="text-end pe-4">
+                                            <a th:href="@{/instructor/reviews/approve/{id}(id=${rev.id})}" class="btn btn-sm btn-success me-1" title="Approve">
+                                                <i class="fa-solid fa-check"></i> Approve
+                                            </a>
+                                            <a th:href="@{/instructor/reviews/delete/{id}(id=${rev.id})}" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this review?')">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div th:if="${pendingReviews == null or pendingReviews.isEmpty()}" class="text-center py-5 text-muted">
+                            <i class="fa-solid fa-circle-check fa-3x mb-3 text-success"></i>
+                            <h5>All Caught Up!</h5>
+                            <p class="mb-0 text-muted">There are no pending reviews requiring moderation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/layout :: footer}"></div>
+
+</body>
+</html>

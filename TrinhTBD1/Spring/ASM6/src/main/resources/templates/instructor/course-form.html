@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${course.id == null ? 'Create Course' : 'Edit Course'})}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('courses')}"></header>
+
+    <main class="main-container flex-grow-1">
+
+        
+        <div class="mb-3">
+            <a th:href="@{/instructor/courses}" class="text-decoration-none text-muted small">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Manage Courses
+            </a>
+        </div>
+
+        <div class="card border-0 shadow" style="border-radius: var(--radius); overflow: hidden;">
+            <div class="card-header bg-dark text-white py-3">
+                <h3 class="h5 mb-0 fw-bold">
+                    <i class="fa-solid fa-book-medical me-2 text-primary" th:if="${course.id == null}"></i>
+                    <i class="fa-solid fa-pen-to-square me-2 text-primary" th:unless="${course.id == null}"></i>
+                    <span th:text="${course.id == null ? 'Create New Course' : 'Edit Course'}">Create Course</span>
+                </h3>
+            </div>
+
+            <div class="card-body bg-white p-4">
+                <form th:action="${course.id == null
+                                    ? '/instructor/courses/new'
+                                    : '/instructor/courses/edit/' + course.id}"
+                      th:object="${course}"
+                      method="post"
+                      novalidate
+                      id="courseForm">
+
+                    
+                    <input type="hidden" id="statusField" th:field="*{status}">
+
+                    <div class="row g-3">
+
+                        
+                        <div class="col-12">
+                            <label for="title" class="form-label fw-semibold">
+                                Course Title <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="title"
+                                   th:field="*{title}"
+                                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
+                                   placeholder="Enter course title">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('title')}"
+                                 th:errors="*{title}"></div>
+                        </div>
+
+                        
+                        <div class="col-12">
+                            <label for="description" class="form-label fw-semibold">
+                                Short Description <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control"
+                                      id="description"
+                                      rows="3"
+                                      th:field="*{description}"
+                                      th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+                                      placeholder="Write a brief summary..."></textarea>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('description')}"
+                                 th:errors="*{description}"></div>
+                        </div>
+
+                        
+                        <div class="col-12">
+                            <label for="content" class="form-label fw-semibold">
+                                Course Content (Markdown) <span class="text-danger">*</span>
+                            </label>
+                            <textarea class="form-control font-monospace"
+                                      id="content"
+                                      rows="6"
+                                      th:field="*{content}"
+                                      th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'"
+                                      placeholder="# Markdown content here..."></textarea>
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('content')}"
+                                 th:errors="*{content}"></div>
+                            <div class="form-text text-muted">Supports full Markdown formatting.</div>
+                        </div>
+
+                        
+                        <div class="col-md-8">
+                            <label for="category" class="form-label fw-semibold">
+                                Categories (comma-separated)
+                            </label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="category"
+                                   th:field="*{category}"
+                                   th:classappend="${#fields.hasErrors('category')} ? 'is-invalid'"
+                                   placeholder="e.g., Java, Web, Spring">
+                            <div class="invalid-feedback"
+                                 th:if="${#fields.hasErrors('category')}"
+                                 th:errors="*{category}"></div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="statusDisplay" class="form-label fw-semibold">Status</label>
+                            <select class="form-select"
+                                    id="statusDisplay"
+                                    onchange="document.getElementById('statusField').value = this.value">
+                                <option th:each="st : ${statuses}"
+                                        th:value="${st.code}"
+                                        th:text="${st.name}"
+                                        th:selected="${course.status != null
+                                                        and course.status.toString() == st.code}">
+                                    Status
+                                </option>
+                            </select>
+                        </div>
+
+                        
+                        <div class="col-12 d-flex gap-3 pt-2">
+                            
+                            <button type="button"
+                                    class="btn btn-secondary px-5 py-2 fw-semibold"
+                                    style="min-width: 160px;"
+                                    onclick="submitWithStatus(1)">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Save Draft
+                            </button>
+
+                            
+                            <button type="button"
+                                    class="btn btn-success px-5 py-2 fw-semibold"
+                                    style="min-width: 160px;"
+                                    onclick="submitWithStatus(2)">
+                                <i class="fa-solid fa-circle-check me-1"></i> Publish
+                            </button>
+
+                            <a th:href="@{/instructor/courses}"
+                               class="btn btn-outline-secondary px-4 py-2 ms-auto">
+                                Cancel
+                            </a>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+
+    <script>
+        // Đồng bộ statusDisplay dropdown → hidden statusField khi trang load
+        (function () {
+            const display = document.getElementById('statusDisplay');
+            const hidden  = document.getElementById('statusField');
+            if (display && hidden && hidden.value) {
+                display.value = hidden.value;
+            }
+        })();
+
+        /**
+         * Ghi đè status rồi submit form.
+         * @param {number} statusCode  1 = Draft, 2 = Published
+         */
+        function submitWithStatus(statusCode) {
+            document.getElementById('statusField').value = statusCode;
+            document.getElementById('statusDisplay').value = statusCode;
+            document.getElementById('courseForm').submit();
+        }
+    </script>
+</body>
+</html>

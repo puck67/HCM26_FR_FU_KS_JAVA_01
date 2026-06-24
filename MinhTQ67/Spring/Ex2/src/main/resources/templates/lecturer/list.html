@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title>Lecturer Management</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="page-header">
+            <h2><i class="bi bi-person-video3 text-primary me-2"></i> Lecturer Management</h2>
+            <button class="btn btn-primary" disabled><i class="bi bi-plus-circle me-1"></i> Add New Lecturer</button>
+        </div>
+
+        <div class="table-container mt-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th width="10%">ID</th>
+                        <th width="25%">Full Name</th>
+                        <th width="25%">Email</th>
+                        <th width="20%">Department</th>
+                        <th width="20%">Expertise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="lecturer : ${lecturers}">
+                        <td th:text="${lecturer.id}"></td>
+                        <td class="fw-medium text-primary" th:text="${lecturer.name}"></td>
+                        <td class="text-muted" th:text="${lecturer.email}"></td>
+                        <td><span class="badge bg-light text-dark border border-secondary border-opacity-25" th:text="${lecturer.department}"></span></td>
+                        <td th:text="${lecturer.expertise}"></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(lecturers)}">
+                        <td colspan="5" class="text-center py-5 text-muted">
+                            <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                            No lecturers found.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

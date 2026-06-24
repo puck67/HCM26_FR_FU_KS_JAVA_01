@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${enrollment.id} ? 'Edit Enrollment' : 'New Enrollment'">Enrollment Form - LMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Learning Management System</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/courses">Courses</a>
+                <a href="/students">Students</a>
+                <a href="/enrollments" class="active">Enrollments</a>
+            </nav>
+        </header>
+        <main>
+            <div class="page-header">
+                <h2 th:text="${enrollment.id} ? 'Edit Enrollment' : 'New Enrollment'">Enrollment Form</h2>
+            </div>
+            <div class="form-container">
+                <form th:action="${enrollment.id} ? @{/enrollments/update/{id}(id=${enrollment.id})} : @{/enrollments/save}" th:object="${enrollment}" method="post">
+                    <div class="form-group">
+                        <label for="student">Student:</label>
+                        <select id="student" th:field="*{student}" required>
+                            <option value="">Select Student</option>
+                            <option th:each="student : ${students}" 
+                                    th:value="${student.id}" 
+                                    th:text="${student.name} + ' - ' + ${student.studentId}"
+                                    th:selected="${enrollment.student?.id == student.id}">John Doe</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <select id="course" th:field="*{course}" required>
+                            <option value="">Select Course</option>
+                            <option th:each="course : ${courses}" 
+                                    th:value="${course.id}" 
+                                    th:text="${course.name} + ' - ' + ${course.code}"
+                                    th:selected="${enrollment.course?.id == course.id}">CS101</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="enrollmentDate">Enrollment Date:</label>
+                        <input type="date" id="enrollmentDate" th:field="*{enrollmentDate}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" th:field="*{status}" required>
+                            <option value="">Select Status</option>
+                            <option value="Active" th:selected="${enrollment.status == 'Active'}">Active</option>
+                            <option value="Completed" th:selected="${enrollment.status == 'Completed'}">Completed</option>
+                            <option value="Dropped" th:selected="${enrollment.status == 'Dropped'}">Dropped</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" th:text="${enrollment.id} ? 'Update' : 'Save'">Save</button>
+                        <a href="/enrollments" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 Learning Management System</p>
+        </footer>
+    </div>
+</body>
+</html>

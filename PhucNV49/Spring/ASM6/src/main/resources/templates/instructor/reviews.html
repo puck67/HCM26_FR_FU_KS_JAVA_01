@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Reviews')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="instructor-layout">
+  <nav class="instructor-sidebar">
+    <div class="sidebar-brand">Instructor Panel</div>
+    <ul>
+      <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+      <li><a th:href="@{/instructor/courses}">Manage Courses</a></li>
+      <li><a th:href="@{/instructor/courses/new}">Create Course</a></li>
+      <li><a th:href="@{/instructor/reviews}" class="active">Manage Reviews</a></li>
+      <li><a th:href="@{/}">View Site</a></li>
+    </ul>
+  </nav>
+
+  <main class="instructor-main">
+    <h1>Manage Reviews</h1>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <!-- Pending -->
+    <div class="card" style="margin-bottom:1.5rem">
+      <h2 style="font-size:1rem;margin-bottom:1rem">
+        Pending Reviews
+        <span class="badge badge-pending" style="margin-left:.5rem" th:text="${#lists.size(pendingReviews)}">0</span>
+      </h2>
+      <table class="table">
+        <thead>
+          <tr><th>Author</th><th>Course</th><th>Rating</th><th>Content</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <tr th:each="r : ${pendingReviews}">
+            <td>
+              <div th:text="${r.authorName}">Author</div>
+              <div style="font-size:.8rem;color:var(--text-muted)" th:text="${r.email}">email</div>
+            </td>
+            <td><a th:href="@{/courses/{id}(id=${r.course.id})}" th:text="${r.course.title}" target="_blank">Course</a></td>
+            <td><span class="stars" th:text="${'★'.repeat(r.rating)}"></span></td>
+            <td style="max-width:250px" th:text="${#strings.abbreviate(r.content,100)}">Content</td>
+            <td th:text="${#temporals.format(r.createdAt,'MMM dd, yyyy')}">Date</td>
+            <td>
+              <div class="table-actions">
+                <form th:action="@{/instructor/reviews/{id}/approve(id=${r.id})}" method="post">
+                  <button class="btn btn-sm btn-success">Approve</button>
+                </form>
+                <form th:action="@{/instructor/reviews/{id}/delete(id=${r.id})}" method="post"
+                      onsubmit="return confirm('Delete this review?')">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(pendingReviews)}">
+            <td colspan="6" style="color:var(--text-muted)">No pending reviews.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Approved -->
+    <div class="card">
+      <h2 style="font-size:1rem;margin-bottom:1rem">
+        Approved Reviews
+        <span class="badge badge-approved" style="margin-left:.5rem" th:text="${#lists.size(approvedReviews)}">0</span>
+      </h2>
+      <table class="table">
+        <thead>
+          <tr><th>Author</th><th>Course</th><th>Rating</th><th>Content</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          <tr th:each="r : ${approvedReviews}">
+            <td>
+              <div th:text="${r.authorName}">Author</div>
+              <div style="font-size:.8rem;color:var(--text-muted)" th:text="${r.email}">email</div>
+            </td>
+            <td><a th:href="@{/courses/{id}(id=${r.course.id})}" th:text="${r.course.title}" target="_blank">Course</a></td>
+            <td><span class="stars" th:text="${'★'.repeat(r.rating)}"></span></td>
+            <td style="max-width:250px" th:text="${#strings.abbreviate(r.content,100)}">Content</td>
+            <td th:text="${#temporals.format(r.createdAt,'MMM dd, yyyy')}">Date</td>
+            <td>
+              <form th:action="@{/instructor/reviews/{id}/delete(id=${r.id})}" method="post"
+                    onsubmit="return confirm('Delete this review?')">
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(approvedReviews)}">
+            <td colspan="6" style="color:var(--text-muted)">No approved reviews.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

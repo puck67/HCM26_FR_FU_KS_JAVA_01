@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - Course Sharing System'">Course Sharing System</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6 Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header th:fragment="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" th:href="@{/}">
+                    <i class="fa-solid fa-graduation-cap me-2"></i>EduShare
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}"><i class="fa-solid fa-house me-1"></i>Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/reviews}"><i class="fa-solid fa-star me-1"></i>All Reviews</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <!-- If instructor is logged in -->
+                        <div th:if="${session.instructor != null}" class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="instructorDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-user-tie me-1"></i>Instructor: <span th:text="${session.instructor.username}">Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="instructorDropdown">
+                                <li><a class="dropdown-item" th:href="@{/instructor/dashboard}"><i class="fa-solid fa-chart-line me-2"></i>Dashboard</a></li>
+                                <li><a class="dropdown-item" th:href="@{/instructor/courses}"><i class="fa-solid fa-book me-2"></i>Manage Courses</a></li>
+                                <li><a class="dropdown-item" th:href="@{/instructor/reviews}"><i class="fa-solid fa-comments me-2"></i>Manage Reviews</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" th:href="@{/instructor/logout}"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+                            </ul>
+                        </div>
+                        <!-- If not logged in -->
+                        <div th:if="${session.instructor == null}">
+                            <a th:href="@{/instructor/login}" class="btn btn-primary">
+                                <i class="fa-solid fa-right-to-bracket me-1"></i>Instructor Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar Fragment -->
+    <div th:fragment="sidebar" class="col-lg-4">
+        <!-- Category Cloud Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-white border-bottom py-3">
+                <h5 class="mb-0 text-primary"><i class="fa-solid fa-tags me-2"></i>Categories Cloud</h5>
+            </div>
+            <div class="card-body">
+                <div class="tag-cloud" th:if="${categories != null and !categories.isEmpty()}">
+                    <a th:each="cat : ${categories}" 
+                       th:href="@{/category/{name}(name=${cat.name})}"
+                       th:style="'font-size: ' + ${13 + (cat.frequency > 6 ? 12 : cat.frequency * 2)} + 'px;'"
+                       class="tag-cloud-item" 
+                       th:title="${cat.frequency} + ' courses'">
+                        <span th:text="${cat.name}">Category</span>
+                        <span class="badge bg-secondary-subtle text-dark ms-1" style="font-size: 0.65em;" th:text="${cat.frequency}">0</span>
+                    </a>
+                </div>
+                <div th:if="${categories == null or categories.isEmpty()}" class="text-muted text-center py-3">
+                    <i class="fa-solid fa-folder-open fa-2x mb-2 d-block"></i>
+                    No categories found.
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Reviews Card -->
+        <div class="card">
+            <div class="card-header bg-white border-bottom py-3">
+                <h5 class="mb-0 text-primary"><i class="fa-solid fa-comment-dots me-2"></i>Recent Reviews</h5>
+            </div>
+            <div class="card-body p-0">
+                <div th:if="${recentReviews != null and !recentReviews.isEmpty()}">
+                    <div th:each="rev : ${recentReviews}" class="review-sidebar-item">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="mb-0 text-dark" th:text="${rev.authorName}">Student</h6>
+                            <span class="star-rating small">
+                                <i th:each="star : ${#numbers.sequence(1, rev.rating)}" class="fa-solid fa-star"></i><i th:each="star : ${rev.rating < 5 ? #numbers.sequence(rev.rating + 1, 5) : {}}" class="fa-regular fa-star"></i>
+                            </span>
+                        </div>
+                        <p class="mb-1 text-muted small" th:text="${#strings.length(rev.content) > 80 ? #strings.substring(rev.content, 0, 80) + '...' : rev.content}">
+                            Review snippet...
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a th:href="@{/course/{id}(id=${rev.course.id})}" class="text-primary small" style="text-decoration: none;" th:text="${rev.course.title}">
+                                Course Title
+                            </a>
+                            <span class="text-muted small" style="font-size: 0.75em;" th:text="${#temporals.format(rev.createdAt, 'dd/MM/yyyy')}">Date</span>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${recentReviews == null or recentReviews.isEmpty()}" class="text-muted text-center py-4">
+                    <i class="fa-solid fa-comments fa-2x mb-2 d-block text-black-50"></i>
+                    No approved reviews yet.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Fragment -->
+    <footer th:fragment="footer" class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-2"><i class="fa-solid fa-graduation-cap me-2"></i>EduShare Course Sharing Portal</p>
+            <p class="text-muted small mb-0">&copy; 2026 FPT Academy. All Rights Reserved. Built with Spring Boot, JPA, & Thymeleaf.</p>
+        </div>
+        
+        <!-- Bootstrap 5 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Client-Side Markdown Parser Marked.js -->
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+            // Client side markdown rendering helper
+            document.addEventListener("DOMContentLoaded", function() {
+                document.querySelectorAll(".markdown-content").forEach(function(el) {
+                    const rawText = el.textContent || el.innerText;
+                    // Decode HTML entities if any
+                    const temp = document.createElement("textarea");
+                    temp.innerHTML = rawText;
+                    el.innerHTML = marked.parse(temp.value);
+                });
+            });
+        </script>
+    </footer>
+
+</body>
+</html>

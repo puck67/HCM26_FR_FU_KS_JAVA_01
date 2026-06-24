@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle} + ' Form'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-container form-container">
+        <h2 class="form-title" th:text="${pageTitle} + ' Form'"></h2>
+        <form th:action="${actionUrl}" th:object="${entity}" method="post" class="crud-form">
+            <div class="form-group" th:each="field : ${fields}">
+                <label th:for="${field.name}" th:text="${field.label}"></label>
+                <input th:type="${field.type}"
+                       th:field="*{__${field.name}__}"
+                       th:id="${field.name}"
+                       th:classappend="${#fields.hasErrors('__${field.name}__')} ? 'is-invalid' : ''"
+                       class="form-control"
+                       step="any">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('__${field.name}__')}" th:errors="*{__${field.name}__}"></div>
+            </div>
+            <div class="form-actions-bar">
+                <button type="submit" class="btn btn-submit">Save</button>
+                <a th:href="@{|/${entityName}|}" class="btn btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
