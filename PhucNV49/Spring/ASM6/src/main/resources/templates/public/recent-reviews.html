@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Recent Reviews')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container page-layout" style="padding-top:2rem">
+  <main class="page-content">
+    <h1 style="font-size:1.6rem;margin-bottom:1.5rem">Most Recent Reviews</h1>
+
+    <div th:if="${#lists.isEmpty(reviews)}" class="alert alert-info">No approved reviews yet.</div>
+
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
+      <div th:each="review : ${reviews}" class="card review-card">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem">
+          <strong th:text="${review.authorName}">Author</strong>
+          <span class="stars" th:text="${'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}"></span>
+          <span class="review-meta" th:text="${#temporals.format(review.createdAt,'MMM dd, yyyy')}">Date</span>
+        </div>
+        <p th:text="${review.content}" style="margin-bottom:.5rem">Content</p>
+        <div style="font-size:.82rem">
+          Course: <a th:href="@{/courses/{id}(id=${review.course.id})}"
+                     th:text="${review.course.title}">Course</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="card">
+      <h3>Categories</h3>
+      <div class="category-cloud">
+        <a th:each="cat : ${categories}"
+           th:href="@{/categories/{name}(name=${cat.name})}"
+           th:text="${cat.name}"
+           class="cloud-tag"></a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

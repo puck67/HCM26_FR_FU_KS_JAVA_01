@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="bg-light">
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="d-flex">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+        <main class="flex-grow-1 p-4">
+            <h2>Dashboard</h2>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-book"></i> Total Subjects</h5>
+                            <p class="card-text fs-2" th:text="${totalSubjects}">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-file-earmark-text"></i> Total Materials</h5>
+                            <p class="card-text fs-2" th:text="${totalMaterials}">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-warning mb-3 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="bi bi-hdd"></i> Total Storage Used</h5>
+                            <p class="card-text fs-2" th:text="${storageUsed}">0 B</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

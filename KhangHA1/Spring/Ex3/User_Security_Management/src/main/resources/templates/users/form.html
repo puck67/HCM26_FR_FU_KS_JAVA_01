@@ -16,7 +16,7 @@
 
             <div class="card col-md-8 mx-auto shadow-sm">
                 <div class="card-body">
-                    <form th:action="${user.userId == null ? '/users/add' : '/users/edit/' + user.userId}" 
+                    <form th:action="@{/users/save}" 
                           th:object="${user}" method="post">
                         
                         <input type="hidden" th:field="*{userId}">

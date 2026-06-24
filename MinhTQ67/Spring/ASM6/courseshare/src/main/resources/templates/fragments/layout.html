@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} + ' - CourseShare'">CourseShare</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar" th:fragment="navbar">
+        <a href="/" class="brand">CourseShare</a>
+        <div class="nav-links">
+            <a sec:authorize="!isAuthenticated()" href="/">Home</a>
+            <a sec:authorize="!isAuthenticated()" href="/login">Login</a>
+            
+            <a sec:authorize="isAuthenticated()" href="/instructor/dashboard">Dashboard</a>
+            <a sec:authorize="isAuthenticated()" href="/instructor/courses">Manage Courses</a>
+            <a sec:authorize="isAuthenticated()" href="/instructor/reviews">Reviews</a>
+            <form sec:authorize="isAuthenticated()" th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" style="background:none;border:none;color:inherit;cursor:pointer;font-size:0.9rem;opacity:0.8;">Logout</button>
+            </form>
+        </div>
+    </nav>
+</body>
+</html>

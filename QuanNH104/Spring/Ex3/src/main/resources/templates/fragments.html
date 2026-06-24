@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <!-- Header Fragment -->
+    <header th:fragment="header" class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 fw-bold text-center" th:href="@{/dashboard}" style="background-color: var(--primary-color, #4f46e5);">LMS Portal</a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-flex w-100 justify-content-between px-4 py-2">
+            <!-- Bonus 2: Hiển thị thông tin người dùng hiện tại -->
+            <div class="text-light align-self-center" sec:authorize="isAuthenticated()">
+                <span>Welcome, <strong sec:authentication="name">Username</strong></span>
+                <span class="ms-2 badge bg-primary">
+                    Role: <span th:each="auth, iter : ${#authentication.authorities}" th:text="${#strings.replace(auth.authority, 'ROLE_', '') + (!iter.last ? ', ' : '')}">ROLE</span>
+                </span>
+            </div>
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-outline-danger btn-sm px-3">Logout</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Sidebar Fragment -->
+    <nav th:fragment="sidebar" id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-white sidebar collapse border-end">
+        <div class="position-sticky pt-3">
+            <ul class="nav flex-column px-2">
+                <li class="nav-item mb-2">
+                    <a class="nav-link rounded px-3 py-2 d-flex align-items-center" th:href="@{/dashboard}"
+                       th:classappend="${requestURI != null && requestURI == '/dashboard' ? 'bg-primary text-white active' : 'text-dark hover-bg'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer2 me-2" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1h2.5V4.5A.5.5 0 0 1 8 4M3.732 5.732a.5.5 0 0 1 0 .707l-2 2a.5.5 0 0 1-.707 0l-2-2a.5.5 0 0 1 .707-.707L1.5 7.293l1.525-1.561a.5.5 0 0 1 .707 0z"/>
+                            <path d="M10.104 2.224a.5.5 0 0 1 .68-.175l3 2a.5.5 0 0 1 .216.596l-1.5 4.5a.5.5 0 0 1-.95-.316l1.242-3.727-2.313-1.542a.5.5 0 0 1-.175-.68z"/>
+                            <path d="M8 1a7 7 0 1 0 7 7 7 7 0 0 0-7-7M.5 8a7.5 7.5 0 1 1 15 0 7.5 7.5 0 0 1-15 0"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                
+                <!-- Security Management Section Header -->
+                <li sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')" class="nav-item mt-3 mb-2 px-3">
+                    <span class="text-uppercase text-muted fw-bold" style="font-size: 0.75rem;">Security Management</span>
+                </li>
+                
+                <!-- User Management -->
+                <li sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')" class="nav-item mb-2">
+                    <a class="nav-link rounded px-3 py-2 d-flex align-items-center" th:href="@{/users}"
+                       th:classappend="${requestURI != null && requestURI.startsWith('/users') ? 'bg-primary text-white active' : 'text-dark hover-bg'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people me-2" viewBox="0 0 16 16">
+                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.004.007-.026.02-.078.026-.105.074-.275.146-.49.149-.443.368-1.023.649-1.634C8.388 9.782 9.11 9 10 9s1.612.782 2.185 2.033c.28.611.5 1.191.649 1.634.072.215.12.385.146.49.013.052.019.074.02.078L12 13zM11 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0M7 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6M5 8a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 6s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1z"/>
+                        </svg>
+                        User Management
+                    </a>
+                </li>
+                
+                <!-- Role Management -->
+                <li sec:authorize="hasRole('SUPER_ADMIN')" class="nav-item mb-2">
+                    <a class="nav-link rounded px-3 py-2 d-flex align-items-center" th:href="@{/roles}"
+                       th:classappend="${requestURI != null && requestURI.startsWith('/roles') ? 'bg-primary text-white active' : 'text-dark hover-bg'}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock me-2" viewBox="0 0 16 16">
+                            <path d="M8 1a2 2 0 0 1 2 2v2H6V3a2 2 0 0 1 2-2m3 4V3a3 3 0 0 0-6 0v2H2a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1zM2 6h12v7H2z"/>
+                        </svg>
+                        Role Management
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</body>
+</html>

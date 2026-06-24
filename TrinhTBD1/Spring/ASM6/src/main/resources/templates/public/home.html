@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body class="d-flex flex-column min-vh-100">
+
+    <header th:replace="~{fragments/layout :: header('home')}"></header>
+
+    <main class="main-container flex-grow-1">
+        <div class="row">
+
+            
+            <div class="col-lg-8">
+                <h2 class="mb-4 fw-bold">
+                    <i class="fa-solid fa-graduation-cap text-primary me-2"></i>Recent Published Courses
+                </h2>
+
+                
+                <div th:if="${coursePage.isEmpty()}">
+                    <div th:replace="~{fragments/components :: empty-state(message='No published courses available yet.')}"></div>
+                </div>
+
+                <div th:each="course : ${coursePage.content}" class="custom-card">
+                    <h3 class="card-title mb-1">
+                        <a th:href="@{/course/{id}(id=${course.id})}" th:text="${course.title}">Title</a>
+                    </h3>
+                    <p class="text-muted mb-3" th:text="${course.description}">Description</p>
+
+                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-2 border-top">
+                        <div class="d-flex align-items-center flex-wrap gap-1">
+                            <span class="text-muted small me-1"><i class="fa-solid fa-tags me-1"></i></span>
+                            <a th:each="cat : ${#strings.arraySplit(course.category, ',')}"
+                               th:href="@{/categories(name=${#strings.trim(cat)})}"
+                               class="badge badge-custom badge-cat"
+                               th:text="${#strings.trim(cat)}">Cat</a>
+                        </div>
+                        <a th:href="@{/course/{id}(id=${course.id})}" class="btn btn-primary-custom btn-sm">
+                            View Details <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                
+                <nav th:replace="~{fragments/components :: pagination(page=${coursePage}, url='/')}"></nav>
+            </div>
+
+            
+            <div class="col-lg-4">
+
+                
+                <div class="card border-0 shadow-sm mb-4" style="border-radius:var(--radius);overflow:hidden;">
+                    <div class="card-header bg-dark text-white py-3 border-0">
+                        <h4 class="h6 mb-0"><i class="fa-solid fa-cloud me-2 text-primary"></i>Categories</h4>
+                    </div>
+                    <div class="card-body p-3">
+                        <div th:replace="~{fragments/components :: category-cloud(categories=${categories}, selected=${null})}"></div>
+                    </div>
+                </div>
+
+                
+                <div class="card border-0 shadow-sm" style="border-radius:var(--radius);overflow:hidden;">
+                    <div class="card-header bg-dark text-white py-3 border-0">
+                        <h4 class="h6 mb-0"><i class="fa-solid fa-comments me-2 text-primary"></i>Most Recent Reviews</h4>
+                    </div>
+                    <div class="card-body p-3">
+                        <div th:if="${recentReviews.isEmpty()}" class="text-muted text-center py-3">No reviews yet.</div>
+                        <div th:each="review : ${recentReviews}" class="border-bottom pb-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="review-author" th:text="${review.authorName}">Author</span>
+                                
+                                <span th:replace="~{fragments/components :: star-rating(rating=${review.rating})}"></span>
+                            </div>
+                            <small class="text-primary d-block mb-1" th:text="${review.course.title}">Course</small>
+                            <p class="text-muted small mb-0" th:text="${review.content}">Review...</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

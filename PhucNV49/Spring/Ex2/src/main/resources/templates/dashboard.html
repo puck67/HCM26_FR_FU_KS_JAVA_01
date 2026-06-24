@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Welcome section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="glass-panel p-4 mb-2 position-relative overflow-hidden" 
+                 style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);">
+                <div class="position-absolute top-0 end-0 p-3 opacity-10 fs-1">
+                    <i class="bi bi-cpu text-info"></i>
+                </div>
+                <h1 class="display-6 fw-bold text-white mb-2">Welcome to LMS Dashboard</h1>
+                <p class="text-secondary mb-0">
+                    This is the Dynamic Menu Management System. Modify the database records in 
+                    <strong>Manage Menus</strong> and see the sidebar refresh dynamically according to your role.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Total Menus -->
+        <div class="col-md-4">
+            <div class="card glass-panel border-secondary h-100 glow-card">
+                <div class="card-body d-flex align-items-center justify-content-between p-4">
+                    <div>
+                        <h6 class="card-subtitle text-secondary text-uppercase tracking-wider font-mono small mb-2">Total Menus</h6>
+                        <h2 class="card-title text-white fw-bold display-5 mb-0" th:text="${totalMenus}">12</h2>
+                    </div>
+                    <div class="rounded-circle p-3 bg-info bg-opacity-10 border border-info border-opacity-25">
+                        <i class="bi bi-list-nested text-info fs-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Parent Menus -->
+        <div class="col-md-4">
+            <div class="card glass-panel border-secondary h-100 glow-card">
+                <div class="card-body d-flex align-items-center justify-content-between p-4">
+                    <div>
+                        <h6 class="card-subtitle text-secondary text-uppercase tracking-wider font-mono small mb-2">Total Parent Menus</h6>
+                        <h2 class="card-title text-white fw-bold display-5 mb-0" th:text="${totalParentMenus}">5</h2>
+                    </div>
+                    <div class="rounded-circle p-3 bg-primary bg-opacity-10 border border-primary border-opacity-25">
+                        <i class="bi bi-folder-fill text-primary fs-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Sub Menus -->
+        <div class="col-md-4">
+            <div class="card glass-panel border-secondary h-100 glow-card">
+                <div class="card-body d-flex align-items-center justify-content-between p-4">
+                    <div>
+                        <h6 class="card-subtitle text-secondary text-uppercase tracking-wider font-mono small mb-2">Total Sub Menus</h6>
+                        <h2 class="card-title text-white fw-bold display-5 mb-0" th:text="${totalSubMenus}">7</h2>
+                    </div>
+                    <div class="rounded-circle p-3 bg-warning bg-opacity-10 border border-warning border-opacity-25">
+                        <i class="bi bi-folder-symlink-fill text-warning fs-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Menu Tree -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card glass-panel border-secondary p-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h5 class="card-title text-info mb-0">
+                        <i class="bi bi-diagram-3-fill me-2"></i> Database Menu Hierarchy Tree
+                    </h5>
+                    <span class="badge bg-dark border border-secondary text-secondary font-mono">All Roles & Levels</span>
+                </div>
+                <p class="text-secondary small mb-4">
+                    This diagram illustrates the self-referencing relationship tree stored in the database.
+                </p>
+                
+                <div class="tree-root-container p-3 rounded bg-dark bg-opacity-50 border border-secondary border-opacity-50 overflow-auto">
+                    <!-- Recursive fragment for drawing the tree -->
+                    <th:block th:fragment="treeFragment(menus)">
+                        <ul class="list-unstyled ps-4 border-start border-secondary border-opacity-25 my-2">
+                            <li th:each="m : ${menus}" class="my-3 position-relative">
+                                <div class="d-flex align-items-center flex-wrap gap-2 py-1 px-2 rounded hover-tree-node">
+                                    <!-- Node Connector Indicator -->
+                                    <span class="text-secondary font-mono small opacity-50">├──</span>
+                                    <span class="badge bg-dark border border-secondary text-info font-mono small">ID: <span th:text="${m.id}">1</span></span>
+                                    <i th:class="${m.icon != null && !m.icon.isEmpty() ? m.icon : 'bi bi-folder-fill'}" class="text-warning"></i>
+                                    <strong class="text-white" th:text="${m.name}">Dashboard</strong>
+                                    
+                                    <span th:if="${m.url != null && !m.url.isEmpty()}" 
+                                          class="badge bg-secondary bg-opacity-20 text-light border border-secondary border-opacity-25 font-monospace small" 
+                                          th:text="${m.url}">
+                                        /students
+                                    </span>
+                                    
+                                    <span class="ms-auto d-flex align-items-center gap-1">
+                                        <span class="badge bg-dark border border-secondary text-white-50 font-mono small" th:text="'Order: ' + ${m.displayOrder}">Order: 1</span>
+                                        <span th:each="r : ${#strings.arraySplit(m.roles, ',')}" 
+                                              th:class="${r == 'ADMIN' ? 'badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 small' : (r == 'TEACHER' ? 'badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 small' : 'badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 small')}"
+                                              th:text="${r}">
+                                            ADMIN
+                                        </span>
+                                        <span th:if="${m.status}" class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 small"><i class="bi bi-check-circle-fill me-1"></i>Active</span>
+                                        <span th:if="${!m.status}" class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 small"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>
+                                    </span>
+                                    
+                                    <a th:href="@{/menus/edit/{id}(id=${m.id})}" class="btn btn-sm btn-outline-secondary py-0 px-1 ms-2" title="Edit Menu">
+                                        <i class="bi bi-pencil-fill font-mono fs-8"></i>
+                                    </a>
+                                </div>
+                                
+                                <!-- Recursive children render -->
+                                <th:block th:if="${m.children != null && !m.children.isEmpty()}">
+                                    <th:block th:replace="~{:: treeFragment(menus=${m.children})}"></th:block>
+                                </th:block>
+                            </li>
+                        </ul>
+                    </th:block>
+
+                    <!-- Render root nodes (where parent is null) -->
+                    <div th:if="${allMenus != null && !allMenus.isEmpty()}" class="ps-1">
+                        <th:block th:each="m : ${allMenus}" th:if="${m.parent == null}">
+                            <div class="d-flex align-items-center flex-wrap gap-2 py-1 px-2 rounded hover-tree-node">
+                                <span class="badge bg-dark border border-info text-info font-mono small">ROOT ID: <span th:text="${m.id}">1</span></span>
+                                <i th:class="${m.icon != null && !m.icon.isEmpty() ? m.icon : 'bi bi-folder-fill'}" class="text-info fs-5"></i>
+                                <strong class="text-white fs-5" th:text="${m.name}">Dashboard</strong>
+                                
+                                <span th:if="${m.url != null && !m.url.isEmpty()}" 
+                                      class="badge bg-secondary bg-opacity-20 text-light border border-secondary border-opacity-25 font-monospace small" 
+                                      th:text="${m.url}">
+                                    /
+                                </span>
+                                
+                                <span class="ms-auto d-flex align-items-center gap-1">
+                                    <span class="badge bg-dark border border-secondary text-white-50 font-mono small" th:text="'Order: ' + ${m.displayOrder}">Order: 1</span>
+                                    <span th:each="r : ${#strings.arraySplit(m.roles, ',')}" 
+                                          th:class="${r == 'ADMIN' ? 'badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 small' : (r == 'TEACHER' ? 'badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 small' : 'badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 small')}"
+                                          th:text="${r}">
+                                        ADMIN
+                                    </span>
+                                    <span th:if="${m.status}" class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 small"><i class="bi bi-check-circle-fill me-1"></i>Active</span>
+                                    <span th:if="${!m.status}" class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 small"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>
+                                </span>
+                                
+                                <a th:href="@{/menus/edit/{id}(id=${m.id})}" class="btn btn-sm btn-outline-secondary py-0 px-1 ms-2" title="Edit Menu">
+                                    <i class="bi bi-pencil-fill font-mono fs-8"></i>
+                                </a>
+                            </div>
+                            
+                            <!-- Call recursive child drawer -->
+                            <th:block th:if="${m.children != null && !m.children.isEmpty()}">
+                                <th:block th:replace="~{:: treeFragment(menus=${m.children})}"></th:block>
+                            </th:block>
+                        </th:block>
+                    </div>
+                    
+                    <div th:if="${allMenus == null || allMenus.isEmpty()}" class="text-center py-5 text-muted">
+                        <i class="bi bi-database-exclamation fs-1 d-block mb-3 text-warning"></i>
+                        <h5>No menus found in database!</h5>
+                        <p class="small">Click <strong>Configure</strong> to add your first menu item.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .hover-tree-node {
+            transition: all 0.2s ease;
+        }
+        .hover-tree-node:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .fs-8 {
+            font-size: 0.75rem;
+        }
+    </style>
+</main>
+</body>
+</html>

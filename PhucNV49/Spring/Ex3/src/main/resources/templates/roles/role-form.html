@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Back Button & Page Header -->
+    <div class="mb-4">
+        <a href="/roles" class="btn btn-outline-secondary btn-sm mb-3 d-inline-flex align-items-center gap-1 border-secondary">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to List</span>
+        </a>
+        <h2 class="text-white fw-bold" th:text="${role.roleId == null ? 'Create New Role' : 'Edit Role'}">Create Role</h2>
+        <p class="text-secondary mb-0">Fill in the fields to configure the security role properties.</p>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-12">
+            <div class="card glass-panel border-secondary p-4">
+                <form th:action="@{/roles/save}" th:object="${role}" method="POST">
+                    <!-- Hidden ID -->
+                    <input type="hidden" th:field="*{roleId}" />
+
+                    <!-- Role Name -->
+                    <div class="mb-4">
+                        <label for="roleName" class="form-label text-secondary font-mono small">Role Name <span class="text-danger">*</span></label>
+                        <input type="text" th:field="*{roleName}" id="roleName" class="form-control bg-dark text-white border-secondary font-mono" 
+                               placeholder="e.g. STUDENT" required style="text-transform: uppercase;" />
+                        <div class="form-text text-muted">Role name will be capitalized automatically. (Do not prefix with ROLE_, the backend handles that).</div>
+                        <div th:if="${#fields.hasErrors('roleName')}" th:errors="*{roleName}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Actions Footer -->
+                    <hr class="border-secondary mb-4">
+                    <div class="d-flex align-items-center justify-content-end gap-3">
+                        <a href="/roles" class="btn btn-outline-secondary border-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-info text-dark fw-bold px-4">Save Role</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to automatically capitalize role name input in real time -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const roleNameInput = document.getElementById("roleName");
+            if (roleNameInput) {
+                roleNameInput.addEventListener("input", function () {
+                    this.value = this.value.toUpperCase().replace(/[^A-Z0-9_]/g, '');
+                });
+            }
+        });
+    </script>
+</main>
+</body>
+</html>

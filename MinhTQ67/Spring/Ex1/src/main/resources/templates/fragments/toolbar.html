@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <!-- Generic Toolbar Fragment -->
+    <!-- Usage: <div th:replace="~{fragments/toolbar :: toolbar(addUrl='/...', addModalId='myModal', importUrl='/...', exportUrl='/...', templateUrl='/...', addText='Add ...')}"></div> -->
+    <div th:fragment="toolbar(addUrl, addModalId, importUrl, exportUrl, templateUrl, addText)">
+        
+        <!-- Toolbar Buttons Container -->
+        <div class="toolbar-container" style="justify-content: flex-end;">
+            
+            <!-- Link-based Add Button -->
+            <a th:if="${addUrl != null and addModalId == null}" th:href="${addUrl}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> <span th:text="${addText ?: 'Add'}">Add</span>
+            </a>
+            
+            <!-- Modal-based Add Button -->
+            <button th:if="${addModalId != null}" type="button" class="btn btn-primary" th:data-modal-id="${addModalId}" onclick="openModal(this.getAttribute('data-modal-id'))">
+                <i class="fa-solid fa-plus"></i> <span th:text="${addText ?: 'Add'}">Add</span>
+            </button>
+            
+            <button th:if="${importUrl != null}" type="button" class="btn btn-secondary btn-toolbar" onclick="openModal('importModal')">
+                <i class="fa-solid fa-file-import"></i> <span>Import</span>
+            </button>
+
+            <a th:if="${exportUrl != null}" th:href="${exportUrl}" class="btn btn-secondary btn-toolbar">
+                <i class="fa-solid fa-file-export"></i> <span>Export</span>
+            </a>
+        </div>
+
+        <!-- Import Modal -->
+        <div th:if="${importUrl != null}" id="importModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Import Data</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('importModal')">&times;</button>
+                </div>
+                <form th:action="${importUrl}" method="post" enctype="multipart/form-data">
+                    <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+                        <label class="form-label" style="margin: 0;">Choose file to import:</label>
+                        <a th:if="${templateUrl != null}" th:href="${templateUrl}" style="color: var(--primary); font-size: 0.9rem; text-decoration: none; display: flex; align-items: center; gap: 4px; font-weight: 500;">
+                            <i class="fa-solid fa-download"></i> Download Template
+                        </a>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" name="file" required style="width: 100%; padding: 16px; border: 2px dashed var(--border-color); border-radius: var(--radius-md); box-sizing: border-box; background-color: var(--bg-main); color: var(--text-main); transition: var(--transition); cursor: pointer;">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('importModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-upload"></i> Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Generic Modal Script -->
+        <script>
+            function openModal(modalId) {
+                var modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.add('show');
+                }
+            }
+
+            function closeModal(modalId) {
+                var modal = document.getElementById(modalId);
+                if (modal) {
+                    modal.classList.remove('show');
+                }
+            }
+
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('custom-modal')) {
+                    event.target.classList.remove('show');
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

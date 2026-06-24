@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Quản lý Menu</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h2 class="page-title">Dynamic Menu Management</h2>
+        
+        <!-- Gọi generic toolbar fragment -->
+        <div th:replace="~{fragments/toolbar :: toolbar(
+            addUrl=null, 
+            addModalId='addMenuModal',
+            importUrl=null, 
+            exportUrl=null,
+            templateUrl=null,
+            addText='Add Menu'
+        )}"></div>
+
+        <div class="card-container">
+            <div class="table-responsive">
+                <table class="modern-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>URL</th>
+                        <th>Icon</th>
+                        <th>Role</th>
+                        <th>Order</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="m : ${menus}">
+                        <td th:text="${m.id}"></td>
+                        <td th:text="${m.title}"></td>
+                        <td th:text="${m.url}"></td>
+                        <td><i th:class="${m.icon}"></i> <span th:text="${m.icon}" style="margin-left: 5px; font-size: 0.8rem; color: #a0aec0;"></span></td>
+                        <td>
+                            <span th:if="${m.role == 'ADMIN'}" class="badge badge-admin">ADMIN</span>
+                            <span th:if="${m.role == 'TEACHER'}" class="badge badge-teacher">TEACHER</span>
+                            <span th:if="${m.role == 'STUDENT'}" class="badge badge-student">STUDENT</span>
+                        </td>
+                        <td th:text="${m.orderIndex}"></td>
+                        <td>
+                            <button type="button" class="btn btn-sm" title="Edit Menu" th:attr="onclick=|openEditMenuModal('${m.id}', '${#strings.escapeJavaScript(m.title)}', '${#strings.escapeJavaScript(m.url)}', '${#strings.escapeJavaScript(m.icon)}', '${m.role}', '${m.orderIndex}')|" style="color: var(--warning); border: none; background: none; font-size: 1.1rem; cursor: pointer; margin-right: 12px;"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button type="button" class="btn btn-sm" title="Delete Menu" th:attr="onclick=|confirmDelete('/menus/delete/${m.id}', '${#strings.escapeJavaScript(m.title)}')|" style="color: var(--danger); border: none; background: none; font-size: 1.1rem; cursor: pointer; padding: 4px;"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(menus)}">
+                        <td colspan="7" class="empty-data">No menus found</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div th:replace="~{fragments/pagination :: pagination(page=${page}, url='/menus')}"></div>
+        </div>
+
+        <!-- Add Menu Modal -->
+        <div id="addMenuModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Menu</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('addMenuModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form th:action="@{/menus/new}" method="post">
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" required class="form-input" placeholder="e.g. Dashboard">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL Path</label>
+                        <input type="text" name="url" required class="form-input" placeholder="e.g. /home">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Icon (FontAwesome)</label>
+                        <div style="position: relative;">
+                            <input type="text" id="iconInput" name="icon" class="form-input" placeholder="Search icon... (e.g. home, user)" autocomplete="off">
+                            <i id="iconPreview" class="fa-solid fa-icons" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: var(--primary); transition: all 0.3s;"></i>
+                            
+                            <!-- Autocomplete Dropdown -->
+                            <div id="iconDropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border-color); border-radius: 12px; box-shadow: var(--shadow-hover); max-height: 250px; overflow-y: auto; z-index: 1050; margin-top: 8px; padding: 8px 0;">
+                                <div style="padding: 10px 20px; color: var(--text-muted); font-size: 0.9rem; text-align: center;">Loading icons...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role Mapping</label>
+                        <select name="role" required class="form-input">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="TEACHER">TEACHER</option>
+                            <option value="STUDENT">STUDENT</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Display Order</label>
+                        <input type="number" name="orderIndex" required class="form-input" placeholder="e.g. 1">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('addMenuModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Menu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <th:block layout:fragment="script">
+        <style>
+            .icon-item {
+                padding: 12px 20px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                cursor: pointer;
+                transition: var(--transition);
+                border-left: 3px solid transparent;
+            }
+            .icon-item:hover {
+                background: var(--bg-main);
+                border-left: 3px solid var(--primary);
+            }
+            .icon-item i {
+                font-size: 1.2rem;
+                width: 24px;
+                text-align: center;
+                color: var(--primary);
+            }
+            .icon-item span {
+                font-weight: 600;
+                color: var(--text-main);
+                font-size: 0.95rem;
+            }
+        </style>
+        <script>
+            let fontAwesomeIcons = [
+                'fa-solid fa-home', 'fa-solid fa-user', 'fa-solid fa-cog', 'fa-solid fa-envelope',
+                'fa-solid fa-bell', 'fa-solid fa-search', 'fa-solid fa-star', 'fa-solid fa-heart',
+                'fa-solid fa-check', 'fa-solid fa-times', 'fa-solid fa-plus', 'fa-solid fa-minus',
+                'fa-solid fa-edit', 'fa-solid fa-trash', 'fa-solid fa-arrow-right', 'fa-solid fa-arrow-left',
+                'fa-solid fa-book', 'fa-solid fa-graduation-cap', 'fa-solid fa-users', 'fa-solid fa-chalkboard-teacher',
+                'fa-solid fa-layer-group', 'fa-solid fa-chart-bar', 'fa-solid fa-chart-line', 'fa-solid fa-table',
+                'fa-solid fa-file', 'fa-solid fa-folder', 'fa-solid fa-image', 'fa-solid fa-video',
+                'fa-solid fa-music', 'fa-solid fa-camera', 'fa-solid fa-map', 'fa-solid fa-globe',
+                'fa-solid fa-calendar', 'fa-solid fa-clock', 'fa-solid fa-phone', 'fa-solid fa-comment'
+            ];
+            let isLoadingIcons = false;
+            
+            // Lấy danh sách icon từ Github
+            function fetchIcons() {
+                if (isLoadingIcons) return;
+                isLoadingIcons = true;
+                
+                fetch('https://cdn.jsdelivr.net/gh/FortAwesome/Font-Awesome@6.4.0/metadata/icons.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        let newIcons = [];
+                        for (const [iconName, iconData] of Object.entries(data)) {
+                            iconData.styles.forEach(style => {
+                                newIcons.push(`fa-${style} fa-${iconName}`);
+                            });
+                        }
+                        if (newIcons.length > 0) {
+                            fontAwesomeIcons = newIcons;
+                        }
+                        isLoadingIcons = false;
+                        console.log("Loaded " + fontAwesomeIcons.length + " FontAwesome icons.");
+                    })
+                    .catch(err => {
+                        console.error("Error loading icons, using fallback:", err);
+                        isLoadingIcons = false;
+                    });
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const iconInput = document.getElementById('iconInput');
+                const iconDropdown = document.getElementById('iconDropdown');
+                const iconPreview = document.getElementById('iconPreview');
+                
+                // Fetch icons sớm khi trang load
+                fetchIcons();
+
+                // Ẩn dropdown khi click ra ngoài
+                document.addEventListener('click', (e) => {
+                    if (!iconInput.contains(e.target) && !iconDropdown.contains(e.target)) {
+                        iconDropdown.style.display = 'none';
+                    }
+                });
+
+                iconInput.addEventListener('focus', function() {
+                    showDropdown(this.value);
+                });
+
+                iconInput.addEventListener('input', function() {
+                    iconPreview.className = this.value || 'fa-solid fa-icons';
+                    showDropdown(this.value);
+                });
+
+                function showDropdown(query) {
+                    iconDropdown.style.display = 'block';
+                    
+                    const q = query.toLowerCase().trim();
+                    const searchTerm = q.replace('fa-solid ', '').replace('fa-regular ', '').replace('fa-brands ', '').replace('fa-', '');
+                    
+                    const filtered = fontAwesomeIcons.filter(icon => icon.includes(searchTerm)).slice(0, 50); // Limit 50
+                    
+                    if (filtered.length === 0) {
+                        iconDropdown.innerHTML = '<div style="padding: 10px; text-align: center; color: #a0aec0;">No icons found</div>';
+                        return;
+                    }
+
+                    iconDropdown.innerHTML = filtered.map(icon => `
+                        <div class="icon-item" onclick="selectIcon('${icon}')">
+                            <i class="${icon}"></i>
+                            <span>${icon}</span>
+                        </div>
+                    `).join('');
+                }
+
+                // Expose function to global scope for onclick handler
+                window.selectIcon = function(iconClass) {
+                    iconInput.value = iconClass;
+                    iconPreview.className = iconClass;
+                    iconDropdown.style.display = 'none';
+                };
+            });
+        </script>
+        <!-- Edit Menu Modal -->
+        <div id="editMenuModal" class="custom-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Menu</h3>
+                    <button type="button" class="close-btn" onclick="closeModal('editMenuModal')">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+                <form id="editMenuForm" method="post">
+                    <input type="hidden" name="id" id="editMenuId">
+                    <div class="form-group">
+                        <label class="form-label">Title:</label>
+                        <input type="text" name="title" id="editMenuTitle" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">URL:</label>
+                        <input type="text" name="url" id="editMenuUrl" required class="form-input">
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label class="form-label">Icon Class:</label>
+                        <input type="text" name="icon" id="editMenuIcon" class="form-input" onkeyup="searchIcons(this.value, 'editIconResults')">
+                        <div id="editIconResults" class="icon-results"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Role:</label>
+                        <select name="role" id="editMenuRole" class="form-input">
+                            <option value="ROLE_ADMIN">Admin</option>
+                            <option value="ROLE_TEACHER">Teacher</option>
+                            <option value="ROLE_STUDENT">Student</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label class="form-label">Order Index:</label>
+                        <input type="number" name="orderIndex" id="editMenuOrderIndex" required class="form-input">
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 15px;">
+                        <button type="button" class="btn btn-secondary" onclick="closeModal('editMenuModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <script>
+            function openEditMenuModal(id, title, url, icon, role, orderIndex) {
+                document.getElementById('editMenuForm').action = '/menus/edit/' + id;
+                document.getElementById('editMenuId').value = id;
+                document.getElementById('editMenuTitle').value = title;
+                document.getElementById('editMenuUrl').value = url;
+                document.getElementById('editMenuIcon').value = icon;
+                document.getElementById('editMenuRole').value = role;
+                document.getElementById('editMenuOrderIndex').value = orderIndex;
+                openModal('editMenuModal');
+            }
+        </script>
+    </th:block>
+</body>
+</html>

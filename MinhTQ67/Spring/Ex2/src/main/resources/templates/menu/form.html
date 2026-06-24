@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/base}">
+<head>
+    <title th:text="${menu.id == null ? 'Add Menu' : 'Edit Menu'}">Menu Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div class="page-header">
+            <h2>
+                <i class="bi bi-pencil-square text-primary me-2" th:if="${menu.id != null}"></i>
+                <i class="bi bi-plus-square text-primary me-2" th:if="${menu.id == null}"></i>
+                <span th:text="${menu.id == null ? 'Add New Menu' : 'Edit Menu'}">Menu Form</span>
+            </h2>
+            <a th:href="@{/menus}" class="btn btn-secondary"><i class="bi bi-arrow-left me-1"></i> Back to List</a>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-8 col-xl-6">
+                <div class="form-container border-top-primary border-3">
+                    <form th:action="@{/menus/save}" th:object="${menu}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+                        
+                        <div class="mb-4 form-group">
+                            <label for="name">Menu Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="e.g. Dashboard" required>
+                        </div>
+                        
+                        <div class="mb-4 form-group">
+                            <label for="url">URL / Path</label>
+                            <input type="text" class="form-control" id="url" th:field="*{url}" placeholder="e.g. /courses or #">
+                            <div class="form-text text-muted mt-1"><i class="bi bi-info-circle me-1"></i>Use '#' for parent menus that don't link anywhere.</div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 form-group">
+                                <label for="icon">Icon Class (Bootstrap Icons)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i id="icon-preview" th:class="${menu.icon != null && !menu.icon.isEmpty() ? menu.icon : 'bi bi-app'}"></i></span>
+                                    <input type="text" class="form-control" id="icon" th:field="*{icon}" placeholder="e.g. bi-book">
+                                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#iconModal"><i class="bi bi-search"></i></button>
+                                </div>
+                                <div class="form-text text-muted mt-1">Click the search icon to pick from library.</div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="displayOrder">Display Order</label>
+                                <input type="number" class="form-control" id="displayOrder" th:field="*{displayOrder}" placeholder="1">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 form-group">
+                            <label for="parent">Parent Menu</label>
+                            <select class="form-select" id="parent" th:field="*{parent.id}">
+                                <option value="">-- No Parent (Root Menu) --</option>
+                                <option th:each="p : ${parentMenus}" th:value="${p.id}" th:text="${p.name}" th:if="${p.id != menu.id}"></option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <div class="form-check form-switch fs-5">
+                                <input class="form-check-input" type="checkbox" role="switch" id="status" th:field="*{status}">
+                                <label class="form-check-label fs-6 pt-1 ms-1 text-main fw-medium" for="status">Active</label>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end gap-2 border-top pt-4">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Save Menu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Icon Picker Modal -->
+        <div class="modal fade" id="iconModal" tabindex="-1" aria-labelledby="iconModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="iconModalLabel">Select an Icon</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <input type="text" id="icon-search" class="form-control mb-3" placeholder="Search icons... (e.g., user, home, list)">
+                <div id="icon-list" class="d-flex flex-wrap gap-2 justify-content-center">
+                    <div class="text-center text-muted w-100 py-4"><div class="spinner-border text-primary mb-2" role="status"></div><br>Loading icons from Bootstrap API...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <style>
+            .icon-item { cursor: pointer; transition: all 0.2s; width: 60px; height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid transparent; }
+            .icon-item:hover { background-color: #f8f9fa; border-color: #dee2e6; transform: translateY(-2px); }
+            .icon-item i { font-size: 1.5rem; color: #495057; }
+            .icon-item.selected { background-color: #e7f1ff; border-color: #0d6efd; }
+            .icon-item.selected i { color: #0d6efd; }
+        </style>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const iconInput = document.getElementById('icon');
+                const iconPreview = document.getElementById('icon-preview');
+                const iconList = document.getElementById('icon-list');
+                const iconSearch = document.getElementById('icon-search');
+                let allIcons = [];
+                let iconsLoaded = false;
+                
+                // Update preview when typing manually
+                if(iconInput) {
+                    iconInput.addEventListener('input', function() {
+                        iconPreview.className = this.value || 'bi bi-app';
+                    });
+                }
+                
+                // Load icons when modal is opened for the first time
+                const iconModalEl = document.getElementById('iconModal');
+                if(iconModalEl) {
+                    iconModalEl.addEventListener('show.bs.modal', function () {
+                        if (!iconsLoaded) {
+                            // Fetch Bootstrap Icons JSON
+                            fetch('https://unpkg.com/bootstrap-icons@1.11.1/font/bootstrap-icons.json')
+                                .then(response => response.json())
+                                .then(data => {
+                                    allIcons = Object.keys(data);
+                                    iconsLoaded = true;
+                                    renderIcons(allIcons);
+                                })
+                                .catch(err => {
+                                    iconList.innerHTML = '<div class="text-danger w-100 text-center">Failed to load icons API. Please check your connection.</div>';
+                                });
+                        }
+                        
+                        // Clear search and focus
+                        setTimeout(() => { iconSearch.focus(); }, 500);
+                    });
+                }
+                
+                // Filter icons
+                if(iconSearch) {
+                    iconSearch.addEventListener('input', function() {
+                        const term = this.value.toLowerCase();
+                        const filtered = allIcons.filter(icon => icon.includes(term));
+                        renderIcons(filtered);
+                    });
+                }
+                
+                function renderIcons(icons) {
+                    if (icons.length === 0) {
+                        iconList.innerHTML = '<div class="text-muted w-100 text-center py-4">No icons found.</div>';
+                        return;
+                    }
+                    
+                    // Limit to 200 icons to prevent browser lag, but searching shows specific ones
+                    const displayIcons = icons.slice(0, 200);
+                    
+                    let html = '';
+                    displayIcons.forEach(iconName => {
+                        const fullClass = 'bi bi-' + iconName;
+                        html += `
+                            <div class="icon-item" onclick="selectIcon('${fullClass}')" title="${iconName}">
+                                <i class="${fullClass}"></i>
+                            </div>
+                        `;
+                    });
+                    if(icons.length > 200) {
+                        html += `<div class="w-100 text-center text-muted mt-2"><small>Showing 200 of ${icons.length} icons. Type to search more.</small></div>`;
+                    }
+                    
+                    iconList.innerHTML = html;
+                }
+                
+                // Global function to be called from onclick
+                window.selectIcon = function(className) {
+                    if(iconInput && iconPreview) {
+                        iconInput.value = className;
+                        iconPreview.className = className;
+                    }
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(iconModalEl);
+                    if(modal) { modal.hide(); }
+                };
+                
+                // Display Order Validation Logic
+                const orderInput = document.getElementById('displayOrder');
+                const parentInput = document.getElementById('parent');
+                const menuIdInput = document.getElementById('id');
+                
+                if(orderInput) {
+                    // Container for feedback and swap option
+                    const feedbackContainer = document.createElement('div');
+                    feedbackContainer.className = 'mt-2 text-warning';
+                    feedbackContainer.style.display = 'none';
+                    
+                    const feedbackText = document.createElement('div');
+                    feedbackText.innerHTML = '<i class="bi bi-exclamation-triangle"></i> <span id="conflictMsg"></span>';
+                    
+                    const swapDiv = document.createElement('div');
+                    swapDiv.className = 'form-check mt-1';
+                    swapDiv.innerHTML = `
+                        <input class="form-check-input" type="checkbox" id="swapCheckbox" name="swapWithId" value="">
+                        <label class="form-check-label" for="swapCheckbox">
+                            Swap position with this menu
+                        </label>
+                    `;
+                    
+                    feedbackContainer.appendChild(feedbackText);
+                    feedbackContainer.appendChild(swapDiv);
+                    orderInput.parentNode.appendChild(feedbackContainer);
+                    
+                    const swapCheckbox = feedbackContainer.querySelector('#swapCheckbox');
+                    const conflictMsg = feedbackContainer.querySelector('#conflictMsg');
+                    
+                    function checkOrder() {
+                        const order = orderInput.value;
+                        const parent = parentInput ? parentInput.value : '';
+                        const id = menuIdInput ? menuIdInput.value : '';
+                        
+                        if(!order) {
+                            orderInput.classList.remove('is-invalid', 'is-valid');
+                            orderInput.style.borderColor = '';
+                            feedbackContainer.style.display = 'none';
+                            swapCheckbox.checked = false;
+                            return;
+                        }
+                        
+                        let url = `/menus/check-order?displayOrder=${order}`;
+                        if(parent) url += `&parentId=${parent}`;
+                        if(id) url += `&id=${id}`;
+                        
+                        fetch(url)
+                            .then(res => res.json())
+                            .then(data => {
+                                if(data.valid) {
+                                    orderInput.classList.remove('is-invalid');
+                                    orderInput.classList.add('is-valid');
+                                    orderInput.style.borderColor = '';
+                                    feedbackContainer.style.display = 'none';
+                                    swapCheckbox.checked = false;
+                                } else {
+                                    orderInput.classList.remove('is-valid');
+                                    orderInput.style.borderColor = '#ffc107'; // Warning color
+                                    
+                                    feedbackContainer.style.display = 'block';
+                                    conflictMsg.innerText = `Order number is already used by '${data.conflictMenuName}'.`;
+                                    swapCheckbox.value = data.conflictMenuId;
+                                }
+                            })
+                            .catch(e => console.error(e));
+                    }
+                    
+                    let timeout = null;
+                    orderInput.addEventListener('input', () => {
+                        orderInput.classList.remove('is-invalid', 'is-valid');
+                        orderInput.style.borderColor = '';
+                        feedbackContainer.style.display = 'none';
+                        swapCheckbox.checked = false;
+                        
+                        clearTimeout(timeout);
+                        timeout = setTimeout(checkOrder, 500);
+                    });
+                    
+                    if(parentInput) {
+                        parentInput.addEventListener('change', checkOrder);
+                    }
+                    
+                    const form = orderInput.closest('form');
+                    if (form) {
+                        form.addEventListener('submit', function(e) {
+                            if (feedbackContainer.style.display === 'block' && !swapCheckbox.checked) {
+                                e.preventDefault();
+                                alert('Please either choose a different Display Order or check the "Swap position" box.');
+                            }
+                        });
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
