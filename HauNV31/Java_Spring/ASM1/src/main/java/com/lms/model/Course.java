@@ -1,0 +1,57 @@
+package com.lms.model;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class Course {
+
+    @NotEmpty(message = "Title must not be empty")
+    @Size(min = 5, message = "Title must have at least 5 characters")
+    private String title;
+
+    @NotEmpty(message = "Instructor name must not be empty")
+    @Size(min = 2, message = "Instructor name must have at least 2 characters")
+    private String instructorName;
+
+    @NotEmpty(message = "Instructor email must not be empty")
+    @Email(message = "Instructor email must be a valid email address")
+    private String instructorEmail;
+
+    @NotEmpty(message = "Description must not be empty")
+    @Size(min = 10, max = 200, message = "Description must be between 10 and 200 characters")
+    private String description;
+
+    @NotNull(message = "Duration hours must not be null")
+    @Min(value = 1, message = "Duration hours must be at least 1")
+    private Integer durationHours;
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getInstructorName() { return instructorName; }
+    public void setInstructorName(String instructorName) { this.instructorName = instructorName; }
+
+    public String getInstructorEmail() { return instructorEmail; }
+    public void setInstructorEmail(String instructorEmail) { this.instructorEmail = instructorEmail; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public Integer getDurationHours() { return durationHours; }
+    public void setDurationHours(Integer durationHours) { this.durationHours = durationHours; }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Course{")
+                .append("title='").append(title).append('\'')
+                .append(", instructorName='").append(instructorName).append('\'')
+                .append(", instructorEmail='").append(instructorEmail).append('\'')
+                .append(", description='").append(description).append('\'')
+                .append(", durationHours=").append(durationHours)
+                .append('}')
+                .toString();
+    }
+}
