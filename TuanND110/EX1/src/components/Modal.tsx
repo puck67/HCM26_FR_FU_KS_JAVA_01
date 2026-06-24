@@ -33,11 +33,15 @@ export function Modal({ isOpen, onClose, title, children, footer }: ModalProps) 
       style={{ padding: 0, border: 'none', background: 'transparent' }}
       onCancel={onClose}
       onClick={handleClose}
+      onKeyDown={(e) => { if (e.key === "Escape") onClose(); }}
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      tabIndex={-1}
     >
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content-inner" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>{title}</h3>
-          <button className="modal-close-btn" onClick={onClose} aria-label="Close modal">
+          <h3 id="modal-title">{title}</h3>
+          <button type="button" className="modal-close-btn" onClick={onClose} aria-label="Close modal">
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>

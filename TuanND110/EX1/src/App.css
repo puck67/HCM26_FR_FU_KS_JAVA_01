@@ -831,6 +831,7 @@ dialog[open].modal-content::backdrop {
   font-weight: 600;
   text-transform: capitalize;
   border: 1px solid transparent;
+  white-space: nowrap;
 }
 
 .badge.primary {
@@ -998,3 +999,87 @@ dialog[open].modal-content::backdrop {
   background-color: var(--color-surface-container);
   color: var(--color-on-surface);
 }
+
+/* Premium Form Custom Styles */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.form-group-full {
+  grid-column: span 2;
+}
+
+.form-group-custom {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label-custom {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-label-custom .material-symbols-outlined {
+  font-size: 16px;
+  color: var(--color-primary);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon .material-symbols-outlined.input-prefix-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--color-outline);
+  font-size: 20px;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.form-control-custom {
+  font-family: var(--font-sans);
+  background-color: var(--color-surface-container-low);
+  border: 1px solid var(--color-outline-variant);
+  padding: 12px 14px 12px 42px;
+  font-size: 14px;
+  border-radius: var(--radius-lg);
+  color: var(--color-on-surface);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-control-custom:focus {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-card);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+.form-control-custom:focus + .input-prefix-icon,
+.input-with-icon:focus-within .input-prefix-icon {
+  color: var(--color-primary);
+}
+
+select.form-control-custom {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+

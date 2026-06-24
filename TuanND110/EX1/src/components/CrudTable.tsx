@@ -1,5 +1,7 @@
+import { useState, useRef } from "react";
 import { ButtonList } from "./ButtonList";
 import type { ButtonConfig } from "./ButtonList";
+import { Pagination } from "./Pagination";
 
 // Vietnamese translation dictionary for table columns
 const COLUMNS_VIETNAMESE: Record<string, string> = {
@@ -36,7 +38,8 @@ const STATUS_VIETNAMESE: Record<string, { label: string; className: string }> = 
     draft: { label: "Bản nháp", className: "badge warning" },
     paid: { label: "Đã thanh toán", className: "badge success" },
     pending: { label: "Chờ xử lý", className: "badge warning" },
-    unpaid: { label: "Chưa thanh toán", className: "badge danger" }
+    unpaid: { label: "Chưa thanh toán", className: "badge danger" },
+    refunded: { label: "Đã hoàn tiền", className: "badge danger" }
 };
 
 type CrudTableProps<T extends object> = {
@@ -52,6 +55,16 @@ export function CrudTable<T extends object>({
     onDelete,
     extraActions
 }: CrudTableProps<T>) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    // Adjust state inline during render when dataset size changes
+    const prevDataLengthRef = useRef(data.length);
+    if (data.length !== prevDataLengthRef.current) {
+        prevDataLengthRef.current = data.length;
+        setCurrentPage(1);
+    }
+
     if (data.length === 0) {
         return (
             <div className="table-container" style={{ textAlign: 'center', padding: '64px 20px', backgroundColor: 'var(--color-surface-card)' }}>
@@ -64,6 +77,10 @@ export function CrudTable<T extends object>({
     }
 
     const columns = data.length > 0 ? (Object.keys(data[0]) as Array<keyof T>) : [];
+    
+    // Slice data for pagination
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedData = data.slice(startIndex, startIndex + itemsPerPage);
 
     return (
         <div className="table-container">
@@ -85,7 +102,7 @@ export function CrudTable<T extends object>({
                 </thead>
 
                 <tbody>
-                    {data.map((item, rowIndex) => {
+                    {paginatedData.map((item, rowIndex) => {
                         const rowActions: ButtonConfig[] = [
                             ...(onEdit ? [{ 
                                 title: <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>edit</span>, 
@@ -155,15 +172,12 @@ export function CrudTable<T extends object>({
                     })}
                 </tbody>
             </table>
-            <div className="pagination">
-                <span className="pagination-info">Hiển thị {data.length} bản ghi</span>
-                <div className="pagination-controls">
-                    <button type="button" className="page-btn active">1</button>
-                    <button type="button" className="page-btn">
-                        <span className="material-symbols-outlined text-sm">chevron_right</span>
-                    </button>
-                </div>
-            </div>
+            <Pagination
+                currentPage={currentPage}
+                totalItems={data.length}
+                itemsPerPage={itemsPerPage}
+                onPageChange={setCurrentPage}
+            />
         </div>
     );
 }

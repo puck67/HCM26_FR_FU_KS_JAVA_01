@@ -4,10 +4,27 @@ import { LmsModalForm } from "./components/LmsModalForm";
 import { GenericCrudPage } from "./components/GenericCrudPage";
 import { Modal } from "./components/Modal";
 import { NotificationToast } from "./components/NotificationToast";
+import { LmsImportModal } from "./components/LmsImportModal";
+import { LmsExportModal } from "./components/LmsExportModal";
 import type { Course, Lesson, Student, Enrollment } from "./types";
 import "./App.css";
 
 type TabType = "dashboard" | "courses" | "lessons" | "students" | "enrollments";
+
+const TAB_NAMES_VIETNAMESE: Record<string, string> = {
+  dashboard: "Dashboard",
+  courses: "Khóa học",
+  lessons: "Bài học",
+  students: "Học viên",
+  enrollments: "Đăng ký & tài chính"
+};
+
+const ENTITY_NAMES_VIETNAMESE: Record<string, string> = {
+  course: "khóa học",
+  lesson: "bài học",
+  student: "học viên",
+  enrollment: "đơn đăng ký"
+};
 
 // --- Static Initial Mock Data ---
 const INITIAL_COURSES: Course[] = [
@@ -38,6 +55,42 @@ const INITIAL_COURSES: Course[] = [
     level: "Advanced",
     status: "Draft",
   },
+  {
+    id: "C04",
+    title: "Docker & Kubernetes Basics",
+    instructor: "Nate Robinson",
+    category: "DevOps",
+    duration: "24 Hours",
+    level: "Beginner",
+    status: "Published",
+  },
+  {
+    id: "C05",
+    title: "UI/UX Design Fundamentals",
+    instructor: "Elena Rostova",
+    category: "Frontend Development",
+    duration: "30 Hours",
+    level: "Beginner",
+    status: "Published",
+  },
+  {
+    id: "C06",
+    title: "Go (Golang) Backend Bootcamp",
+    instructor: "Ken Thompson",
+    category: "Backend Development",
+    duration: "45 Hours",
+    level: "Intermediate",
+    status: "Draft",
+  },
+  {
+    id: "C07",
+    title: "Deep Learning with PyTorch",
+    instructor: "Yann LeCun",
+    category: "Data Science",
+    duration: "60 Hours",
+    level: "Advanced",
+    status: "Published",
+  }
 ];
 
 const INITIAL_LESSONS: Lesson[] = [
@@ -69,6 +122,34 @@ const INITIAL_LESSONS: Lesson[] = [
     duration: "30 mins",
     format: "Video",
   },
+  {
+    id: "L05",
+    courseTitle: "Docker & Kubernetes Basics",
+    title: "Understanding Container Images",
+    duration: "20 mins",
+    format: "Video",
+  },
+  {
+    id: "L06",
+    courseTitle: "UI/UX Design Fundamentals",
+    title: "Design Systems and Typography",
+    duration: "35 mins",
+    format: "Article",
+  },
+  {
+    id: "L07",
+    courseTitle: "Go (Golang) Backend Bootcamp",
+    title: "Goroutines and Channels",
+    duration: "40 mins",
+    format: "Quiz",
+  },
+  {
+    id: "L08",
+    courseTitle: "Deep Learning with PyTorch",
+    title: "Backpropagation from Scratch",
+    duration: "50 mins",
+    format: "Video",
+  }
 ];
 
 const INITIAL_STUDENTS: Student[] = [
@@ -93,6 +174,34 @@ const INITIAL_STUDENTS: Student[] = [
     joinedDate: "2026-03-01",
     status: "Inactive",
   },
+  {
+    id: "S04",
+    name: "Emily Watson",
+    email: "emily@gmail.com",
+    joinedDate: "2026-03-12",
+    status: "Active",
+  },
+  {
+    id: "S05",
+    name: "Frank Miller",
+    email: "frank@gmail.com",
+    joinedDate: "2026-04-05",
+    status: "Active",
+  },
+  {
+    id: "S06",
+    name: "Grace Hopper",
+    email: "grace@cobol.org",
+    joinedDate: "2026-04-18",
+    status: "Active",
+  },
+  {
+    id: "S07",
+    name: "Henry Cavill",
+    email: "henry@gmail.com",
+    joinedDate: "2026-05-02",
+    status: "Inactive",
+  }
 ];
 
 const INITIAL_ENROLLMENTS: Enrollment[] = [
@@ -117,32 +226,37 @@ const INITIAL_ENROLLMENTS: Enrollment[] = [
     enrollmentDate: "2026-06-15",
     paymentStatus: "Paid",
   },
+  {
+    id: "E04",
+    studentName: "Emily Watson",
+    courseTitle: "Docker & Kubernetes Basics",
+    enrollmentDate: "2026-06-18",
+    paymentStatus: "Paid",
+  },
+  {
+    id: "E05",
+    studentName: "Frank Miller",
+    courseTitle: "UI/UX Design Fundamentals",
+    enrollmentDate: "2026-06-20",
+    paymentStatus: "Pending",
+  },
+  {
+    id: "E06",
+    studentName: "Grace Hopper",
+    courseTitle: "Go (Golang) Backend Bootcamp",
+    enrollmentDate: "2026-06-22",
+    paymentStatus: "Paid",
+  },
+  {
+    id: "E07",
+    studentName: "Emily Watson",
+    courseTitle: "React & TypeScript Masterclass",
+    enrollmentDate: "2026-06-23",
+    paymentStatus: "Refunded",
+  }
 ];
 
 // --- Pure Helper Functions (Module Scope) ---
-function getMockImportedItem(entityType: string, count: number) {
-  if (entityType === "course") {
-    return {
-      id: `C${String(count + 1).padStart(2, "0")}`,
-      title: "Docker Containerization Fundamentals",
-      instructor: "Gary V",
-      category: "DevOps",
-      duration: "18 Hours",
-      level: "Beginner",
-      status: "Draft",
-    } as Course;
-  }
-  if (entityType === "student") {
-    return {
-      id: `S${String(count + 1).padStart(2, "0")}`,
-      name: "Diana Prince",
-      email: "diana@wonder.com",
-      joinedDate: new Date().toISOString().split("T")[0],
-      status: "Active",
-    } as Student;
-  }
-  return null;
-}
 
 export default function App() {
   // --- Consolidated LMS Data State ---
@@ -191,8 +305,21 @@ export default function App() {
     setNotification({ message, type, isOpen: true });
   };
 
+  const [importModal, setImportModal] = useState<{
+    isOpen: boolean;
+    entityType: "course" | "lesson" | "student" | "enrollment" | null;
+  }>({ isOpen: false, entityType: null });
+
+  const [exportModal, setExportModal] = useState<{
+    isOpen: boolean;
+    entityType: string | null;
+    columns: string[];
+  }>({ isOpen: false, entityType: null, columns: [] });
+
   const handleExport = (entityType: string) => {
-    showNotification(`Đang xuất dữ liệu danh sách ${entityType}... Tải xuống bắt đầu!`, "success");
+    const list = activeTabConfig?.data || [];
+    const cols = list.length > 0 ? Object.keys(list[0]) : [];
+    setExportModal({ isOpen: true, entityType, columns: cols });
   };
 
   // --- Modal Controllers ---
@@ -228,26 +355,36 @@ export default function App() {
 
   // --- Import / Export Handlers ---
   const handleImport = (entityType: "course" | "lesson" | "student" | "enrollment") => {
-    const list = entityType === "course" ? lmsData.courses : lmsData.students;
-    const newItem = getMockImportedItem(entityType, list.length);
-    if (!newItem) {
-      showNotification(`Mô phỏng nhập dữ liệu thành công cho ${entityType}`, "info");
-      return;
-    }
+    setImportModal({ isOpen: true, entityType });
+  };
 
-    if (entityType === "course") {
-      setLmsData((prev) => ({
-        ...prev,
-        courses: [...prev.courses, newItem as Course],
-      }));
-      showNotification(`Đã nhập khóa học thành công: ${(newItem as Course).title}`, "success");
-    } else if (entityType === "student") {
-      setLmsData((prev) => ({
-        ...prev,
-        students: [...prev.students, newItem as Student],
-      }));
-      showNotification(`Đã nhập học viên thành công: ${(newItem as Student).name}`, "success");
-    }
+  const handleImportSuccess = (items: any[]) => {
+    const entityType = importModal.entityType;
+    if (!entityType || items.length === 0) return;
+
+    setLmsData((prev) => {
+      if (entityType === "course") {
+        return { ...prev, courses: [...prev.courses, ...items] };
+      } else if (entityType === "lesson") {
+        return { ...prev, lessons: [...prev.lessons, ...items] };
+      } else if (entityType === "student") {
+        return { ...prev, students: [...prev.students, ...items] };
+      } else if (entityType === "enrollment") {
+        return { ...prev, enrollments: [...prev.enrollments, ...items] };
+      }
+      return prev;
+    });
+
+    showNotification(`Đã nhập thành công ${items.length} bản ghi cho ${entityType}!`, "success");
+    setImportModal({ isOpen: false, entityType: null });
+  };
+
+  const handleExportSuccess = (format: "xlsx" | "csv" | "pdf", columns: string[]) => {
+    showNotification(
+      `Đã xuất dữ liệu ${exportModal.entityType?.toUpperCase()} sang định dạng ${format.toUpperCase()} (gồm ${columns.length} cột) thành công!`,
+      "success"
+    );
+    setExportModal({ isOpen: false, entityType: null, columns: [] });
   };
 
   // --- CRUD Save Action ---
@@ -518,6 +655,7 @@ export default function App() {
         <nav className="sidebar-nav">
           <div className="nav-group-title">Cơ bản</div>
           <button
+            type="button"
             className={`nav-item ${activeTab === "dashboard" ? "active" : ""}`}
             onClick={() => setActiveTab("dashboard")}
           >
@@ -525,6 +663,7 @@ export default function App() {
             Dashboard
           </button>
           <button
+            type="button"
             className={`nav-item ${activeTab === "students" ? "active" : ""}`}
             onClick={() => setActiveTab("students")}
           >
@@ -532,6 +671,7 @@ export default function App() {
             Học viên
           </button>
           <button
+            type="button"
             className={`nav-item ${activeTab === "courses" ? "active" : ""}`}
             onClick={() => setActiveTab("courses")}
           >
@@ -539,6 +679,7 @@ export default function App() {
             Khóa học
           </button>
           <button
+            type="button"
             className={`nav-item ${activeTab === "lessons" ? "active" : ""}`}
             onClick={() => setActiveTab("lessons")}
           >
@@ -548,6 +689,7 @@ export default function App() {
 
           <div className="nav-group-title">Quản lý</div>
           <button
+            type="button"
             className={`nav-item ${activeTab === "enrollments" ? "active" : ""}`}
             onClick={() => setActiveTab("enrollments")}
           >
@@ -557,11 +699,11 @@ export default function App() {
         </nav>
 
         <div className="sidebar-footer">
-          <button className="nav-item">
+          <button type="button" className="nav-item">
             <span className="material-symbols-outlined">settings</span>
             Cài đặt
           </button>
-          <button className="nav-item" style={{ color: 'var(--color-error)' }}>
+          <button type="button" className="nav-item" style={{ color: 'var(--color-error)' }}>
             <span className="material-symbols-outlined" style={{ color: 'var(--color-error)' }}>logout</span>
             Đăng xuất
           </button>
@@ -576,8 +718,8 @@ export default function App() {
             {activeTab === 'enrollments' ? 'Quản lý' : 'Cơ bản'}
           </span>
           <span>/</span>
-          <span className="breadcrumb-item active" style={{ textTransform: 'capitalize' }}>
-            {activeTab}
+          <span className="breadcrumb-item active">
+            {TAB_NAMES_VIETNAMESE[activeTab] || activeTab}
           </span>
         </div>
 
@@ -589,10 +731,10 @@ export default function App() {
           </div>
 
           <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-            <button className="btn-icon-only" style={{ border: 'none' }}>
+            <button type="button" className="btn-icon-only" style={{ border: 'none' }}>
               <span className="material-symbols-outlined">search</span>
             </button>
-            <button className="btn-icon-only" style={{ border: 'none', position: 'relative' }}>
+            <button type="button" className="btn-icon-only" style={{ border: 'none', position: 'relative' }}>
               <span className="material-symbols-outlined">notifications</span>
               <span style={{ position: 'absolute', top: '8px', right: '8px', width: '8px', height: '8px', background: 'var(--color-error)', borderRadius: '50%' }}></span>
             </button>
@@ -642,8 +784,8 @@ export default function App() {
         isOpen={modal.isOpen}
         title={
           modal.mode === "add"
-            ? `Thêm mới ${modal.entityType ? modal.entityType.toUpperCase() : ""}`
-            : `Chỉnh sửa ${modal.entityType ? modal.entityType.toUpperCase() : ""}: ${modal.editingItem?.id}`
+            ? `Thêm mới ${modal.entityType ? (ENTITY_NAMES_VIETNAMESE[modal.entityType] || modal.entityType) : ""}`
+            : `Chỉnh sửa ${modal.entityType ? (ENTITY_NAMES_VIETNAMESE[modal.entityType] || modal.entityType) : ""}: ${modal.editingItem?.id}`
         }
         onClose={handleCloseModal}
         footer={
@@ -673,6 +815,25 @@ export default function App() {
           />
         )}
       </Modal>
+
+      {importModal.isOpen && importModal.entityType && (
+        <LmsImportModal
+          isOpen={importModal.isOpen}
+          onClose={() => setImportModal({ isOpen: false, entityType: null })}
+          entityType={importModal.entityType}
+          onImport={handleImportSuccess}
+        />
+      )}
+
+      {exportModal.isOpen && exportModal.entityType && (
+        <LmsExportModal
+          isOpen={exportModal.isOpen}
+          onClose={() => setExportModal({ isOpen: false, entityType: null, columns: [] })}
+          entityType={exportModal.entityType}
+          columns={exportModal.columns}
+          onExport={handleExportSuccess}
+        />
+      )}
 
       <NotificationToast
         message={notification.message}

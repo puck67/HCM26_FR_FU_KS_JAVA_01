@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface NotificationToastProps {
   message: string;
@@ -15,14 +15,20 @@ export function NotificationToast({
   onClose,
   durationMs = 4000
 }: NotificationToastProps) {
+  const onCloseRef = useRef(onClose);
+  
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
-        onClose();
+        onCloseRef.current();
       }, durationMs);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, message, onClose, durationMs]);
+  }, [isOpen, durationMs]);
 
   if (!isOpen) return null;
 
