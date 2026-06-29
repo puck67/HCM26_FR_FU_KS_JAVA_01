@@ -1,0 +1,23 @@
+# React Task Dashboard Implementation Tasks
+
+- [x] Create project directories and initialize Vite React + TypeScript template
+- [x] Install dependencies (react-router-dom, tailwindcss, postcss, autoprefixer, formik, yup, lucide-react)
+- [x] Configure Tailwind CSS and general styling
+- [x] Create TypeScript types for tasks
+- [x] Implement Mock REST API Service with latency simulation and LocalStorage persistence
+- [x] Implement useReducer and TaskContext state management
+- [x] Create Generic reusable UI components (Button, FormField, Card, ListView, Spinner, Alert)
+- [x] Implement MainLayout container
+- [x] Implement Routing configuration
+- [x] Build Pages:
+  - [x] Home Page
+  - [x] Tasks List Page (handling view, delete, create modal/drawer, list rendering, search/filter controls)
+  - [x] Task Detail & Edit Page (Formik validation, dynamic load)
+- [ ] Refactor Visuals and Notifications:
+  - [ ] Create generic Toast Notification component (`Toast.tsx`)
+  - [ ] Create generic Custom Confirmation Dialog component (`ConfirmDialog.tsx`)
+  - [ ] Add input limits and live character counters to `FormField.tsx`
+  - [ ] Fix color contrast issues and invalid Tailwind color classes (e.g., `650`, `605`)
+  - [ ] Integrate custom ConfirmDialog and Toast notifications into `Tasks.tsx` and `TaskDetail.tsx`
+- [ ] Verify UI design, responsiveness, error handling, and component generic interfaces
+- [ ] Produce final walkthrough and zip artifact (excluding node_modules) as required by project submission
