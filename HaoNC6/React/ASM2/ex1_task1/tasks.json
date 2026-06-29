@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Set up Next.js Project structure",
+    "description": "Configure file-based App routing and directory layouts.",
+    "completed": true,
+    "createdAt": "2026-06-29T02:46:17.332Z"
+  },
+  {
+    "id": "2",
+    "name": "Implement Next.js Server Actions",
+    "description": "Write createTask, updateTask, deleteTask and toggleTaskCompleted server actions.",
+    "completed": false,
+    "createdAt": "2026-06-29T05:46:17.332Z"
+  },
+  {
+    "id": "3",
+    "name": "Integrate Formik validation form",
+    "description": "Add validation rules for task fields (name: required, max 40; description: max 200).",
+    "completed": false,
+    "createdAt": "2026-06-29T07:46:17.332Z"
+  }
+]
