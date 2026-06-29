@@ -1,0 +1,23 @@
+[
+  {
+    "id": "task-1",
+    "name": "Complete React Assignment",
+    "description": "Develop dynamic user interfaces using React components, hooks, Formik, and Tailwind CSS.",
+    "status": "In Progress",
+    "createdAt": "2026-06-29"
+  },
+  {
+    "id": "task-2",
+    "name": "Setup Vite and TypeScript",
+    "description": "Initialize a light and fast React environment using Vite and configure TypeScript.",
+    "status": "Completed",
+    "createdAt": "2026-06-28"
+  },
+  {
+    "id": "task-3",
+    "name": "Design Dashboard UI",
+    "description": "Apply clean and responsive Tailwind CSS styling for task cards and form modals.",
+    "status": "Pending",
+    "createdAt": "2026-06-29"
+  }
+]

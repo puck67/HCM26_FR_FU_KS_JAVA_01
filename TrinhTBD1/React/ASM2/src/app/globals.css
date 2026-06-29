@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0f1115;
+  --foreground: #f1f5f9;
+  --burgundy: #800020;
+  --burgundy-hover: #991032;
+  --burgundy-dark: #540015;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-burgundy: var(--burgundy);
+  --color-burgundy-hover: var(--burgundy-hover);
+  --color-burgundy-dark: var(--burgundy-dark);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}

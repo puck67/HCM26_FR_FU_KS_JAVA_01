@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "Complete Next.js Assignment",
+    "description": "Implement Task Manager with Next.js App Router, Formik, and Server Actions.",
+    "completed": false
+  },
+  {
+    "id": "2",
+    "name": "Review React Hooks",
+    "description": "Revise useState, useEffect, useMemo, and custom hooks.",
+    "completed": true
+  }
+]
