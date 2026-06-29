@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Design Dashboard Mockup",
+    "description": "Create a sleek glassmorphic UI layout using Outfit typography.",
+    "completed": true,
+    "createdAt": "2026-06-29T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Implement Server Actions",
+    "description": "Set up database reads/writes with Next.js revalidation rules.",
+    "completed": false,
+    "createdAt": "2026-06-29T01:00:00.000Z"
+  }
+]
