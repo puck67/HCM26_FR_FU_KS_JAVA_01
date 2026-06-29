@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  body {
+    background: radial-gradient(circle at 50% 0%, #18122B 0%, #08090d 75%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+  }
+  
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+  }
+  
+  .text-glow-pink {
+    text-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+  }
+
+  .border-glow-purple {
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.25);
+  }
+
+  .border-glow-cyan {
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+  }
+
+  .glassmorphism {
+    background: rgba(17, 20, 28, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* Custom transitions and animations */
+.transition-all-300 {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
