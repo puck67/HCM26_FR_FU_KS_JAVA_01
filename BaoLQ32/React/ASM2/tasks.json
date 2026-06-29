@@ -1,0 +1,30 @@
+[
+  {
+    "id": "task-1",
+    "name": "Implement Server Actions",
+    "description": "Create server actions for task management including createTask, updateTask, and deleteTask.",
+    "completed": true,
+    "createdAt": "2026-06-29T05:13:50.181Z"
+  },
+  {
+    "id": "task-2",
+    "name": "Integrate Formik & Yup",
+    "description": "Set up form validation for task creation and editing pages with strict length constraints.",
+    "completed": false,
+    "createdAt": "2026-06-29T06:13:50.181Z"
+  },
+  {
+    "id": "task-3",
+    "name": "Design Premium Tailwind UI",
+    "description": "Apply high-quality styling with glassmorphism effects, harmonized colors, and responsive layouts.",
+    "completed": false,
+    "createdAt": "2026-06-29T07:13:50.181Z"
+  },
+  {
+    "id": "task-1782717449480-vwxdkq6k2",
+    "name": "Test Task from Agent",
+    "description": "Testing the application features - Edited",
+    "completed": true,
+    "createdAt": "2026-06-29T07:17:29.480Z"
+  }
+]
