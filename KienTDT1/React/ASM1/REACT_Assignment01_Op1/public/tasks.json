@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "Learn React Hooks", "description": "Master useState, useEffect, and useReducer." },
+  { "id": 2, "name": "Configure React Router", "description": "Set up dynamic routing with Layout paths." },
+  { "id": 3, "name": "Form Validation with Formik", "description": "Validate fields using Formik and Yup schema." },
+  { "id": 4, "name": "Style with Tailwind CSS", "description": "Design a premium and highly responsive dashboard UI." }
+]
