@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: main-layout(~{::content}, 'Add User')}">
+<body>
+    <div th:fragment="content">
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Back Link -->
+                <div class="mb-3">
+                    <a th:href="@{/users}" class="text-decoration-none text-secondary">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Back to User List
+                    </a>
+                </div>
+
+                <!-- Form Card -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="fw-bold m-0"><i class="fa-solid fa-user-plus text-primary me-2"></i>Create New User Account</h5>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <!-- Error message -->
+                        <div th:if="${error}" class="alert alert-danger mb-4" th:text="${error}"></div>
+                        
+                        <form th:action="@{/users/add}" th:object="${user}" method="post">
+                            
+                            <!-- Username -->
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+                                <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Enter username (e.g. jdoe)" required>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                                <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Enter secure password" required>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="mb-3">
+                                <label for="fullName" class="form-label fw-semibold">Full Name</label>
+                                <input type="text" id="fullName" th:field="*{fullName}" class="form-control" placeholder="Enter full name (e.g. John Doe)">
+                            </div>
+
+                            <!-- Status -->
+                            <div class="mb-3">
+                                <label for="status" class="form-label fw-semibold">Account Status <span class="text-danger">*</span></label>
+                                <select id="status" th:field="*{status}" class="form-select" required>
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                </select>
+                            </div>
+
+                            <!-- Roles (Checkboxes) -->
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold d-block">Assign Roles</label>
+                                <div class="form-check form-check-inline mt-1" th:each="role : ${allRoles}">
+                                    <input class="form-check-input" type="checkbox" name="roleIds" th:value="${role.roleId}" th:id="'role_' + ${role.roleId}">
+                                    <label class="form-check-label" th:for="'role_' + ${role.roleId}" th:text="${role.roleName}"></label>
+                                </div>
+                                <div th:if="${allRoles.isEmpty()}" class="text-muted small">No roles available in the system. Please create a role first.</div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Actions -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/users}" class="btn btn-outline-secondary px-4">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fa-solid fa-save me-1"></i> Save Account
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

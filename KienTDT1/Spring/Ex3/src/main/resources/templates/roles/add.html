@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: main-layout(~{::content}, 'Add Role')}">
+<body>
+    <div th:fragment="content">
+        
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- Back Link -->
+                <div class="mb-3">
+                    <a th:href="@{/roles}" class="text-decoration-none text-secondary">
+                        <i class="fa-solid fa-arrow-left me-1"></i> Back to Role List
+                    </a>
+                </div>
+
+                <!-- Form Card -->
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white border-bottom py-3">
+                        <h5 class="fw-bold m-0"><i class="fa-solid fa-shield-halved text-primary me-2"></i>Create New System Role</h5>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <!-- Error message -->
+                        <div th:if="${error}" class="alert alert-danger mb-4" th:text="${error}"></div>
+                        
+                        <form th:action="@{/roles/add}" th:object="${role}" method="post">
+                            
+                            <!-- Role Name -->
+                            <div class="mb-4">
+                                <label for="roleName" class="form-label fw-semibold">Role Name <span class="text-danger">*</span></label>
+                                <input type="text" id="roleName" th:field="*{roleName}" class="form-control" placeholder="Enter role name (e.g. VISITOR)" required autofocus style="text-transform: uppercase;">
+                                <div class="form-text">Role names are normally saved in uppercase format.</div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <!-- Actions -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/roles}" class="btn btn-outline-secondary px-4">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fa-solid fa-save me-1"></i> Save Role
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
