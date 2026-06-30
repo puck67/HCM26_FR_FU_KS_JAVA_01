@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "name": "Configure Next.js project",
+    "description": "Initialize Next.js with App Router and TypeScript",
+    "completed": true,
+    "createdAt": "2026-06-30T07:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Implement Formik validation",
+    "description": "Set up validation rules for the task creation form",
+    "completed": false,
+    "createdAt": "2026-06-30T07:01:00.000Z"
+  }
+]
