@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Instructor Login')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="login-wrapper">
+  <div class="login-box">
+    <div class="card">
+      <h1 style="font-size:1.4rem;margin-bottom:.5rem;text-align:center">Instructor Login</h1>
+      <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem;font-size:.9rem">
+        Sign in to manage your courses
+      </p>
+
+      <div th:if="${param.error}" class="alert alert-danger">
+        Invalid username or password.
+      </div>
+      <div th:if="${param.logout}" class="alert alert-success">
+        You have been logged out.
+      </div>
+
+      <form th:action="@{/login}" method="post">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" class="form-control"
+                 placeholder="Enter username" required autofocus/>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control"
+                 placeholder="Enter password" required/>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">
+          Sign In
+        </button>
+      </form>
+
+      <p style="text-align:center;margin-top:1rem;font-size:.85rem;color:var(--text-muted)">
+        Default: instructor / password
+      </p>
+    </div>
+  </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

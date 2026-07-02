@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>LMS - Lesson Detail</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+    <style>
+        body { background: #f0f4f8; font-family: 'Segoe UI', sans-serif; }
+        .navbar { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+        .card { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        .card-header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border-radius: 12px 12px 0 0 !important; }
+        .card-header.green { background: linear-gradient(135deg, #065f46, #10b981); }
+        .summary-badge { background: #e0f2fe; color: #0369a1; border-radius: 8px; padding: 6px 14px; font-size: 0.85rem; }
+        .table thead th { background: #1e3a8a; color: white; border: none; }
+        .table tbody tr:hover { background: #f0f9ff; transition: 0.2s; }
+        .btn-primary-custom { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; border: none; border-radius: 8px; }
+        .btn-primary-custom:hover { background: linear-gradient(135deg, #1e40af, #2563eb); color: white; }
+        .btn-edit { background: linear-gradient(135deg, #d97706, #f59e0b); color: white; border: none; border-radius: 6px; }
+        .btn-edit:hover { background: linear-gradient(135deg, #b45309, #d97706); color: white; }
+        .btn-del { background: linear-gradient(135deg, #dc2626, #ef4444); color: white; border: none; border-radius: 6px; }
+        .btn-del:hover { background: linear-gradient(135deg, #b91c1c, #dc2626); color: white; }
+        .status-draft { background: #fef3c7; color: #92400e; border-radius: 12px; padding: 3px 10px; font-size: 0.8rem; }
+        .status-open  { background: #d1fae5; color: #065f46; border-radius: 12px; padding: 3px 10px; font-size: 0.8rem; }
+        .status-closed{ background: #fee2e2; color: #991b1b; border-radius: 12px; padding: 3px 10px; font-size: 0.8rem; }
+        .form-label { font-weight: 600; color: #374151; }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark px-4 py-3 mb-4">
+    <span class="navbar-brand fw-bold fs-5"><i class="bi bi-mortarboard-fill me-2"></i>LMS Course Manager</span>
+    <a class="btn btn-light btn-sm" href="/courses"><i class="bi bi-arrow-left me-1"></i>Back to Courses</a>
+</nav>
+
+<div class="container">
+
+    <!-- Course Summary -->
+    <div class="card">
+        <div class="card-header py-3 px-4">
+            <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Course Summary</h5>
+        </div>
+        <div class="card-body p-4">
+            <div class="d-flex flex-wrap gap-3">
+                <div class="summary-badge"><strong>Code:</strong> <span th:text="${course.courseCode}"></span></div>
+                <div class="summary-badge"><strong>Name:</strong> <span th:text="${course.courseName}"></span></div>
+                <div class="summary-badge"><strong>Start:</strong> <span th:text="${course.startDate}"></span></div>
+                <div class="summary-badge"><strong>Category:</strong> <span th:text="${course.category}"></span></div>
+                <div class="summary-badge"><strong>Instructor:</strong> <span th:text="${course.instructor}"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Lesson Form -->
+    <div class="card">
+        <div class="card-header green py-3 px-4">
+            <h5 class="mb-0">
+                <i class="bi bi-pencil-square me-2"></i>
+                <span th:text="${editMode} ? 'Edit Lesson' : 'Add New Lesson'"></span>
+            </h5>
+        </div>
+        <div class="card-body p-4">
+            <form th:action="@{/lessons/save(code=${course.courseCode}, date=${course.startDate})}"
+                  th:object="${newLesson}" method="post">
+                <!-- hidden id for edit -->
+                <input type="hidden" th:field="*{id}"/>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="lessonName" class="form-label">Lesson Name <span class="text-danger">*</span></label>
+                        <input type="text" id="lessonName" class="form-control" th:field="*{lessonName}"
+                               placeholder="e.g. Introduction to Variables" required/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="duration" class="form-label">Duration (min)</label>
+                        <input type="number" id="duration" class="form-control" th:field="*{duration}"
+                               min="1" placeholder="45"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="contentType" class="form-label">Content Type</label>
+                        <select id="contentType" class="form-select" th:field="*{contentType}">
+                            <option value="">-- Select --</option>
+                            <option value="Video">Video</option>
+                            <option value="Lý thuyết">Lý thuyết</option>
+                            <option value="Thực hành">Thực hành</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" class="form-select" th:field="*{status}">
+                            <option value="">-- Select --</option>
+                            <option value="Bản nháp">Bản nháp</option>
+                            <option value="Đang mở">Đang mở</option>
+                            <option value="Đã khóa">Đã khóa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                    <button type="submit" id="saveLessonBtn" class="btn btn-primary-custom">
+                        <i class="bi bi-floppy-fill me-2"></i>Save Lesson
+                    </button>
+                    <a th:if="${editMode}"
+                       th:href="@{/lessons(code=${course.courseCode}, date=${course.startDate})}"
+                       class="btn btn-outline-secondary">
+                        <i class="bi bi-x-circle me-1"></i>Cancel Edit
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lesson Table -->
+    <div class="card">
+        <div class="card-header py-3 px-4 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Lesson List</h5>
+            <span class="badge bg-light text-dark" th:text="${#lists.size(lessons)} + ' lessons'"></span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lesson Name</th>
+                            <th>Duration</th>
+                            <th>Content Type</th>
+                            <th>Status</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:if="${#lists.isEmpty(lessons)}">
+                            <td colspan="6" class="text-center text-muted py-4">No lessons yet. Add one above.</td>
+                        </tr>
+                        <tr th:each="lesson, stat : ${lessons}">
+                            <td class="align-middle text-muted" th:text="${stat.count}"></td>
+                            <td class="align-middle fw-semibold" th:text="${lesson.lessonName}"></td>
+                            <td class="align-middle" th:text="${lesson.duration} + ' min'"></td>
+                            <td class="align-middle" th:text="${lesson.contentType}"></td>
+                            <td class="align-middle">
+                                <span th:classappend="${lesson.status == 'Bản nháp'} ? 'status-draft' : (${lesson.status == 'Đang mở'} ? 'status-open' : 'status-closed')"
+                                      th:text="${lesson.status}"></span>
+                            </td>
+                            <td class="align-middle text-center">
+                                <a th:href="@{/lessons/edit/{id}(id=${lesson.id}, code=${course.courseCode}, date=${course.startDate})}"
+                                   class="btn btn-edit btn-sm me-1">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                                <button type="button" class="btn btn-del btn-sm"
+                                        th:onclick="'confirmDeleteLesson(' + ${lesson.id} + ')'">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Lesson Modal -->
+<div class="modal fade" id="deleteLessonModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">Do you want to delete this lesson?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <a id="confirmLessonDeleteBtn" href="#" class="btn btn-danger">Yes, Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:inline="javascript">
+    const courseCode = /*[[${course.courseCode}]]*/ '';
+    const courseDate = /*[[${course.startDate}]]*/ '';
+
+    function confirmDeleteLesson(id) {
+        document.getElementById('confirmLessonDeleteBtn').href =
+            '/lessons/delete/' + id + '?code=' + courseCode + '&date=' + courseDate;
+        new bootstrap.Modal(document.getElementById('deleteLessonModal')).show();
+    }
+</script>
+</body>
+</html>

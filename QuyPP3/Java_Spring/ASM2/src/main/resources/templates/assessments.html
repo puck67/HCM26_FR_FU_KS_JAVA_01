@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assessment Materials</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h1 { color: #333; }
+        .alert-success { color: green; background: #e8f5e9; padding: 10px; border-radius: 4px; }
+        .alert-error { color: red; background: #ffebee; padding: 10px; border-radius: 4px; }
+        form { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        input[type=text], textarea { width: 100%; padding: 8px; margin: 6px 0 14px; box-sizing: border-box; }
+        input[type=file] { margin: 6px 0 14px; }
+        button { background: #1976d2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1565c0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #1976d2; color: white; }
+        a { color: #1976d2; }
+    </style>
+</head>
+<body>
+
+<h1>Assessment Materials</h1>
+
+<div th:if="${message}" class="alert-success" th:text="${message}"></div>
+<div th:if="${error}" class="alert-error" th:text="${error}"></div>
+
+<h2>Upload New Material</h2>
+<form method="post" action="/assessments/upload" enctype="multipart/form-data">
+    <label>Title:</label>
+    <input type="text" name="title" required>
+
+    <label>Description:</label>
+    <textarea name="description" rows="3"></textarea>
+
+    <label>File:</label>
+    <input type="file" name="file" required>
+
+    <button type="submit">Upload</button>
+</form>
+
+<h2>Uploaded Materials</h2>
+<table th:if="${not #lists.isEmpty(materials)}">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="material : ${materials}">
+            <td th:text="${material.id}"></td>
+            <td th:text="${material.title}"></td>
+            <td th:text="${material.description}"></td>
+            <td>
+                <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}"
+                   th:text="${material.fileName}">Download</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p th:if="${#lists.isEmpty(materials)}">No materials uploaded yet.</p>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${course.title})}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="padding-top:2rem">
+  <a th:href="@{/}" style="color:var(--text-muted);font-size:.9rem">&larr; Back to Home</a>
+
+  <div class="page-layout" style="margin-top:1.5rem">
+    <main class="page-content">
+      <!-- Course header -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <div class="category-tags" style="margin-bottom:.75rem"
+             th:if="${course.category != null and !course.category.isBlank()}">
+          <a th:each="cat : ${course.category.split(',')}"
+             th:href="@{/categories/{n}(n=${cat.trim()})}"
+             th:text="${cat.trim()}" class="tag"></a>
+        </div>
+        <h1 style="font-size:1.6rem;margin-bottom:.5rem" th:text="${course.title}">Title</h1>
+        <p style="color:var(--text-muted)" th:text="${course.description}">Desc</p>
+      </div>
+
+      <!-- Course content (Markdown rendered) -->
+      <div class="card course-content" style="margin-bottom:1.5rem" th:utext="${contentHtml}"></div>
+
+      <!-- Reviews section -->
+      <div class="card" style="margin-bottom:1.5rem">
+        <h2 style="font-size:1.1rem;margin-bottom:1rem">Reviews
+          <span style="font-size:.85rem;color:var(--text-muted);font-weight:400"
+                th:text="'(' + ${#lists.size(reviews)} + ')'"></span>
+        </h2>
+
+        <div th:if="${reviewSuccess}" class="alert alert-success" th:text="${reviewSuccess}"></div>
+        <div th:if="${reviewError}" class="alert alert-danger" th:text="${reviewError}"></div>
+
+        <div th:if="${#lists.isEmpty(reviews)}" style="color:var(--text-muted);margin-bottom:1.5rem">
+          No approved reviews yet. Be the first!
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.25rem;margin-bottom:2rem">
+          <div th:each="review : ${reviews}" class="review-card">
+            <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.3rem">
+              <span class="author" th:text="${review.authorName}">Author</span>
+              <span class="stars" th:text="${'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}"></span>
+              <span class="review-meta" th:text="${#temporals.format(review.createdAt,'MMM dd, yyyy')}">Date</span>
+            </div>
+            <p th:text="${review.content}">Content</p>
+          </div>
+        </div>
+
+        <!-- Submit review form -->
+        <h3 style="font-size:1rem;margin-bottom:1rem">Leave a Review</h3>
+        <form th:action="@{/courses/{id}/review(id=${course.id})}" th:object="${newReview}" method="post">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group">
+              <label>Your Name *</label>
+              <input type="text" th:field="*{authorName}" class="form-control" required/>
+              <div class="form-error" th:if="${#fields.hasErrors('authorName')}" th:errors="*{authorName}"></div>
+            </div>
+            <div class="form-group">
+              <label>Email *</label>
+              <input type="email" th:field="*{email}" class="form-control" required/>
+              <div class="form-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Rating *</label>
+            <select th:field="*{rating}" class="form-control" required>
+              <option value="">-- Select rating --</option>
+              <option th:each="i : ${#numbers.sequence(5,1,-1)}" th:value="${i}"
+                      th:text="${'★'.repeat(i) + ' (' + i + '/5)'}"></option>
+            </select>
+            <div class="form-error" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></div>
+          </div>
+          <div class="form-group">
+            <label>Review *</label>
+            <textarea th:field="*{content}" class="form-control" rows="4" required></textarea>
+            <div class="form-error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="card">
+        <h3>Categories</h3>
+        <div class="category-cloud">
+          <a th:each="cat : ${categories}"
+             th:href="@{/categories/{name}(name=${cat.name})}"
+             th:text="${cat.name}"
+             th:classappend="${cat.frequency >= 3} ? ' size-4' : (${cat.frequency == 2} ? ' size-3' : ' size-2')"
+             class="cloud-tag"></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
