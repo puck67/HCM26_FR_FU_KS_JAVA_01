@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Course — LMS</title>
+</head>
+<body>
+    <h1>Create New Course</h1>
+
+    <form action="#"
+          th:action="@{/courses/create}"
+          th:object="${course}"
+          method="post"
+          novalidate>
+
+        <div>
+            <label for="title">Course Title:</label>
+            <input type="text" id="title" th:field="*{title}"
+                   maxlength="100" autocomplete="off" />
+            <span th:if="${#fields.hasErrors('title')}"
+                  th:errors="*{title}"
+                  style="color: red;"></span>
+        </div>
+
+        <div>
+            <label for="instructorName">Instructor Name:</label>
+            <input type="text" id="instructorName" th:field="*{instructorName}"
+                   maxlength="50" autocomplete="name" />
+            <span th:if="${#fields.hasErrors('instructorName')}"
+                  th:errors="*{instructorName}"
+                  style="color: red;"></span>
+        </div>
+
+        <div>
+            <label for="instructorEmail">Instructor Email:</label>
+            <input type="email" id="instructorEmail" th:field="*{instructorEmail}"
+                   autocomplete="email" />
+            <span th:if="${#fields.hasErrors('instructorEmail')}"
+                  th:errors="*{instructorEmail}"
+                  style="color: red;"></span>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" th:field="*{description}" maxlength="200"></textarea>
+            <span th:if="${#fields.hasErrors('description')}"
+                  th:errors="*{description}"
+                  style="color: red;"></span>
+        </div>
+
+        <div>
+            <label for="durationHours">Duration (Hours):</label>
+            <input type="number" id="durationHours" th:field="*{durationHours}"
+                   min="1" max="1000" />
+            <span th:if="${#fields.hasErrors('durationHours')}"
+                  th:errors="*{durationHours}"
+                  style="color: red;"></span>
+        </div>
+
+        <button type="submit">Create Course</button>
+
+    </form>
+</body>
+</html>

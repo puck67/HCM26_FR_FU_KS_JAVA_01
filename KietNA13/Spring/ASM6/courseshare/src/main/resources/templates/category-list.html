@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Category: ' + ${categoryName})}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container home-layout">
+        <main>
+            <h2 th:text="'Courses in Category: ' + ${categoryName}">Category</h2>
+            <br>
+            <div th:if="${#lists.isEmpty(coursePage.content)}">
+                <p>No courses found for this category.</p>
+            </div>
+            <div th:each="course : ${coursePage.content}" class="card">
+                <h3 class="card-title" th:text="${course.title}">Course Title</h3>
+                <div class="card-subtitle" th:text="${course.description}">Description</div>
+                <a th:href="@{/course/{id}(id=${course.id})}" class="btn btn-primary">View Details</a>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="pagination" th:if="${coursePage.totalPages > 1}">
+                <li th:each="i : ${#numbers.sequence(1, coursePage.totalPages)}" th:classappend="${i == coursePage.number + 1} ? 'active'">
+                    <a th:href="@{/category/{name}(name=${categoryName}, page=${i})}" th:text="${i}"></a>
+                </li>
+            </ul>
+        </main>
+        
+        <aside>
+            <div class="sidebar-section">
+                <div class="sidebar-section-header">Category Cloud</div>
+                <div class="sidebar-section-body category-cloud">
+                    <a th:each="cat : ${categories}" th:href="@{/category/{name}(name=${cat.name})}" th:text="${cat.name}" th:style="'font-size: ' + (1 + (cat.frequency * 0.1)) + 'rem; color: var(--primary-color); font-weight: 500; margin-right: 8px;'"></a>
+                </div>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>

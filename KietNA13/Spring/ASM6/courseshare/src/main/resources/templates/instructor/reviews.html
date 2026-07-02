@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Reviews')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container">
+        <div class="card">
+            <h2 style="margin-bottom: 1.5rem;">Pending Reviews</h2>
+
+            <div th:if="${message}" class="badge badge-success" style="display:block; padding:1rem; margin-bottom:1rem;" th:text="${message}"></div>
+
+            <div th:if="${#lists.isEmpty(pendingPage.content)}">
+                <p>No pending reviews.</p>
+            </div>
+
+            <div th:each="review : ${pendingPage.content}" class="review-item" style="border: 1px solid var(--border-color); border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 4px; margin-bottom: 1rem; background-color: white;">
+                <div style="font-weight: 700; margin-bottom: 0.25rem;" th:text="'Course: ' + ${review.course.title}">Course</div>
+                <div class="review-header" style="margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem; font-weight: 600;">Reviewer: </span>
+                    <span class="review-author" style="font-size: 0.9rem; font-weight: normal; margin-left: 4px;" th:text="${review.authorName}">Name</span>
+                </div>
+                <div class="review-rating" style="margin-bottom: 0.5rem;">
+                    <span th:each="i : ${#numbers.sequence(1, 5)}" th:text="${i <= review.rating ? '★' : '☆'}"></span>
+                </div>
+                <div class="review-content" th:text="${review.content}" style="margin-bottom: 1rem; color:var(--text-color);">Content</div>
+                
+                <div class="table-actions">
+                    <a th:href="@{/instructor/review/{id}/approve(id=${review.id})}" class="btn btn-success" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px;">Approve</a>
+                    <a th:href="@{/instructor/review/{id}/delete(id=${review.id})}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px;" onclick="return confirm('Delete this review?');">Delete</a>
+                </div>
+            </div>
+
+            <!-- Pending Pagination -->
+            <ul class="pagination" th:if="${pendingPage.totalPages > 1}" style="margin-bottom: 3rem;">
+                <li th:each="i : ${#numbers.sequence(1, pendingPage.totalPages)}" th:classappend="${i == pendingPage.number + 1} ? 'active'">
+                    <a th:href="@{/instructor/reviews(page=${i})}" th:text="${i}"></a>
+                </li>
+            </ul>
+
+            <h2 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-top: 2rem;">Approved Reviews</h2>
+
+            <div th:if="${#lists.isEmpty(approvedPage.content)}">
+                <p>No approved reviews.</p>
+            </div>
+
+            <div th:each="review : ${approvedPage.content}" class="review-item" style="border: 1px solid var(--border-color); border-left: 4px solid var(--primary-color); padding: 1rem; border-radius: 4px; margin-bottom: 1rem; background-color: white;">
+                <div style="font-weight: 700; margin-bottom: 0.25rem;" th:text="'Course: ' + ${review.course.title}">Course</div>
+                <div class="review-header" style="margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem; font-weight: 600;">Reviewer: </span>
+                    <span class="review-author" style="font-size: 0.9rem; font-weight: normal; margin-left: 4px;" th:text="${review.authorName}">Name</span>
+                </div>
+                <div class="review-rating" style="margin-bottom: 0.5rem;">
+                    <span th:each="i : ${#numbers.sequence(1, 5)}" th:text="${i <= review.rating ? '★' : '☆'}"></span>
+                </div>
+                <div class="review-content" th:text="${review.content}" style="margin-bottom: 1rem; color:var(--text-color);">Content</div>
+                
+                <div class="table-actions">
+                    <a th:href="@{/instructor/review/{id}/delete(id=${review.id})}" class="btn btn-danger" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; border-radius: 4px;" onclick="return confirm('Delete this review?');">Delete</a>
+                </div>
+            </div>
+
+            <!-- Approved Pagination -->
+            <ul class="pagination" th:if="${approvedPage.totalPages > 1}">
+                <li th:each="i : ${#numbers.sequence(1, approvedPage.totalPages)}" th:classappend="${i == approvedPage.number + 1} ? 'active'">
+                    <a th:href="@{/instructor/reviews(page=${i})}" th:text="${i}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

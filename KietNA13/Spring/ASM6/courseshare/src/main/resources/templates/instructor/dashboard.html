@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard')}"></head>
+<body>
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+    <div class="container">
+        <h2 style="margin-bottom: 1.5rem;">Dashboard Overview</h2>
+        
+        <div class="dashboard-grid">
+            <div class="card stat-card">
+                <div class="stat-value" style="color: var(--primary-color);" th:text="${totalCourses}">0</div>
+                <div class="stat-label">Total Courses</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value" style="color: var(--success-color);" th:text="${publishedCourses}">0</div>
+                <div class="stat-label">Published Courses</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value" style="color: var(--warning-color);" th:text="${pendingReviews}">0</div>
+                <div class="stat-label">Pending Reviews</div>
+            </div>
+            <div class="card stat-card">
+                <div class="stat-value" style="color: #0dcaf0;" th:text="${totalCategories}">0</div>
+                <div class="stat-label">Total Categories</div>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 1.5rem;">Quick Actions</h3>
+        <div style="display: flex; gap: 1rem;">
+            <a href="/instructor/course/new" class="card" style="flex: 1; text-align: center; text-decoration: none; background-color: var(--primary-color); color: white;">
+                <h4>Create New Course</h4>
+            </a>
+            <a href="/instructor/courses" class="card" style="flex: 1; text-align: center; text-decoration: none; color: var(--primary-color);">
+                <h4>Manage Courses</h4>
+            </a>
+            <a href="/instructor/reviews" class="card" style="flex: 1; text-align: center; text-decoration: none; color: var(--primary-color);">
+                <h4>Pending Reviews</h4>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Materials — LMS</title>
+</head>
+<body>
+
+    <h1>Assessment Materials</h1>
+
+    <!-- Flash message sau redirect (upload thành công/thất bại) -->
+    <div th:if="${message}"
+         th:text="${message}"
+         style="padding: 8px; margin-bottom: 12px; background: #e8f4fd; border-left: 4px solid #2196f3;">
+    </div>
+
+    <h2>Upload New Material</h2>
+
+    <form method="post"
+          th:action="@{/assessments/upload}"
+          enctype="multipart/form-data"
+          novalidate>
+
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title"
+                   maxlength="100" required autocomplete="off" />
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" maxlength="500"></textarea>
+        </div>
+
+        <div>
+            <label for="file">File:</label>
+            <input type="file" id="file" name="file" required />
+        </div>
+
+        <button type="submit">Upload</button>
+
+    </form>
+
+    <hr />
+
+    <h2>Uploaded Materials</h2>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="material : ${materials}">
+                <td th:text="${material.id}"></td>
+                <td th:text="${material.title}"></td>
+                <td th:text="${material.description}"></td>
+                <td>
+                    <a th:href="@{/assessments/download/{fn}(fn=${material.fileName})}"
+                       th:text="${material.fileName}">
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(materials)}">
+                <td colspan="4">No materials uploaded yet.</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

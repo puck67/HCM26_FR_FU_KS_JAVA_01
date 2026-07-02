@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/base}">
+<head>
+    <title>Add Course</title>
+</head>
+<body>
+    <div layout:fragment="banner-center">Banner</div>
+    <div layout:fragment="content" class="content-wrapper">
+        <div th:if="${successMessage}" class="alert-success">
+            <i class="fa-solid fa-check-circle"></i>
+            <span th:text="${successMessage}"></span>
+        </div>
+
+        <div th:if="${savedCourse}" style="margin-bottom: 15px; text-align: center;">
+            <a th:href="@{'/courses/' + ${savedCourse.id.courseCode} + '/lessons'(startDate=${savedCourse.id.startDate})}" style="font-size: 1.2rem; color: #2b78e4; text-decoration: underline;">Lesson Detail</a>
+        </div>
+
+        <div class="card-container" style="max-width: 800px; margin: 0 auto;">
+            <h3 style="margin-top: 0; color: #2d3748; font-weight: 700; border-bottom: 2px solid #edf2f7; padding-bottom: 15px; margin-bottom: 25px;">Create New Course</h3>
+            <form th:action="@{/courses/new}" th:object="${course}" method="post">
+                <div style="display: flex; gap: 20px;">
+                    <div class="form-group" style="flex: 1; margin-bottom: 20px;">
+                        <label style="color: #4a5568; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; display: block;">Mã khóa học / Course ID</label>
+                        <input type="text" th:field="*{id.courseCode}" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; background-color: #f8fafc; transition: all 0.3s ease;">
+                    </div>
+                    <div class="form-group" style="flex: 1; margin-bottom: 20px;">
+                        <label style="color: #4a5568; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; display: block;">Ngày khai giảng / Start Date</label>
+                        <input type="date" th:field="*{id.startDate}" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; background-color: #f8fafc; transition: all 0.3s ease;">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="color: #4a5568; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; display: block;">Tên khóa học / Course Name</label>
+                    <input type="text" th:field="*{courseName}" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; background-color: #f8fafc; transition: all 0.3s ease;">
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label style="color: #4a5568; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; display: block;">Danh mục / Category</label>
+                    <select th:field="*{category}" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; background-color: #f8fafc; transition: all 0.3s ease; color: #4a5568;">
+                        <option value="Technology">Technology</option>
+                        <option value="Business">Business</option>
+                        <option value="Design">Design</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label style="color: #4a5568; font-weight: 600; font-size: 0.95rem; margin-bottom: 8px; display: block;">Giảng viên / Instructor</label>
+                    <select th:field="*{instructor}" required style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; background-color: #f8fafc; transition: all 0.3s ease; color: #4a5568;">
+                        <option value="" disabled selected>-- Select Instructor --</option>
+                        <option th:each="t : ${teachers}" th:value="${t.username}" th:text="${t.username}"></option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 15px; justify-content: flex-end; border-top: 1px solid #edf2f7; padding-top: 20px;">
+                    <button type="button" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Course</button>
+                </div>
+            </form>
+        </div>
+        <style>
+            input:focus, select:focus { outline: none; border-color: #3182ce !important; background-color: #fff !important; box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1); }
+        </style>
+    </div>
+</body>
+</html>
