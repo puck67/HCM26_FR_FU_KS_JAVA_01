@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Header with Action Button -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h2 class="text-white fw-bold"><i class="bi bi-key-fill text-info me-2"></i> Role Management</h2>
+            <p class="text-secondary mb-0">Create, update, or remove system security roles.</p>
+        </div>
+        <a href="/roles/new" class="btn btn-info text-dark fw-bold d-flex align-items-center gap-2">
+            <i class="bi bi-shield-plus"></i>
+            <span>Add Role</span>
+        </a>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage != null}" class="alert alert-success bg-success bg-opacity-10 border-success border-opacity-25 text-success alert-dismissible fade show glass-panel" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <span th:text="${successMessage}">Success!</span>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${errorMessage != null}" class="alert alert-danger bg-danger bg-opacity-10 border-danger border-opacity-25 text-danger alert-dismissible fade show glass-panel" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span th:text="${errorMessage}">Error!</span>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Roles Table -->
+    <div class="card glass-panel border-secondary overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead class="table-group-divider border-secondary text-secondary font-mono small">
+                    <tr>
+                        <th class="ps-4">ID</th>
+                        <th>Role Name</th>
+                        <th>Status Type</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-secondary">
+                    <tr th:each="r : ${roles}" class="border-secondary">
+                        <!-- ID -->
+                        <td class="ps-4 font-mono text-secondary" th:text="${r.roleId}">1</td>
+                        
+                        <!-- Role Name -->
+                        <td>
+                            <strong th:class="${r.roleName == 'SUPER_ADMIN' ? 'badge bg-danger' : (r.roleName == 'ADMIN' ? 'badge bg-warning text-dark' : 'badge bg-success')}"
+                                    th:text="${r.roleName}">
+                                SUPER_ADMIN
+                            </strong>
+                        </td>
+                        
+                        <!-- Status Type -->
+                        <td>
+                            <span th:if="${r.roleName == 'SUPER_ADMIN' || r.roleName == 'ADMIN' || r.roleName == 'TEACHER'}" 
+                                  class="text-info small font-mono">
+                                <i class="bi bi-lock-fill me-1"></i>System Protected
+                            </span>
+                            <span th:if="${r.roleName != 'SUPER_ADMIN' && r.roleName != 'ADMIN' && r.roleName != 'TEACHER'}" 
+                                  class="text-muted small">
+                                Custom Role
+                            </span>
+                        </td>
+                        
+                        <!-- Actions -->
+                        <td class="text-end pe-4">
+                            <div class="d-inline-flex gap-2">
+                                <!-- Edit -->
+                                <a th:href="@{/roles/edit/{id}(id=${r.roleId})}" 
+                                   class="btn btn-outline-light btn-sm d-flex align-items-center gap-1 border-secondary"
+                                   th:if="${r.roleName != 'SUPER_ADMIN' && r.roleName != 'ADMIN' && r.roleName != 'TEACHER'}">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Edit</span>
+                                </a>
+                                
+                                <!-- Delete -->
+                                <form th:action="@{/roles/delete/{id}(id=${r.roleId})}" method="POST" class="d-inline-block" 
+                                      th:if="${r.roleName != 'SUPER_ADMIN' && r.roleName != 'ADMIN' && r.roleName != 'TEACHER'}"
+                                      onsubmit="return confirm('Are you sure you want to delete this role?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1 border-danger border-opacity-20">
+                                        <i class="bi bi-trash-fill"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                </form>
+
+                                <span th:if="${r.roleName == 'SUPER_ADMIN' || r.roleName == 'ADMIN' || r.roleName == 'TEACHER'}" class="text-secondary small font-mono px-3 py-1">
+                                    Read-Only
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+</body>
+</html>

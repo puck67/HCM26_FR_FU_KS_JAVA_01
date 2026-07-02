@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::#materialListContent})}">
+<body>
+    <div id="materialListContent">
+        <!-- Back to select button -->
+        <div class="mb-4">
+            <a href="/materials" class="btn btn-sm btn-outline-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back to Subjects
+            </a>
+        </div>
+
+        <!-- Subject Information Header -->
+        <div class="glass-card mb-4" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(59, 130, 246, 0.05)); border-left: 5px solid var(--accent-primary);">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <span class="badge bg-dark text-indigo border border-indigo mb-2" th:text="${subject.subjectCode}">JAVA01</span>
+                    <h2 class="text-white mb-1" th:text="${subject.subjectName}">Java Programming</h2>
+                    <p class="text-secondary mb-0">Duration: <span class="text-white" th:text="${subject.duration}">40</span> hours</p>
+                </div>
+                <div class="text-md-end mt-3 mt-md-0">
+                    <span class="text-secondary small d-block">Repository Size</span>
+                    <h4 class="text-white mb-0" th:text="${#lists.size(materials) + ' Files'}">0 Files</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success/Error Alerts -->
+        <div th:if="${success}" class="glass-alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="glass-alert-danger" th:text="${error}"></div>
+
+        <div class="row g-4">
+            <!-- Material List Section (Left) -->
+            <div class="col-lg-8">
+                <div class="glass-card h-100">
+                    <h4 class="text-white mb-4"><i class="fa-solid fa-list-check me-2 text-indigo"></i> Learning Materials</h4>
+                    <div class="table-responsive">
+                        <table class="table glass-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 8%;">ID</th>
+                                    <th style="width: 30%;">File Name</th>
+                                    <th style="width: 25%;">Description</th>
+                                    <th style="width: 15%;">Category</th>
+                                    <th style="width: 12%;">Size</th>
+                                    <th style="width: 10%; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="material : ${materials}">
+                                    <td th:text="${material.materialId}">1</td>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i th:class="${material.getIconClass()}" style="font-size: 1.25rem;"></i>
+                                            <span class="text-white font-weight-medium text-truncate" style="max-width: 180px;" th:text="${material.fileName}" th:title="${material.fileName}">Lecture1.pdf</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-secondary small" th:text="${material.description}">Introduction to Java syntax</td>
+                                    <td>
+                                        <span class="badge-glass-category" th:text="${material.category}">Lecture</span>
+                                    </td>
+                                    <td class="text-secondary small" th:text="${material.getFormattedSize()}">1.2 MB</td>
+                                    <td style="text-align: right;">
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <a th:href="@{/materials/download/{id}(id=${material.materialId})}" class="btn btn-sm btn-outline-success" title="Download">
+                                                <i class="fa-solid fa-download"></i>
+                                            </a>
+                                            <a th:href="@{/materials/delete/{id}(id=${material.materialId}, subjectId=${subject.subjectId})}" 
+                                               class="btn btn-sm btn-glass-danger" 
+                                               onclick="return confirm('Do you want to delete this material?');" 
+                                               title="Delete">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(materials)}">
+                                    <td colspan="6" class="text-center text-secondary py-5">
+                                        <i class="fa-regular fa-folder-open d-block mb-3" style="font-size: 2.5rem; color: rgba(255,255,255,0.15);"></i>
+                                        No materials uploaded for this subject yet. Upload materials on the right.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Material Section (Right) -->
+            <div class="col-lg-4">
+                <div class="glass-card">
+                    <h4 class="text-white mb-4"><i class="fa-solid fa-cloud-arrow-up me-2 text-indigo"></i> Upload Material</h4>
+                    
+                    <form th:action="@{/materials/upload}" method="post" enctype="multipart/form-data">
+                        <!-- Hidden Subject ID -->
+                        <input type="hidden" name="subjectId" th:value="${subject.subjectId}">
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label text-secondary font-weight-bold">Description</label>
+                            <textarea id="description" name="description" rows="2" class="form-control form-control-glass" placeholder="Enter file description..." required></textarea>
+                        </div>
+
+                        <!-- Category -->
+                        <div class="mb-3">
+                            <label for="category" class="form-label text-secondary font-weight-bold">Category</label>
+                            <select id="category" name="category" class="form-select form-select-glass" required>
+                                <option value="Lecture">Lecture</option>
+                                <option value="Assignment">Assignment</option>
+                                <option value="Reference">Reference</option>
+                                <option value="Source Code">Source Code</option>
+                            </select>
+                        </div>
+
+                        <!-- File Input (Multiple) -->
+                        <div class="mb-4">
+                            <label for="files" class="form-label text-secondary font-weight-bold">Select File(s)</label>
+                            <input type="file" id="files" name="files" class="form-control form-control-glass" multiple required>
+                            <div class="form-text text-secondary mt-1" style="font-size: 0.75rem;">
+                                Supported: PDF, DOCX, PPTX, ZIP, TXT (Max 10MB per file). Executables (.exe, .bat, etc.) are strictly blocked.
+                            </div>
+                        </div>
+
+                        <!-- Upload Button -->
+                        <button type="submit" class="btn btn-glass w-100 py-2">
+                            <i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Upload Material
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

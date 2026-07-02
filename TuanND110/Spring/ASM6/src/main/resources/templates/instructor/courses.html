@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Courses')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="instructor-layout">
+  <nav class="instructor-sidebar">
+    <div class="sidebar-brand">Instructor Panel</div>
+    <ul>
+      <li><a th:href="@{/instructor/dashboard}">Dashboard</a></li>
+      <li><a th:href="@{/instructor/courses}" class="active">Manage Courses</a></li>
+      <li><a th:href="@{/instructor/courses/new}">Create Course</a></li>
+      <li><a th:href="@{/instructor/reviews}">Manage Reviews</a></li>
+      <li><a th:href="@{/}">View Site</a></li>
+    </ul>
+  </nav>
+
+  <main class="instructor-main">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <h1 style="margin-bottom:0">Manage Courses</h1>
+      <a th:href="@{/instructor/courses/new}" class="btn btn-primary">+ New Course</a>
+    </div>
+
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+
+    <div class="card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="course : ${courses}">
+            <td>
+              <a th:href="@{/courses/{id}(id=${course.id})}" th:text="${course.title}" target="_blank"></a>
+            </td>
+            <td th:text="${course.category != null ? course.category : '-'}">-</td>
+            <td>
+              <span th:classappend="${course.status == 1} ? 'badge-draft' : (${course.status == 2} ? 'badge-published' : 'badge-archived')"
+                    class="badge"
+                    th:text="${course.status == 1} ? 'Draft' : (${course.status == 2} ? 'Published' : 'Archived')">
+              </span>
+            </td>
+            <td th:text="${#temporals.format(course.createdAt,'MMM dd, yyyy')}">Date</td>
+            <td>
+              <div class="table-actions">
+                <a th:href="@{/instructor/courses/{id}/edit(id=${course.id})}" class="btn btn-sm btn-outline">Edit</a>
+                <form th:action="@{/instructor/courses/{id}/publish(id=${course.id})}" method="post" style="display:inline"
+                      th:if="${course.status != 2}">
+                  <button class="btn btn-sm btn-success">Publish</button>
+                </form>
+                <form th:action="@{/instructor/courses/{id}/unpublish(id=${course.id})}" method="post" style="display:inline"
+                      th:if="${course.status == 2}">
+                  <button class="btn btn-sm btn-warning">Unpublish</button>
+                </form>
+                <form th:action="@{/instructor/courses/{id}/archive(id=${course.id})}" method="post" style="display:inline"
+                      th:if="${course.status != 3}">
+                  <button class="btn btn-sm btn-secondary">Archive</button>
+                </form>
+                <form th:action="@{/instructor/courses/{id}/delete(id=${course.id})}" method="post" style="display:inline"
+                      onsubmit="return confirm('Delete this course?')">
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          <tr th:if="${#lists.isEmpty(courses)}">
+            <td colspan="5" style="color:var(--text-muted)">No courses yet. Create your first one!</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

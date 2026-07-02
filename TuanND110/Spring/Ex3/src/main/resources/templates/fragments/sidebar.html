@@ -1,0 +1,52 @@
+<!-- Reusable Sidebar Fragment -->
+<div th:fragment="sidebar" class="sidebar-wrapper d-flex flex-column flex-shrink-0 text-white h-100">
+    <!-- Sidebar Header / Brand -->
+    <div class="sidebar-header d-flex align-items-center p-3 border-bottom border-secondary">
+        <a href="/dashboard" class="d-flex align-items-center text-white text-decoration-none">
+            <i class="bi bi-shield-lock-fill fs-3 me-2 text-info"></i>
+            <span class="fs-4 fw-bold tracking-wide">LMS Security</span>
+        </a>
+    </div>
+
+    <!-- Navigation List (Root) -->
+    <div class="sidebar-nav-container overflow-y-auto flex-grow-1 py-3 px-2">
+        <ul class="nav nav-pills flex-column mb-auto gap-1">
+            <!-- Dashboard Link (All Roles) -->
+            <li class="nav-item">
+                <a href="/dashboard" class="nav-link text-white d-flex align-items-center gap-2 py-2 px-3 rounded sidebar-item-link">
+                    <i class="bi bi-speedometer2 text-info"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Security Management Section Header (SUPER_ADMIN and ADMIN only) -->
+            <li class="nav-item mt-3 mb-1 px-3" sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                <span class="text-secondary font-monospace small text-uppercase tracking-wider">Security Management</span>
+            </li>
+
+            <!-- User Management Link (SUPER_ADMIN and ADMIN only) -->
+            <li class="nav-item" sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                <a href="/users" class="nav-link text-white d-flex align-items-center gap-2 py-2 px-3 rounded sidebar-item-link">
+                    <i class="bi bi-people-fill text-info"></i>
+                    <span>User Management</span>
+                </a>
+            </li>
+
+            <!-- Role Management Link (SUPER_ADMIN only) -->
+            <li class="nav-item" sec:authorize="hasRole('SUPER_ADMIN')">
+                <a href="/roles" class="nav-link text-white d-flex align-items-center gap-2 py-2 px-3 rounded sidebar-item-link">
+                    <i class="bi bi-key-fill text-info"></i>
+                    <span>Role Management</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="p-3 border-top border-secondary mt-auto bg-dark bg-opacity-40">
+        <div class="d-flex align-items-center gap-2 text-secondary small">
+            <i class="bi bi-dot text-success fs-3"></i>
+            <span>Environment Active</span>
+        </div>
+    </div>
+</div>

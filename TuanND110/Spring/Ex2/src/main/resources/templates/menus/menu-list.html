@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Header with Action Button -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h2 class="text-white fw-bold"><i class="bi bi-gear-wide-connected text-info me-2"></i> Menu Management</h2>
+            <p class="text-secondary mb-0">Create, update, or remove dynamic navigation menus here.</p>
+        </div>
+        <a href="/menus/new" class="btn btn-info text-dark fw-bold d-flex align-items-center gap-2">
+            <i class="bi bi-plus-circle-fill"></i>
+            <span>Add Menu / Sub Menu</span>
+        </a>
+    </div>
+
+    <!-- Alert Notifications -->
+    <div th:if="${successMessage != null}" class="alert alert-success bg-success bg-opacity-10 border-success border-opacity-25 text-success alert-dismissible fade show glass-panel" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <span th:text="${successMessage}">Success!</span>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${errorMessage != null && showCascadePrompt == null}" class="alert alert-danger bg-danger bg-opacity-10 border-danger border-opacity-25 text-danger alert-dismissible fade show glass-panel" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span th:text="${errorMessage}">Error!</span>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Menus Table -->
+    <div class="card glass-panel border-secondary overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead class="table-group-divider border-secondary text-secondary font-mono small">
+                    <tr>
+                        <th class="ps-4">ID</th>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th>Icon</th>
+                        <th>Parent Menu</th>
+                        <th>Order</th>
+                        <th>Status</th>
+                        <th>Allowed Roles</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="border-secondary">
+                    <tr th:each="m : ${menus}" class="border-secondary">
+                        <!-- ID -->
+                        <td class="ps-4 font-mono text-secondary" th:text="${m.id}">1</td>
+                        
+                        <!-- Name with hierarchy visual indent -->
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span th:if="${m.parent != null}" class="text-muted font-mono me-2 opacity-50">└──</span>
+                                <span th:if="${m.parent != null && m.parent.parent != null}" class="text-muted font-mono me-2 opacity-50">└──</span>
+                                <strong class="text-white" th:text="${m.name}">Dashboard</strong>
+                            </div>
+                        </td>
+                        
+                        <!-- URL -->
+                        <td>
+                            <code th:if="${m.url != null && !m.url.isEmpty()}" class="text-info font-monospace" th:text="${m.url}">/students</code>
+                            <span th:if="${m.url == null || m.url.isEmpty()}" class="text-muted small">None (Header)</span>
+                        </td>
+                        
+                        <!-- Icon -->
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <i th:class="${m.icon != null && !m.icon.isEmpty() ? m.icon : 'bi bi-dash'}" class="text-info fs-5"></i>
+                                <span class="text-secondary small font-mono" th:text="${m.icon}">bi-house</span>
+                            </div>
+                        </td>
+                        
+                        <!-- Parent Menu -->
+                        <td>
+                            <span th:if="${m.parent != null}" class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25" th:text="${m.parent.name}">User Management</span>
+                            <span th:if="${m.parent == null}" class="text-muted small">None (Root)</span>
+                        </td>
+                        
+                        <!-- Display Order -->
+                        <td class="font-mono text-center" th:text="${m.displayOrder}">1</td>
+                        
+                        <!-- Status -->
+                        <td>
+                            <span th:if="${m.status}" class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25"><i class="bi bi-check-circle-fill me-1"></i>Active</span>
+                            <span th:if="${!m.status}" class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25"><i class="bi bi-x-circle-fill me-1"></i>Inactive</span>
+                        </td>
+                        
+                        <!-- Roles -->
+                        <td>
+                            <div class="d-flex flex-wrap gap-1">
+                                <span th:each="r : ${#strings.arraySplit(m.roles, ',')}" 
+                                      th:class="${r == 'ADMIN' ? 'badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25' : (r == 'TEACHER' ? 'badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 text-dark' : 'badge bg-success bg-opacity-10 text-success border border-success border-opacity-25')}"
+                                      th:text="${r}">
+                                    ADMIN
+                                </span>
+                            </div>
+                        </td>
+                        
+                        <!-- Actions -->
+                        <td class="text-end pe-4">
+                            <div class="d-inline-flex gap-2">
+                                <a th:href="@{/menus/edit/{id}(id=${m.id})}" class="btn btn-outline-light btn-sm d-flex align-items-center gap-1 border-secondary">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Edit</span>
+                                </a>
+                                
+                                <form th:action="@{/menus/delete/{id}(id=${m.id})}" method="POST" class="d-inline-block" 
+                                      onsubmit="return confirm('Are you sure you want to delete this menu?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1 border-danger border-opacity-20">
+                                        <i class="bi bi-trash-fill"></i>
+                                        <span>Delete</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr th:if="${menus == null || menus.isEmpty()}">
+                        <td colspan="9" class="text-center py-5 text-muted">
+                            <i class="bi bi-database-exclamation fs-1 d-block mb-3"></i>
+                            <h5>No menus registered in the database</h5>
+                            <p class="small mb-0">Click the "Add Menu" button to register new entries.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CASCADE DELETION PROMPT MODAL -->
+    <div th:if="${showCascadePrompt != null}" class="modal fade" id="cascadeModal" tabindex="-1" aria-labelledby="cascadeModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-panel border-danger border-opacity-50 text-white" style="background-color: #0f172a;">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title text-danger d-flex align-items-center gap-2" id="cascadeModalLabel">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        Confirm Deletion Cascade
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        The menu you are attempting to delete contains <strong>active submenus</strong>.
+                        Spring Data JPA cannot delete it safely without resolving these relationships.
+                    </p>
+                    <p class="text-secondary small">
+                        Please choose if you want to perform a <strong>Cascade Delete</strong> (which deletes the menu and all its submenus recursively), or abort the operation.
+                    </p>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <!-- Abort button -->
+                    <a href="/menus" class="btn btn-secondary border-secondary">Cancel Deletion</a>
+                    
+                    <!-- Cascade delete confirmation form -->
+                    <form th:action="@{/menus/delete/{id}(id=${showCascadePrompt})}" method="POST">
+                        <input type="hidden" name="cascade" value="true" />
+                        <button type="submit" class="btn btn-danger d-flex align-items-center gap-1">
+                            <i class="bi bi-trash-fill"></i>
+                            <span>Cascade Delete (Recursive)</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trigger Modal script if prompt signal exists -->
+    <script th:if="${showCascadePrompt != null}">
+        document.addEventListener("DOMContentLoaded", function() {
+            var myModal = new bootstrap.Modal(document.getElementById('cascadeModal'));
+            myModal.show();
+        });
+    </script>
+</main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Created Successfully</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+    <div class="container success-container">
+        <div class="success-icon">✓</div>
+        <h1>Course Created Successfully!</h1>
+        <p>Your new course has been created and is ready to use.</p>
+        <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: center;">
+            <a th:href="@{/courses/new}" class="btn btn-primary">Create Another Course</a>
+            <a th:href="@{/courses}" class="btn btn-secondary">View Courses List</a>
+        </div>
+    </div>
+
+</body>
+</html>

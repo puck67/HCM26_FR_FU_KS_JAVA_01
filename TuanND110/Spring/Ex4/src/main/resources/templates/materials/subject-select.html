@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::#subjectSelectContent})}">
+<body>
+    <div id="subjectSelectContent">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="text-white">Material Management Workspace</h2>
+                <p class="text-secondary">Select a subject below to manage, upload, download, and search its learning materials.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" th:each="subj : ${subjects}">
+                <div class="glass-card h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-dark text-white border border-secondary" th:text="${subj.subjectCode}">JAVA01</span>
+                            <span class="text-secondary small" th:text="${subj.duration + ' Hours'}">40 Hours</span>
+                        </div>
+                        <h4 class="text-white mb-2" th:text="${subj.subjectName}">Java Programming</h4>
+                        <p class="text-secondary small mb-4">
+                            Contains <span class="text-white font-weight-bold" th:text="${subj.materials != null ? subj.materials.size() : 0}">0</span> academic materials.
+                        </p>
+                    </div>
+                    <div>
+                        <a th:href="@{/materials/subject/{id}(id=${subj.subjectId})}" class="btn btn-glass w-100">
+                            Select Subject <i class="fa-solid fa-chevron-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-center py-5 text-secondary" th:if="${#lists.isEmpty(subjects)}">
+                <p>No subjects found. Please register subjects first in Subject Management.</p>
+                <a href="/subjects/new" class="btn btn-glass mt-3">Add Subject</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/layout :: layout(~{::main})}">
+<body>
+<main>
+    <!-- Page Title Header -->
+    <div class="mb-4">
+        <a href="/menus" class="btn btn-outline-secondary btn-sm mb-3 d-inline-flex align-items-center gap-1 border-secondary">
+            <i class="bi bi-arrow-left"></i>
+            <span>Back to List</span>
+        </a>
+        <h2 class="text-white fw-bold" th:text="${menu.id == null ? 'Create New Menu' : 'Edit Menu'}">Create New Menu</h2>
+        <p class="text-secondary mb-0">Fill in the fields to configure the menu properties.</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="row">
+        <div class="col-lg-8 col-md-10 col-12">
+            <div class="card glass-panel border-secondary p-4">
+                <form th:action="@{/menus/save}" th:object="${menu}" method="POST" id="menuForm">
+                    <!-- Hidden fields -->
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{roles}" id="rolesInput" />
+
+                    <!-- Parent Menu Selection -->
+                    <div class="mb-3">
+                        <label for="parent" class="form-label text-secondary font-mono small">Parent Menu</label>
+                        <select th:field="*{parent}" id="parent" class="form-select bg-dark text-white border-secondary">
+                            <option value="">None (Make Root Menu)</option>
+                            <option th:each="p : ${potentialParents}" 
+                                    th:value="${p.id}" 
+                                    th:text="${p.parent != null ? (p.parent.parent != null ? '└── └── ' + p.name : '└── ' + p.name) : p.name}">
+                                Parent Menu
+                            </option>
+                        </select>
+                        <div class="form-text text-muted">Select a parent menu if this is a sub-menu. Supports up to 3 levels.</div>
+                        <div th:if="${#fields.hasErrors('parent')}" th:errors="*{parent}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Menu Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label text-secondary font-mono small">Menu Name <span class="text-danger">*</span></label>
+                        <input type="text" th:field="*{name}" id="name" class="form-control bg-dark text-white border-secondary" placeholder="e.g. Question Bank" required />
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- URL Link -->
+                    <div class="mb-3">
+                        <label for="url" class="form-label text-secondary font-mono small">URL Path</label>
+                        <input type="text" th:field="*{url}" id="url" class="form-control bg-dark text-white border-secondary" placeholder="e.g. /questions (leave empty for header/parents)" />
+                        <div class="form-text text-muted">Web routes should start with a slash (e.g. <code>/subjects</code>). Leave blank for parent menus without clickable links.</div>
+                        <div th:if="${#fields.hasErrors('url')}" th:errors="*{url}" class="text-danger small mt-1">Error</div>
+                    </div>
+
+                    <!-- Icon Selection & Picker -->
+                    <div class="mb-4">
+                        <label for="icon" class="form-label text-secondary font-mono small">Menu Icon</label>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text bg-dark border-secondary text-info" id="iconPreviewContainer">
+                                <i th:class="${menu.icon != null && !menu.icon.isEmpty() ? menu.icon : 'bi bi-app'}" id="iconPreview"></i>
+                            </span>
+                            <input type="text" th:field="*{icon}" id="icon" class="form-control bg-dark text-white border-secondary" placeholder="e.g. bi bi-house-door" />
+                        </div>
+                        
+                        <!-- Interactive Icon Selector -->
+                        <div class="p-3 bg-dark bg-opacity-40 border border-secondary border-opacity-50 rounded">
+                            <span class="d-block text-secondary small mb-2 font-mono">Quick Pick Icon:</span>
+                            <div class="d-flex flex-wrap gap-2 overflow-auto py-1" style="max-height: 120px;">
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-speedometer2"><i class="bi bi-speedometer2 text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-people-fill"><i class="bi bi-people-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-mortarboard-fill"><i class="bi bi-mortarboard-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-person-badge-fill"><i class="bi bi-person-badge-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-journal-album"><i class="bi bi-journal-album text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-book-half"><i class="bi bi-book-half text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-collection-play-fill"><i class="bi bi-collection-play-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-globe2"><i class="bi bi-globe2 text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-building"><i class="bi bi-building text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-file-earmark-text-fill"><i class="bi bi-file-earmark-text-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-question-diamond-fill"><i class="bi bi-question-diamond-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-pencil-square"><i class="bi bi-pencil-square text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-clipboard-data-fill"><i class="bi bi-clipboard-data-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-gear-fill"><i class="bi bi-gear-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-shield-lock-fill"><i class="bi bi-shield-lock-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-person-gear"><i class="bi bi-person-gear text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-journal-check"><i class="bi bi-journal-check text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-house-door-fill"><i class="bi bi-house-door-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-info-circle-fill"><i class="bi bi-info-circle-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-envelope-fill"><i class="bi bi-envelope-fill text-info"></i></button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm icon-picker-btn text-white border-secondary" data-icon="bi bi-bell-fill"><i class="bi bi-bell-fill text-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row for Display Order & Status -->
+                    <div class="row g-3 mb-4">
+                        <!-- Display Order -->
+                        <div class="col-md-6">
+                            <label for="displayOrder" class="form-label text-secondary font-mono small">Display Order <span class="text-danger">*</span></label>
+                            <input type="number" th:field="*{displayOrder}" id="displayOrder" class="form-control bg-dark text-white border-secondary" min="1" required />
+                            <div th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}" class="text-danger small mt-1">Error</div>
+                        </div>
+                        
+                        <!-- Status Active -->
+                        <div class="col-md-6 d-flex align-items-end">
+                            <div class="form-check form-switch p-3 bg-dark bg-opacity-20 border border-secondary border-opacity-50 rounded w-100 d-flex align-items-center justify-content-between">
+                                <label class="form-check-label text-secondary font-mono small ps-2" for="status">Active Status</label>
+                                <input class="form-check-input me-2" type="checkbox" th:field="*{status}" id="status" checked />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Role Permissions (Checkboxes) -->
+                    <div class="mb-4">
+                        <label class="form-label text-secondary font-mono small d-block mb-2">Role Permissions</label>
+                        <div class="p-3 bg-dark bg-opacity-20 border border-secondary border-opacity-50 rounded d-flex flex-wrap gap-4">
+                            <div class="form-check">
+                                <input class="form-check-input role-checkbox" type="checkbox" value="ADMIN" id="roleAdmin" />
+                                <label class="form-check-label text-white" for="roleAdmin">
+                                    <span class="badge bg-danger">ADMIN</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input role-checkbox" type="checkbox" value="TEACHER" id="roleTeacher" />
+                                <label class="form-check-label text-white" for="roleTeacher">
+                                    <span class="badge bg-warning text-dark">TEACHER</span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input role-checkbox" type="checkbox" value="STUDENT" id="roleStudent" />
+                                <label class="form-check-label text-white" for="roleStudent">
+                                    <span class="badge bg-success">STUDENT</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-text text-muted">If no roles are selected, the menu will be public (accessible by anyone).</div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <hr class="border-secondary mb-4">
+                    <div class="d-flex align-items-center justify-content-end gap-3">
+                        <a href="/menus" class="btn btn-outline-secondary border-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-info text-dark fw-bold px-4">Save Menu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script to handle Live Icon Preview & Comma Separated Role Checkbox Binding -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // --- ICON PICKER LOGIC ---
+            const iconInput = document.getElementById("icon");
+            const iconPreview = document.getElementById("iconPreview");
+            const pickerButtons = document.querySelectorAll(".icon-picker-btn");
+
+            // Update live preview when user manually types
+            iconInput.addEventListener("input", function() {
+                const val = iconInput.value.trim();
+                iconPreview.className = val ? val : "bi bi-app";
+            });
+
+            // Handle picker click
+            pickerButtons.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    const iconClass = btn.getAttribute("data-icon");
+                    iconInput.value = iconClass;
+                    iconPreview.className = iconClass;
+                });
+            });
+
+            // --- ROLE CHECKBOX LOGIC ---
+            const rolesInput = document.getElementById("rolesInput");
+            const checkboxes = document.querySelectorAll(".role-checkbox");
+
+            // Page Load: Split the hidden input's roles and check checkboxes
+            if (rolesInput.value) {
+                const currentRoles = rolesInput.value.split(",").map(r => r.trim().toUpperCase());
+                checkboxes.forEach(cb => {
+                    if (currentRoles.includes(cb.value.toUpperCase())) {
+                        cb.checked = true;
+                    }
+                });
+            }
+
+            // Function to update hidden inputs when checking/unchecking checkboxes
+            function updateRoles() {
+                const checkedRoles = [];
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        checkedRoles.push(cb.value);
+                    }
+                });
+                rolesInput.value = checkedRoles.join(",");
+            }
+
+            // Bind update function to all role checkboxes change event
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", updateRoles);
+            });
+            
+            // Initial call to ensure sync
+            updateRoles();
+        });
+    </script>
+</main>
+</body>
+</html>

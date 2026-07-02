@@ -1,0 +1,4 @@
+Title;Instructor Name;Instructor Email;Description;Duration (hours)
+Spring Framework Masterclass;Nguyen Van A;a.nguyen@example.com;Comprehensive guide to Spring Core and Boot;40
+Microservices with Spring Cloud;Tran Van B;b.tran@example.com;Design and build scalable microservices;35
+Spring Security Deep Dive;Le Van C;c.le@example.com;Implement OAuth2 and JWT security;28
